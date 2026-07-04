@@ -1,0 +1,30 @@
+<svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" width="760" height="300" role="img">
+  <rect x="0" y="0" width="760" height="300" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Learning rate: too small · just right · too big</text>
+  <path d="M48.0,158.5 L52.6,165.1 L57.2,171.4 L61.8,177.4 L66.4,183.0 L71.0,188.2 L75.6,193.2 L80.2,197.8 L84.8,202.0 L89.4,205.9 L94.0,209.5 L98.6,212.7 L103.2,215.6 L107.8,218.2 L112.4,220.4 L117.0,222.2 L121.6,223.8 L126.2,225.0 L130.8,225.8 L135.4,226.3 L140.0,226.5 L144.6,226.3 L149.2,225.8 L153.8,225.0 L158.4,223.8 L163.0,222.2 L167.6,220.4 L172.2,218.2 L176.8,215.6 L181.4,212.7 L186.0,209.5 L190.6,205.9 L195.2,202.0 L199.8,197.8 L204.4,193.2 L209.0,188.2 L213.6,183.0 L218.2,177.4 L222.8,171.4 L227.4,165.1 L232.0,158.5" fill="none" stroke="#6366f1" stroke-width="2.2"/>
+  <text x="140.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="1" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle"></text>
+  <circle cx="52.6" cy="165.1" r="4" fill="#fb7185"/>
+  <circle cx="66.4" cy="183.0" r="4" fill="#fb7185"/>
+  <circle cx="77.9" cy="195.5" r="4" fill="#fb7185"/>
+  <circle cx="87.1" cy="204.0" r="4" fill="#fb7185"/>
+  <circle cx="94.0" cy="209.5" r="4" fill="#fb7185"/>
+  <text x="140.0" y="285.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">too small: crawls</text>
+  <path d="M288.0,158.5 L292.6,165.1 L297.2,171.4 L301.8,177.4 L306.4,183.0 L311.0,188.2 L315.6,193.2 L320.2,197.8 L324.8,202.0 L329.4,205.9 L334.0,209.5 L338.6,212.7 L343.2,215.6 L347.8,218.2 L352.4,220.4 L357.0,222.2 L361.6,223.8 L366.2,225.0 L370.8,225.8 L375.4,226.3 L380.0,226.5 L384.6,226.3 L389.2,225.8 L393.8,225.0 L398.4,223.8 L403.0,222.2 L407.6,220.4 L412.2,218.2 L416.8,215.6 L421.4,212.7 L426.0,209.5 L430.6,205.9 L435.2,202.0 L439.8,197.8 L444.4,193.2 L449.0,188.2 L453.6,183.0 L458.2,177.4 L462.8,171.4 L467.4,165.1 L472.0,158.5" fill="none" stroke="#6366f1" stroke-width="2.2"/>
+  <text x="380.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="1" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle"></text>
+  <circle cx="292.6" cy="165.1" r="4" fill="#10b981"/>
+  <circle cx="343.2" cy="215.6" r="4" fill="#10b981"/>
+  <circle cx="368.5" cy="225.4" r="4" fill="#10b981"/>
+  <circle cx="377.7" cy="226.5" r="4" fill="#10b981"/>
+  <circle cx="380.0" cy="226.5" r="4" fill="#10b981"/>
+  <text x="380.0" y="285.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">just right: converges</text>
+  <path d="M528.0,158.5 L532.6,165.1 L537.2,171.4 L541.8,177.4 L546.4,183.0 L551.0,188.2 L555.6,193.2 L560.2,197.8 L564.8,202.0 L569.4,205.9 L574.0,209.5 L578.6,212.7 L583.2,215.6 L587.8,218.2 L592.4,220.4 L597.0,222.2 L601.6,223.8 L606.2,225.0 L610.8,225.8 L615.4,226.3 L620.0,226.5 L624.6,226.3 L629.2,225.8 L633.8,225.0 L638.4,223.8 L643.0,222.2 L647.6,220.4 L652.2,218.2 L656.8,215.6 L661.4,212.7 L666.0,209.5 L670.6,205.9 L675.2,202.0 L679.8,197.8 L684.4,193.2 L689.0,188.2 L693.6,183.0 L698.2,177.4 L702.8,171.4 L707.4,165.1 L712.0,158.5" fill="none" stroke="#6366f1" stroke-width="2.2"/>
+  <text x="620.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="1" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle"></text>
+  <circle cx="546.4" cy="183.0" r="4" fill="#f59e0b"/>
+  <circle cx="698.2" cy="177.4" r="4" fill="#f59e0b"/>
+  <line x1="546.4" y1="183.0" x2="698.2" y2="177.4" stroke="#f59e0b" stroke-width="1.4" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <circle cx="534.9" cy="168.3" r="4" fill="#f59e0b"/>
+  <line x1="698.2" y1="177.4" x2="534.9" y2="168.3" stroke="#f59e0b" stroke-width="1.4" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <circle cx="709.7" cy="161.9" r="4" fill="#f59e0b"/>
+  <line x1="534.9" y1="168.3" x2="709.7" y2="161.9" stroke="#f59e0b" stroke-width="1.4" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <text x="620.0" y="285.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">too big: overshoots</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 730 300" xmlns="http://www.w3.org/2000/svg" width="730" height="300" role="img">
+  <rect x="0" y="0" width="730" height="300" fill="#ffffff"/>
+  <text x="365.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Three vision-language tasks, one shared idea</text>
+  <rect x="40.0" y="66.0" width="200.0" height="150.0" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="56.0" y="82.0" width="168.0" height="44.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="140.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">CLIP / matching</text>
+  <text x="140.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">image + text</text>
+  <text x="140.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">→ similarity score</text>
+  <rect x="275.0" y="66.0" width="200.0" height="150.0" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="291.0" y="82.0" width="168.0" height="44.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="375.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Captioning</text>
+  <text x="375.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">image</text>
+  <text x="375.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">→ a sentence</text>
+  <rect x="500.0" y="66.0" width="200.0" height="150.0" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="516.0" y="82.0" width="168.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="600.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">VQA</text>
+  <text x="600.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">image + question</text>
+  <text x="600.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">→ an answer</text>
+  <text x="365.0" y="258.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">All connect pixels to language: match them (CLIP), describe them (captioning), or answer about them (VQA).</text>
+</svg>

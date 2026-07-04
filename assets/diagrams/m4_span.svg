@@ -1,0 +1,25 @@
+<svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" width="720" height="330" role="img">
+  <rect x="0" y="0" width="720" height="330" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Span: everything you can reach by scaling &amp; adding</text>
+  <line x1="-10.0" y1="210.0" x2="320.0" y2="210.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="110.0" y1="226.0" x2="110.0" y2="60.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M320.0,210.0 L312.7,206.7 L312.7,213.3 Z" fill="#94a3b8"/>
+  <path d="M110.0,60.0 L106.7,67.3 L113.3,67.3 Z" fill="#94a3b8"/>
+  <line x1="20.0" y1="255.0" x2="260.0" y2="135.0" stroke="#c7d2fe" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <line x1="110.0" y1="210.0" x2="200.0" y2="165.0" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M200.0,165.0 L189.0,165.5 L193.0,173.5 Z" fill="#10b981"/>
+  <text x="206.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#065f46" text-anchor="start" opacity="1.0" dominant-baseline="middle">v</text>
+  <text x="140.0" y="280.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#6366f1" text-anchor="middle" opacity="1.0" dominant-baseline="middle">span(v) = a line</text>
+  <rect x="320.0" y="80.0" width="300.0" height="210.0" rx="10" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.4" opacity="0.6"/>
+  <line x1="320.0" y1="210.0" x2="620.0" y2="210.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="470.0" y1="226.0" x2="470.0" y2="60.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M620.0,210.0 L612.7,206.7 L612.7,213.3 Z" fill="#94a3b8"/>
+  <path d="M470.0,60.0 L466.7,67.3 L473.3,67.3 Z" fill="#94a3b8"/>
+  <line x1="470.0" y1="210.0" x2="565.0" y2="170.0" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M565.0,170.0 L554.0,169.8 L557.5,178.0 Z" fill="#10b981"/>
+  <line x1="470.0" y1="210.0" x2="505.0" y2="115.0" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M505.0,115.0 L497.3,122.9 L505.7,126.0 Z" fill="#38bdf8"/>
+  <text x="570.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#065f46" text-anchor="start" opacity="1.0" dominant-baseline="middle">u</text>
+  <text x="510.0" y="110.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#075985" text-anchor="start" opacity="1.0" dominant-baseline="middle">w</text>
+  <text x="470.0" y="280.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#6366f1" text-anchor="middle" opacity="1.0" dominant-baseline="middle">span(u, w) = the whole plane</text>
+</svg>

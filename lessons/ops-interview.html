@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview check: MLOps · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html" class="current"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 9</b> · MLOps &amp; Serving · Lesson 9.10</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 9 · MLOps &amp; Serving</div>
+<h1>Interview check: MLOps</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 15 min</span>
+<span class="pill">Lesson 9.10</span>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>MLOps interviews test whether you can run a model, not just train one: the lifecycle, train/serve skew, drift, serving and scaling trade-offs, monitoring, CI/CD. This checkpoint rehearses those with model answers.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Walk through notebook-to-production</li><li>Debug offline-good-but-prod-bad</li><li>Explain drift and retraining</li><li>Reason about serving, scaling, and CI/CD</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> What an MLOps interview tests</h2>
+
+<p>MLOps questions separate people who can <em>train</em> a model from people who can <em>run</em> one. Interviewers probe
+whether you understand that deploying a model is the start of the hard part, not the end — whether you grasp the lifecycle
+loop, can reason about serving and scaling trade-offs, and know why models decay and how to keep them healthy. The signal
+they're listening for is <strong>production maturity</strong>: an instinct that the system will fail in subtle ways and a
+vocabulary of practices for catching and fixing those failures. The model answers below show that reasoning.</p>
+
+<figure class="diagram"><svg viewBox="0 0 740 290" xmlns="http://www.w3.org/2000/svg" width="740" height="290" role="img">
+  <rect x="0" y="0" width="740" height="290" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 9 in one line: run ML reliably in production</text>
+  <rect x="8.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="70.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Version</text>
+  <text x="70.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">&amp; track</text>
+  <rect x="158.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="220.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Pipeline</text>
+  <text x="220.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">&amp; registry</text>
+  <rect x="308.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="370.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Serve</text>
+  <text x="370.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">&amp; scale</text>
+  <rect x="458.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="520.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Monitor</text>
+  <rect x="608.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="670.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Drift →</text>
+  <text x="670.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">retrain</text>
+  <line x1="132.0" y1="150.0" x2="158.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M158.0,150.0 L148.9,145.9 L148.9,154.1 Z" fill="#475569"/>
+  <line x1="282.0" y1="150.0" x2="308.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M308.0,150.0 L298.9,145.9 L298.9,154.1 Z" fill="#475569"/>
+  <line x1="432.0" y1="150.0" x2="458.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M458.0,150.0 L448.9,145.9 L448.9,154.1 Z" fill="#475569"/>
+  <line x1="582.0" y1="150.0" x2="608.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M608.0,150.0 L598.9,145.9 L598.9,154.1 Z" fill="#475569"/>
+  <text x="370.0" y="235.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">MLOps wraps the model in versioning, pipelines, serving, monitoring, and retraining —</text>
+  <text x="370.0" y="256.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the engineering that turns a working model into a reliable service.</text>
+</svg>
+<figcaption><b>The Track 9 mental model.</b> MLOps wraps a model in versioning and pipelines, serves and scales it, monitors it, and retrains it on drift — a continuous loop. Most questions probe one stage; the unifying theme is that a deployed model is a living system that must be maintained, not a finished artifact.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "Walk me through taking a model from notebook to production."</div>
+<div class="bd">
+<p>"I think of it as the lifecycle loop. <strong>Train stage:</strong> I run experiments with tracking (MLflow or similar)
+so every run's params, metrics, and artifacts are logged and the winner is reproducible — same data, code, environment, and
+seed. <strong>Data stage:</strong> features come from a pipeline — ideally a feature store — so they're computed one way and
+served identically at training and inference, avoiding train/serve skew. <strong>Deploy stage:</strong> the chosen model
+goes into a registry, versioned and staged staging → production, then gets packaged in a container with its exact
+dependencies and served behind an endpoint, with rollback available because old versions are archived. <strong>Serve
+stage:</strong> I scale horizontally with replicas behind a load balancer and autoscaling, and optimize cost with caching,
+batching, and maybe quantization. <strong>Monitor stage:</strong> I watch both operational metrics (latency, errors) and
+model quality (drift, prediction distribution, accuracy when labels arrive), and wire drift detection to trigger retraining
+— and I automate the whole thing with CI/CD/CT so changes are tested, validated against the baseline, and deployed
+reliably. The thread through all of it: deploying the model is the middle of the story; keeping it healthy as the world
+changes is the job."</p>
+<p class="dd-note" style="color:var(--muted);font-size:13.5px;margin:.4rem 0 0">Strong close: emphasize that an ML system is never "done" — it decays and must be continuously maintained.</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "A model performs great offline but poorly in production. How do you debug it?"</div>
+<div class="bd">
+<p>"This pattern — strong offline, weak in production, model unchanged — points at the <em>data</em>, not the model, so I'd
+check two things first. <strong>Train/serve skew:</strong> are the features computed in production identical to those at
+training? I'd log the actual served features and compare them, for the same entities, against the training pipeline's
+output; a mismatch (different defaults, windows, rounding, or a feature computed differently in the serving code) is the
+classic culprit, and the fix is to unify the computation through a shared feature definition or store. <strong>Drift:</strong>
+has the live data moved away from the training distribution since the model was built? I'd compare input distributions and
+the prediction distribution against training references. I'd also sanity-check that offline evaluation wasn't optimistic —
+data leakage or a non-representative test set can inflate offline metrics. The discipline is to <em>not</em> assume the
+model is the problem: the model is identical, so something about the data it's fed or the world it's seeing changed, and the
+job is to localize which. That instinct — offline-good-but-prod-bad means look at the data plumbing — is what experience
+teaches."</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "Why do models degrade in production, and what do you do about it?"</div>
+<div class="bd">
+<p>"They degrade because of <strong>drift</strong> — the model was trained on a snapshot of the world, and the world moves
+away from it. Two kinds: <strong>data drift</strong>, where the input distribution shifts (you start seeing different
+inputs than training), and <strong>concept drift</strong>, where the relationship between inputs and the correct output
+changes (the same inputs now imply a different answer) — the second is subtler because inputs can look unchanged. The model
+itself is fine; the assumption that the future resembles the training past has eroded. What I do: <strong>monitor</strong>
+for it — data drift I can often catch label-free by comparing input distributions; concept drift usually needs outcomes —
+and <strong>retrain</strong> on fresh data when drift crosses a threshold, either on a schedule or triggered by detection.
+Retraining isn't a failure, it's normal maintenance. The deeper point I'd make is that drift is inherent to deploying ML in
+a changing world, not a flaw to eliminate — which is exactly why MLOps treats the model as a living system with a
+monitor-and-retrain loop, rather than a finished artifact."</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "How would you serve a model to millions of users affordably?"</div>
+<div class="bd">
+<p>"Two prongs: scale out, and make each prediction cheaper. <strong>Scale out</strong> with horizontal scaling —
+many identical replicas behind a load balancer — plus <strong>autoscaling</strong> so capacity tracks traffic, giving me
+enough at peak without paying for idle servers off-peak. <strong>Cheaper per prediction</strong> with caching (reuse results
+for repeated inputs — huge when inputs recur), batching (group requests into one pass, which GPUs love), quantization or
+distillation (a smaller, faster model at a small accuracy cost), and the right hardware. I'd also choose the serving pattern
+by need: online endpoints for real-time, batch for bulk scoring where nobody's waiting. And I'd hold the latency budget in
+mind — the model is only one slice of the user's total response time, so sometimes a slightly less accurate but much faster
+model is the correct production choice, because the best offline model isn't always the best model to serve. The framing I'd
+stress is that a model is trained once but served forever, so inference cost dominates and optimizing it is where much of
+the real engineering — and money — lives, especially for LLMs."</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "How is CI/CD for ML different from CI/CD for regular software?"</div>
+<div class="bd">
+<p>"Regular CI/CD ships <strong>code</strong>, so it tests and deploys code. ML systems depend on code <em>plus data plus a
+trained model</em>, so the pipeline has to handle all three — which adds <strong>CT</strong>, continuous training: the
+pipeline can retrain on new data, validate the result, and deploy it automatically. The key difference is the
+<strong>deployment gate</strong>. In software, 'tests pass' is enough to ship. In ML, there's an extra gate: the new model
+must actually be as good as or better than the production baseline on a validation set — because retraining on fresh data
+doesn't guarantee a better model, and you must never silently ship a regression. So ML testing is broader: unit tests for
+code, <em>plus</em> data validation (schema, ranges, quality) and model validation (quality vs baseline, and often fairness
+across slices). That baseline gate is precisely what makes automated retraining safe — a bad retrain gets caught and
+rejected instead of going live. The principle I'd articulate: automation multiplies your discipline, so CT without strong
+validation gates is a machine for shipping bad models fast, while CT with good gates lets you safely deploy improvements
+often."</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Rapid-fire answers to have ready</div>
+<ul>
+<li><strong>What is MLOps?</strong> The engineering of deploying, serving, monitoring, and maintaining ML in production — running the lifecycle loop.</li>
+<li><strong>Train/serve skew?</strong> Features computed differently at training vs serving; fix with one shared feature definition (feature store).</li>
+<li><strong>Data vs concept drift?</strong> Input distribution shifts vs the input→output relationship changes; both need retraining.</li>
+<li><strong>Why a model registry?</strong> Versioned models, explicit promotion, and instant rollback (old versions archived, not deleted).</li>
+<li><strong>Online vs batch serving?</strong> Real-time low-latency endpoint vs scheduled high-throughput bulk scoring.</li>
+<li><strong>Scaling levers?</strong> Replicas + load balancer + autoscaling; caching, batching, quantization, better hardware.</li>
+<li><strong>Two monitoring layers?</strong> Operational (latency, errors) and model quality (drift, accuracy) — green ops ≠ good model.</li>
+<li><strong>Reproducibility needs?</strong> Pin data, params, code, environment, and the random seed.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Rapid-fire check</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> "Our model was 91% accurate at launch but it's been getting worse for months, and the code hasn't changed." Most likely cause?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The server needs rebooting</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The code has a bug that appeared on its own</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Drift — the live data has moved away from the training data, decaying accuracy while the model is unchanged</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The model file got corrupted</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">A reboot doesn't fix a gradual, months-long accuracy decline.</div>
+<div class="ex" data-for="b">Unchanged code doesn't spontaneously develop bugs; the data changed.</div>
+<div class="ex" data-for="c">Correct. Gradual decay with unchanged code is the signature of drift — retrain on fresh data.</div>
+<div class="ex" data-for="d">Corruption would cause errors or sudden failure, not slow decay.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> An interviewer asks why you'd use a feature store. Best answer:</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To make the model bigger</span></li>
+<li data-opt="b"><span class="mk">B</span><span>To compute features once and serve them identically to training and production — preventing train/serve skew — and to reuse features across models</span></li>
+<li data-opt="c"><span class="mk">C</span><span>To replace the model registry</span></li>
+<li data-opt="d"><span class="mk">D</span><span>To store the trained model</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Unrelated to model size.</div>
+<div class="ex" data-for="b">Correct. One consistent feature definition for train and serve (no skew), plus reuse across models, is the point.</div>
+<div class="ex" data-for="c">Different tool — registries version models, feature stores manage features.</div>
+<div class="ex" data-for="d">Models go in a registry; feature stores hold features.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> Your operational dashboards (latency, errors, uptime) are all green. What can you conclude about model quality?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The model is definitely accurate</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The model has no drift</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The predictions are correct</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Nothing — operational health says nothing about prediction quality; you need the model-monitoring layer</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">A fast, up service can still serve a badly decayed model.</div>
+<div class="ex" data-for="b">Ops metrics don't measure drift at all.</div>
+<div class="ex" data-for="c">Green ops dashboards are silent about whether answers are right.</div>
+<div class="ex" data-for="d">Correct. The two layers are independent — you must monitor model quality separately from system health.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> Why must an ML CI/CD pipeline check more than "do the code tests pass" before deploying?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Because the new model must also beat the production baseline on validation — a technically-correct but worse model should not ship</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Because ML code never has tests</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Because deployment can't be automated for ML</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Because models don't need validation</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. The ML-specific gate validates model quality vs baseline, so automated retraining can't silently ship a regression.</div>
+<div class="ex" data-for="b">ML code has tests too; the point is it needs <em>additional</em> model/data checks.</div>
+<div class="ex" data-for="c">It can be automated — that's exactly what CI/CD/CT does.</div>
+<div class="ex" data-for="d">Models need <em>more</em> validation, not less.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Mock interview prompts</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>"Design the end-to-end MLOps system for a recommendation model at a large e-commerce company." (3-minute answer.)</span></div>
+<details><summary>Show a strong answer</summary><div class="sol">
+<p>"<strong>Data &amp; features:</strong> a feature store computing user/item features consistently for training and serving,
+fed by batch pipelines for slow features and streaming for fresh ones (recent activity), with point-in-time correctness to
+avoid leakage. <strong>Training:</strong> tracked experiments for reproducibility, with a pipeline that can retrain on
+recent data. <strong>Registry &amp; deploy:</strong> versioned models, promotion staging → production with canary rollout
+(send 5% of traffic to the new model, watch metrics, ramp if healthy) and instant rollback. <strong>Serving:</strong> a
+hybrid — batch-precompute candidate recommendations cheaply, then re-rank online with live context for freshness; scaled
+horizontally with autoscaling for traffic spikes (think Black Friday), with caching for popular items. <strong>Monitoring:</strong>
+operational metrics plus model quality — recommendation distribution, input drift, and business metrics like click-through;
+delayed labels (did they buy?) feed slower accuracy tracking. <strong>Automation:</strong> CI/CD/CT retrains on a schedule
+plus drift triggers, validates each new model against the baseline and on key segments before deploying. The themes I'm
+hitting — consistent features, safe gradual deployment, scale for spikes, two-layer monitoring, and automated-but-gated
+retraining — are exactly the production concerns this system lives or dies on."</p>
+<p>This shows you can assemble the whole track into a coherent system tuned to a domain's realities (spiky traffic, delayed
+labels, freshness needs) — the system-design judgment senior roles want.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>"Your company has one model in production today but plans to have fifty within a year. What MLOps investments do you prioritize, and why?</span></div>
+<details><summary>Show a strong answer</summary><div class="sol">
+<p>"The shift from one model to fifty is fundamentally about <strong>automation and standardization</strong> — what you can
+do by hand for one becomes impossible for fifty. I'd prioritize, roughly in order: (1) <strong>Reproducible training with
+experiment tracking</strong>, so every model is rebuildable and comparable — the foundation everything else needs. (2) A
+<strong>model registry</strong> for versioning, deployment, and rollback across many models, so you always know what's live
+and can revert safely. (3) <strong>Automated deployment pipelines (CI/CD/CT) with validation gates</strong>, because
+hand-deploying fifty models is untenable and ungated automation is dangerous — the gates let you deploy often and safely.
+(4) <strong>Standardized monitoring</strong> across all models — a common framework for operational and model-quality
+metrics plus drift, so you're not building bespoke monitoring per model and you catch decay everywhere. (5) Shared
+<strong>feature infrastructure</strong> if the models share data, for consistency and reuse. The reasoning is that scaling
+the <em>number</em> of models is a different problem from improving one model: it's about building <em>platforms and
+automation</em> so each new model rides on shared, reliable infrastructure rather than a hand-crafted pipeline. I'd
+sequence by what hurts most first and what unblocks the rest — reproducibility and the registry are foundational, then
+automation, then standardized monitoring."</p>
+<p>Recognizing that 'one model vs fifty' is a platform/automation problem — not just more of the same — and sequencing the
+investments by leverage is exactly the strategic MLOps thinking that distinguishes a senior candidate.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>"Explain to a skeptical engineering manager why MLOps deserves real investment, when 'the model already works.'"</span></div>
+<details><summary>Show a strong answer</summary><div class="sol">
+<p>"'The model works' is true today and temporary. The single most important fact about ML systems is that they
+<strong>decay on their own</strong> — the world drifts away from the training data, so a model that's accurate now will
+quietly get worse, with no crash to warn us, until it's costing us real money in bad decisions. Without MLOps, we won't even
+<em>know</em> it's happening, because operational dashboards stay green while quality rots. MLOps is the investment that
+catches and fixes that decay: monitoring to detect it, retraining pipelines to fix it, and the versioning and deployment
+machinery to do so safely. Beyond decay, it's also what lets us move <em>fast and safely</em> — reproducibility so we can
+debug and rebuild, registries and rollback so a bad deploy is a non-event instead of an outage, and automation so we can
+ship improvements frequently without manual risk. The cost of skipping it isn't visible at launch; it shows up months later
+as a silently degraded model, an unreproducible result we can't fix, or a bad deployment we can't roll back — and as the
+inability to scale beyond a handful of models. The framing I'd leave him with: we're not shipping a model, we're committing
+to <em>operating</em> one, and MLOps is the difference between a model that works at launch and a system that keeps working.
+The ROI is avoided incidents, faster iteration, and the ability to scale — which is exactly what turns ML from a demo into a
+durable business capability."</p>
+<p>Framing MLOps' value in terms the manager cares about — silent decay as a hidden cost, plus speed, safety, and scale — and
+positioning it as 'operating a system, not shipping a model' is precisely the business-level communication that lands this
+argument.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: thinking like an ML engineer, end to end<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>The strongest MLOps answers share one mental model: a deployed model is a <strong>living system in a changing world</strong>,
+not a finished artifact. Everything in the track flows from that. Because the world changes, models drift, so you must
+monitor and retrain — the lifecycle loop. Because the model depends on data and code together, you must version and validate
+all three, not just code — reproducibility, feature stores, registries, CI/CD/CT. Because a model is trained once but served
+forever, inference cost and reliability dominate — serving patterns, scaling, optimization. Because deployment is risky and
+offline metrics are an incomplete read on reality, you make every change reversible and gradually validated — staging,
+canary, rollback, baseline gates. When you reason about <em>any</em> MLOps problem, the expert move is to locate it on the
+loop and ask the production question: how will this fail silently, what signal would warn me, and what's the reversible,
+automated response? Candidates who frame answers this way — "I'd look at the data first because the model is unchanged," "I'd
+validate against the baseline before deploying," "green ops doesn't mean a good model" — immediately signal they've operated
+real systems, because those instincts only come from having watched models decay and deployments go wrong.</p>
+<p>Three habits sharpen MLOps reasoning. First, <strong>distrust the happy path</strong>: assume the model will degrade, the
+data will break, and the deployment will sometimes be worse, and build the machinery (monitoring, validation, rollback) to
+catch each — production maturity is fundamentally this defensive instinct. Second, <strong>separate the layers</strong>: when
+something's wrong, is it operational (system) or model (quality)? is it the data (skew, drift) or the model itself? is it
+offline evaluation being optimistic or production genuinely different? — localizing the failure is most of the battle, and
+the track has given you the map. Third, <strong>connect to the foundations</strong>: drift is the i.i.d. assumption (Track 3)
+decaying over time; serving constraints are why the best offline model isn't always the right one; monitoring and gates are
+the same defense-in-depth instinct as agent guardrails (Track 8). Seeing MLOps not as a bag of tools but as the disciplined
+practice of keeping a model's generalization valid as the world moves — with the lifecycle loop as the organizing idea and
+automation as the way to scale it — is the system-level understanding that the best teams hire for. You've now built that
+understanding end to end: you can take a model from a notebook to a reliably-served, monitored, self-maintaining production
+system, and reason about every stage. That's the difference between someone who trains models and someone who ships them —
+and it's exactly what the final tracks build on as they turn to evaluating and governing these systems responsibly."</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">That completes Track 9 — you can run ML reliably in production. Next, Track 10
+(<strong>AI System Design</strong>) zooms out from individual components to architecting complete ML systems end to
+end — combining everything so far into designs that meet real-world requirements at scale.</p>
+</article>
+<nav class="pager"><a class="prev" href="ops9-cicd.html"><span class="dir">← Previous</span><span class="ti">CI/CD for ML</span></a><a class="next" href="sd1-framework.html"><span class="dir">Next →</span><span class="ti">How to approach an AI system design interview</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

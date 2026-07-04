@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" width="720" height="360" role="img">
+  <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Computational graph: forward values, backward gradients</text>
+  <rect x="34.0" y="64.0" width="92.0" height="52.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="94.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">w = 2</text>
+  <rect x="34.0" y="154.0" width="92.0" height="52.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="184.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">x = 3</text>
+  <rect x="34.0" y="244.0" width="92.0" height="52.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="274.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">b = 1</text>
+  <rect x="238.0" y="105.0" width="104.0" height="60.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="290.0" y="130.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">z = w·x</text>
+  <text x="290.0" y="148.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">= 6</text>
+  <rect x="418.0" y="150.0" width="104.0" height="60.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="470.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">a = z+b</text>
+  <text x="470.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">= 7</text>
+  <rect x="592.0" y="150.0" width="96.0" height="60.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="640.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">L = a²</text>
+  <text x="640.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">= 49</text>
+  <line x1="126.0" y1="99.9" x2="238.0" y2="123.9" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M238.0,123.9 L229.9,118.0 L228.2,125.9 Z" fill="#475569"/>
+  <line x1="126.0" y1="170.1" x2="238.0" y2="146.1" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M238.0,146.1 L228.2,144.1 L229.9,152.0 Z" fill="#475569"/>
+  <line x1="126.0" y1="259.4" x2="418.0" y2="192.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M418.0,192.0 L408.2,190.1 L410.0,198.0 Z" fill="#475569"/>
+  <line x1="342.0" y1="148.0" x2="418.0" y2="167.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M418.0,167.0 L410.1,160.8 L408.2,168.7 Z" fill="#475569"/>
+  <line x1="522.0" y1="180.0" x2="592.0" y2="180.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M592.0,180.0 L582.9,175.9 L582.9,184.1 Z" fill="#475569"/>
+  <text x="560.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">∂L/∂a = 2a = 14</text>
+  <text x="370.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">∂L/∂z = 14</text>
+  <text x="200.0" y="320.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">∂L/∂w = 14·x = 42</text>
+  <text x="420.0" y="330.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">multiply local slopes back to every input</text>
+</svg>

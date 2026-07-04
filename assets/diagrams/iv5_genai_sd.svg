@@ -1,0 +1,28 @@
+<svg viewBox="0 0 740 280" xmlns="http://www.w3.org/2000/svg" width="740" height="280" role="img">
+  <rect x="0" y="0" width="740" height="280" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">GenAI system design: the 2026 checklist</text>
+  <rect x="30.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="90.0" y="116.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Require-</text>
+  <text x="90.0" y="132.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">ments</text>
+  <rect x="180.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="240.0" y="116.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Architecture</text>
+  <text x="240.0" y="132.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">(RAG/agents)</text>
+  <rect x="350.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="410.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Evaluation</text>
+  <rect x="500.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="560.0" y="116.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Cost &amp;</text>
+  <text x="560.0" y="132.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">latency</text>
+  <rect x="620.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="680.0" y="116.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Guard-</text>
+  <text x="680.0" y="132.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">rails</text>
+  <line x1="150.0" y1="120.0" x2="180.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M180.0,120.0 L170.9,115.9 L170.9,124.1 Z" fill="#475569"/>
+  <line x1="300.0" y1="120.0" x2="350.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M350.0,120.0 L340.9,115.9 L340.9,124.1 Z" fill="#475569"/>
+  <line x1="470.0" y1="120.0" x2="500.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M500.0,120.0 L490.9,115.9 L490.9,124.1 Z" fill="#475569"/>
+  <line x1="620.0" y1="120.0" x2="620.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M620.0,120.0 L610.9,115.9 L610.9,124.1 Z" fill="#475569"/>
+  <text x="370.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Interviewers now weight evaluation, cost/latency, and guardrails as heavily as the architecture —</text>
+  <text x="370.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">so don't stop at boxes and arrows; reason about how you'd measure, budget, and safeguard it.</text>
+</svg>

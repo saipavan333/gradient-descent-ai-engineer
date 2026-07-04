@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dimensionality reduction (PCA, t-SNE, UMAP) · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html" class="current"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 3</b> · Classical ML · Lesson 3.11</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 3 · Classical ML</div>
+<h1>Dimensionality reduction (PCA, t-SNE, UMAP)</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 24 min</span>
+<span class="pill">Lesson 3.11</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm11_dimred.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>High-dimensional data is hard to see, slow to model, and noisy. Dimensionality reduction compresses it while keeping the signal — PCA for modeling and compression, t-SNE/UMAP for visualization.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain PCA as rotating to max-variance axes</li><li>Read the explained-variance ratio</li><li>Use t-SNE/UMAP for visualization, with caution</li><li>Know why to standardize before PCA</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> Too many features is its own problem</h2>
+
+<p>Real datasets often have dozens, hundreds, or thousands of features. That causes three headaches:
+you can't <strong>visualize</strong> more than 3 dimensions; distances become less meaningful in high dimensions (the
+"<span class="term">curse of dimensionality</span>" — everything ends up roughly equidistant); and many features are
+redundant or noisy, slowing models and inviting overfitting. <span class="term">Dimensionality reduction</span> squeezes
+many features down to a few <em>new</em> ones that keep most of the information — for plotting, for speed, and for
+removing noise.</p>
+
+<p>It's unsupervised (no labels needed) and comes in two flavors: linear methods like PCA that are fast, reversible,
+and great for compression, and nonlinear methods like t-SNE and UMAP built specifically to make a revealing 2-D
+picture.</p>
+
+<h2><span class="sec-tag">Concept</span> PCA: rotate to the most informative axes</h2>
+
+<p><span class="term">Principal Component Analysis</span> (PCA) finds the directions along which the data
+<em>varies the most</em> and uses them as new axes. The first <span class="term">principal component</span> (PC1) is
+the single direction capturing the greatest spread; PC2 is the next-most-spread direction perpendicular to it; and so
+on. These are exactly the eigenvectors of the data's covariance matrix from Track 1 — PCA is that idea put to work.</p>
+
+<figure class="diagram"><svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" width="640" height="360" role="img">
+  <rect x="0" y="0" width="640" height="360" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">PCA rotates to the axes of greatest variance</text>
+  <circle cx="331.6" cy="199.3" r="3.6" fill="#075985"/>
+  <circle cx="289.4" cy="215.8" r="3.6" fill="#075985"/>
+  <circle cx="308.1" cy="186.6" r="3.6" fill="#075985"/>
+  <circle cx="396.1" cy="150.3" r="3.6" fill="#075985"/>
+  <circle cx="322.9" cy="195.2" r="3.6" fill="#075985"/>
+  <circle cx="364.4" cy="162.8" r="3.6" fill="#075985"/>
+  <circle cx="337.1" cy="161.1" r="3.6" fill="#075985"/>
+  <circle cx="302.7" cy="186.4" r="3.6" fill="#075985"/>
+  <circle cx="257.8" cy="191.3" r="3.6" fill="#075985"/>
+  <circle cx="254.1" cy="213.4" r="3.6" fill="#075985"/>
+  <circle cx="311.2" cy="184.2" r="3.6" fill="#075985"/>
+  <circle cx="314.3" cy="166.4" r="3.6" fill="#075985"/>
+  <circle cx="318.4" cy="189.6" r="3.6" fill="#075985"/>
+  <circle cx="344.4" cy="159.6" r="3.6" fill="#075985"/>
+  <circle cx="291.5" cy="166.7" r="3.6" fill="#075985"/>
+  <circle cx="286.2" cy="166.4" r="3.6" fill="#075985"/>
+  <circle cx="270.8" cy="226.6" r="3.6" fill="#075985"/>
+  <circle cx="237.9" cy="237.8" r="3.6" fill="#075985"/>
+  <circle cx="331.0" cy="174.6" r="3.6" fill="#075985"/>
+  <circle cx="341.5" cy="182.9" r="3.6" fill="#075985"/>
+  <circle cx="359.9" cy="161.8" r="3.6" fill="#075985"/>
+  <circle cx="292.8" cy="188.6" r="3.6" fill="#075985"/>
+  <circle cx="280.7" cy="203.5" r="3.6" fill="#075985"/>
+  <circle cx="295.6" cy="214.0" r="3.6" fill="#075985"/>
+  <circle cx="239.2" cy="207.0" r="3.6" fill="#075985"/>
+  <circle cx="269.1" cy="176.4" r="3.6" fill="#075985"/>
+  <circle cx="380.1" cy="117.2" r="3.6" fill="#075985"/>
+  <circle cx="305.5" cy="183.7" r="3.6" fill="#075985"/>
+  <circle cx="373.0" cy="127.4" r="3.6" fill="#075985"/>
+  <circle cx="357.8" cy="154.9" r="3.6" fill="#075985"/>
+  <circle cx="309.6" cy="179.3" r="3.6" fill="#075985"/>
+  <circle cx="338.2" cy="158.0" r="3.6" fill="#075985"/>
+  <circle cx="319.1" cy="191.1" r="3.6" fill="#075985"/>
+  <circle cx="377.6" cy="118.4" r="3.6" fill="#075985"/>
+  <circle cx="386.3" cy="167.8" r="3.6" fill="#075985"/>
+  <circle cx="302.8" cy="198.3" r="3.6" fill="#075985"/>
+  <circle cx="311.9" cy="215.2" r="3.6" fill="#075985"/>
+  <circle cx="326.9" cy="178.2" r="3.6" fill="#075985"/>
+  <circle cx="309.7" cy="186.8" r="3.6" fill="#075985"/>
+  <circle cx="307.5" cy="177.1" r="3.6" fill="#075985"/>
+  <circle cx="389.4" cy="120.6" r="3.6" fill="#075985"/>
+  <circle cx="176.6" cy="253.1" r="3.6" fill="#075985"/>
+  <circle cx="316.5" cy="192.6" r="3.6" fill="#075985"/>
+  <circle cx="311.0" cy="187.0" r="3.6" fill="#075985"/>
+  <circle cx="339.2" cy="191.1" r="3.6" fill="#075985"/>
+  <circle cx="299.9" cy="188.8" r="3.6" fill="#075985"/>
+  <line x1="238.3" y1="224.9" x2="410.3" y2="140.9" stroke="#9f1239" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M410.3,140.9 L399.3,141.3 L403.2,149.3 Z" fill="#9f1239"/>
+  <line x1="303.2" y1="150.6" x2="340.2" y2="226.3" stroke="#065f46" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M340.2,226.3 L339.8,216.3 L332.5,219.9 Z" fill="#065f46"/>
+  <text x="421.5" y="141.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">PC1</text>
+  <text x="352.9" y="240.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">PC2</text>
+  <text x="320.0" y="326.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">PC1 captures the most spread; keep it, drop PC2 → 2-D becomes 1-D with little loss</text>
+</svg>
+<figcaption><b>PCA finds the axes of greatest variance.</b> PC1 points along the data's longest spread; PC2 is perpendicular and shorter. Keeping only PC1 (dropping PC2) projects this 2-D cloud onto a line, reducing the dimension while preserving most of the variation.</figcaption></figure>
+
+<p>To reduce dimensions, you keep the top few components and drop the rest — projecting the data onto them. Because the
+discarded directions had little variance (mostly noise), you lose little real information. How much you keep is the
+<span class="term">explained variance ratio</span>: the fraction of total variance each component captures. Plotting
+it (a <span class="term">scree plot</span>) tells you how many components you need — e.g., "10 components keep 95% of
+the variance," letting you replace 100 features with 10.</p>
+
+<h2><span class="sec-tag">Concept</span> t-SNE and UMAP: maps made for the eye</h2>
+
+<p>PCA is linear, so it can miss curved structure. <span class="term">t-SNE</span> and <span class="term">UMAP</span>
+are nonlinear methods designed for one job: produce a 2-D scatter where similar points sit together, so clusters pop
+out visually. They're wonderful for <em>seeing</em> structure in high-dimensional data (like embeddings from Track 5).</p>
+
+<figure class="diagram"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" width="640" height="330" role="img">
+  <rect x="0" y="0" width="640" height="330" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">t-SNE / UMAP: a 2-D map that groups similar points</text>
+  <circle cx="173.3" cy="162.3" r="4" fill="#10b981"/>
+  <circle cx="174.1" cy="142.4" r="4" fill="#10b981"/>
+  <circle cx="155.8" cy="144.9" r="4" fill="#10b981"/>
+  <circle cx="208.9" cy="160.2" r="4" fill="#10b981"/>
+  <circle cx="207.0" cy="156.0" r="4" fill="#10b981"/>
+  <circle cx="190.3" cy="154.4" r="4" fill="#10b981"/>
+  <circle cx="136.7" cy="170.5" r="4" fill="#10b981"/>
+  <circle cx="193.2" cy="162.0" r="4" fill="#10b981"/>
+  <circle cx="136.0" cy="108.1" r="4" fill="#10b981"/>
+  <circle cx="156.9" cy="138.8" r="4" fill="#10b981"/>
+  <circle cx="187.9" cy="148.9" r="4" fill="#10b981"/>
+  <circle cx="193.5" cy="134.6" r="4" fill="#10b981"/>
+  <circle cx="188.0" cy="159.5" r="4" fill="#10b981"/>
+  <circle cx="162.8" cy="191.2" r="4" fill="#10b981"/>
+  <circle cx="194.5" cy="178.7" r="4" fill="#10b981"/>
+  <circle cx="163.9" cy="132.3" r="4" fill="#10b981"/>
+  <circle cx="171.1" cy="147.4" r="4" fill="#10b981"/>
+  <circle cx="196.4" cy="156.0" r="4" fill="#10b981"/>
+  <circle cx="168.4" cy="127.0" r="4" fill="#10b981"/>
+  <circle cx="166.5" cy="179.3" r="4" fill="#10b981"/>
+  <circle cx="159.0" cy="155.9" r="4" fill="#10b981"/>
+  <circle cx="191.1" cy="114.2" r="4" fill="#10b981"/>
+  <circle cx="431.3" cy="151.3" r="4" fill="#38bdf8"/>
+  <circle cx="377.6" cy="112.3" r="4" fill="#38bdf8"/>
+  <circle cx="427.2" cy="100.4" r="4" fill="#38bdf8"/>
+  <circle cx="442.9" cy="118.5" r="4" fill="#38bdf8"/>
+  <circle cx="391.9" cy="139.9" r="4" fill="#38bdf8"/>
+  <circle cx="447.4" cy="142.7" r="4" fill="#38bdf8"/>
+  <circle cx="467.5" cy="128.7" r="4" fill="#38bdf8"/>
+  <circle cx="433.1" cy="88.8" r="4" fill="#38bdf8"/>
+  <circle cx="446.0" cy="105.3" r="4" fill="#38bdf8"/>
+  <circle cx="418.2" cy="89.6" r="4" fill="#38bdf8"/>
+  <circle cx="404.8" cy="107.3" r="4" fill="#38bdf8"/>
+  <circle cx="463.5" cy="71.2" r="4" fill="#38bdf8"/>
+  <circle cx="392.1" cy="125.7" r="4" fill="#38bdf8"/>
+  <circle cx="467.5" cy="133.9" r="4" fill="#38bdf8"/>
+  <circle cx="380.6" cy="59.6" r="4" fill="#38bdf8"/>
+  <circle cx="439.3" cy="102.3" r="4" fill="#38bdf8"/>
+  <circle cx="400.9" cy="143.5" r="4" fill="#38bdf8"/>
+  <circle cx="458.6" cy="123.8" r="4" fill="#38bdf8"/>
+  <circle cx="436.4" cy="130.4" r="4" fill="#38bdf8"/>
+  <circle cx="471.4" cy="134.9" r="4" fill="#38bdf8"/>
+  <circle cx="443.5" cy="133.1" r="4" fill="#38bdf8"/>
+  <circle cx="389.2" cy="150.8" r="4" fill="#38bdf8"/>
+  <circle cx="384.8" cy="262.7" r="4" fill="#f59e0b"/>
+  <circle cx="308.7" cy="234.8" r="4" fill="#f59e0b"/>
+  <circle cx="381.9" cy="206.5" r="4" fill="#f59e0b"/>
+  <circle cx="355.2" cy="274.5" r="4" fill="#f59e0b"/>
+  <circle cx="325.9" cy="288.6" r="4" fill="#f59e0b"/>
+  <circle cx="374.4" cy="246.4" r="4" fill="#f59e0b"/>
+  <circle cx="368.4" cy="265.6" r="4" fill="#f59e0b"/>
+  <circle cx="363.1" cy="277.5" r="4" fill="#f59e0b"/>
+  <circle cx="342.8" cy="240.0" r="4" fill="#f59e0b"/>
+  <circle cx="387.1" cy="250.6" r="4" fill="#f59e0b"/>
+  <circle cx="337.1" cy="272.7" r="4" fill="#f59e0b"/>
+  <circle cx="398.1" cy="239.3" r="4" fill="#f59e0b"/>
+  <circle cx="324.1" cy="246.8" r="4" fill="#f59e0b"/>
+  <circle cx="356.1" cy="242.8" r="4" fill="#f59e0b"/>
+  <circle cx="396.5" cy="225.4" r="4" fill="#f59e0b"/>
+  <circle cx="392.8" cy="219.6" r="4" fill="#f59e0b"/>
+  <circle cx="339.5" cy="265.2" r="4" fill="#f59e0b"/>
+  <circle cx="389.3" cy="270.6" r="4" fill="#f59e0b"/>
+  <circle cx="369.0" cy="253.4" r="4" fill="#f59e0b"/>
+  <circle cx="364.0" cy="263.8" r="4" fill="#f59e0b"/>
+  <circle cx="355.4" cy="256.7" r="4" fill="#f59e0b"/>
+  <circle cx="374.9" cy="250.0" r="4" fill="#f59e0b"/>
+  <text x="320.0" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">read which points group together — but cluster size and between-cluster distance aren't literal</text>
+</svg>
+<figcaption><b>t-SNE / UMAP embedding.</b> Similar high-dimensional points are placed near each other in 2-D, so groups become visible. Read which points cluster together — but don't over-interpret the size of clusters or the distance between them.</figcaption></figure>
+
+<p>The crucial caveat: these maps preserve <em>local</em> neighborhoods, not global geometry. So you may read
+<strong>which points group together</strong>, but cluster <em>sizes</em>, <em>between-cluster distances</em>, and
+densities are largely artifacts of the algorithm and its settings — not real. They're visualization tools, not inputs
+to a downstream model (use PCA for that).</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Compressing 30 features with PCA</div>
+<div class="bd">
+<p>The breast-cancer data has 30 features. We standardize them (PCA is variance-based, so scale matters — Lesson 2.5),
+run PCA, and ask how much of the total variation the top components capture.</p>
+
+<pre><code>from sklearn.datasets import load_breast_cancer
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+X, _ = load_breast_cancer(return_X_y=True)
+X_scaled = StandardScaler().fit_transform(X)
+
+pca = PCA().fit(X_scaled)
+evr = pca.explained_variance_ratio_
+print("variance explained by first 5 PCs:", evr[:5].round(3))
+print(f"cumulative — first 2 PCs: {evr[:2].sum():.3f}   first 10 PCs: {evr[:10].sum():.3f}")</code></pre>
+<div class="out"><span class="lbl">Output</span>variance explained by first 5 PCs: [0.443 0.19  0.094 0.066 0.055]
+cumulative — first 2 PCs: 0.632   first 10 PCs: 0.952</code></div>
+
+<p>The first component alone captures <strong>44.3%</strong> of all the variation across 30 features, and the second
+adds another 19% — so just <strong>two</strong> components hold <strong>63%</strong> of the information, enough to make
+a revealing 2-D scatter plot of all 30 features. Want to keep almost everything? <strong>Ten</strong> components retain
+<strong>95.2%</strong> — meaning you can replace 30 features with 10 and lose under 5% of the variance. That's a 3×
+compression with negligible loss, which speeds up downstream models and strips noise. The numbers also show the
+characteristic decay (44% → 19% → 9% → …): the first few directions carry most of the signal, the tail is mostly
+noise worth dropping.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Dimensionality reduction</strong> compresses many features into a few, for visualization, speed, and noise removal.</li>
+<li><strong>PCA</strong> rotates to the directions of greatest variance (principal components = covariance eigenvectors) and keeps the top few.</li>
+<li>The <strong>explained variance ratio</strong> tells you how many components to keep (e.g., "10 PCs = 95%").</li>
+<li><strong>t-SNE / UMAP</strong> make 2-D maps where similar points cluster — great for <em>seeing</em> structure.</li>
+<li>In t-SNE/UMAP, trust <em>which points group</em>, not cluster sizes or between-cluster distances; <strong>standardize</strong> before PCA.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What does the first principal component (PC1) represent?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The feature with the largest raw values</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The target label</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The direction along which the data varies the most</span></li>
+<li data-opt="d"><span class="mk">D</span><span>A randomly chosen axis</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">PC1 is a direction (a combination of features), not whichever feature has big numbers.</div>
+<div class="ex" data-for="b">PCA is unsupervised — it never sees a label.</div>
+<div class="ex" data-for="c">Correct. PC1 is the direction of maximum variance; PC2 is the next-most-variance direction perpendicular to it, and so on.</div>
+<div class="ex" data-for="d">Components are chosen to maximize variance, the opposite of random.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> The explained variance ratios are [0.44, 0.19, 0.09, …]. What does keeping the first two components achieve?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It keeps 44% of the variance</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It keeps about 63% of the variance in just 2 dimensions</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It discards all the information</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It doubles the number of features</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">44% is just PC1; you add PC2's 19% as well.</div>
+<div class="ex" data-for="b">Correct. 0.44 + 0.19 = 0.63 — two new axes preserve ~63% of all the variation, ideal for a 2-D plot.</div>
+<div class="ex" data-for="c">It keeps the majority of the variance, not none.</div>
+<div class="ex" data-for="d">Reduction <em>shrinks</em> dimensionality — here to 2 — it doesn't double it.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> In a t-SNE plot, two clusters appear far apart and one looks much bigger than the other. What can you safely conclude?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The far-apart clusters are very different, and the big one has more variance</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The big cluster has more data points, guaranteed</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The distance between them is a precise dissimilarity measure</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Mainly that points within each cluster are similar — sizes and gaps are not reliable</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Between-cluster distance in t-SNE isn't a faithful measure of how different clusters are.</div>
+<div class="ex" data-for="b">Cluster size in the plot is an artifact of the algorithm, not a point count.</div>
+<div class="ex" data-for="c">t-SNE distorts global distances by design; they're not precise.</div>
+<div class="ex" data-for="d">Correct. t-SNE/UMAP preserve local neighborhoods, so "these points group together" is trustworthy; sizes and gaps are largely artifacts.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> You want to reduce 100 features to 10 and then feed them into a classifier. Which method is appropriate?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>PCA — it produces reusable components you can apply to new data</span></li>
+<li data-opt="b"><span class="mk">B</span><span>t-SNE — it's the standard input for classifiers</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Neither can reduce features</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Clustering</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. PCA learns a fixed projection you can apply consistently to train and new data — suitable as a preprocessing step for a model.</div>
+<div class="ex" data-for="b">t-SNE is for visualization; it doesn't give a stable transform for new points and isn't meant as model input.</div>
+<div class="ex" data-for="c">Both reduce dimensions; PCA is the right one for downstream modeling.</div>
+<div class="ex" data-for="d">Clustering groups points; it doesn't produce reduced feature axes.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>In the worked example, 10 of 30 components captured 95.2% of the variance. Concretely, what are two benefits of using those 10 components instead of all 30 features?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p><strong>(1) Speed and size:</strong> downstream models train and predict faster with 10 inputs than 30, and the data
+takes less memory — a 3× reduction here. <strong>(2) Noise removal / less overfitting:</strong> the 20 dropped
+components held only ~4.8% of the variance, much of it noise; removing them can actually improve generalization by
+giving the model fewer spurious directions to latch onto.</p>
+<p>A third benefit is decorrelation: the principal components are uncorrelated with each other by construction, which
+helps models that struggle with correlated inputs (recall multicollinearity in Lesson 3.2). The cost is
+interpretability — each component is a blend of original features, so "PC3" doesn't have a simple real-world name.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>Why must you standardize features before PCA? What goes wrong if one feature is in dollars (range 0–1,000,000) and another is a ratio (range 0–1)?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>PCA finds directions of maximum <em>variance</em>, and variance depends on scale. The dollar feature, ranging over a
+million, has astronomically larger variance than the 0–1 ratio — so PC1 would point almost entirely along the dollar
+axis simply because its numbers are big, not because it's more informative. The ratio feature would be effectively
+invisible.</p>
+<p>Standardizing (each feature to mean 0, standard deviation 1) puts every feature on equal footing, so PCA discovers
+the directions of greatest <em>genuine</em> co-variation rather than the directions of biggest units. This is the same
+scale-fairness issue we saw with regularization (Lesson 3.6) and k-means (Lesson 3.10) — any variance- or
+distance-based method needs it.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>A colleague runs t-SNE, sees three clusters, and concludes "there are exactly three customer types, and type A is twice as common as type B because its blob is twice as big." Critique this.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The "three clusters" observation may be a useful hypothesis, but the size conclusion is <strong>wrong</strong>. t-SNE
+deliberately distorts cluster sizes and spacing to make local neighborhoods readable — a blob's area reflects how the
+algorithm spread those points out, <em>not</em> how many points it contains or how common the type is. You can't read
+counts off the picture.</p>
+<p>The fix: to claim "A is twice as common," count the actual points assigned to each group (e.g., cluster the data
+with k-means or check labels) rather than eyeballing blob area. Treat the t-SNE map as a qualitative guide for
+generating hypotheses ("there seem to be distinct groups — let me verify and quantify"), never as a source of
+quantitative facts about sizes or distances.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: PCA as eigen-decomposition, and when linear reduction fails<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>PCA is the direct payoff of Track 1's eigenvectors. You compute the data's <strong>covariance matrix</strong> (how
+each pair of features varies together), then find its <strong>eigenvectors</strong> — those are the principal
+components, and each eigenvector's <strong>eigenvalue</strong> is the variance captured along it. Sorting components by
+eigenvalue and keeping the largest is exactly "keep the directions of most variance." (In practice libraries use the
+singular value decomposition, SVD, which is numerically nicer but mathematically equivalent.) So the abstract
+"directions a transformation only stretches" from Lesson 1.5 turns out to be the engine of the most-used compression
+method in data science — a satisfying closing of the loop.</p>
+<p>PCA's limitation is that it's <strong>linear</strong>: it can only rotate and project, so it captures structure that
+lies along straight directions. If your data lives on a curved surface — points wrapped on a spiral or a Swiss-roll
+shape — PCA flattens it badly, because no straight projection untangles a curl. That's the gap nonlinear methods fill:
+t-SNE and UMAP (and "manifold learning" broadly) can follow curved structure. UMAP has largely overtaken t-SNE in
+practice because it's much faster, scales to millions of points, and preserves a bit more of the global structure —
+though the same "don't trust sizes and distances" caution still applies.</p>
+<p>One forward link: in modern ML you'll constantly reduce and visualize high-dimensional <strong>embeddings</strong> —
+the learned vector representations of words, images, or users (Tracks 5–7). PCA for a quick variance check and a
+preprocessing step, UMAP for a 2-D picture of whether your embeddings have learned meaningful structure, is a workflow
+you'll use for the rest of the course. Dimensionality reduction isn't just a classical-ML topic; it's how you keep
+your bearings in the high-dimensional spaces all of deep learning lives in.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">You now have a toolbox of models and ways to simplify data. The final
+skill ties it together: choosing and tuning honestly. Next, in <strong>3.12 Model selection &amp; cross-validation</strong>,
+we learn to compare models and pick hyperparameters without fooling ourselves.</p>
+</article>
+<nav class="pager"><a class="prev" href="cm10-clustering.html"><span class="dir">← Previous</span><span class="ti">Clustering &amp; unsupervised learning</span></a><a class="next" href="cm12-modelselection.html"><span class="dir">Next →</span><span class="ti">Model selection &amp; cross-validation</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

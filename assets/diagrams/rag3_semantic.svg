@@ -1,0 +1,26 @@
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" width="720" height="300" role="img">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Why embeddings beat keyword search: meaning, not words</text>
+  <text x="190.0" y="84.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">keyword search</text>
+  <rect x="50.0" y="120.0" width="120.0" height="40.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="110.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">query: "car"</text>
+  <rect x="220.0" y="102.0" width="140.0" height="36.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="290.0" y="123.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">doc: "automobile"</text>
+  <text x="290.0" y="160.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">NO match (different word)</text>
+  <line x1="360.0" y1="90.0" x2="360.0" y2="250.0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <text x="545.0" y="84.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">embedding search</text>
+  <rect x="405.0" y="120.0" width="110.0" height="40.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="460.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">query: "car"</text>
+  <rect x="580.0" y="102.0" width="120.0" height="36.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="640.0" y="123.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">"automobile"</text>
+  <rect x="405.0" y="120.0" width="110.0" height="40.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="460.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">query: "car"</text>
+  <rect x="580.0" y="102.0" width="120.0" height="36.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="640.0" y="123.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">"automobile"</text>
+  <line x1="515.0" y1="133.9" x2="580.0" y2="126.7" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M580.0,126.7 L570.5,123.6 L571.4,131.7 Z" fill="#475569"/>
+  <rect x="525.1" y="115.3" width="44.8" height="15.5" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="547.5" y="123.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" fill="#475569" text-anchor="middle" dominant-baseline="middle">close!</text>
+  <text x="545.0" y="170.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">vectors are near → MATCH</text>
+  <text x="360.0" y="278.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">embeddings capture synonyms and paraphrase, so semantic search finds relevant chunks keyword search misses</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" width="520" height="320" role="img">
+  <rect x="0" y="0" width="520" height="320" fill="#ffffff"/>
+  <text x="260.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Zoom in and any smooth curve looks linear</text>
+  <line x1="74.0" y1="255.0" x2="450.0" y2="255.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="90.0" y1="271.0" x2="90.0" y2="55.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M450.0,255.0 L442.7,251.7 L442.7,258.3 Z" fill="#94a3b8"/>
+  <path d="M90.0,55.0 L86.7,62.3 L93.3,62.3 Z" fill="#94a3b8"/>
+  <text x="453.0" y="270.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">x</text>
+  <text x="77.0" y="54.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">f(x)</text>
+  <path d="M116.0,176.8 L119.3,176.0 L122.6,175.2 L126.0,174.4 L129.3,173.5 L132.6,172.7 L135.9,171.8 L139.3,171.0 L142.6,170.1 L145.9,169.3 L149.2,168.4 L152.5,167.5 L155.9,166.6 L159.2,165.8 L162.5,164.9 L165.8,164.0 L169.2,163.1 L172.5,162.2 L175.8,161.2 L179.1,160.3 L182.4,159.4 L185.8,158.5 L189.1,157.5 L192.4,156.6 L195.7,155.6 L199.1,154.7 L202.4,153.7 L205.7,152.7 L209.0,151.8 L212.3,150.8 L215.7,149.8 L219.0,148.8 L222.3,147.8 L225.6,146.8 L229.0,145.8 L232.3,144.8 L235.6,143.8 L238.9,142.7 L242.2,141.7 L245.6,140.7 L248.9,139.6 L252.2,138.6 L255.5,137.5 L258.9,136.4 L262.2,135.4 L265.5,134.3 L268.8,133.2 L272.1,132.1 L275.5,131.0 L278.8,129.9 L282.1,128.8 L285.4,127.7 L288.8,126.6 L292.1,125.5 L295.4,124.4 L298.7,123.2 L302.0,122.1 L305.4,120.9 L308.7,119.8 L312.0,118.6 L315.3,117.5 L318.7,116.3 L322.0,115.1 L325.3,114.0 L328.6,112.8 L331.9,111.6 L335.3,110.4 L338.6,109.2 L341.9,108.0 L345.2,106.8 L348.6,105.5 L351.9,104.3 L355.2,103.1 L358.5,101.8 L361.8,100.6 L365.2,99.3 L368.5,98.1 L371.8,96.8 L375.1,95.6 L378.5,94.3 L381.8,93.0 L385.1,91.7 L388.4,90.4 L391.7,89.1 L395.1,87.8 L398.4,86.5 L401.7,85.2 L405.0,83.9 L408.4,82.5 L411.7,81.2 L415.0,79.9" fill="none" stroke="#6366f1" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="246.0" cy="140.5" r="4" fill="#1f2937"/>
+  <circle cx="350.0" cy="105.0" r="4" fill="#1f2937"/>
+  <line x1="246.0" y1="140.5" x2="350.0" y2="140.5" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+  <line x1="350.0" y1="140.5" x2="350.0" y2="105.0" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+  <text x="298.0" y="156.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Δx</text>
+  <text x="364.0" y="122.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="start" opacity="1.0" dominant-baseline="middle">Δy ≈ slope · Δx</text>
+</svg>

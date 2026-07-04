@@ -1,0 +1,39 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" width="720" height="360" role="img">
+  <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Scaled dot-product attention, step by step</text>
+  <rect x="58.0" y="68.0" width="64.0" height="44.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="90.0" y="95.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">Q</text>
+  <rect x="58.0" y="163.0" width="64.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="90.0" y="190.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">K</text>
+  <rect x="58.0" y="278.0" width="64.0" height="44.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="90.0" y="305.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">V</text>
+  <rect x="202.0" y="109.0" width="96.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="250.0" y="132.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Q·Kᵀ</text>
+  <text x="250.0" y="149.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">scores</text>
+  <rect x="346.0" y="109.0" width="88.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="390.0" y="132.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">÷ √dₖ</text>
+  <text x="390.0" y="149.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">scale</text>
+  <rect x="465.0" y="109.0" width="110.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="520.0" y="133.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">softmax</text>
+  <text x="520.0" y="149.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">→ weights</text>
+  <rect x="495.0" y="257.0" width="130.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="560.0" y="281.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">× V</text>
+  <text x="560.0" y="297.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">weighted sum</text>
+  <rect x="617.0" y="188.0" width="86.0" height="44.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="660.0" y="214.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">output</text>
+  <line x1="122.0" y1="99.4" x2="202.0" y2="122.9" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M202.0,122.9 L194.4,116.4 L192.1,124.2 Z" fill="#475569"/>
+  <line x1="122.0" y1="175.4" x2="202.0" y2="151.4" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M202.0,151.4 L192.1,150.1 L194.4,157.9 Z" fill="#475569"/>
+  <line x1="298.0" y1="137.0" x2="346.0" y2="137.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M346.0,137.0 L336.9,132.9 L336.9,141.1 Z" fill="#475569"/>
+  <line x1="434.0" y1="137.0" x2="465.0" y2="137.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M465.0,137.0 L455.9,132.9 L455.9,141.1 Z" fill="#475569"/>
+  <path d="M520.0,165.0 L560.0,257.0" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M560.0,257.0 L560.1,247.0 L552.6,250.2 Z" fill="#94a3b8"/>
+  <line x1="122.0" y1="299.0" x2="495.0" y2="287.1" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M495.0,287.1 L485.7,283.3 L486.0,291.4 Z" fill="#475569"/>
+  <path d="M625.0,285.0 L660.0,232.0" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M660.0,232.0 L651.6,237.4 L658.4,241.9 Z" fill="#94a3b8"/>
+  <text x="360.0" y="340.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Attention(Q,K,V) = softmax(Q·Kᵀ / √dₖ) · V   —   the one equation behind transformers</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg viewBox="0 0 720 290" xmlns="http://www.w3.org/2000/svg" width="720" height="290" role="img">
+  <rect x="0" y="0" width="720" height="290" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Generation = predict the next token, append, repeat</text>
+  <rect x="15.0" y="108.0" width="130.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="80.0" y="134.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"the"</text>
+  <rect x="175.0" y="108.0" width="130.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="240.0" y="134.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"the cat"</text>
+  <rect x="335.0" y="108.0" width="130.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="400.0" y="134.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"the cat sat"</text>
+  <rect x="495.0" y="108.0" width="130.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="560.0" y="134.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"the cat sat on"</text>
+  <line x1="145.0" y1="130.0" x2="175.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M175.0,130.0 L165.9,125.9 L165.9,134.1 Z" fill="#475569"/>
+  <rect x="130.6" y="114.6" width="58.7" height="16.3" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="160.0" y="123.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">+1 token</text>
+  <line x1="305.0" y1="130.0" x2="335.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M335.0,130.0 L325.9,125.9 L325.9,134.1 Z" fill="#475569"/>
+  <rect x="290.6" y="114.6" width="58.7" height="16.3" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="320.0" y="123.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">+1 token</text>
+  <line x1="465.0" y1="130.0" x2="495.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M495.0,130.0 L485.9,125.9 L485.9,134.1 Z" fill="#475569"/>
+  <rect x="450.6" y="114.6" width="58.7" height="16.3" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="480.0" y="123.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">+1 token</text>
+  <path d="M80.0,154.0 L80.0,174.0" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M240.0,154.0 L240.0,174.0" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M400.0,154.0 L400.0,174.0" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="360.0" y="235.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">each new token is fed back in as input — 'autoregressive' generation, one token at a time</text>
+  <text x="360.0" y="258.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.6" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">temperature / top-k / top-p (Track 6) decide how the next token is sampled from the distribution</text>
+</svg>

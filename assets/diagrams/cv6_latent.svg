@@ -1,0 +1,30 @@
+<svg viewBox="0 0 740 320" xmlns="http://www.w3.org/2000/svg" width="740" height="320" role="img">
+  <rect x="0" y="0" width="740" height="320" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Latent diffusion (Stable Diffusion): denoise in a compressed space</text>
+  <rect x="40.0" y="96.0" width="90.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="85.0" y="124.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">image</text>
+  <rect x="165.0" y="96.0" width="100.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="215.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">encoder</text>
+  <rect x="300.0" y="92.0" width="140.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="370.0" y="116.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">small latent</text>
+  <text x="370.0" y="131.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">(diffuse here)</text>
+  <rect x="485.0" y="96.0" width="100.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="535.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">decoder</text>
+  <rect x="620.0" y="96.0" width="90.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="665.0" y="124.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">image</text>
+  <line x1="130.0" y1="120.0" x2="165.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M165.0,120.0 L155.9,115.9 L155.9,124.1 Z" fill="#475569"/>
+  <line x1="265.0" y1="120.0" x2="300.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M300.0,120.0 L290.9,115.9 L290.9,124.1 Z" fill="#475569"/>
+  <line x1="440.0" y1="120.0" x2="485.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M485.0,120.0 L475.9,115.9 L475.9,124.1 Z" fill="#475569"/>
+  <line x1="585.0" y1="120.0" x2="620.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M620.0,120.0 L610.9,115.9 L610.9,124.1 Z" fill="#475569"/>
+  <rect x="285.0" y="212.0" width="170.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="370.0" y="238.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">"a cat astronaut"</text>
+  <path d="M370.0,212.0 L370.0,205.0 L370.0,205.0 L370.0,148.0" fill="none" stroke="#92400e" stroke-width="2.0" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M370.0,148.0 L365.9,157.1 L374.1,157.1 Z" fill="#92400e"/>
+  <rect x="408.8" y="187.2" width="118.5" height="17.1" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="468.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" fill="#92400e" text-anchor="middle" dominant-baseline="middle">text conditioning</text>
+  <text x="370.0" y="286.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Diffusing in a small latent (not full pixels) makes it fast; the text prompt steers denoising toward the words.</text>
+</svg>

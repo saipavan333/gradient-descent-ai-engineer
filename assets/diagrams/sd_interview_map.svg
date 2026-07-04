@@ -1,0 +1,31 @@
+<svg viewBox="0 0 770 285" xmlns="http://www.w3.org/2000/svg" width="770" height="285" role="img">
+  <rect x="0" y="0" width="770" height="285" fill="#ffffff"/>
+  <text x="385.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 10 in one line: design systems that meet real requirements</text>
+  <rect x="17.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="75.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Clarify</text>
+  <text x="75.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">needs</text>
+  <rect x="140.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="198.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Sketch</text>
+  <text x="198.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">design</text>
+  <rect x="263.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="321.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Data &amp;</text>
+  <text x="321.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">model</text>
+  <rect x="386.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="444.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Scale</text>
+  <rect x="509.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="567.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Cost</text>
+  <rect x="632.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="690.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">Trade-offs</text>
+  <line x1="133.0" y1="150.0" x2="140.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M140.0,150.0 L130.9,145.9 L130.9,154.1 Z" fill="#475569"/>
+  <line x1="256.0" y1="150.0" x2="263.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M263.0,150.0 L253.9,145.9 L253.9,154.1 Z" fill="#475569"/>
+  <line x1="379.0" y1="150.0" x2="386.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M386.0,150.0 L376.9,145.9 L376.9,154.1 Z" fill="#475569"/>
+  <line x1="502.0" y1="150.0" x2="509.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M509.0,150.0 L499.9,145.9 L499.9,154.1 Z" fill="#475569"/>
+  <line x1="625.0" y1="150.0" x2="632.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M632.0,150.0 L622.9,145.9 L622.9,154.1 Z" fill="#475569"/>
+  <text x="385.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Clarify requirements, sketch the architecture, then reason about scale, cost, and trade-offs —</text>
+  <text x="385.0" y="253.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">out loud. The reasoning is what's being evaluated, not a single 'right' design.</text>
+</svg>

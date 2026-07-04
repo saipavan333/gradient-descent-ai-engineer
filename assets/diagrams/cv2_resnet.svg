@@ -1,0 +1,28 @@
+<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" width="680" height="300" role="img">
+  <rect x="0" y="0" width="680" height="300" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">ResNet: skip connections let networks go very deep</text>
+  <rect x="25.0" y="126.0" width="90.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="70.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">input</text>
+  <rect x="185.0" y="126.0" width="90.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="230.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">conv</text>
+  <rect x="345.0" y="126.0" width="90.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="390.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">conv</text>
+  <rect x="493.0" y="126.0" width="54.0" height="48.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="520.0" y="155.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">+</text>
+  <rect x="580.0" y="126.0" width="80.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="620.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">out</text>
+  <line x1="115.0" y1="150.0" x2="185.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M185.0,150.0 L175.9,145.9 L175.9,154.1 Z" fill="#475569"/>
+  <line x1="275.0" y1="150.0" x2="345.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M345.0,150.0 L335.9,145.9 L335.9,154.1 Z" fill="#475569"/>
+  <line x1="435.0" y1="150.0" x2="493.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M493.0,150.0 L483.9,145.9 L483.9,154.1 Z" fill="#475569"/>
+  <line x1="547.0" y1="150.0" x2="580.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M580.0,150.0 L570.9,145.9 L570.9,154.1 Z" fill="#475569"/>
+  <path d="M70.0,126.0 L70.0,90.0 L520.0,90.0 L520.0,126.0" fill="none" stroke="#8b5cf6" stroke-width="2.0" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M520.0,126.0 L524.1,116.9 L515.9,116.9 Z" fill="#8b5cf6"/>
+  <rect x="245.0" y="74.8" width="110.0" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="300.0" y="84.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#8b5cf6" text-anchor="middle" dominant-baseline="middle">skip (identity)</text>
+  <text x="345.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The block learns a small change added to its input; the skip gives gradients a clear path back —</text>
+  <text x="345.0" y="270.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">so hundreds of layers train. Transformers use the same trick.</text>
+</svg>

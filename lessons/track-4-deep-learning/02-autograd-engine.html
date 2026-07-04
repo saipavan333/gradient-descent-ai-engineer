@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-root="../../" data-lesson="t4-l02">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build an autograd engine · AI/ML Mastery</title>
+  <link rel="stylesheet" href="../../assets/vendor/katex/katex.min.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <aside id="sidebar"></aside>
+  <main>
+    <article class="lesson">
+      <h1>Build an autograd engine</h1>
+      <p class="subtitle">This is the lesson the whole curriculum has been building toward. In about sixty lines of Python you’ll write a real automatic-differentiation engine — the same machinery, in miniature, that powers PyTorch and every model trained today. Once you’ve built it, deep learning stops being magic.</p>
+      <div class="meta-row">
+        <span class="chip b">Track 4 · Lesson 2</span>
+        <span class="chip">From-scratch implementation</span>
+        <span class="chip">~32 min</span>
+        <span class="chip">Builds on: Lessons 4.0–4.1</span>
+      </div>
+
+      <p class="lead prose">
+        Last lesson we ran backprop by hand. That doesn’t scale — a real network has millions of operations. So we’ll automate it: build a <code>Value</code> object that wraps a number, <em>records how it was
+        computed</em> as we go, and knows how to run the backward pass over the whole graph by itself. This is <span class="newterm">automatic differentiation</span> (autograd).
+      </p>
+
+      <!-- DESIGN -->
+      <h2><span class="sec-ico">💡</span> Concept: a value that remembers</h2>
+      <p class="prose">
+        The key idea: instead of computing with bare numbers (which forget their history), we compute with objects that remember. Each <code>Value</code> stores four things: its <strong>data</strong> (the number), its
+        <strong>grad</strong> (the gradient of the final loss with respect to it, initially 0), the set of <strong>children</strong> that produced it, and a little function <strong>_backward</strong> that knows how to push gradient to those children.
+        As you do arithmetic, each operation builds a new <code>Value</code> and wires up its <code>_backward</code> — so the computational graph assembles itself automatically.
+      </p>
+      <figure class="diagram">
+        <img src="data:image/png;base64,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" alt="The computational graph for d = a*b + c with each node showing data and grad, and red arrows showing gradients propagating backward — the engine automates exactly this." />
+        <figcaption><span class="fig-num">Figure 2.1.</span> The engine automates exactly the backward pass we did by hand in Lesson&nbsp;1. Every <code>Value</code> node carries its <code>data</code> and <code>grad</code>; calling <code>.backward()</code> on the output floods these red gradients through the whole graph in one sweep.</figcaption>
+      </figure>
+
+      <!-- BUILD -->
+      <h2><span class="sec-ico">🛠️</span> Building it, piece by piece</h2>
+      <p class="prose">Start with the object and one operation. The pattern for <em>every</em> operation is identical: compute the output value, then define a <code>_backward</code> closure encoding that operation’s local derivative (Lesson&nbsp;1).</p>
+      <div class="code-h"><span class="dot"></span> code/track-4/autograd.py — the core</div>
+      <pre><code>import math
+
+class Value:
+    def __init__(self, data, _children=()):
+        self.data = data
+        self.grad = 0.0                 # gradient of the loss w.r.t. this value
+        self._backward = lambda: None   # how to push grad to children
+        self._prev = set(_children)     # the Values that produced this one
+
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other)
+        out = Value(self.data + other.data, (self, other))
+        def _backward():                # add distributes the gradient
+            self.grad  += out.grad
+            other.grad += out.grad
+        out._backward = _backward
+        return out
+
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other)
+        out = Value(self.data * other.data, (self, other))
+        def _backward():                # multiply scales by the OTHER input
+            self.grad  += other.data * out.grad
+            other.grad += self.data  * out.grad
+        out._backward = _backward
+        return out
+
+    def tanh(self):
+        t = math.tanh(self.data)
+        out = Value(t, (self,))
+        def _backward():                # d/dx tanh = 1 - tanh^2
+            self.grad += (1 - t*t) * out.grad
+        out._backward = _backward
+        return out</code></pre>
+      <p class="prose">
+        Notice three things that are <em>exactly</em> Lesson&nbsp;1 in code. Each operation knows its <strong>local derivative</strong> (add → 1; multiply → the other value; tanh → \(1-\tanh^2\)). Each uses <code>+=</code> so gradients
+        <strong>accumulate</strong> at shared nodes. And each closure captures the incoming gradient via <code>out.grad</code>, multiplying it by the local derivative — the chain rule, automated.
+      </p>
+      <h3>The backward pass: topological order</h3>
+      <p class="prose">
+        Now the engine’s heart. To backprop, we must process nodes in the right order: a node’s gradient can only be pushed to its children <em>after</em> its own gradient is fully accumulated from everything above it. That ordering is a
+        <strong>topological sort</strong> of the graph (children before parents); we reverse it to go output → inputs.
+      </p>
+      <div class="code-h"><span class="dot"></span> the backward sweep</div>
+      <pre><code>    def backward(self):
+        topo, visited = [], set()
+        def build(v):                   # depth-first topological sort
+            if v not in visited:
+                visited.add(v)
+                for child in v._prev:
+                    build(child)
+                topo.append(v)          # children get added before parents
+        build(self)
+        self.grad = 1.0                 # seed: d(output)/d(output) = 1
+        for v in reversed(topo):        # outputs -> inputs
+            v._backward()               # apply each local rule in order</code></pre>
+      <p class="prose">
+        That’s the entire algorithm. Build the graph by computing, then call <code>.backward()</code> on the final loss to fill in every <code>.grad</code>. With a few more one-line operations (<code>**</code>, <code>relu</code>, <code>exp</code>, and the
+        reverse/negate helpers that let <code>Value</code>s mix with plain numbers), you have a complete engine — see the full <code>code/track-4/autograd.py</code>.
+      </p>
+
+      <!-- VERIFY -->
+      <h2><span class="sec-ico">🎯</span> Proving it works</h2>
+      <p class="prose">The acid test: do the engine’s gradients match finite differences (Track&nbsp;2)? And does it handle a real neuron?</p>
+      <div class="code-h out"><span class="dot"></span> running autograd.py</div>
+      <pre data-nohl><code>a = Value(2.0); b = Value(-3.0); c = Value(10.0)
+d = a*b + c
+d.backward()
+print(a.grad, b.grad, c.grad)     # -3.0  2.0  1.0   (matches Lesson 1 by hand!)
+
+# finite-difference check on a:  both give -3.0  ✓
+
+# a full tanh neuron, differentiated automatically:
+x1, x2 = Value(2.0), Value(0.0)
+w1, w2 = Value(-3.0), Value(1.0)
+n = x1*w1 + x2*w2 + Value(6.881373587)
+o = n.tanh(); o.backward()
+print(round(o.data,4), round(x1.grad,4))   # 0.7071  -1.5</code></pre>
+      <div class="callout keyresult">
+        <div class="co-h">🔑 You just built PyTorch (the important part)</div>
+        <p style="margin:0">This <code>Value</code> class <em>is</em> autograd. PyTorch’s real engine differs only in engineering, not in concept: it operates on whole tensors (arrays) at once instead of single scalars, runs on GPUs, and has hundreds of operations — but every one still records a local backward rule, and <code>loss.backward()</code> still does a reverse topological sweep accumulating gradients. When you later write <code>loss.backward()</code> in PyTorch, you will know <em>exactly</em> what those two words do, because you wrote them yourself.</p>
+      </div>
+
+      <!-- KEY RESULTS -->
+      <h2><span class="sec-ico">🔑</span> Key results to remember</h2>
+      <div class="keybox">
+        <h3>Lock these in</h3>
+        <ol>
+          <li>A <code>Value</code> stores <strong>data</strong>, <strong>grad</strong>, its <strong>children</strong>, and a <strong>_backward</strong> closure — the graph builds itself as you compute.</li>
+          <li>Every operation defines its output and a local backward rule (add → pass through; multiply → scale by the other; tanh → \(1-\tanh^2\)), using <code>grad +=</code> to accumulate.</li>
+          <li><strong>backward()</strong> = topological sort (children before parents), seed output grad = 1, then call each <code>_backward</code> in reverse.</li>
+          <li>The gradients match finite differences — the engine is provably correct.</li>
+          <li>This is PyTorch’s autograd in miniature; the real one adds tensors, GPUs, and scale, not new ideas.</li>
+        </ol>
+      </div>
+
+      <!-- QUIZ -->
+      <h2><span class="sec-ico">🧩</span> Quiz</h2>
+      <div class="quiz">
+        <div class="quiz-title">🧩 Check your understanding</div>
+        <div class="quiz-sub">Answer from memory, then read why.</div>
+
+        <div class="quiz-q" data-correct="3">
+          <p class="quiz-stem"><span class="qn">Q1.</span> Why does each operation use <code>self.grad += ...</code> rather than <code>self.grad = ...</code>?</p>
+          <ul class="quiz-options">
+            <li>To make the code shorter.<div class="quiz-why">It’s not about brevity — using <code>=</code> would be just as short but <em>wrong</em>.</div></li>
+            <li>To avoid floating-point errors.<div class="quiz-why">Accumulation isn’t a numerical-stability trick; it’s about correctness when a value has multiple consumers.</div></li>
+            <li>Because gradients are always positive.<div class="quiz-why">Gradients can be negative (we saw \(-3\)). The reason for <code>+=</code> is unrelated to sign.</div></li>
+            <li>A value used in several places receives gradient from each path; they must be summed.<div class="quiz-why">Correct. The multivariable chain rule sums contributions from every path a value feeds into. Overwriting with <code>=</code> would keep only the last path and corrupt the gradient.</div></li>
+          </ul>
+        </div>
+
+        <div class="quiz-q" data-correct="1">
+          <p class="quiz-stem"><span class="qn">Q2.</span> Why must <code>backward()</code> process nodes in (reverse) topological order?</p>
+          <ul class="quiz-options">
+            <li>To save memory.<div class="quiz-why">Ordering is about correctness, not memory. Any order uses similar memory.</div></li>
+            <li>A node’s gradient must be fully accumulated before it’s pushed to its children.<div class="quiz-why">Correct. If you propagated a node’s gradient before all its parents had contributed, the children would get an incomplete (wrong) gradient. Topological order guarantees parents finish first.</div></li>
+            <li>So the forward values are computed correctly.<div class="quiz-why">Forward values are already computed before <code>backward()</code> runs; ordering here is purely about the gradient sweep.</div></li>
+            <li>Python requires it.<div class="quiz-why">Python imposes no such requirement; it’s a mathematical necessity of the chain rule over a graph.</div></li>
+          </ul>
+        </div>
+
+        <div class="quiz-q" data-correct="0">
+          <p class="quiz-stem"><span class="qn">Q3.</span> What value do we seed at the output before the backward sweep?</p>
+          <ul class="quiz-options">
+            <li>1, since \(\partial L/\partial L = 1\).<div class="quiz-why">Correct. The gradient of the loss with respect to itself is 1; this seed is what the rest of the gradients chain off of.</div></li>
+            <li>0, so nothing has gradient yet.<div class="quiz-why">Seeding 0 would make every gradient stay 0 — the chain rule would multiply everything by zero. The output must start at 1.</div></li>
+            <li>The value of the loss.<div class="quiz-why">We seed the <em>gradient</em>, not the data. \(\partial L/\partial L = 1\) regardless of the loss’s numeric value.</div></li>
+            <li>The learning rate.<div class="quiz-why">The learning rate belongs to the optimizer step, not the backward pass. The seed is the output’s self-gradient, 1.</div></li>
+          </ul>
+        </div>
+
+        <div class="quiz-q" data-correct="2">
+          <p class="quiz-stem"><span class="qn">Q4.</span> How does this scalar engine relate to PyTorch’s autograd?</p>
+          <ul class="quiz-options">
+            <li>They’re completely different algorithms.<div class="quiz-why">They’re the same algorithm — reverse-mode autodiff with per-operation local rules and a topological backward sweep.</div></li>
+            <li>PyTorch doesn’t use backpropagation.<div class="quiz-why">PyTorch is built entirely on backpropagation; <code>loss.backward()</code> is exactly this sweep.</div></li>
+            <li>Same core idea; PyTorch adds tensors, GPUs, and many operations.<div class="quiz-why">Correct. The concept is identical — record local backward rules, sweep in reverse topological order — PyTorch just operates on whole arrays, on GPUs, at scale.</div></li>
+            <li>PyTorch computes gradients with finite differences.<div class="quiz-why">No — finite differences are too slow at scale. PyTorch uses autograd (this very mechanism), which is why it’s fast.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PRACTICE -->
+      <h2><span class="sec-ico">✍️</span> Practice</h2>
+      <div class="practice">
+        <div class="problem">
+          <div class="p-tag code">Problem 1 · extend the engine</div>
+          <p class="problem-stem">Add a <code>.sigmoid()</code> method to the <code>Value</code> class. (Recall \(\sigma(x)=1/(1+e^{-x})\) and \(\sigma'(x)=\sigma(x)(1-\sigma(x))\).) Gradient-check it against finite differences.</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="sol-body">
+              <pre><code>def sigmoid(self):
+    s = 1 / (1 + math.exp(-self.data))
+    out = Value(s, (self,))
+    def _backward():
+        self.grad += s * (1 - s) * out.grad   # local derivative
+    out._backward = _backward
+    return out
+
+x = Value(0.5); y = x.sigmoid(); y.backward()
+print(x.grad)                                  # sigma'(0.5) ~ 0.2350
+# finite diff: ((sig(0.5+h)-sig(0.5-h))/(2h)) ~ 0.2350  ✓</code></pre>
+              <p>The pattern is mechanical: compute the output, then write <code>self.grad += (local derivative) * out.grad</code>. Once you internalize this template, you can add <em>any</em> differentiable operation to the engine in three lines — which is exactly how PyTorch’s op library grew.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="problem">
+          <div class="p-tag code">Problem 2 · use the engine</div>
+          <p class="problem-stem">Use the <code>Value</code> engine to compute the gradient of \(L = a^2 + 3b\) at \(a=4, b=2\). What should \(\partial L/\partial a\) and \(\partial L/\partial b\) be?</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="sol-body">
+              <pre><code>a = Value(4.0); b = Value(2.0)
+L = a**2 + 3*b
+L.backward()
+print(a.grad, b.grad)        # 8.0  3.0</code></pre>
+              <p>Analytically \(\partial L/\partial a = 2a = 8\) and \(\partial L/\partial b = 3\), matching the engine. (This needs the <code>__pow__</code> and <code>__rmul__</code> helpers from the full file, so <code>a**2</code> and <code>3*b</code> work.) You’re now differentiating expressions you never wrote a derivative for by hand — the engine does it.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="problem">
+          <div class="p-tag">Problem 3 · reasoning</div>
+          <p class="problem-stem">If you call <code>.backward()</code> twice on the same graph without resetting gradients, what happens, and why?</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="sol-body">
+              <p>The gradients <strong>double</strong> (more precisely, accumulate again). Because every <code>_backward</code> uses <code>+=</code>, a second backward pass adds a second copy of every gradient on top of the first. This is the same reason PyTorch makes you call <code>optimizer.zero_grad()</code> (or <code>model.zero_grad()</code>) before each backward pass — to clear the accumulators. Forgetting to zero gradients is one of the most common real-world training bugs, and now you understand precisely why it happens: the <code>+=</code> that makes shared-node accumulation correct also means gradients persist until you reset them.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="problem">
+          <div class="p-tag">Problem 4 · synthesis</div>
+          <p class="problem-stem">Explain how this lesson unites Track 1, Track 2, and Lesson 4.1 into one working system.</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="sol-body">
+              <p>The engine is the confluence of everything so far. The <em>forward</em> computations are dot products and sums (<strong>Track&nbsp;1</strong> linear algebra). The <em>local backward rules</em> are derivatives — the power rule, the chain rule, \(\frac{d}{dx}\tanh\) (<strong>Track&nbsp;2</strong> calculus). The <em>backward sweep</em> is the chain rule applied over a graph (<strong>Lesson&nbsp;4.1</strong>). And the <em>purpose</em> is to feed gradients to gradient descent so the model can minimize its loss, which is maximum likelihood (<strong>Track&nbsp;1</strong> again). In ~60 lines, the entire mathematical arc of the curriculum becomes a runnable machine that can train any differentiable model. That is why this lesson is the pivot of the whole journey: from here on, building bigger models (MLPs next lesson, transformers in Track&nbsp;5) is mostly about <em>what graph to build</em> — the engine differentiates it for free.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- DEEP DIVE -->
+      <div class="deepdive">
+        <h3>🔬 Deep dive &amp; primary sources</h3>
+        <ul class="refs">
+          <li><span class="src-type">code</span> Karpathy, <em>micrograd</em> — the ~150-line autograd engine this lesson is modeled on. <a href="https://github.com/karpathy/micrograd" target="_blank" rel="noopener">github.com/karpathy/micrograd</a></li>
+          <li><span class="src-type">paper</span> Baydin et al. (2018), “Automatic Differentiation in Machine Learning: a Survey” — the definitive overview. <a href="https://arxiv.org/abs/1502.05767" target="_blank" rel="noopener">arXiv:1502.05767</a></li>
+          <li><span class="src-type">docs</span> PyTorch, “Autograd mechanics” — how the real engine tracks the graph. <a href="https://pytorch.org/docs/stable/notes/autograd.html" target="_blank" rel="noopener">pytorch.org/docs</a></li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <script src="../../assets/vendor/katex/katex.min.js"></script>
+  <script src="../../assets/vendor/katex/auto-render.min.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

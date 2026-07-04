@@ -1,0 +1,18 @@
+<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" width="680" height="300" role="img">
+  <rect x="0" y="0" width="680" height="300" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Evaluation is hard: the metric is only a proxy for the goal</text>
+  <rect x="65.0" y="113.0" width="210.0" height="74.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="170.0" y="145.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">What you measure</text>
+  <text x="170.0" y="163.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">accuracy, clicks, loss</text>
+  <rect x="395.0" y="113.0" width="210.0" height="74.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="500.0" y="145.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">What you want</text>
+  <text x="500.0" y="163.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">useful, safe, fair</text>
+  <line x1="275.0" y1="150.0" x2="395.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M395.0,150.0 L385.9,145.9 L385.9,154.1 Z" fill="#475569"/>
+  <path d="M275.0,150.0 L284.1,154.1 L284.1,145.9 Z" fill="#475569"/>
+  <rect x="305.6" y="133.4" width="58.7" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="335.0" y="143.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#475569" text-anchor="middle" dominant-baseline="middle">the gap</text>
+  <text x="335.0" y="214.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">proxy</text>
+  <text x="340.0" y="258.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Goodhart's law: when a measure becomes the target, it stops being a good measure.</text>
+  <text x="340.0" y="278.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Systems fail in the gap between what you optimized and what you actually wanted.</text>
+</svg>

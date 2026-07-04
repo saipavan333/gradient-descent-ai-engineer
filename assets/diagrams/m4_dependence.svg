@@ -1,0 +1,28 @@
+<svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" width="720" height="330" role="img">
+  <rect x="0" y="0" width="720" height="330" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Independent vs. dependent vectors</text>
+  <line x1="50.0" y1="210.0" x2="320.0" y2="210.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="120.0" y1="226.0" x2="120.0" y2="60.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M320.0,210.0 L312.7,206.7 L312.7,213.3 Z" fill="#94a3b8"/>
+  <path d="M120.0,60.0 L116.7,67.3 L123.3,67.3 Z" fill="#94a3b8"/>
+  <line x1="120.0" y1="210.0" x2="230.0" y2="155.0" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M230.0,155.0 L219.0,155.5 L223.0,163.5 Z" fill="#10b981"/>
+  <line x1="120.0" y1="210.0" x2="270.0" y2="135.0" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+  <path d="M270.0,135.0 L258.0,135.5 L262.4,144.3 Z" fill="#fb7185"/>
+  <text x="180.0" y="192.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a</text>
+  <text x="240.0" y="132.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#9f1239" text-anchor="start" opacity="1.0" dominant-baseline="middle">b = 2a</text>
+  <text x="140.0" y="272.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#fb7185" text-anchor="middle" opacity="1.0" dominant-baseline="middle">DEPENDENT</text>
+  <text x="140.0" y="290.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">b adds nothing new (same line)</text>
+  <line x1="400.0" y1="210.0" x2="650.0" y2="210.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="470.0" y1="226.0" x2="470.0" y2="60.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M650.0,210.0 L642.7,206.7 L642.7,213.3 Z" fill="#94a3b8"/>
+  <path d="M470.0,60.0 L466.7,67.3 L473.3,67.3 Z" fill="#94a3b8"/>
+  <line x1="470.0" y1="210.0" x2="590.0" y2="170.0" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M590.0,170.0 L579.1,168.9 L581.9,177.4 Z" fill="#10b981"/>
+  <line x1="470.0" y1="210.0" x2="510.0" y2="100.0" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M510.0,100.0 L502.4,107.9 L510.8,111.0 Z" fill="#38bdf8"/>
+  <text x="596.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#065f46" text-anchor="start" opacity="1.0" dominant-baseline="middle">a</text>
+  <text x="516.0" y="96.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#075985" text-anchor="start" opacity="1.0" dominant-baseline="middle">b</text>
+  <text x="480.0" y="272.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#10b981" text-anchor="middle" opacity="1.0" dominant-baseline="middle">INDEPENDENT</text>
+  <text x="480.0" y="290.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">different directions → span a plane</text>
+</svg>

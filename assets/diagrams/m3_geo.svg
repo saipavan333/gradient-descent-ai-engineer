@@ -1,0 +1,17 @@
+<svg viewBox="0 0 540 360" xmlns="http://www.w3.org/2000/svg" width="540" height="360" role="img">
+  <rect x="0" y="0" width="540" height="360" fill="#ffffff"/>
+  <text x="270.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Geometrically, the dot product measures alignment</text>
+  <line x1="94.0" y1="300.0" x2="470.0" y2="300.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="110.0" y1="316.0" x2="110.0" y2="50.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M470.0,300.0 L462.7,296.7 L462.7,303.3 Z" fill="#94a3b8"/>
+  <path d="M110.0,50.0 L106.7,57.3 L113.3,57.3 Z" fill="#94a3b8"/>
+  <line x1="110.0" y1="300.0" x2="321.2" y2="247.2" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M321.2,247.2 L310.4,245.3 L312.5,254.0 Z" fill="#10b981"/>
+  <line x1="110.0" y1="300.0" x2="202.4" y2="128.4" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M202.4,128.4 L193.7,135.1 L201.6,139.4 Z" fill="#38bdf8"/>
+  <text x="327.2" y="251.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#065f46" text-anchor="start" opacity="1.0" dominant-baseline="middle">a</text>
+  <text x="204.4" y="116.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#075985" text-anchor="start" opacity="1.0" dominant-baseline="middle">b</text>
+  <path d="M150.7,289.8 A42,42 0 0 1 129.9,263.0" fill="none" stroke="#64748b" stroke-width="1.6"/>
+  <text x="166.0" y="266.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">θ</text>
+  <text x="270.0" y="332.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a · b = ‖a‖ ‖b‖ cos θ</text>
+</svg>

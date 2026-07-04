@@ -1,0 +1,41 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" width="720" height="360" role="img">
+  <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Bagging (Random Forest): many trees on resampled data, then vote</text>
+  <rect x="55.0" y="148.0" width="110.0" height="64.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="110.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">training</text>
+  <text x="110.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">data</text>
+  <rect x="250.0" y="70.0" width="120.0" height="40.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="310.0" y="94.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">sample 1</text>
+  <rect x="250.0" y="160.0" width="120.0" height="40.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="310.0" y="184.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">sample 2</text>
+  <rect x="250.0" y="250.0" width="120.0" height="40.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="310.0" y="274.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">sample 3</text>
+  <rect x="422.0" y="70.0" width="96.0" height="40.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="470.0" y="94.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">tree 1</text>
+  <rect x="422.0" y="160.0" width="96.0" height="40.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="470.0" y="184.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">tree 2</text>
+  <rect x="422.0" y="250.0" width="96.0" height="40.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="470.0" y="274.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">tree 3</text>
+  <rect x="578.0" y="148.0" width="104.0" height="64.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="630.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">average</text>
+  <text x="630.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">/ vote</text>
+  <line x1="165.0" y1="155.2" x2="265.6" y2="110.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M265.6,110.0 L255.6,110.0 L258.9,117.5 Z" fill="#94a3b8"/>
+  <line x1="165.0" y1="180.0" x2="250.0" y2="180.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M250.0,180.0 L240.9,175.9 L240.9,184.1 Z" fill="#94a3b8"/>
+  <line x1="165.0" y1="204.8" x2="265.6" y2="250.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M265.6,250.0 L258.9,242.5 L255.6,250.0 Z" fill="#94a3b8"/>
+  <line x1="370.0" y1="90.0" x2="422.0" y2="90.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M422.0,90.0 L412.9,85.9 L412.9,94.1 Z" fill="#94a3b8"/>
+  <line x1="370.0" y1="180.0" x2="422.0" y2="180.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M422.0,180.0 L412.9,175.9 L412.9,184.1 Z" fill="#94a3b8"/>
+  <line x1="370.0" y1="270.0" x2="422.0" y2="270.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M422.0,270.0 L412.9,265.9 L412.9,274.1 Z" fill="#94a3b8"/>
+  <line x1="505.6" y1="110.0" x2="578.0" y2="150.8" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M578.0,150.8 L572.0,142.7 L568.0,149.8 Z" fill="#94a3b8"/>
+  <line x1="518.0" y1="180.0" x2="578.0" y2="180.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M578.0,180.0 L568.9,175.9 L568.9,184.1 Z" fill="#94a3b8"/>
+  <line x1="505.6" y1="250.0" x2="578.0" y2="209.2" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M578.0,209.2 L568.0,210.2 L572.0,217.3 Z" fill="#94a3b8"/>
+  <text x="360.0" y="332.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">each tree sees a random resample → their errors cancel → variance drops</text>
+</svg>

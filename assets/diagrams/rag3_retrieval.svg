@@ -1,0 +1,23 @@
+<svg viewBox="0 0 700 360" xmlns="http://www.w3.org/2000/svg" width="700" height="360" role="img">
+  <rect x="0" y="0" width="700" height="360" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Retrieval = nearest neighbors in embedding space</text>
+  <line x1="90.0" y1="300.0" x2="560.0" y2="300.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="90.0" y1="300.0" x2="90.0" y2="50.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="168.0" cy="94.2" r="5" fill="#075985"/>
+  <text x="176.0" y="86.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">doc A</text>
+  <circle cx="282.4" cy="90.0" r="5" fill="#075985"/>
+  <text x="290.4" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">doc B</text>
+  <circle cx="485.2" cy="232.8" r="5" fill="#075985"/>
+  <text x="493.2" y="224.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">doc C</text>
+  <circle cx="448.8" cy="81.6" r="5" fill="#075985"/>
+  <text x="456.8" y="73.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">doc D</text>
+  <circle cx="230.4" cy="216.0" r="5" fill="#075985"/>
+  <text x="238.4" y="208.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">doc E</text>
+  <path d="M220.0,137.6 l4,11 l-9,-7 l11,0 l-9,7 z" fill="#fb7185"/>
+  <text x="220.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">query</text>
+  <line x1="220.0" y1="144.6" x2="168.0" y2="94.2" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <circle cx="168.0" cy="94.2" r="11.0" fill="none" stroke="#9f1239" stroke-width="2"/>
+  <line x1="220.0" y1="144.6" x2="282.4" y2="90.0" stroke="#fb7185" stroke-width="1.6" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <circle cx="282.4" cy="90.0" r="11.0" fill="none" stroke="#9f1239" stroke-width="2"/>
+  <text x="330.0" y="344.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.6" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">embed the query and the chunks; return the chunks whose vectors are closest (cosine) — A and B here</text>
+</svg>

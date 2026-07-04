@@ -1,0 +1,32 @@
+<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" width="680" height="300" role="img">
+  <rect x="0" y="0" width="680" height="300" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Initialization sets gradient scale across layers</text>
+  <rect x="30.0" y="102.0" width="22.0" height="108.0" rx="2" fill="#eef2ff" stroke="#fb7185" stroke-width="1.6" opacity="1.0"/>
+  <rect x="60.0" y="150.0" width="22.0" height="60.0" rx="2" fill="#eef2ff" stroke="#fb7185" stroke-width="1.6" opacity="1.0"/>
+  <rect x="90.0" y="178.8" width="22.0" height="31.2" rx="2" fill="#eef2ff" stroke="#fb7185" stroke-width="1.6" opacity="1.0"/>
+  <rect x="120.0" y="195.6" width="22.0" height="14.4" rx="2" fill="#eef2ff" stroke="#fb7185" stroke-width="1.6" opacity="1.0"/>
+  <rect x="150.0" y="204.0" width="22.0" height="6.0" rx="2" fill="#eef2ff" stroke="#fb7185" stroke-width="1.6" opacity="1.0"/>
+  <line x1="24.0" y1="210.0" x2="180.0" y2="210.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="102.0" y="88.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">vanishing</text>
+  <text x="102.0" y="230.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">layer 1 → deep</text>
+  <text x="102.0" y="246.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.6" font-weight="400" fill="#fb7185" text-anchor="middle" opacity="1.0" dominant-baseline="middle">gradients shrink → early layers stuck</text>
+  <rect x="250.0" y="126.0" width="22.0" height="84.0" rx="2" fill="#eef2ff" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <rect x="280.0" y="130.8" width="22.0" height="79.2" rx="2" fill="#eef2ff" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <rect x="310.0" y="135.6" width="22.0" height="74.4" rx="2" fill="#eef2ff" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <rect x="340.0" y="138.0" width="22.0" height="72.0" rx="2" fill="#eef2ff" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <rect x="370.0" y="140.4" width="22.0" height="69.6" rx="2" fill="#eef2ff" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <line x1="244.0" y1="210.0" x2="400.0" y2="210.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="322.0" y="88.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">healthy</text>
+  <text x="322.0" y="230.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">layer 1 → deep</text>
+  <text x="322.0" y="246.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.6" font-weight="400" fill="#10b981" text-anchor="middle" opacity="1.0" dominant-baseline="middle">stable scale → all layers learn</text>
+  <rect x="470.0" y="198.0" width="22.0" height="12.0" rx="2" fill="#eef2ff" stroke="#f59e0b" stroke-width="1.6" opacity="1.0"/>
+  <rect x="500.0" y="183.6" width="22.0" height="26.4" rx="2" fill="#eef2ff" stroke="#f59e0b" stroke-width="1.6" opacity="1.0"/>
+  <rect x="530.0" y="156.0" width="22.0" height="54.0" rx="2" fill="#eef2ff" stroke="#f59e0b" stroke-width="1.6" opacity="1.0"/>
+  <rect x="560.0" y="114.0" width="22.0" height="96.0" rx="2" fill="#eef2ff" stroke="#f59e0b" stroke-width="1.6" opacity="1.0"/>
+  <rect x="590.0" y="90.0" width="22.0" height="120.0" rx="2" fill="#eef2ff" stroke="#f59e0b" stroke-width="1.6" opacity="1.0"/>
+  <line x1="464.0" y1="210.0" x2="620.0" y2="210.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="542.0" y="88.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">exploding</text>
+  <text x="542.0" y="230.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">layer 1 → deep</text>
+  <text x="542.0" y="246.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="9.6" font-weight="400" fill="#f59e0b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">gradients blow up → NaNs</text>
+  <text x="340.0" y="284.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">good initialization (e.g. He/Xavier) + normalization keep gradients in a healthy range</text>
+</svg>

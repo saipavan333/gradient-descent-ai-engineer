@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Packaging &amp; serving · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html" class="current"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 9</b> · MLOps &amp; Serving · Lesson 9.5</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 9 · MLOps &amp; Serving</div>
+<h1>Packaging &amp; serving</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 27 min</span>
+<span class="pill">Lesson 9.5</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops05_serving.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>A trained model is just a file; serving turns it into a callable service. Packaging (a container) freezes the environment so it runs anywhere; serving patterns — online, batch, streaming — are chosen by how predictions are needed.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain packaging and containers</li><li>Contrast online, batch, and streaming serving</li><li>Distinguish latency and throughput</li><li>Know why serving cost dominates training</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> From a saved model to a service users can call</h2>
+
+<p>A trained model is a file — a blob of learned weights sitting on disk. That file can't do anything by itself; to be
+useful it has to <span class="term">serve</span> predictions: receive an input, run the model, and return an output, on
+demand. Getting from "file on disk" to "service users can call" involves two steps. First, <span class="term">packaging</span>:
+bundling the model file together with everything it needs to run — the inference code, and the software dependencies (the
+exact libraries and versions). Second, <span class="term">serving</span>: running that package somewhere it can answer
+requests. Packaging without serving is a sealed box nobody opens; serving without proper packaging is the "works on my
+laptop" disaster waiting to happen.</p>
+
+<figure class="diagram"><svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg" width="660" height="300" role="img">
+  <rect x="0" y="0" width="660" height="300" fill="#ffffff"/>
+  <text x="330.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Packaging: bundle model + code + deps together</text>
+  <rect x="45.0" y="67.0" width="150.0" height="46.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="120.0" y="94.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">model weights</text>
+  <rect x="45.0" y="137.0" width="150.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="120.0" y="164.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">inference code</text>
+  <rect x="45.0" y="207.0" width="150.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="120.0" y="234.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">dependencies</text>
+  <rect x="325.0" y="124.0" width="130.0" height="72.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="390.0" y="155.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Container</text>
+  <text x="390.0" y="173.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">image</text>
+  <rect x="500.0" y="124.0" width="120.0" height="72.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="560.0" y="164.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Endpoint</text>
+  <line x1="195.0" y1="109.4" x2="325.0" y2="143.1" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M325.0,143.1 L317.2,136.9 L315.1,144.8 Z" fill="#475569"/>
+  <line x1="195.0" y1="160.0" x2="325.0" y2="160.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M325.0,160.0 L315.9,155.9 L315.9,164.1 Z" fill="#475569"/>
+  <line x1="195.0" y1="210.6" x2="325.0" y2="176.9" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M325.0,176.9 L315.1,175.2 L317.2,183.1 Z" fill="#475569"/>
+  <line x1="455.0" y1="160.0" x2="500.0" y2="160.0" stroke="#475569" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M500.0,160.0 L490.9,155.9 L490.9,164.1 Z" fill="#475569"/>
+  <text x="330.0" y="283.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A container runs identically on any machine — no "works on my laptop" surprises.</text>
+</svg>
+<figcaption><b>Packaging bundles the model with everything it needs to run.</b> The model weights, the inference code, and the dependencies (specific library versions) are combined into a container image — a self-contained unit — which is then run as an endpoint. The container guarantees the model runs identically on any machine, eliminating "works on my laptop" surprises.</figcaption></figure>
+
+<p>The standard packaging tool is a <span class="term">container</span> (Docker being the common one): a self-contained
+unit that bundles the model, the code, and <em>all</em> its dependencies — even a pinned version of Python and the
+operating-system libraries — so it runs identically on your laptop, a teammate's machine, or a cloud server. This solves
+the notorious "it works on my machine but breaks in production" problem, which in ML is acute because a slightly different
+library version can silently change a model's numerical output. A container freezes the entire environment, so the model
+that worked in testing is byte-for-byte the model that runs in production.</p>
+
+<h2><span class="sec-tag">Concept</span> Three ways to serve: online, batch, streaming</h2>
+
+<p>Once packaged, a model can be served in three patterns, chosen by <em>how</em> predictions are needed.
+<span class="term">Online serving</span> (also called real-time or synchronous) wraps the model behind an API
+<span class="term">endpoint</span> — a URL the application calls with one input and gets one prediction back immediately;
+this is what you use when a user is waiting (a fraud check at checkout, a recommendation as the page loads), and it
+optimizes for low <span class="term">latency</span> (the delay before a response). <span class="term">Batch serving</span>
+runs the model on a large pile of inputs at once, on a schedule — e.g., overnight, score all 10 million customers for churn
+and write the results to a database; nobody's waiting in real time, so it optimizes for <span class="term">throughput</span>
+(total volume processed) rather than per-request speed. <span class="term">Streaming serving</span> sits in between,
+scoring events continuously as they flow through a real-time data stream (e.g., scoring transactions as they happen).</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" width="720" height="340" role="img">
+  <rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Three ways to serve a model</text>
+  <rect x="50.0" y="62.0" width="190.0" height="210.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="70.0" y="85.0" width="150.0" height="46.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="145.0" y="112.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Online</text>
+  <text x="145.0" y="170.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">REST endpoint</text>
+  <text x="145.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">one request →</text>
+  <text x="145.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">instant response</text>
+  <rect x="265.0" y="62.0" width="190.0" height="210.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="285.0" y="85.0" width="150.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="360.0" y="112.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Batch</text>
+  <text x="360.0" y="170.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">scheduled job</text>
+  <text x="360.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">score millions</text>
+  <text x="360.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">at once, offline</text>
+  <rect x="480.0" y="62.0" width="190.0" height="210.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="500.0" y="85.0" width="150.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="575.0" y="112.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Streaming</text>
+  <text x="575.0" y="170.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">event-driven</text>
+  <text x="575.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">react to events</text>
+  <text x="575.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">continuously</text>
+  <text x="145.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">low latency</text>
+  <text x="360.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">high throughput</text>
+  <text x="575.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">real-time feeds</text>
+  <text x="360.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Pick by need: live predictions (online), bulk scoring (batch), or event streams (streaming).</text>
+</svg>
+<figcaption><b>Three ways to serve a model, chosen by how predictions are needed.</b> Online: a REST endpoint returns one prediction per request, optimized for low latency when a user is waiting. Batch: a scheduled job scores millions of inputs at once, optimized for throughput. Streaming: the model reacts to a continuous feed of events in real time. The right pattern depends on whether predictions are needed instantly, in bulk, or continuously.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> The same model, served two ways</div>
+<div class="bd">
+<p>The model logic doesn't change between serving patterns — only how inputs arrive. Here a single <code>predict</code>
+function (standing in for the packaged model) is served <strong>online</strong> (one request) and <strong>batch</strong>
+(many inputs at once):</p>
+
+<pre><code>def predict(x): return x * 2                          # the packaged 'model'
+
+# online: one request at a time, answered immediately
+print("online (1 request) :", predict(5))
+
+# batch: score many inputs at once, on a schedule
+batch = [1, 2, 3, 4, 5]
+print("batch (many at once):", [predict(x) for x in batch])</code></pre>
+<div class="out"><span class="lbl">Output</span>online (1 request) : 10
+batch (many at once): [2, 4, 6, 8, 10]</div>
+
+<p>The exact same <code>predict</code> is used both ways. <strong>Online</strong>, it's called with a single input
+(<code>predict(5)</code> → 10) — this is the shape of a real-time endpoint: one request in, one prediction out,
+immediately, while a user waits. <strong>Batch</strong>, it's mapped over a whole list at once
+(<code>[predict(x) for x in batch]</code> → [2, 4, 6, 8, 10]) — the shape of a scheduled job scoring millions of records
+and writing them somewhere. The model is identical; what differs is the <em>serving pattern</em> wrapped around it. That's
+the key insight: packaging produces one model artifact, and you choose the serving pattern based on the use case's needs —
+low latency for online, high throughput for batch — without changing the model itself. In a real deployment the online
+version lives behind a web endpoint and the batch version runs as a scheduled pipeline, but both load the same packaged
+model file; the <code>predict</code> here is that shared core.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Packaging</strong> bundles the model + code + dependencies; a <strong>container</strong> (Docker) freezes the whole environment so it runs identically anywhere.</li>
+<li><strong>Serving</strong> runs the package so it can answer prediction requests.</li>
+<li><strong>Online</strong> serving = real-time endpoint, one request at a time, optimized for low <strong>latency</strong> (user waiting).</li>
+<li><strong>Batch</strong> serving = score huge volumes on a schedule, optimized for <strong>throughput</strong> (nobody waiting live).</li>
+<li><strong>Streaming</strong> serving = score events continuously as they flow in; pick the pattern by how predictions are needed.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q1.</span> Why package a model in a container?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To make the model more accurate</span></li>
+<li data-opt="b"><span class="mk">B</span><span>To bundle the model with its code and exact dependencies so it runs identically on any machine — no "works on my laptop" surprises</span></li>
+<li data-opt="c"><span class="mk">C</span><span>To make the file smaller</span></li>
+<li data-opt="d"><span class="mk">D</span><span>To train it faster</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Containers don't change accuracy; they fix the runtime environment.</div>
+<div class="ex" data-for="b">Correct. A container freezes the whole environment (code, libs, even OS), so the model behaves the same everywhere.</div>
+<div class="ex" data-for="c">Containers usually add size; that's not the goal.</div>
+<div class="ex" data-for="d">Packaging is about deployment, not training speed.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q2.</span> A fraud check must return a decision while the customer waits at checkout. Which serving pattern fits?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Batch, scored overnight</span></li>
+<li data-opt="b"><span class="mk">B</span><span>No serving needed</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Retrain per request</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Online (real-time) serving via an endpoint, optimized for low latency</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Overnight batch is far too slow — the customer is waiting now.</div>
+<div class="ex" data-for="b">A live decision absolutely needs serving.</div>
+<div class="ex" data-for="c">You never retrain per request; you serve a prediction.</div>
+<div class="ex" data-for="d">Correct. A user waiting in real time needs a low-latency online endpoint.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q3.</span> "Score all 20 million customers for churn every night and save the results." Which pattern, and what does it optimize?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Batch serving, optimized for throughput (total volume), since nobody is waiting in real time</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Online serving, optimized for latency</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Streaming, because it's continuous</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It can't be done</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. A scheduled bulk job over millions of records is batch, where total throughput matters more than per-record speed.</div>
+<div class="ex" data-for="b">No user is waiting per record, so optimizing latency is the wrong goal.</div>
+<div class="ex" data-for="c">It's a scheduled bulk run, not a continuous event stream.</div>
+<div class="ex" data-for="d">It's a routine batch job.</div>
+</div>
+</div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q4.</span> What's the difference between latency and throughput?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>They're the same thing</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Latency is model size; throughput is accuracy</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Latency is the delay for one response; throughput is the total volume processed per unit time</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Latency is for training; throughput is for testing</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">They're distinct, and often in tension.</div>
+<div class="ex" data-for="b">Neither relates to size or accuracy.</div>
+<div class="ex" data-for="c">Correct. Latency = how fast one request returns; throughput = how many requests you handle overall. Online cares about the first, batch about the second.</div>
+<div class="ex" data-for="d">Both are serving (inference) concerns, not a train/test split.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>A model works perfectly in the data scientist's notebook but produces different predictions when an engineer runs it on the production server. The model file is identical. What's likely wrong, and how does packaging fix it?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The likely culprit is an <strong>environment mismatch</strong>: the production server has different versions of the
+libraries (or Python, or underlying numerical/OS libraries) than the notebook. ML predictions can depend on these in subtle
+ways — a different version of scikit-learn or NumPy can change how a computation rounds, how a preprocessing step behaves,
+or even how the saved model is deserialized, producing different outputs from the <em>same</em> model file. This is the
+classic "works on my machine" failure, and it's especially pernicious in ML because it doesn't crash — it just gives subtly
+different (wrong) numbers, much like train/serve skew (Lesson 9.3).</p>
+<p><strong>Packaging in a container</strong> fixes it by freezing the entire environment alongside the model: the container
+specifies the exact Python version, the exact library versions, and the system libraries, so the production server runs the
+identical environment the notebook used. The container the data scientist builds and tests is the <em>same</em> container
+that runs in production — there's no "the server has different versions" gap because the versions travel <em>with</em> the
+model. This is why containers are the standard ML packaging tool: they convert "depends on whatever happens to be installed
+on this machine" into "carries its own complete, pinned environment." The general principle is reproducibility extended
+from training (Lesson 9.2) to deployment — the same instinct (pin everything, leave nothing to chance) applied to the
+runtime rather than the training run.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>An e-commerce site needs product recommendations. Compare doing this with batch serving (precompute nightly) vs online serving (compute per request). What are the trade-offs?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p><strong>Batch (precompute nightly):</strong> overnight, score recommendations for every user and store them; when a user
+visits, just look up their precomputed list. Pros: extremely fast at request time (it's a database lookup, not a model
+run), simple, and cheap (you run the model in bulk once). Cons: the recommendations are <em>stale</em> — they can't reflect
+what the user did in the last few hours (just browsed running shoes), and you waste compute scoring users who never visit
+that day. <strong>Online (compute per request):</strong> when the user visits, run the model live with their current
+context. Pros: fully fresh and personalized to the moment, reflecting their latest behavior. Cons: must be fast enough to
+not delay the page (a latency constraint), and more expensive/complex per request.</p>
+<p>The trade-off is essentially <strong>freshness vs cost/latency</strong>. The right choice depends on how much
+recommendations benefit from real-time context: for slow-changing preferences, nightly batch is fine and far simpler; for
+behavior that shifts within a session (the user is clearly shopping for a gift right now), online's freshness is worth its
+cost. Many real systems use a <strong>hybrid</strong>: precompute a batch of candidate recommendations (cheap, broad) and
+then re-rank or adjust them online using live context (fresh where it matters) — getting most of the freshness at a
+fraction of the full online cost. Reasoning about this trade-off — rather than reflexively reaching for "real-time
+everything" — is exactly the systems judgment serving design requires, and it connects to the cost/latency optimization of
+the next lesson.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Why is serving (inference) often a bigger long-term cost and engineering concern than training, even though training gets more attention?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Because of <strong>volume and duration</strong>. Training a model is typically a one-time (or periodic) cost — you train
+it, perhaps over hours or days, and you're done until the next retraining. <strong>Serving runs forever</strong>: every
+single prediction for every user, every day, for the entire life of the deployed model. A model trained once might then
+serve billions of predictions over its lifetime, so even a small per-prediction cost or latency multiplies into the
+dominant expense and the primary engineering challenge. The famous training runs grab headlines, but for most deployed
+systems the cumulative inference cost dwarfs the training cost.</p>
+<p>This reframes where engineering effort should go. Serving must be <strong>reliable</strong> (it's a live service users
+depend on — downtime is an outage, unlike a training job that can just be rerun), <strong>scalable</strong> (it must handle
+peak traffic, which is the next lesson), <strong>fast</strong> (latency directly affects user experience and is often
+constrained), and <strong>cost-efficient</strong> (since it runs constantly, optimizations compound). It's a classic
+production-software problem — uptime, scaling, latency, cost — layered on top of ML, which is why serving is where MLOps
+meets traditional systems engineering hardest. The practical implication: when you design an ML system, you should think
+about serving from the start, not treat it as an afterthought once training "succeeds," because serving is where the model
+spends its actual working life and where most of the operational money and risk live. This is also why the next lesson is
+devoted entirely to scaling inference — making serving fast and cheap at volume is one of the central problems of applied
+ML.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: the serving stack, model formats, and the latency budget<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>A production serving setup is a small stack. At the core is the packaged model, often exported to a
+<strong>serving-optimized format</strong> rather than served from raw training-framework objects: formats like
+<strong>ONNX</strong> (a portable, framework-independent model representation) or framework servers like TensorFlow Serving
+and TorchServe, which load the model efficiently and expose it over a standard protocol. Around it sits an <strong>API
+layer</strong> (commonly a REST or gRPC endpoint) that receives requests, runs the model's preprocessing and inference, and
+returns predictions — plus the container that packages it all, an orchestration system (like Kubernetes) that runs and
+scales the containers, and a load balancer in front (next lesson). The reason for serving-specific formats and servers is
+that training frameworks are built for flexibility and gradient computation, whereas serving wants the opposite: minimal,
+fast, stable inference with low overhead — so you "compile" the trained model into a lean form for production.</p>
+<p>The discipline that organizes serving design is the <strong>latency budget</strong>. A user-facing request has a total
+time budget (say, the page must respond in 200 milliseconds), and the model's inference is only one slice of it — there's
+also network time, feature lookup (hitting the feature store's online side, Lesson 9.3), preprocessing, and post-processing.
+Designing serving means accounting for the whole budget: if feature lookup eats 50ms and the network 30ms, the model has
+maybe 100ms to run, which constrains how big and slow a model you can afford — sometimes forcing a smaller or compressed
+model (Lesson 9.6) even at a small accuracy cost, because a more accurate model that blows the latency budget is unusable in
+that slot. This is a recurring tension in applied ML: the "best" model offline is often not the best model to <em>serve</em>,
+because production imposes constraints — latency, cost, memory — that offline evaluation ignores. The engineers who ship
+successful ML systems are the ones who treat these production constraints as first-class design inputs from the beginning,
+co-designing the model and its serving so the whole thing meets its budget — rather than training the most accurate model
+possible and only then discovering it's too slow or expensive to run. Serving, in other words, is where ML stops being a
+modeling exercise and becomes systems engineering, and the next lesson pushes directly into the hardest part of that:
+making inference scale.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Serving one request is easy; serving millions per second without falling
+over is not. Next, <strong>9.6 Scaling inference</strong> covers replicas, load balancing, autoscaling, and the techniques
+(batching, caching, model compression) that make serving fast and affordable at volume.</p>
+</article>
+<nav class="pager"><a class="prev" href="ops4-registry.html"><span class="dir">← Previous</span><span class="ti">Model registry &amp; versioning</span></a><a class="next" href="ops6-scaling.html"><span class="dir">Next →</span><span class="ti">Scaling inference</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

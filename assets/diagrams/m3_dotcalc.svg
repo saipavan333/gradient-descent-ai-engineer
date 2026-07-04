@@ -1,0 +1,26 @@
+<svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" width="620" height="300" role="img">
+  <rect x="0" y="0" width="620" height="300" fill="#ffffff"/>
+  <text x="310.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The dot product: multiply pairs, then add</text>
+  <rect x="150.0" y="92.0" width="56.0" height="44.0" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="178.0" y="114.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <rect x="214.0" y="92.0" width="56.0" height="44.0" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="242.0" y="114.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5</text>
+  <rect x="278.0" y="92.0" width="56.0" height="44.0" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="306.0" y="114.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="126.0" y="114.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#065f46" text-anchor="end" opacity="1.0" dominant-baseline="middle">a</text>
+  <rect x="150.0" y="150.0" width="56.0" height="44.0" rx="8" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.6" opacity="1.0"/>
+  <text x="178.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <rect x="214.0" y="150.0" width="56.0" height="44.0" rx="8" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.6" opacity="1.0"/>
+  <text x="242.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <rect x="278.0" y="150.0" width="56.0" height="44.0" rx="8" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.6" opacity="1.0"/>
+  <text x="306.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="126.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#075985" text-anchor="end" opacity="1.0" dominant-baseline="middle">b</text>
+  <line x1="178.0" y1="196.0" x2="178.0" y2="222.0" stroke="#cbd5e1" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="178.0" y="236.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2·3 = 6</text>
+  <line x1="242.0" y1="196.0" x2="242.0" y2="222.0" stroke="#cbd5e1" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="242.0" y="236.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5·1 = 5</text>
+  <line x1="306.0" y1="196.0" x2="306.0" y2="222.0" stroke="#cbd5e1" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="306.0" y="236.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1·4 = 4</text>
+  <text x="372.0" y="236.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#312e81" text-anchor="start" opacity="1.0" dominant-baseline="middle">→  6 + 5 + 4 = 15</text>
+  <text x="310.0" y="268.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a · b = 15</text>
+</svg>

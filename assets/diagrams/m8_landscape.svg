@@ -1,0 +1,24 @@
+<svg viewBox="0 0 560 360" xmlns="http://www.w3.org/2000/svg" width="560" height="360" role="img">
+  <rect x="0" y="0" width="560" height="360" fill="#ffffff"/>
+  <text x="280.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Gradient descent rolls downhill to the minimum</text>
+  <line x1="64.0" y1="300.0" x2="520.0" y2="300.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="80.0" y1="316.0" x2="80.0" y2="50.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M520.0,300.0 L512.7,296.7 L512.7,303.3 Z" fill="#94a3b8"/>
+  <path d="M80.0,50.0 L76.7,57.3 L83.3,57.3 Z" fill="#94a3b8"/>
+  <text x="523.0" y="315.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">parameter w</text>
+  <text x="67.0" y="49.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">loss L</text>
+  <path d="M94.4,123.2 L99.0,130.3 L103.7,137.3 L108.3,144.1 L113.0,150.7 L117.6,157.2 L122.2,163.5 L126.9,169.7 L131.5,175.6 L136.2,181.4 L140.8,187.1 L145.4,192.5 L150.1,197.9 L154.7,203.0 L159.4,208.0 L164.0,212.8 L168.6,217.4 L173.3,221.9 L177.9,226.2 L182.6,230.4 L187.2,234.3 L191.8,238.1 L196.5,241.8 L201.1,245.3 L205.8,248.6 L210.4,251.7 L215.0,254.7 L219.7,257.5 L224.3,260.2 L229.0,262.7 L233.6,265.0 L238.2,267.1 L242.9,269.1 L247.5,270.9 L252.2,272.6 L256.8,274.1 L261.4,275.4 L266.1,276.5 L270.7,277.5 L275.4,278.4 L280.0,279.0 L284.6,279.5 L289.3,279.8 L293.9,280.0 L298.6,280.0 L303.2,279.8 L307.8,279.5 L312.5,279.0 L317.1,278.3 L321.8,277.4 L326.4,276.4 L331.0,275.3 L335.7,273.9 L340.3,272.4 L345.0,270.8 L349.6,268.9 L354.2,266.9 L358.9,264.7 L363.5,262.4 L368.2,259.9 L372.8,257.2 L377.4,254.4 L382.1,251.4 L386.7,248.2 L391.4,244.9 L396.0,241.4 L400.6,237.8 L405.3,233.9 L409.9,229.9 L414.6,225.8 L419.2,221.4 L423.8,216.9 L428.5,212.3 L433.1,207.5 L437.8,202.5 L442.4,197.3 L447.0,192.0 L451.7,186.5 L456.3,180.8 L461.0,175.0 L465.6,169.0 L470.2,162.9 L474.9,156.6 L479.5,150.1 L484.2,143.4 L488.8,136.6 L493.4,129.6 L498.1,122.5 L502.7,115.1 L507.4,107.7 L512.0,100.0" fill="none" stroke="#6366f1" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="116.0" cy="155.0" r="5" fill="#fb7185"/>
+  <circle cx="180.8" cy="228.8" r="5" fill="#fb7185"/>
+  <path d="M116.0,155.0 Q123.2,141.0 180.8,228.8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="231.2" cy="263.8" r="5" fill="#fb7185"/>
+  <path d="M180.8,228.8 Q188.0,214.8 231.2,263.8" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="263.6" cy="275.9" r="5" fill="#fb7185"/>
+  <path d="M231.2,263.8 Q238.4,249.8 263.6,275.9" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="283.0" cy="279.4" r="5" fill="#10b981"/>
+  <path d="M263.6,275.9 Q270.8,261.9 283.0,279.4" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="296.0" cy="280.0" r="5" fill="#10b981"/>
+  <text x="296.0" y="302.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">minimum</text>
+  <text x="97.6" y="122.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">start</text>
+  <text x="280.0" y="346.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">each step moves w opposite the slope</text>
+</svg>

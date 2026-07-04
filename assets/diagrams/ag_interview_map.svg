@@ -1,0 +1,29 @@
+<svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" width="760" height="250" role="img">
+  <rect x="0" y="0" width="760" height="250" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 8 in one line: an LLM that acts to reach a goal</text>
+  <rect x="55.0" y="113.0" width="80.0" height="54.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="95.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">tools</text>
+  <rect x="177.0" y="113.0" width="96.0" height="54.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="225.0" y="136.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">ReAct</text>
+  <text x="225.0" y="151.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">loop</text>
+  <rect x="310.0" y="113.0" width="80.0" height="54.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="350.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">plan</text>
+  <rect x="430.0" y="113.0" width="80.0" height="54.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="470.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">memory</text>
+  <rect x="547.0" y="113.0" width="96.0" height="54.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="595.0" y="136.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">multi-</text>
+  <text x="595.0" y="151.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">agent</text>
+  <rect x="670.0" y="113.0" width="80.0" height="54.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="710.0" y="143.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">guardrails</text>
+  <line x1="135.0" y1="140.0" x2="177.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M177.0,140.0 L167.9,135.9 L167.9,144.1 Z" fill="#475569"/>
+  <line x1="273.0" y1="140.0" x2="310.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M310.0,140.0 L300.9,135.9 L300.9,144.1 Z" fill="#475569"/>
+  <line x1="390.0" y1="140.0" x2="430.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M430.0,140.0 L420.9,135.9 L420.9,144.1 Z" fill="#475569"/>
+  <line x1="510.0" y1="140.0" x2="547.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M547.0,140.0 L537.9,135.9 L537.9,144.1 Z" fill="#475569"/>
+  <line x1="643.0" y1="140.0" x2="670.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M670.0,140.0 L660.9,135.9 L660.9,144.1 Z" fill="#475569"/>
+  <text x="385.0" y="226.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">give the model tools, a loop to use them, memory, and guardrails — and it can accomplish multi-step goals</text>
+</svg>

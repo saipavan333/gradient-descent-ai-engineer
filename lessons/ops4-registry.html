@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model registry &amp; versioning · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html" class="current"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 9</b> · MLOps &amp; Serving · Lesson 9.4</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 9 · MLOps &amp; Serving</div>
+<h1>Model registry &amp; versioning</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 22 min</span>
+<span class="pill">Lesson 9.4</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops04_registry.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Once you train models regularly, you must track which version is live. A model registry versions models and stages them (staging → production → archived), making promotion explicit and rollback instant — like git for models.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain a model registry</li><li>Define versions and stages</li><li>Describe promotion and rollback</li><li>Know why old versions are archived, not deleted</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> Which model is live right now?</h2>
+
+<p>Once you're training models regularly (Lesson 9.2), you accumulate many of them — v1, v2, v3, last Tuesday's
+experiment, the one with the new features. Now urgent questions appear: <em>which</em> model is currently serving
+production traffic? Which was live last month when that incident happened? If the new model misbehaves, how do we instantly
+go back to the old one? Answering these by hand — emailing model files around, naming them <code>final_model_v2_REAL.pkl</code>
+— is how teams lose track of what's actually running. A <span class="term">model registry</span> is the system that solves
+this: a central, versioned catalog of trained models that tracks every version and which <span class="term">stage</span>
+each one is in.</p>
+
+<p>A <span class="term">version</span> is simply an immutable, numbered snapshot of a trained model — v1, v2, v3 — so you
+can refer to an exact model unambiguously. A <span class="term">stage</span> is where a version sits in its journey to
+production. Typical stages are <strong>staging</strong> (a candidate being tested), <strong>production</strong> (the model
+currently serving live traffic), and <strong>archived</strong> (a retired former model, kept for history and rollback). The
+registry's job is to always know, with certainty, which version is in which stage — so "what's live?" has a definite,
+auditable answer.</p>
+
+<figure class="diagram"><svg viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" width="660" height="360" role="img">
+  <rect x="0" y="0" width="660" height="360" fill="#ffffff"/>
+  <text x="330.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Model registry: versioned, staged to production</text>
+  <rect x="190.0" y="62.0" width="280.0" height="66.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" opacity="1.0"/>
+  <text x="330.0" y="52.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">registry (all versions)</text>
+  <rect x="207.0" y="76.0" width="66.0" height="38.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="240.0" y="99.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">v1.0</text>
+  <rect x="297.0" y="76.0" width="66.0" height="38.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="330.0" y="99.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">v2.0</text>
+  <rect x="387.0" y="76.0" width="66.0" height="38.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="420.0" y="99.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">v3.0</text>
+  <rect x="75.0" y="206.0" width="150.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="150.0" y="230.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Staging</text>
+  <text x="150.0" y="247.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">v3.0 (new)</text>
+  <rect x="285.0" y="206.0" width="150.0" height="58.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="360.0" y="230.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Production</text>
+  <text x="360.0" y="247.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">v2.0 (live)</text>
+  <rect x="490.0" y="206.0" width="140.0" height="58.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="560.0" y="230.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Archived</text>
+  <text x="560.0" y="247.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">v1.0 (old)</text>
+  <line x1="225.0" y1="235.0" x2="285.0" y2="235.0" stroke="#475569" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M285.0,235.0 L275.9,230.9 L275.9,239.1 Z" fill="#475569"/>
+  <rect x="225.6" y="218.4" width="58.7" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="255.0" y="228.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#475569" text-anchor="middle" dominant-baseline="middle">promote</text>
+  <line x1="435.0" y1="235.0" x2="490.0" y2="235.0" stroke="#475569" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M490.0,235.0 L480.9,230.9 L480.9,239.1 Z" fill="#475569"/>
+  <rect x="436.6" y="218.4" width="51.8" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="462.5" y="228.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#475569" text-anchor="middle" dominant-baseline="middle">retire</text>
+  <path d="M330.0,128.0 L360.0,206.0" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="6 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M360.0,206.0 L360.5,196.0 L352.9,198.9 Z" fill="#94a3b8"/>
+  <rect x="301.6" y="187.8" width="116.7" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="360.0" y="197.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#94a3b8" text-anchor="middle" dominant-baseline="middle">deploy a version</text>
+  <text x="330.0" y="312.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Every model is versioned; promotion to production is explicit —</text>
+  <text x="330.0" y="332.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">and reversible, so a bad model can be rolled back instantly.</text>
+</svg>
+<figcaption><b>A model registry versions every model and stages it toward production.</b> The registry holds all versions (v1, v2, v3). Each version moves through stages: staging (a tested candidate), production (live), and archived (retired). Promotion to production is an explicit, deliberate step — and because the old version is archived rather than deleted, you can roll back to it instantly if the new one fails.</figcaption></figure>
+
+<h2><span class="sec-tag">Concept</span> Promotion and rollback</h2>
+
+<p>The registry turns deployment into two controlled operations. <span class="term">Promotion</span> is the deliberate act
+of moving a version into production — you don't "accidentally" deploy; you explicitly promote v3 from staging to production
+after it passes your checks, and the registry records exactly when and by whom. <span class="term">Rollback</span> is the
+reverse safety net: if the freshly-promoted model turns out to be bad in production (errors spike, accuracy drops), you
+promote the previous known-good version back to production — instantly returning to a working state. Rollback is only
+possible because the registry <em>kept</em> the old version (archived, not deleted); this is exactly why you never throw
+old models away.</p>
+
+<p>This matters because deploying a new model is risky — it might be worse in ways your offline tests didn't catch (recall
+train/serve skew, Lesson 9.3). The registry makes that risk manageable: every deployment is reversible. The mindset is the
+same as version control for code (git), where you can always revert to a previous commit — here you can always revert to a
+previous model. Without it, a bad deployment means scrambling to find and redeploy the old model under pressure; with it,
+rollback is one promotion away.</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Promotion and instant rollback</div>
+<div class="bd">
+<p>Here's a registry in miniature. <code>register</code> adds a new version in staging; <code>promote</code> moves a
+version to production — and crucially, it first archives whatever was previously in production, enforcing the rule that
+<em>one</em> model is live at a time. Watch the rollback at the end.</p>
+
+<pre><code>registry = {}
+def register(version): registry[version] = "staging"
+def promote(version):                          # one model is 'production' at a time
+    for v in registry:
+        if registry[v] == "production": registry[v] = "archived"
+    registry[version] = "production"
+
+register("v1"); promote("v1")
+register("v2"); promote("v2")
+print("after v2 promote:", registry)
+promote("v1")                                  # rollback to the known-good v1
+print("after rollback  :", registry)</code></pre>
+<div class="out"><span class="lbl">Output</span>after v2 promote: {'v1': 'archived', 'v2': 'production'}
+after rollback  : {'v1': 'production', 'v2': 'archived'}</div>
+
+<p>Trace the stages. We register and promote v1 — it's now production. Then v2 is registered and promoted; promoting v2
+first archives v1 (the old production model), so we get <code>{v1: archived, v2: production}</code> — v2 is live, v1 is
+retired but <em>kept</em>. Now suppose v2 is misbehaving in production. Rollback is a single call: <code>promote("v1")</code>
+archives v2 and restores v1 to production, giving <code>{v1: production, v2: archived}</code>. We're back to the
+known-good model instantly, with no retraining and no hunting for files. Two things make this work: the registry
+<strong>never deletes</strong> versions (so v1 was still there to roll back to), and promotion <strong>always archives the
+incumbent</strong> (so there's exactly one production model and the transition is clean). That's the entire value of a
+registry — every deployment is an explicit, recorded, reversible stage change, which turns the scary act of shipping a new
+model into a safe, one-command operation you can undo.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>A <strong>model registry</strong> is a central, versioned catalog of trained models — it always knows which version is live.</li>
+<li>A <strong>version</strong> is an immutable numbered snapshot; a <strong>stage</strong> is its status: staging, production, or archived.</li>
+<li><strong>Promotion</strong> is the deliberate, recorded move into production; deployment becomes explicit, not accidental.</li>
+<li><strong>Rollback</strong> = promote the previous known-good version back — instant recovery from a bad deployment.</li>
+<li>Rollback works only because old versions are <strong>archived, not deleted</strong> — like git for models.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What is the main job of a model registry?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To train models faster</span></li>
+<li data-opt="b"><span class="mk">B</span><span>To compute features</span></li>
+<li data-opt="c"><span class="mk">C</span><span>To version trained models and track which version is in which stage (staging, production, archived)</span></li>
+<li data-opt="d"><span class="mk">D</span><span>To label data</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Training speed is unrelated; the registry manages finished models.</div>
+<div class="ex" data-for="b">Features are a feature store's job (Lesson 9.3).</div>
+<div class="ex" data-for="c">Correct. It's the versioned catalog that always knows which model is live and manages stage transitions.</div>
+<div class="ex" data-for="d">Labeling is a data task, not the registry's role.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> In the worked example, why does promoting v2 leave the registry as <code>{v1: archived, v2: production}</code>?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>v1 was deleted</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Promotion archives the previous production model first, enforcing one live model at a time</span></li>
+<li data-opt="c"><span class="mk">C</span><span>v2 failed</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It's a bug</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">v1 is archived, not deleted — that's what enables rollback.</div>
+<div class="ex" data-for="b">Correct. <code>promote</code> archives whatever was in production, so exactly one model is live (v2), with v1 retired but kept.</div>
+<div class="ex" data-for="c">v2 was successfully promoted; nothing failed here.</div>
+<div class="ex" data-for="d">It's the intended behavior — clean, single-production transitions.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> Rollback (returning to a previous model) is possible only because the registry does what?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Retrains the old model on demand</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Deletes bad models</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Uses a bigger server</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Keeps old versions archived rather than deleting them</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">No retraining needed — the old model is stored and ready.</div>
+<div class="ex" data-for="b">The opposite — it keeps them, so you can return to them.</div>
+<div class="ex" data-for="c">Server size is irrelevant to rollback.</div>
+<div class="ex" data-for="d">Correct. Archived (not deleted) versions are what you roll back to — instantly, no retraining.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> Why is "promotion" being an explicit, recorded step valuable?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Deployment becomes deliberate and auditable — you know exactly which model went live, when, and by whom, instead of deploying by accident</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It makes the model more accurate</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It speeds up training</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It deletes old models</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Explicit promotion gives a clear, auditable record of what's live — essential for debugging incidents and accountability.</div>
+<div class="ex" data-for="b">Promotion doesn't change the model's accuracy.</div>
+<div class="ex" data-for="c">It's about deployment control, not training speed.</div>
+<div class="ex" data-for="d">Promotion archives the incumbent; it doesn't delete history.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>Your team promotes a new recommendation model on Friday afternoon. By Saturday, click-through has dropped 15%. Walk through how a registry lets you respond, and what you'd do next.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The immediate response is <strong>rollback</strong>: promote the previous known-good version back to production. Because
+the registry archived rather than deleted it, the old model is sitting there ready, and one promotion restores it —
+click-through should recover within minutes, stopping the bleeding without anyone retraining or hunting for a file. This is
+the registry's headline value: a bad deployment is a reversible event, not a crisis. (This is also why you don't deploy
+risky changes Friday afternoon if you can help it — but if you did, rollback saves you.)</p>
+<p>Then, with the fire out, you <strong>investigate offline</strong>: the bad version (v-new) is still archived in the
+registry, so you can pull it and diagnose why it underperformed — compare its served features against training features
+(train/serve skew?), check whether its offline metrics actually predicted online success, look at what changed. The
+registry's history also tells you exactly which version was live during the drop, which is essential for a clean
+investigation. The general pattern this illustrates is the operational discipline of <em>safe deployment</em>: make every
+change reversible, roll back first and investigate second (restore service before diagnosing), and keep enough history to
+do the diagnosis. The registry is the infrastructure that makes this discipline possible for models — without it, a 15%
+drop on a Saturday is a panicked scramble; with it, it's a routine rollback followed by a calm post-mortem.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>How does a model registry relate to git (version control for code)? Where does the analogy hold, and where does it break down?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The analogy is strong and intentional. Like git, a registry gives you <strong>immutable versioned snapshots</strong>
+(each model version is fixed and referenceable, like a commit), <strong>history</strong> (you can see what existed when),
+and <strong>the ability to revert</strong> (rollback is "checkout the previous version"). The mindset is identical: never
+lose old states, make changes reversible, always know what's current. Many registries even integrate with git so a model
+version links to the exact code commit that produced it (lineage, Lesson 9.2).</p>
+<p>Where it breaks down is <em>what</em> is being versioned and how you judge it. Code is deterministic and text-based, so
+git can show a precise line-by-line diff and you can read exactly what changed. A model is a large binary blob of learned
+weights; you can't meaningfully "diff" v2 against v3 by looking at the numbers, and the difference that matters is
+<em>behavioral</em> (v3 predicts differently), which you measure with metrics on data, not by reading the file. So a model
+registry pairs each version with its <strong>metrics and metadata</strong> (how it scored, what data it trained on) because
+that — not a textual diff — is how you compare model versions. Also, a model's quality depends on data that lives outside
+the registry, so reproducing a version requires the registry <em>plus</em> the versioned data and code. The clean takeaway:
+a registry is "git for models" in spirit — versioning, history, revert — but adapted to artifacts whose meaning is
+statistical and whose comparison is empirical rather than syntactic. Recognizing both the parallel and its limits is the
+mark of understanding why model versioning needs its own tooling rather than just throwing model files into git.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Beyond rollback, why is it valuable for the registry to record which version was in production at any past point in time?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Because production incidents are investigated <em>after</em> the fact, and you can't debug what you can't identify. When
+something goes wrong — a wave of bad predictions, a customer complaint, a regulator's inquiry about a decision made three
+months ago — the first question is "which model produced that?" If the registry records the full timeline of which version
+was in production during which dates, you can answer precisely: "on March 12 the live model was v4, here it is, here's its
+training data and metrics." Without that record, you're guessing which model made a decision, and you may be unable to
+reproduce or explain it at all.</p>
+<p>This <strong>temporal audit trail</strong> matters for several reasons. For <strong>debugging</strong>: you can pull the
+exact model that generated a bad output and inspect it. For <strong>accountability and compliance</strong>: regulated
+domains (credit, healthcare, insurance) often require proving which model made a given automated decision and how it was
+built — a legal, not just technical, need. For <strong>analysis</strong>: when metrics shifted, knowing whether a model
+change coincided with the shift helps separate "the model caused it" from "the world changed." It connects to the lineage
+idea from Lesson 9.2 — the registry's timeline plus each version's training lineage gives end-to-end traceability from a
+production decision back to the data and code that produced the responsible model. The deeper principle is that production
+systems must be <em>accountable</em>: able to answer "what was running, when, and why" long after the fact, because the
+questions that matter most always come later. The registry's history is what makes models accountable in that sense.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: safe deployment strategies — canary, blue-green, shadow<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>A registry makes rollback possible, but the best teams reduce how often they <em>need</em> it by deploying new models
+gradually rather than flipping a switch for all traffic at once. <strong>Canary deployment</strong> routes a small slice
+of traffic (say 5%) to the new model while the rest stays on the old one; you watch the new model's metrics on that slice,
+and only if it looks healthy do you ramp it to 100% — if it's bad, you've exposed just 5% of users and you roll the canary
+back. (The name comes from "canary in a coal mine.") <strong>Blue-green deployment</strong> keeps two full environments,
+the current ("blue") and the new ("green"); you switch all traffic from blue to green at once but keep blue running idle,
+so rollback is an instant switch back — trading the cost of running two environments for a very fast, clean cutover.
+<strong>Shadow deployment</strong> (or shadow mode) runs the new model alongside the old on real production traffic but
+<em>doesn't use its predictions</em> — it just logs them, so you can compare the new model's behavior against the old on
+genuine live data with zero user risk before ever promoting it. Each strategy is a different point on the trade-off between
+deployment safety, infrastructure cost, and complexity.</p>
+<p>What ties these to the registry is that they're all built on the same foundation it provides: multiple versions
+coexisting, explicit control over which version serves which traffic, and the ability to revert. Canary needs two versions
+live and a way to shift the split; blue-green needs the old version held ready; shadow needs the new version deployed but
+inert — all of which presuppose a registry that tracks and serves specific versions on demand. These strategies belong to
+the broader discipline of <strong>progressive delivery</strong>, the idea that you de-risk changes by exposing them
+incrementally and watching real signals rather than betting everything on offline tests — which, given train/serve skew and
+the gap between offline metrics and online outcomes, is exactly the humility production ML calls for. The throughline of
+this lesson is risk management: a new model is a bet, offline tests are an incomplete read on that bet, so you make the bet
+reversible (registry rollback) and, ideally, partial and observable (canary/shadow). That mindset — every deployment is a
+reversible, gradually-validated experiment, never an irreversible leap — is what separates teams that ship models
+confidently from teams that fear every deploy. With versioned models that you can deploy and revert safely, the next
+question is the mechanics of actually serving them to users, which is the next lesson.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">A registry knows which model should be live — but how does that model
+actually answer requests? Next, <strong>9.5 Packaging &amp; serving</strong> covers bundling a model into a deployable
+artifact and the patterns (online, batch, streaming) for serving its predictions.</p>
+</article>
+<nav class="pager"><a class="prev" href="ops3-pipelines.html"><span class="dir">← Previous</span><span class="ti">Data &amp; feature pipelines, feature stores</span></a><a class="next" href="ops5-serving.html"><span class="dir">Next →</span><span class="ti">Packaging &amp; serving</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

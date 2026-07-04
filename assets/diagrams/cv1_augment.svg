@@ -1,0 +1,23 @@
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" width="720" height="300" role="img">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Data augmentation: turn one image into many</text>
+  <rect x="55.0" y="105.0" width="110.0" height="90.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="110.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">original</text>
+  <rect x="450.0" y="48.0" width="140.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="520.0" y="74.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">flip</text>
+  <line x1="165.0" y1="139.3" x2="450.0" y2="83.7" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M450.0,83.7 L440.3,81.4 L441.8,89.4 Z" fill="#475569"/>
+  <rect x="450.0" y="108.0" width="140.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="520.0" y="134.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">rotate</text>
+  <line x1="165.0" y1="147.3" x2="450.0" y2="133.4" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M450.0,133.4 L440.7,129.8 L441.1,137.9 Z" fill="#475569"/>
+  <rect x="450.0" y="168.0" width="140.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="520.0" y="194.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">crop</text>
+  <line x1="165.0" y1="155.4" x2="450.0" y2="183.2" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M450.0,183.2 L441.3,178.2 L440.5,186.3 Z" fill="#475569"/>
+  <rect x="450.0" y="228.0" width="140.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="520.0" y="254.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">color shift</text>
+  <line x1="165.0" y1="163.4" x2="450.0" y2="232.9" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M450.0,232.9 L442.1,226.8 L440.2,234.7 Z" fill="#475569"/>
+  <text x="360.0" y="286.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Random flips, rotations, crops, and color changes teach the model to generalize — for free.</text>
+</svg>

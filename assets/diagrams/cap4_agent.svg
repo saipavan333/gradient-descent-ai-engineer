@@ -1,0 +1,27 @@
+<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" width="680" height="340" role="img">
+  <rect x="0" y="0" width="680" height="340" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Capstone agent: think → act → observe, safely</text>
+  <rect x="70.0" y="64.0" width="540.0" height="208.0" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4" opacity="1.0"/>
+  <text x="340.0" y="54.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">guardrails: permissions · budget · human approval</text>
+  <rect x="115.0" y="93.0" width="130.0" height="54.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="180.0" y="115.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Think</text>
+  <text x="180.0" y="132.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">(reason)</text>
+  <rect x="435.0" y="93.0" width="130.0" height="54.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="500.0" y="115.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Act</text>
+  <text x="500.0" y="132.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(call a tool)</text>
+  <rect x="270.0" y="198.0" width="140.0" height="54.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="340.0" y="220.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Observe</text>
+  <text x="340.0" y="237.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">(read result)</text>
+  <line x1="245.0" y1="120.0" x2="435.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M435.0,120.0 L425.9,115.9 L425.9,124.1 Z" fill="#475569"/>
+  <line x1="458.9" y1="147.0" x2="381.1" y2="198.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M381.1,198.0 L391.0,196.4 L386.5,189.6 Z" fill="#475569"/>
+  <line x1="298.9" y1="198.0" x2="221.1" y2="147.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M221.1,147.0 L226.5,155.4 L231.0,148.6 Z" fill="#475569"/>
+  <rect x="455.0" y="203.0" width="90.0" height="44.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="500.0" y="229.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">Tools</text>
+  <line x1="500.0" y1="147.0" x2="500.0" y2="203.0" stroke="#475569" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M500.0,203.0 L504.1,193.9 L495.9,193.9 Z" fill="#475569"/>
+  <path d="M500.0,147.0 L495.9,156.1 L504.1,156.1 Z" fill="#475569"/>
+  <text x="340.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">An LLM loops — reason, use a tool, observe — until done, wrapped in guardrails that bound what it can do.</text>
+</svg>

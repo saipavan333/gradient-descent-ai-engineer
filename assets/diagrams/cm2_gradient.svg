@@ -1,0 +1,32 @@
+<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" width="640" height="340" role="img">
+  <rect x="0" y="0" width="640" height="340" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Two routes to the same minimum of the loss</text>
+  <line x1="70.0" y1="300.0" x2="560.0" y2="300.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="70.0" y1="300.0" x2="70.0" y2="50.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="315.0" y="328.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">parameter w  →</text>
+  <text x="36.0" y="175.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" fill="#64748b" text-anchor="middle" transform="rotate(-90 36.0 175.0)">loss L(w)  →</text>
+  <path d="M70.0,167.7 L75.3,172.8 L80.6,177.7 L85.9,182.5 L91.3,187.1 L96.6,191.7 L101.9,196.2 L107.2,200.5 L112.5,204.8 L117.8,208.9 L123.2,212.9 L128.5,216.8 L133.8,220.6 L139.1,224.2 L144.4,227.8 L149.7,231.2 L155.0,234.5 L160.4,237.8 L165.7,240.9 L171.0,243.9 L176.3,246.7 L181.6,249.5 L186.9,252.2 L192.3,254.7 L197.6,257.1 L202.9,259.4 L208.2,261.6 L213.5,263.7 L218.8,265.7 L224.2,267.6 L229.5,269.3 L234.8,270.9 L240.1,272.5 L245.4,273.9 L250.7,275.2 L256.0,276.4 L261.4,277.4 L266.7,278.4 L272.0,279.2 L277.3,280.0 L282.6,280.6 L287.9,281.1 L293.3,281.5 L298.6,281.8 L303.9,281.9 L309.2,282.0 L314.5,281.9 L319.8,281.8 L325.1,281.5 L330.5,281.1 L335.8,280.6 L341.1,280.0 L346.4,279.2 L351.7,278.4 L357.0,277.4 L362.4,276.4 L367.7,275.2 L373.0,273.9 L378.3,272.5 L383.6,270.9 L388.9,269.3 L394.2,267.6 L399.6,265.7 L404.9,263.7 L410.2,261.6 L415.5,259.4 L420.8,257.1 L426.1,254.7 L431.5,252.2 L436.8,249.5 L442.1,246.7 L447.4,243.9 L452.7,240.9 L458.0,237.8 L463.4,234.5 L468.7,231.2 L474.0,227.8 L479.3,224.2 L484.6,220.6 L489.9,216.8 L495.2,212.9 L500.6,208.9 L505.9,204.8 L511.2,200.5 L516.5,196.2 L521.8,191.7 L527.1,187.1 L532.5,182.5 L537.8,177.7 L543.1,172.8 L548.4,167.7" fill="none" stroke="#6366f1" stroke-width="2.8"/>
+  <circle cx="330.0" cy="282.0" r="5" fill="#10b981"/>
+  <line x1="522.4" y1="204.1" x2="336.0" y2="280.0" stroke="#8b5cf6" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M336.0,280.0 L347.0,280.4 L343.6,272.1 Z" fill="#8b5cf6"/>
+  <text x="516.4" y="178.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#5b21b6" text-anchor="middle" opacity="1.0" dominant-baseline="middle">normal equations:</text>
+  <text x="516.4" y="194.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#5b21b6" text-anchor="middle" opacity="1.0" dominant-baseline="middle">jump there in one shot</text>
+  <circle cx="122.0" cy="195.6" r="3.6" fill="#f59e0b"/>
+  <circle cx="166.9" cy="228.9" r="3.6" fill="#f59e0b"/>
+  <line x1="122.0" y1="195.6" x2="166.9" y2="228.9" stroke="#92400e" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M166.9,228.9 L163.5,222.8 L160.1,227.4 Z" fill="#92400e"/>
+  <circle cx="202.2" cy="249.4" r="3.6" fill="#f59e0b"/>
+  <line x1="166.9" y1="228.9" x2="202.2" y2="249.4" stroke="#92400e" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M202.2,249.4 L198.1,243.7 L195.2,248.6 Z" fill="#92400e"/>
+  <circle cx="229.8" cy="261.9" r="3.6" fill="#f59e0b"/>
+  <line x1="202.2" y1="249.4" x2="229.8" y2="261.9" stroke="#92400e" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M229.8,261.9 L225.1,256.7 L222.8,261.9 Z" fill="#92400e"/>
+  <circle cx="251.4" cy="269.7" r="3.6" fill="#f59e0b"/>
+  <line x1="229.8" y1="261.9" x2="251.4" y2="269.7" stroke="#92400e" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M251.4,269.7 L246.4,264.8 L244.4,270.2 Z" fill="#92400e"/>
+  <circle cx="268.4" cy="274.4" r="3.6" fill="#f59e0b"/>
+  <line x1="251.4" y1="269.7" x2="268.4" y2="274.4" stroke="#92400e" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M268.4,274.4 L263.0,270.0 L261.5,275.4 Z" fill="#92400e"/>
+  <text x="153.2" y="199.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#92400e" text-anchor="start" opacity="1.0" dominant-baseline="middle">gradient descent: step by step</text>
+  <text x="330.0" y="304.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">minimum</text>
+</svg>

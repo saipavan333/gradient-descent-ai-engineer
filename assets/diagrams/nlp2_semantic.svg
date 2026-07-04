@@ -1,0 +1,20 @@
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" width="640" height="360" role="img">
+  <rect x="0" y="0" width="640" height="360" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Embedding space: directions encode meaning</text>
+  <line x1="90.0" y1="300.0" x2="560.0" y2="300.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="90.0" y1="300.0" x2="90.0" y2="50.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="188.4" y1="249.6" x2="204.8" y2="106.8" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M204.8,106.8 L200.2,114.6 L207.5,115.4 Z" fill="#94a3b8"/>
+  <line x1="434.4" y1="232.8" x2="450.8" y2="90.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M450.8,90.0 L446.2,97.8 L453.5,98.6 Z" fill="#94a3b8"/>
+  <text x="166.6" y="178.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">+ royal</text>
+  <circle cx="188.4" cy="249.6" r="6" fill="#075985"/>
+  <text x="196.4" y="239.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="start" opacity="1.0" dominant-baseline="middle">man</text>
+  <circle cx="204.8" cy="106.8" r="6" fill="#312e81"/>
+  <text x="212.8" y="96.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="start" opacity="1.0" dominant-baseline="middle">king</text>
+  <circle cx="434.4" cy="232.8" r="6" fill="#9f1239"/>
+  <text x="442.4" y="222.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#9f1239" text-anchor="start" opacity="1.0" dominant-baseline="middle">woman</text>
+  <circle cx="450.8" cy="90.0" r="6" fill="#8b5cf6"/>
+  <text x="458.8" y="80.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#8b5cf6" text-anchor="start" opacity="1.0" dominant-baseline="middle">queen</text>
+  <text x="330.0" y="344.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">king − man + woman ≈ queen : the 'royal' direction is a constant vector</text>
+</svg>

@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image classification &amp; CNN architectures · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html" class="current"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 14</b> · Computer Vision · Lesson 14.2</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 14 · Computer Vision</div>
+<h1>Image classification &amp; CNN architectures</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 40 min</span>
+<span class="pill">Lesson 14.2</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv02_classification.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Image classification is the base capability all of vision builds on. Understanding convolution, why architectures like ResNet work, and transfer learning is what lets you actually train a working image model — usually without starting from scratch.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Compute a 2-D convolution by hand and explain weight sharing</li><li>Explain the CNN feature hierarchy (edges to textures to parts to objects)</li><li>Say why ResNet skip connections let networks go very deep</li><li>Use transfer learning: fine-tune a pretrained backbone on a small dataset</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> Convolution: the operation that sees</h2>
+
+<p>Image classification — "what is in this picture?" — is the foundational vision task, and it's powered by
+<span class="term">convolution</span>. A convolution slides a small <span class="term">filter</span> (also called a
+kernel — a tiny grid of weights, say 3×3) across the image; at each position it multiplies the filter by the pixels it
+covers and sums the result, producing one number. Doing this everywhere yields a <span class="term">feature map</span>
+that highlights wherever the filter's pattern appears. A filter tuned to detect vertical edges lights up at vertical edges;
+one tuned for a texture lights up on that texture. Crucially, the <em>same</em> filter is used at every position (weight
+sharing), so it detects its pattern anywhere in the image — and the filter's weights are <em>learned</em>, so the network
+discovers which patterns matter.</p>
+
+<figure class="diagram"><svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" width="700" height="340" role="img">
+  <rect x="0" y="0" width="700" height="340" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Convolution: slide a small filter over the image</text>
+  <rect x="70.0" y="90.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="100.0" y="90.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="130.0" y="90.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="160.0" y="90.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="190.0" y="90.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="220.0" y="90.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="70.0" y="120.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="100.0" y="120.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="130.0" y="120.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="160.0" y="120.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="190.0" y="120.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="220.0" y="120.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="70.0" y="150.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="100.0" y="150.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="130.0" y="150.0" width="30.0" height="30.0" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <rect x="160.0" y="150.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="190.0" y="150.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="220.0" y="150.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="70.0" y="180.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="100.0" y="180.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="130.0" y="180.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="160.0" y="180.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="190.0" y="180.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="220.0" y="180.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="70.0" y="210.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="100.0" y="210.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="130.0" y="210.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="160.0" y="210.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="190.0" y="210.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="220.0" y="210.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="70.0" y="240.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="100.0" y="240.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="130.0" y="240.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="160.0" y="240.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="190.0" y="240.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <rect x="220.0" y="240.0" width="30.0" height="30.0" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.0" opacity="1.0"/>
+  <text x="160.0" y="292.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">input image</text>
+  <text x="115.0" y="76.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3×3 filter</text>
+  <line x1="262.0" y1="180.0" x2="418.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M418.0,150.0 L408.3,147.7 L409.8,155.7 Z" fill="#475569"/>
+  <text x="340.0" y="148.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">multiply +</text>
+  <text x="340.0" y="164.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">sum</text>
+  <rect x="430.0" y="90.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="458.0" y="90.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="486.0" y="90.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="514.0" y="90.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="430.0" y="118.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="458.0" y="118.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="486.0" y="118.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="514.0" y="118.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="430.0" y="146.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="458.0" y="146.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="486.0" y="146.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="514.0" y="146.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="430.0" y="174.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="458.0" y="174.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="486.0" y="174.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <rect x="514.0" y="174.0" width="28.0" height="28.0" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2" opacity="1.0"/>
+  <text x="486.0" y="224.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">feature map</text>
+  <text x="350.0" y="318.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The same small filter slides everywhere (weight sharing) and detects a pattern anywhere it appears.</text>
+</svg>
+<figcaption><b>Convolution slides a small filter over the image.</b> At each position, the filter (e.g., 3×3) is multiplied element-wise with the pixels it covers and summed into one output value; sliding it everywhere produces a feature map that highlights where the filter's pattern occurs. The same filter is reused across the whole image (weight sharing) and its weights are learned.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Convolution from scratch — detecting edges</div>
+<div class="bd">
+<p>Here's a real convolution: sliding a 3×3 edge-detection filter over a small image (a solid square on a background). The
+filter responds to <em>changes</em> in intensity, so it lights up at the square's edges and stays flat (zero) in the uniform
+interior:</p>
+
+<pre><code>import numpy as np
+img = np.array([[0,0,0,0,0],
+                [0,9,9,9,0],
+                [0,9,9,9,0],
+                [0,9,9,9,0],
+                [0,0,0,0,0]], float)
+kernel = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]], float)   # edge detector
+H,W,k = *img.shape, 3
+out = np.zeros((H-k+1, W-k+1))
+for i in range(H-k+1):
+    for j in range(W-k+1):
+        out[i,j] = (img[i:i+k, j:j+k] * kernel).sum()          # multiply + sum
+print("feature map:\n", out.astype(int))</code></pre>
+<div class="out"><span class="lbl">Output</span>feature map:
+ [[45 27 45]
+ [27  0 27]
+ [45 27 45]]</div>
+
+<p>The filter slides over the 5×5 image and produces a 3×3 feature map. Look at the pattern: the <strong>center is 0</strong>
+— there the filter sits entirely inside the uniform block of 9s, and the edge detector (which sums to zero over any constant
+region: 8·9 − 8·9 = 0) correctly reports "no edge here, it's flat." The <strong>corners and edges are large</strong> (45,
+27) — there the filter straddles the boundary between the block and the background, detecting the change. So this single
+small filter has located the square's edges purely by arithmetic, and it would find edges <em>anywhere</em> in a larger
+image because the same filter slides everywhere. That's the essence of convolution and why it's perfect for vision: it
+detects local patterns (here, edges) in a translation-invariant way with very few parameters (just the 9 filter weights). A
+real CNN stacks many such layers — early layers learn simple filters (edges, colors), and deeper layers combine them into
+complex patterns (textures, shapes, object parts, whole objects) — a <strong>hierarchy of features</strong> built from this
+one operation. And the filters aren't hand-designed like this edge detector; they're <em>learned</em> by gradient descent
+(Track 4), so the network discovers exactly which patterns are useful for the task. This tiny multiply-and-sum, repeated
+across the image and stacked into layers, is how a computer learns to see.</p>
+</div>
+</div>
+
+<h2><span class="sec-tag">Concept</span> Architectures: from LeNet to ResNet and beyond</h2>
+
+<p>A <span class="term">CNN architecture</span> is a specific arrangement of convolutional and other layers, and the field's
+progress is largely a story of better architectures. Early CNNs (LeNet, AlexNet) stacked convolutions and pooling layers.
+The pivotal breakthrough was <span class="term">ResNet</span>, which introduced <span class="term">residual (skip)
+connections</span> — a path that lets a block's input skip past its layers and add directly to the output. This solved the
+problem that very deep networks were hard to train (vanishing gradients, Track 4): the skip gives gradients a clear path
+backward, so networks of hundreds of layers became trainable, and depth is what gives CNNs their power. Later architectures
+(EfficientNet and others) refined how to scale networks efficiently. You rarely design these from scratch — you use a proven
+architecture.</p>
+
+<figure class="diagram"><svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" width="680" height="300" role="img">
+  <rect x="0" y="0" width="680" height="300" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">ResNet: skip connections let networks go very deep</text>
+  <rect x="25.0" y="126.0" width="90.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="70.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">input</text>
+  <rect x="185.0" y="126.0" width="90.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="230.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">conv</text>
+  <rect x="345.0" y="126.0" width="90.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="390.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">conv</text>
+  <rect x="493.0" y="126.0" width="54.0" height="48.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="520.0" y="155.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="16" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">+</text>
+  <rect x="580.0" y="126.0" width="80.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="620.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">out</text>
+  <line x1="115.0" y1="150.0" x2="185.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M185.0,150.0 L175.9,145.9 L175.9,154.1 Z" fill="#475569"/>
+  <line x1="275.0" y1="150.0" x2="345.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M345.0,150.0 L335.9,145.9 L335.9,154.1 Z" fill="#475569"/>
+  <line x1="435.0" y1="150.0" x2="493.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M493.0,150.0 L483.9,145.9 L483.9,154.1 Z" fill="#475569"/>
+  <line x1="547.0" y1="150.0" x2="580.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M580.0,150.0 L570.9,145.9 L570.9,154.1 Z" fill="#475569"/>
+  <path d="M70.0,126.0 L70.0,90.0 L520.0,90.0 L520.0,126.0" fill="none" stroke="#8b5cf6" stroke-width="2.0" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M520.0,126.0 L524.1,116.9 L515.9,116.9 Z" fill="#8b5cf6"/>
+  <rect x="245.0" y="74.8" width="110.0" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="300.0" y="84.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#8b5cf6" text-anchor="middle" dominant-baseline="middle">skip (identity)</text>
+  <text x="345.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The block learns a small change added to its input; the skip gives gradients a clear path back —</text>
+  <text x="345.0" y="270.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">so hundreds of layers train. Transformers use the same trick.</text>
+</svg>
+<figcaption><b>ResNet: skip connections let networks go very deep.</b> A block learns a small change added to its input, and a skip (identity) connection carries the input directly to the block's output. This gives gradients a clear path backward, so hundreds of layers can train — the depth that makes CNNs powerful. Transformers use the same residual trick.</figcaption></figure>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Convolution</strong> slides a small learned <strong>filter</strong> over the image (multiply + sum) to produce a <strong>feature map</strong> highlighting where a pattern appears.</li>
+<li><strong>Weight sharing</strong> (same filter everywhere) gives translation invariance and few parameters.</li>
+<li>Stacked conv layers build a <strong>hierarchy</strong>: edges → textures → parts → objects; the filters are learned, not hand-designed.</li>
+<li><strong>ResNet</strong>'s <strong>skip connections</strong> made very deep networks trainable (gradients flow through the skip) — the key architecture breakthrough.</li>
+<li>You use proven architectures (ResNet, EfficientNet) rather than designing from scratch — often with <strong>transfer learning</strong>.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What does a convolutional filter produce as it slides over an image?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>A single label</span></li>
+<li data-opt="b"><span class="mk">B</span><span>A larger image</span></li>
+<li data-opt="c"><span class="mk">C</span><span>A feature map that highlights where the filter's pattern appears</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Nothing</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">A label comes later; convolution produces a feature map.</div>
+<div class="ex" data-for="b">The feature map is usually smaller, not larger.</div>
+<div class="ex" data-for="c">Correct. Each position gives one value (multiply + sum); together they form a map of where the pattern occurs.</div>
+<div class="ex" data-for="d">It produces the feature map — the core of the CNN.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> Why does the center of the feature map in the worked example equal 0?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The image is empty there</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The edge filter sums to zero over a uniform region — there's no edge in the flat interior</span></li>
+<li data-opt="c"><span class="mk">C</span><span>A bug</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Random</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">The interior is full of 9s, not empty.</div>
+<div class="ex" data-for="b">Correct. Over a constant region the edge detector gives 0 (8·9 − 8·9) — correctly reporting "no edge."</div>
+<div class="ex" data-for="c">It's the intended behavior of an edge detector.</div>
+<div class="ex" data-for="d">It's a deterministic result of the filter on a flat region.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> What problem did ResNet's skip connections solve?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Images being too small</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Too few parameters</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Slow inference</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Very deep networks being hard to train (vanishing gradients) — the skip gives gradients a clear path backward</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Unrelated to image size.</div>
+<div class="ex" data-for="b">Depth adds parameters; the issue was training them.</div>
+<div class="ex" data-for="c">It's about trainability of depth, not speed.</div>
+<div class="ex" data-for="d">Correct. Skips let gradients flow to early layers, making hundreds-of-layers networks trainable — unlocking depth.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> How do stacked convolutional layers represent an image?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>As a hierarchy — early layers detect edges/colors, deeper layers combine them into textures, parts, and objects</span></li>
+<li data-opt="b"><span class="mk">B</span><span>All layers detect the same thing</span></li>
+<li data-opt="c"><span class="mk">C</span><span>They memorize pixels</span></li>
+<li data-opt="d"><span class="mk">D</span><span>They ignore the image</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Hierarchical feature learning: simple features early, complex ones deep — the source of CNN power.</div>
+<div class="ex" data-for="b">Different layers learn different-level features.</div>
+<div class="ex" data-for="c">They learn general patterns, not raw pixel memorization.</div>
+<div class="ex" data-for="d">They process the image through learned filters.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>You need an image classifier for a custom task but only have a few thousand images. What's the standard, effective approach, and why?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The standard approach is <strong>transfer learning</strong> (Track 4, Capstone 1): take a CNN (or Vision Transformer)
+<em>pretrained</em> on a massive image dataset, freeze its convolutional backbone, and train only a small new
+classification head on your few thousand images. This works because the pretrained backbone has already learned the general
+visual features — edges, textures, shapes, object parts — that are useful for almost any image task (the hierarchy this
+lesson described), so you don't need millions of images or huge compute to relearn how to see; you only need enough data to
+teach the small head your specific classes. A few thousand images is far too few to train a deep CNN from scratch (it would
+overfit badly), but plenty to adapt a pretrained one.</p>
+<p>The reasoning is the key insight that <strong>the expensive part of vision — learning good features — transfers across
+tasks</strong>, so you reuse it. You'd load a proven architecture with pretrained weights (a ResNet or EfficientNet from a
+model library), replace its final layer with one sized to your number of classes, freeze the backbone, and train the head;
+if you have enough data and need more accuracy, you can then fine-tune the top backbone layers at a low learning rate.
+You'd combine this with <strong>data augmentation</strong> (previous lesson) to stretch your limited data further, and
+evaluate honestly on a held-out set (Track 11). This is not just a shortcut — it's how essentially all real-world custom
+image classifiers are built, because training from scratch is rarely worth it. Recognizing that the answer to "small data,
+custom vision task" is "pretrained backbone + trained head + augmentation," and explaining <em>why</em> (transferable
+hierarchical features), is exactly the practical judgment a vision role wants — and it's the same pretrain-then-adapt
+paradigm that runs through the whole curriculum.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>What is pooling (e.g., max pooling), and why do CNNs use it between convolutional layers?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p><strong>Pooling</strong> downsamples a feature map by summarizing small regions — <strong>max pooling</strong> takes the
+maximum value in each little window (say 2×2), so a feature map is halved in height and width, keeping the strongest
+response in each region. CNNs use it for several reasons. <strong>Reduce spatial size</strong> (and thus computation and
+memory) as you go deeper, so the network is efficient. <strong>Add translation robustness</strong>: by keeping the max in a
+region, small shifts of a feature don't change the output much — the network cares that a pattern is <em>present in this
+area</em>, not its exact pixel. <strong>Enlarge the receptive field</strong>: after pooling, each later neuron "sees" a
+larger portion of the original image, letting deep layers integrate information over the whole picture and detect big,
+composite patterns.</p>
+<p>The reasoning connects to the hierarchy idea: convolution detects local patterns, and pooling progressively
+<em>coarsens</em> the spatial resolution while the channel/feature richness grows, so the network moves from "where exactly
+is this edge" (fine spatial detail, many positions) toward "what objects are present" (coarse spatial detail, rich semantic
+features) — exactly the progression from pixels to meaning that classification needs. By the final layers, the spatial grid
+is small and the features are highly abstract, ready to be flattened and classified. Alternatives to pooling exist (strided
+convolutions do the downsampling within the convolution itself, and some modern designs use less pooling), but the concept
+— <em>reduce spatial resolution while building abstraction and gaining shift-robustness</em> — is fundamental to how CNNs
+turn a detailed pixel grid into a compact representation of what's in the image. Understanding pooling as the mechanism that
+trades spatial precision for semantic abstraction as you go deeper shows you grasp <em>how</em> a CNN actually distills an
+image into a classification, not just that it has layers.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Explain why a CNN can recognize a cat whether it's in the top-left or bottom-right of the image, but a plain fully-connected network struggles with this.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The property is <strong>translation invariance</strong>, and the CNN gets it for free from <strong>weight sharing</strong>.
+A convolutional filter is the <em>same</em> set of weights applied at every position as it slides across the image, so a
+filter that detects "cat-ear texture" fires wherever that texture appears — top-left, bottom-right, anywhere. The network
+learns the pattern <em>once</em> and detects it everywhere. Pooling adds further robustness to small shifts. So a cat's
+features are recognized regardless of position, and the network needs to learn each pattern only once.</p>
+<p>A <strong>fully-connected network</strong> struggles because every input pixel connects to every neuron with its
+<em>own separate weight</em>, so there's no sharing across positions: a pattern in the top-left is processed by completely
+different weights than the same pattern in the bottom-right. To recognize a cat anywhere, it would have to
+<em>independently</em> learn "cat" for every possible location — a huge waste of parameters and, critically, of data (it
+would need to see cats in every position to generalize). It has no built-in notion that a pattern means the same thing
+wherever it appears. This is the crux of why CNNs revolutionized vision: they bake in the correct assumption — that visual
+patterns are the same regardless of location (translation invariance) — through weight sharing, giving them far better
+generalization on images with far fewer parameters. The reasoning skill is seeing that this isn't a minor efficiency tweak
+but a fundamental <em>inductive bias</em> matched to how images work (Track 4): objects can appear anywhere, so the
+architecture should recognize them anywhere by construction. That single idea — shared filters sliding everywhere — is what
+makes convolution the right tool for vision, and articulating <em>why</em> (weight sharing → translation invariance →
+learn-once-detect-everywhere) demonstrates real understanding of the architecture, not just its name.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: the ImageNet moment and how architectures evolved<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>Modern computer vision has a clear origin story worth knowing. In 2012, a deep CNN (AlexNet) won the ImageNet
+image-classification competition by a huge margin, dramatically beating the hand-engineered computer-vision methods that
+came before — the moment that ignited the deep learning revolution and showed that <em>learned</em> hierarchical features
+beat human-designed ones. From there, architectures evolved rapidly along a few themes. <strong>Deeper</strong>: VGG showed
+that stacking many small (3×3) convolutions worked well, pushing depth. <strong>Trainably deeper</strong>: ResNet's residual
+connections solved the vanishing-gradient barrier so networks could go from tens to hundreds of layers, a decisive leap in
+accuracy — and residual connections became a universal building block, used far beyond vision (transformers rely on them
+too, Track 5). <strong>Efficient</strong>: architectures like MobileNet and EfficientNet focused on getting the most
+accuracy per unit of computation, crucial for running vision on phones and at scale (the cost concerns of Track 10). Each
+step was a better way to arrange the same basic ingredients — convolutions, nonlinearities, normalization, pooling, and
+skips — into a network that learns better features.</p>
+<p>The deeper lessons for a practitioner are two. First, <strong>you stand on this evolution rather than reinventing it</strong>:
+in practice you pick a proven architecture with pretrained weights and adapt it (transfer learning), because these designs
+and their trained features are the accumulated result of years of research and enormous compute you can't replicate — the
+same pretrain-then-adapt economics that define modern AI (Track 6, Capstones 1–2). Second, <strong>the CNN's reign is no
+longer absolute</strong>: Vision Transformers (next lessons but one) have shown that the transformer architecture — with its
+more general, less image-specific inductive bias — can match or beat CNNs given enough data, echoing the broader shift
+toward attention-based models across AI. So while convolution remains a workhorse and CNNs are still excellent (especially
+with limited data, where their built-in image assumptions help), the field is in a moment where CNNs and transformers
+coexist and compete for vision, much as they did for language before transformers won there. Understanding convolution
+deeply — what it computes, why weight sharing gives translation invariance, how stacking builds a feature hierarchy, and why
+skip connections unlocked depth — gives you the foundation to reason about both the CNNs that dominated the last decade and
+the Vision Transformers reshaping vision now, which is where this track heads after covering the tasks (detection,
+segmentation) that build on classification. Classification is the base; everything else in vision extends it.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Classification says <em>what</em> is in an image; often you need to know
+<em>where</em>. Next, <strong>Object detection</strong> covers finding and boxing multiple objects — localization plus
+classification.</p>
+</article>
+<nav class="pager"><a class="prev" href="cv1-images.html"><span class="dir">← Previous</span><span class="ti">How computers see: images as tensors</span></a><a class="next" href="cv3-detection.html"><span class="dir">Next →</span><span class="ti">Object detection: finding and boxing objects</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forward pass &amp; activation functions · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html" class="current"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 4</b> · Deep Learning · Lesson 4.2</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 4 · Deep Learning</div>
+<h1>Forward pass &amp; activation functions</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 23 min</span>
+<span class="pill">Lesson 4.2</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl02_forward.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>The forward pass is how a network turns inputs into predictions — matrix multiply, add bias, activate, repeat. Knowing the activations and shapes is the foundation for everything that trains.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Compute a forward pass layer by layer</li><li>Track shapes through the network</li><li>Choose hidden (ReLU) and output activations</li><li>Build a network with nn.Sequential</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> The forward pass: push data through, layer by layer</h2>
+
+<p>The <span class="term">forward pass</span> is how a network turns an input into a prediction. You feed the input
+to the first layer, which computes a weighted sum, adds a bias, and applies an activation; its output becomes the next
+layer's input; and so on until the final layer emits the prediction. That's it — a forward pass is just this same
+three-step move (multiply, add, activate) repeated through the stack.</p>
+
+<figure class="diagram"><svg viewBox="0 0 740 300" xmlns="http://www.w3.org/2000/svg" width="740" height="300" role="img">
+  <rect x="0" y="0" width="740" height="300" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The forward pass: ×W + b, activate, repeat</text>
+  <rect x="32.0" y="121.0" width="96.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="80.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">input x</text>
+  <text x="80.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">(1×3)</text>
+  <rect x="180.0" y="121.0" width="110.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="235.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">× W₁ + b₁</text>
+  <text x="235.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(3→4)</text>
+  <rect x="342.0" y="121.0" width="96.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="390.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">ReLU</text>
+  <text x="390.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">(1×4)</text>
+  <rect x="485.0" y="121.0" width="110.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="540.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">× W₂ + b₂</text>
+  <text x="540.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(4→1)</text>
+  <rect x="635.0" y="121.0" width="80.0" height="58.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="675.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">ŷ</text>
+  <text x="675.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">(1×1)</text>
+  <line x1="128.0" y1="150.0" x2="180.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M180.0,150.0 L170.9,145.9 L170.9,154.1 Z" fill="#475569"/>
+  <line x1="290.0" y1="150.0" x2="342.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M342.0,150.0 L332.9,145.9 L332.9,154.1 Z" fill="#475569"/>
+  <line x1="438.0" y1="150.0" x2="485.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M485.0,150.0 L475.9,145.9 L475.9,154.1 Z" fill="#475569"/>
+  <line x1="595.0" y1="150.0" x2="635.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M635.0,150.0 L625.9,145.9 L625.9,154.1 Z" fill="#475569"/>
+  <text x="390.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a layer = a matrix multiply, a bias add, and a nonlinear activation; chain layers to go deep</text>
+</svg>
+<figcaption><b>The forward pass.</b> The input vector is multiplied by the first weight matrix, biased, and passed through ReLU; the result feeds the next layer, and so on to the output. Watch the shapes change as each layer reshapes the representation.</figcaption></figure>
+
+<p>The shapes have to line up exactly as in Lesson 1.2. If the input is a length-3 vector and the first layer has 4
+neurons, its weight matrix is $4\times 3$, producing a length-4 hidden vector; a final layer with 1 neuron has a
+$1\times 4$ matrix, producing the single output. In practice you push a whole <span class="term">batch</span> of
+examples through at once — stack $n$ inputs into an $n\times 3$ matrix — and the same matrix multiplies handle them all
+in parallel, which is what makes GPUs so effective (Lesson 2.2's vectorization, at scale).</p>
+
+<h2><span class="sec-tag">Concept</span> The activation functions you'll actually use</h2>
+
+<p>The activation is the nonlinearity applied after each layer's weighted sum. A handful dominate practice, and they
+fall into two camps:</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" width="720" height="400" role="img">
+  <rect x="0" y="0" width="720" height="400" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Common activation functions</text>
+  <line x1="70.0" y1="208.0" x2="650.0" y2="208.0" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <text x="54.0" y="208.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <line x1="70.0" y1="288.0" x2="650.0" y2="288.0" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <text x="54.0" y="288.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">-1</text>
+  <line x1="70.0" y1="248.0" x2="650.0" y2="248.0" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="360.0" y1="116.0" x2="360.0" y2="328.0" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="646.0" y="266.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">input</text>
+  <path d="M70.0,246.8 L73.6,246.8 L77.2,246.7 L80.9,246.7 L84.5,246.6 L88.1,246.6 L91.8,246.5 L95.4,246.4 L99.0,246.4 L102.6,246.3 L106.2,246.2 L109.9,246.1 L113.5,246.1 L117.1,246.0 L120.7,245.9 L124.4,245.8 L128.0,245.7 L131.6,245.6 L135.2,245.5 L138.9,245.4 L142.5,245.3 L146.1,245.2 L149.8,245.1 L153.4,244.9 L157.0,244.8 L160.6,244.7 L164.2,244.6 L167.9,244.4 L171.5,244.3 L175.1,244.1 L178.8,244.0 L182.4,243.8 L186.0,243.6 L189.6,243.5 L193.2,243.3 L196.9,243.1 L200.5,242.9 L204.1,242.7 L207.8,242.5 L211.4,242.3 L215.0,242.1 L218.6,241.9 L222.2,241.6 L225.9,241.4 L229.5,241.1 L233.1,240.9 L236.8,240.6 L240.4,240.4 L244.0,240.1 L247.6,239.8 L251.2,239.5 L254.9,239.2 L258.5,238.9 L262.1,238.6 L265.8,238.3 L269.4,238.0 L273.0,237.6 L276.6,237.3 L280.2,236.9 L283.9,236.6 L287.5,236.2 L291.1,235.9 L294.8,235.5 L298.4,235.1 L302.0,234.7 L305.6,234.3 L309.2,233.9 L312.9,233.5 L316.5,233.1 L320.1,232.7 L323.8,232.3 L327.4,231.9 L331.0,231.5 L334.6,231.0 L338.2,230.6 L341.9,230.2 L345.5,229.7 L349.1,229.3 L352.8,228.9 L356.4,228.4 L360.0,228.0 L363.6,227.6 L367.2,227.1 L370.9,226.7 L374.5,226.3 L378.1,225.8 L381.8,225.4 L385.4,225.0 L389.0,224.5 L392.6,224.1 L396.2,223.7 L399.9,223.3 L403.5,222.9 L407.1,222.5 L410.8,222.1 L414.4,221.7 L418.0,221.3 L421.6,220.9 L425.2,220.5 L428.9,220.1 L432.5,219.8 L436.1,219.4 L439.8,219.1 L443.4,218.7 L447.0,218.4 L450.6,218.0 L454.2,217.7 L457.9,217.4 L461.5,217.1 L465.1,216.8 L468.8,216.5 L472.4,216.2 L476.0,215.9 L479.6,215.6 L483.2,215.4 L486.9,215.1 L490.5,214.9 L494.1,214.6 L497.7,214.4 L501.4,214.1 L505.0,213.9 L508.6,213.7 L512.2,213.5 L515.9,213.3 L519.5,213.1 L523.1,212.9 L526.8,212.7 L530.4,212.5 L534.0,212.4 L537.6,212.2 L541.2,212.0 L544.9,211.9 L548.5,211.7 L552.1,211.6 L555.8,211.4 L559.4,211.3 L563.0,211.2 L566.6,211.1 L570.2,210.9 L573.9,210.8 L577.5,210.7 L581.1,210.6 L584.8,210.5 L588.4,210.4 L592.0,210.3 L595.6,210.2 L599.2,210.1 L602.9,210.0 L606.5,209.9 L610.1,209.9 L613.8,209.8 L617.4,209.7 L621.0,209.6 L624.6,209.6 L628.2,209.5 L631.9,209.4 L635.5,209.4 L639.1,209.3 L642.8,209.3 L646.4,209.2 L650.0,209.2" fill="none" stroke="#38bdf8" stroke-width="2.6"/>
+  <path d="M70.0,287.9 L73.6,287.9 L77.2,287.9 L80.9,287.9 L84.5,287.9 L88.1,287.9 L91.8,287.9 L95.4,287.9 L99.0,287.9 L102.6,287.8 L106.2,287.8 L109.9,287.8 L113.5,287.8 L117.1,287.8 L120.7,287.8 L124.4,287.7 L128.0,287.7 L131.6,287.7 L135.2,287.6 L138.9,287.6 L142.5,287.6 L146.1,287.5 L149.8,287.5 L153.4,287.5 L157.0,287.4 L160.6,287.4 L164.2,287.3 L167.9,287.2 L171.5,287.2 L175.1,287.1 L178.8,287.0 L182.4,286.9 L186.0,286.8 L189.6,286.7 L193.2,286.6 L196.9,286.5 L200.5,286.3 L204.1,286.2 L207.8,286.0 L211.4,285.8 L215.0,285.7 L218.6,285.4 L222.2,285.2 L225.9,285.0 L229.5,284.7 L233.1,284.4 L236.8,284.1 L240.4,283.8 L244.0,283.4 L247.6,283.0 L251.2,282.6 L254.9,282.1 L258.5,281.6 L262.1,281.1 L265.8,280.5 L269.4,279.9 L273.0,279.3 L276.6,278.6 L280.2,277.8 L283.9,277.0 L287.5,276.2 L291.1,275.2 L294.8,274.3 L298.4,273.3 L302.0,272.2 L305.6,271.0 L309.2,269.8 L312.9,268.6 L316.5,267.3 L320.1,265.9 L323.8,264.5 L327.4,263.0 L331.0,261.5 L334.6,259.9 L338.2,258.3 L341.9,256.6 L345.5,254.9 L349.1,253.2 L352.8,251.5 L356.4,249.7 L360.0,248.0 L363.6,246.3 L367.2,244.5 L370.9,242.8 L374.5,241.1 L378.1,239.4 L381.8,237.7 L385.4,236.1 L389.0,234.5 L392.6,233.0 L396.2,231.5 L399.9,230.1 L403.5,228.7 L407.1,227.4 L410.8,226.2 L414.4,225.0 L418.0,223.8 L421.6,222.7 L425.2,221.7 L428.9,220.8 L432.5,219.8 L436.1,219.0 L439.8,218.2 L443.4,217.4 L447.0,216.7 L450.6,216.1 L454.2,215.5 L457.9,214.9 L461.5,214.4 L465.1,213.9 L468.8,213.4 L472.4,213.0 L476.0,212.6 L479.6,212.2 L483.2,211.9 L486.9,211.6 L490.5,211.3 L494.1,211.0 L497.7,210.8 L501.4,210.6 L505.0,210.3 L508.6,210.2 L512.2,210.0 L515.9,209.8 L519.5,209.7 L523.1,209.5 L526.8,209.4 L530.4,209.3 L534.0,209.2 L537.6,209.1 L541.2,209.0 L544.9,208.9 L548.5,208.8 L552.1,208.8 L555.8,208.7 L559.4,208.6 L563.0,208.6 L566.6,208.5 L570.2,208.5 L573.9,208.5 L577.5,208.4 L581.1,208.4 L584.8,208.4 L588.4,208.3 L592.0,208.3 L595.6,208.3 L599.2,208.2 L602.9,208.2 L606.5,208.2 L610.1,208.2 L613.8,208.2 L617.4,208.2 L621.0,208.1 L624.6,208.1 L628.2,208.1 L631.9,208.1 L635.5,208.1 L639.1,208.1 L642.8,208.1 L646.4,208.1 L650.0,208.1" fill="none" stroke="#f59e0b" stroke-width="2.6"/>
+  <path d="M70.0,248.4 L73.6,248.4 L77.2,248.4 L80.9,248.4 L84.5,248.5 L88.1,248.5 L91.8,248.5 L95.4,248.6 L99.0,248.6 L102.6,248.6 L106.2,248.7 L109.9,248.7 L113.5,248.7 L117.1,248.8 L120.7,248.8 L124.4,248.9 L128.0,248.9 L131.6,249.0 L135.2,249.1 L138.9,249.1 L142.5,249.2 L146.1,249.3 L149.8,249.3 L153.4,249.4 L157.0,249.5 L160.6,249.6 L164.2,249.7 L167.9,249.8 L171.5,249.9 L175.1,250.0 L178.8,250.1 L182.4,250.2 L186.0,250.3 L189.6,250.4 L193.2,250.5 L196.9,250.7 L200.5,250.8 L204.1,250.9 L207.8,251.1 L211.4,251.2 L215.0,251.4 L218.6,251.5 L222.2,251.7 L225.9,251.9 L229.5,252.0 L233.1,252.2 L236.8,252.4 L240.4,252.6 L244.0,252.7 L247.6,252.9 L251.2,253.1 L254.9,253.3 L258.5,253.4 L262.1,253.6 L265.8,253.7 L269.4,253.9 L273.0,254.0 L276.6,254.2 L280.2,254.3 L283.9,254.4 L287.5,254.4 L291.1,254.5 L294.8,254.5 L298.4,254.5 L302.0,254.5 L305.6,254.5 L309.2,254.4 L312.9,254.3 L316.5,254.1 L320.1,253.9 L323.8,253.6 L327.4,253.3 L331.0,253.0 L334.6,252.6 L338.2,252.1 L341.9,251.6 L345.5,251.0 L349.1,250.3 L352.8,249.6 L356.4,248.8 L360.0,248.0 L363.6,247.1 L367.2,246.1 L370.9,245.1 L374.5,244.0 L378.1,242.8 L381.8,241.6 L385.4,240.3 L389.0,239.0 L392.6,237.6 L396.2,236.1 L399.9,234.6 L403.5,233.1 L407.1,231.5 L410.8,229.9 L414.4,228.2 L418.0,226.5 L421.6,224.8 L425.2,223.0 L428.9,221.2 L432.5,219.4 L436.1,217.6 L439.8,215.8 L443.4,213.9 L447.0,212.0 L450.6,210.1 L454.2,208.2 L457.9,206.3 L461.5,204.4 L465.1,202.5 L468.8,200.6 L472.4,198.7 L476.0,196.7 L479.6,194.8 L483.2,192.9 L486.9,191.0 L490.5,189.0 L494.1,187.1 L497.7,185.2 L501.4,183.3 L505.0,181.4 L508.6,179.5 L512.2,177.6 L515.9,175.7 L519.5,173.8 L523.1,171.9 L526.8,170.0 L530.4,168.2 L534.0,166.3 L537.6,164.4 L541.2,162.6 L544.9,160.7 L548.5,158.9 L552.1,157.0 L555.8,155.2 L559.4,153.3 L563.0,151.5 L566.6,149.7 L570.2,147.8 L573.9,146.0 L577.5,144.2 L581.1,142.4 L584.8,140.6 L588.4,138.8 L592.0,136.9 L595.6,135.1 L599.2,133.3 L602.9,131.5 L606.5,129.7 L610.1,128.0 L613.8,126.2 L617.4,124.4 L621.0,122.6 L624.6,120.8 L628.2,119.0 L631.9,117.2 L635.5,115.5 L639.1,113.7 L642.8,111.9 L646.4,110.1 L650.0,108.4" fill="none" stroke="#8b5cf6" stroke-width="2.6"/>
+  <path d="M70.0,248.0 L73.6,248.0 L77.2,248.0 L80.9,248.0 L84.5,248.0 L88.1,248.0 L91.8,248.0 L95.4,248.0 L99.0,248.0 L102.6,248.0 L106.2,248.0 L109.9,248.0 L113.5,248.0 L117.1,248.0 L120.7,248.0 L124.4,248.0 L128.0,248.0 L131.6,248.0 L135.2,248.0 L138.9,248.0 L142.5,248.0 L146.1,248.0 L149.8,248.0 L153.4,248.0 L157.0,248.0 L160.6,248.0 L164.2,248.0 L167.9,248.0 L171.5,248.0 L175.1,248.0 L178.8,248.0 L182.4,248.0 L186.0,248.0 L189.6,248.0 L193.2,248.0 L196.9,248.0 L200.5,248.0 L204.1,248.0 L207.8,248.0 L211.4,248.0 L215.0,248.0 L218.6,248.0 L222.2,248.0 L225.9,248.0 L229.5,248.0 L233.1,248.0 L236.8,248.0 L240.4,248.0 L244.0,248.0 L247.6,248.0 L251.2,248.0 L254.9,248.0 L258.5,248.0 L262.1,248.0 L265.8,248.0 L269.4,248.0 L273.0,248.0 L276.6,248.0 L280.2,248.0 L283.9,248.0 L287.5,248.0 L291.1,248.0 L294.8,248.0 L298.4,248.0 L302.0,248.0 L305.6,248.0 L309.2,248.0 L312.9,248.0 L316.5,248.0 L320.1,248.0 L323.8,248.0 L327.4,248.0 L331.0,248.0 L334.6,248.0 L338.2,248.0 L341.9,248.0 L345.5,248.0 L349.1,248.0 L352.8,248.0 L356.4,248.0 L360.0,248.0 L363.6,246.2 L367.2,244.5 L370.9,242.8 L374.5,241.0 L378.1,239.2 L381.8,237.5 L385.4,235.8 L389.0,234.0 L392.6,232.2 L396.2,230.5 L399.9,228.8 L403.5,227.0 L407.1,225.2 L410.8,223.5 L414.4,221.8 L418.0,220.0 L421.6,218.2 L425.2,216.5 L428.9,214.8 L432.5,213.0 L436.1,211.2 L439.8,209.5 L443.4,207.8 L447.0,206.0 L450.6,204.2 L454.2,202.5 L457.9,200.8 L461.5,199.0 L465.1,197.2 L468.8,195.5 L472.4,193.8 L476.0,192.0 L479.6,190.2 L483.2,188.5 L486.9,186.8 L490.5,185.0 L494.1,183.2 L497.7,181.5 L501.4,179.8 L505.0,178.0 L508.6,176.2 L512.2,174.5 L515.9,172.8 L519.5,171.0 L523.1,169.2 L526.8,167.5 L530.4,165.8 L534.0,164.0 L537.6,162.2 L541.2,160.5 L544.9,158.8 L548.5,157.0 L552.1,155.2 L555.8,153.5 L559.4,151.8 L563.0,150.0 L566.6,148.2 L570.2,146.5 L573.9,144.8 L577.5,143.0 L581.1,141.2 L584.8,139.5 L588.4,137.8 L592.0,136.0 L595.6,134.2 L599.2,132.5 L602.9,130.8 L606.5,129.0 L610.1,127.2 L613.8,125.5 L617.4,123.8 L621.0,122.0 L624.6,120.3 L628.2,118.5 L631.9,116.8 L635.5,115.0 L639.1,113.2 L642.8,111.5 L646.4,109.8 L650.0,108.0" fill="none" stroke="#10b981" stroke-width="2.6"/>
+  <line x1="96.0" y1="90.0" x2="126.0" y2="90.0" stroke="#10b981" stroke-width="3.4" stroke-linecap="round"/>
+  <text x="132.0" y="90.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#10b981" text-anchor="start" opacity="1.0" dominant-baseline="middle">ReLU</text>
+  <line x1="96.0" y1="111.0" x2="126.0" y2="111.0" stroke="#8b5cf6" stroke-width="3.4" stroke-linecap="round"/>
+  <text x="132.0" y="111.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#8b5cf6" text-anchor="start" opacity="1.0" dominant-baseline="middle">GELU</text>
+  <line x1="96.0" y1="132.0" x2="126.0" y2="132.0" stroke="#38bdf8" stroke-width="3.4" stroke-linecap="round"/>
+  <text x="132.0" y="132.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#38bdf8" text-anchor="start" opacity="1.0" dominant-baseline="middle">sigmoid</text>
+  <line x1="96.0" y1="153.0" x2="126.0" y2="153.0" stroke="#f59e0b" stroke-width="3.4" stroke-linecap="round"/>
+  <text x="132.0" y="153.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#f59e0b" text-anchor="start" opacity="1.0" dominant-baseline="middle">tanh</text>
+  <text x="360.0" y="376.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Sigmoid &amp; tanh saturate (flatten at ±1), choking gradients; ReLU &amp; GELU keep growing for x&gt;0.</text>
+</svg>
+<figcaption><b>Four activations.</b> Sigmoid and tanh saturate (flatten) for large inputs, which chokes gradients; ReLU and GELU stay responsive for positive inputs. ReLU — output the input if positive, else zero — is the modern default for hidden layers.</figcaption></figure>
+
+<ul>
+<li><strong>ReLU</strong> $= \max(0, z)$: the default for hidden layers. It's cheap (just a threshold), never saturates
+for positive inputs, and trains fast. Its quirk: neurons can "die" if they get stuck always outputting 0.</li>
+<li><strong>Sigmoid</strong> $= 1/(1+e^{-z})$: squashes to $(0,1)$. Great for a final probability (Lesson 3.3), but
+poor for hidden layers because it <span class="term">saturates</span> — its slope flattens to nearly 0 for large
+$|z|$, starving gradients (the vanishing-gradient problem, Lesson 4.7).</li>
+<li><strong>tanh</strong>: like sigmoid but ranges $(-1,1)$ and is zero-centered; still saturates.</li>
+<li><strong>GELU</strong>: a smooth ReLU-like curve used in modern transformers (Track 5); often a touch better than
+ReLU in big models.</li>
+</ul>
+
+<p>For the <em>output</em> layer the choice is dictated by the task, not preference: <strong>softmax</strong> for
+multi-class classification (probabilities summing to 1, Lesson 3.3), a single <strong>sigmoid</strong> for binary, and
+<strong>no activation</strong> (linear) for regression, where you want an unbounded number.</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> A two-layer network's forward pass, by hand then in PyTorch</div>
+<div class="bd">
+<p>We push one input through a network with a 4-neuron ReLU hidden layer and a 1-neuron linear output, computing every
+intermediate value explicitly:</p>
+
+<pre><code>import numpy as np
+rng = np.random.default_rng(0)
+
+x  = np.array([1.0, 2.0, -1.0])      # input, shape (3,)
+W1 = rng.normal(0, 1, (4, 3)); b1 = np.zeros(4)   # hidden layer: 3 -> 4
+W2 = rng.normal(0, 1, (1, 4)); b2 = np.zeros(1)   # output layer: 4 -> 1
+
+h = np.maximum(0, W1 @ x + b1)       # hidden pre-activation, then ReLU
+y = W2 @ h + b2                      # linear output (regression)
+print("hidden (after ReLU):", h.round(3))
+print("output:", y.round(3))</code></pre>
+<div class="out"><span class="lbl">Output</span>hidden (after ReLU): [0.    0.    3.902 0.   ]
+output: [-4.861]</div>
+
+<p>Notice ReLU zeroed three of the four hidden neurons — their pre-activation sums were negative, so they output 0 and
+contributed nothing to this particular prediction. Only the third neuron "fired." Different inputs light up different
+neurons; that sparse, input-dependent pattern is part of what gives networks their flexibility. The whole forward pass
+was two matrix multiplies and one ReLU. In PyTorch you'd express the same architecture declaratively:</p>
+
+<pre><code>import torch.nn as nn
+
+model = nn.Sequential(
+    nn.Linear(3, 4),   # hidden layer: 3 -> 4
+    nn.ReLU(),         # activation
+    nn.Linear(4, 1),   # output layer: 4 -> 1 (no activation -> regression)
+)
+y = model(x_batch)     # forward pass for a whole batch at once</code></pre>
+
+<p>Calling <code>model(x)</code> <em>is</em> the forward pass — PyTorch runs exactly the multiply-add-activate chain
+above. (Keras: <code>Sequential([Dense(4, "relu"), Dense(1)])</code>.) The network doesn't know anything useful yet —
+its weights are random, so the output is meaningless. Making that output <em>correct</em> is what learning does, and
+that requires knowing how to adjust every weight — the job of backpropagation, next.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>The <strong>forward pass</strong> repeats multiply → add bias → activate through the layers to produce a prediction.</li>
+<li>Shapes must chain: a layer from $m$ to $n$ units uses an $n\times m$ weight matrix; <strong>batches</strong> go through together.</li>
+<li><strong>ReLU</strong> ($\max(0,z)$) is the default hidden activation — cheap, no positive-side saturation.</li>
+<li><strong>Sigmoid/tanh saturate</strong> (flat slopes) and starve gradients, so they're avoided in hidden layers.</li>
+<li>Output activation follows the task: <strong>softmax</strong> (multi-class), <strong>sigmoid</strong> (binary), <strong>linear</strong> (regression).</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q1.</span> What is the forward pass?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The step that updates the weights</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Computing the prediction by passing the input through each layer (multiply, add bias, activate)</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Computing gradients</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Loading the dataset</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Updating weights is the optimizer step, after the backward pass.</div>
+<div class="ex" data-for="b">Correct. The forward pass produces the output by chaining each layer's transform.</div>
+<div class="ex" data-for="c">Computing gradients is the backward pass (backprop), which comes next.</div>
+<div class="ex" data-for="d">Data loading is separate from the forward computation.</div>
+</div>
+</div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q2.</span> Why is ReLU usually preferred over sigmoid for hidden layers?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>ReLU outputs probabilities</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Sigmoid is not differentiable</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Sigmoid saturates (flat slope) for large inputs, starving gradients; ReLU stays responsive and is cheap</span></li>
+<li data-opt="d"><span class="mk">D</span><span>ReLU has more parameters</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Sigmoid outputs probabilities; ReLU does not — that's why sigmoid is for outputs, not hidden layers.</div>
+<div class="ex" data-for="b">Sigmoid is perfectly differentiable; that's not the issue.</div>
+<div class="ex" data-for="c">Correct. Sigmoid's flat tails make gradients vanish in deep nets; ReLU's constant positive slope avoids that and is trivially cheap.</div>
+<div class="ex" data-for="d">Activations have no parameters; they add none.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> You're predicting a house price (any positive number). What activation should the output layer use?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Softmax</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Sigmoid</span></li>
+<li data-opt="c"><span class="mk">C</span><span>tanh</span></li>
+<li data-opt="d"><span class="mk">D</span><span>None (linear output)</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Softmax produces probabilities summing to 1 — for classification, not a price.</div>
+<div class="ex" data-for="b">Sigmoid caps output to $(0,1)$ — wrong for an unbounded price.</div>
+<div class="ex" data-for="c">tanh caps output to $(-1,1)$ — also wrong for a price.</div>
+<div class="ex" data-for="d">Correct. Regression needs an unbounded real number, so use a linear (no-activation) output.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> In the worked example, ReLU set three of four hidden values to 0. What does that mean?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Those neurons had negative pre-activation sums, so they output 0 for this input</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Those neurons are broken</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The network has only one neuron</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The input was zero</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. ReLU outputs 0 whenever $z<0$, so those neurons stayed silent for this particular input — a different input would light up others.</div>
+<div class="ex" data-for="b">It's normal ReLU behavior, not a fault.</div>
+<div class="ex" data-for="c">There are four hidden neurons; three just output 0 here.</div>
+<div class="ex" data-for="d">The input was $[1,2,-1]$, not zero; the zeros come from ReLU clipping negative sums.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>A hidden layer maps 10 inputs to 64 neurons; the next maps 64 to 64; the output maps 64 to 3 classes. Give each layer's weight-matrix shape and the output activation.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Layer 1: $64 \times 10$. Layer 2: $64 \times 64$. Output layer: $3 \times 64$. (A layer from $m$ to $n$ units has an
+$n\times m$ matrix.) The output activation is <strong>softmax</strong>, because it's 3-class classification — you want
+three probabilities that sum to 1.</p>
+<p>Total weights: $640 + 4096 + 192 = 4{,}928$ (plus $64+64+3=131$ biases). A batch of, say, 32 inputs enters as a
+$32\times 10$ matrix and exits as $32\times 3$ — every example processed in parallel by the same matrices.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>A colleague uses sigmoid activations in all 20 hidden layers of a deep network and finds the early layers barely train. Explain the likely cause and the fix.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The cause is <strong>saturation → vanishing gradients</strong>. Sigmoid's slope is near 0 when its input is even
+moderately large or small. During backprop (next lesson) the gradient for an early layer is a <em>product</em> of many
+such slopes; multiply twenty near-zero numbers and you get essentially zero, so the early layers receive almost no
+learning signal (Lesson 4.7 covers this in depth).</p>
+<p>The fix: use <strong>ReLU</strong> (or GELU) in the hidden layers. ReLU's slope is exactly 1 for positive inputs, so
+it doesn't shrink the gradient as it propagates back — this single change was one of the key unlocks that made deep
+networks trainable. Reserve sigmoid for the output layer when you need a probability.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Without any activation functions, the two-layer worked example would compute $W_2(W_1 x)$. Why is that a problem, and what single change fixes it?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>$W_2(W_1 x) = (W_2 W_1)x = W_{\text{combined}}\,x$ — the two layers collapse into one linear map (Lesson 4.1). The
+"deep" network would be no more expressive than a single linear layer, unable to fit anything nonlinear.</p>
+<p>The fix is the ReLU sitting between them: $W_2\,\text{ReLU}(W_1 x)$ <em>cannot</em> be rewritten as a single matrix
+multiply, because ReLU bends the signal. That one nonlinearity is precisely what makes the forward pass compute
+something a linear model can't — which is why the worked example applied <code>np.maximum(0, ...)</code> before the
+second layer.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: dead ReLUs, leaky variants, and numerical care<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>ReLU's one weakness is the <strong>dying ReLU</strong> problem: if a neuron's weights drift so that its
+pre-activation is negative for <em>every</em> input, it always outputs 0, and since ReLU's gradient is also 0 there, it
+receives no signal to recover — the neuron is dead for good. Variants fix this by leaking a small slope for negative
+inputs: <strong>Leaky ReLU</strong> ($0.01z$ for $z<0$), <strong>PReLU</strong> (learns the leak), and
+<strong>ELU</strong>/<strong>GELU</strong> (smooth curves). In practice plain ReLU works fine for most networks with
+good initialization (Lesson 4.8), and GELU has become standard in transformers, but it's worth knowing the failure
+mode and the menu of fixes.</p>
+<p>A subtlety you'll meet in code: <strong>softmax and sigmoid are usually folded into the loss function</strong>, not
+applied as a separate output layer. PyTorch's <code>nn.CrossEntropyLoss</code> expects raw scores ("logits") and
+applies softmax internally; <code>nn.BCEWithLogitsLoss</code> does the same with sigmoid. This isn't a quirk — doing
+the squash and the log together is numerically stabler (it avoids computing $\log$ of a number that underflowed to 0).
+So a classification network often ends with a bare <code>nn.Linear</code> and <em>no</em> visible final activation,
+with the softmax living inside the loss. Knowing this saves you from the common bug of applying softmax twice, which
+silently wrecks training.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">A fresh network's forward pass gives nonsense, because its weights are
+random. Next, in <strong>4.3 Backpropagation, step by step</strong>, we learn how the network measures its error and
+computes how to adjust <em>every</em> weight — the algorithm that makes learning possible.</p>
+</article>
+<nav class="pager"><a class="prev" href="dl1-neuron.html"><span class="dir">← Previous</span><span class="ti">From a neuron to a network</span></a><a class="next" href="dl3-backprop.html"><span class="dir">Next →</span><span class="ti">Backpropagation, step by step</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

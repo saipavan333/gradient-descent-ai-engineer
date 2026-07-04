@@ -1,0 +1,31 @@
+<svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" width="700" height="330" role="img">
+  <rect x="0" y="0" width="700" height="330" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Deep learning &amp; transformers: question clusters</text>
+  <rect x="275.0" y="149.0" width="150.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="350.0" y="173.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Deep</text>
+  <text x="350.0" y="191.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">learning</text>
+  <rect x="275.0" y="40.0" width="150.0" height="52.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="350.0" y="62.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Backprop</text>
+  <text x="350.0" y="78.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">&amp; training</text>
+  <line x1="350.0" y1="149.0" x2="350.0" y2="92.0" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M350.0,92.0 L345.9,101.1 L354.1,101.1 Z" fill="#475569"/>
+  <rect x="48.6" y="117.4" width="150.0" height="52.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="123.6" y="139.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">CNNs &amp;</text>
+  <text x="123.6" y="155.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">RNNs</text>
+  <line x1="275.0" y1="166.5" x2="198.6" y2="154.9" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M198.6,154.9 L207.1,160.3 L208.3,152.2 Z" fill="#475569"/>
+  <rect x="135.1" y="242.6" width="150.0" height="52.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="210.1" y="264.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Attention &amp;</text>
+  <text x="210.1" y="280.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">transformers</text>
+  <line x1="305.2" y1="207.0" x2="250.2" y2="242.6" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M250.2,242.6 L260.1,241.1 L255.7,234.2 Z" fill="#475569"/>
+  <rect x="414.9" y="242.6" width="150.0" height="52.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="489.9" y="264.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Optimization &amp;</text>
+  <text x="489.9" y="280.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">regularization</text>
+  <line x1="394.8" y1="207.0" x2="449.8" y2="242.6" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M449.8,242.6 L444.3,234.2 L439.9,241.1 Z" fill="#475569"/>
+  <rect x="501.4" y="117.4" width="150.0" height="52.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="576.4" y="147.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Embeddings</text>
+  <line x1="425.0" y1="166.5" x2="501.4" y2="154.9" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M501.4,154.9 L491.7,152.2 L492.9,160.3 Z" fill="#475569"/>
+</svg>

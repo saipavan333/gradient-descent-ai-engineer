@@ -1,0 +1,28 @@
+<svg viewBox="0 0 740 290" xmlns="http://www.w3.org/2000/svg" width="740" height="290" role="img">
+  <rect x="0" y="0" width="740" height="290" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 9 in one line: run ML reliably in production</text>
+  <rect x="8.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="70.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Version</text>
+  <text x="70.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">&amp; track</text>
+  <rect x="158.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="220.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Pipeline</text>
+  <text x="220.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">&amp; registry</text>
+  <rect x="308.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="370.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Serve</text>
+  <text x="370.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">&amp; scale</text>
+  <rect x="458.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="520.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Monitor</text>
+  <rect x="608.0" y="121.0" width="124.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="670.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Drift →</text>
+  <text x="670.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">retrain</text>
+  <line x1="132.0" y1="150.0" x2="158.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M158.0,150.0 L148.9,145.9 L148.9,154.1 Z" fill="#475569"/>
+  <line x1="282.0" y1="150.0" x2="308.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M308.0,150.0 L298.9,145.9 L298.9,154.1 Z" fill="#475569"/>
+  <line x1="432.0" y1="150.0" x2="458.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M458.0,150.0 L448.9,145.9 L448.9,154.1 Z" fill="#475569"/>
+  <line x1="582.0" y1="150.0" x2="608.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M608.0,150.0 L598.9,145.9 L598.9,154.1 Z" fill="#475569"/>
+  <text x="370.0" y="235.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">MLOps wraps the model in versioning, pipelines, serving, monitoring, and retraining —</text>
+  <text x="370.0" y="256.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the engineering that turns a working model into a reliable service.</text>
+</svg>

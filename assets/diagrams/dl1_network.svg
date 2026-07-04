@@ -1,0 +1,46 @@
+<svg viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" width="660" height="360" role="img">
+  <rect x="0" y="0" width="660" height="360" fill="#ffffff"/>
+  <text x="330.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Stack neurons into layers → a neural network</text>
+  <circle cx="120.0" cy="110.0" r="15.0" fill="#fff" stroke="#38bdf8" stroke-width="2.2"/>
+  <circle cx="120.0" cy="180.0" r="15.0" fill="#fff" stroke="#38bdf8" stroke-width="2.2"/>
+  <circle cx="120.0" cy="250.0" r="15.0" fill="#fff" stroke="#38bdf8" stroke-width="2.2"/>
+  <circle cx="340.0" cy="80.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="340.0" cy="150.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="340.0" cy="220.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="340.0" cy="290.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="540.0" cy="150.0" r="15.0" fill="#fff" stroke="#fb7185" stroke-width="2.2"/>
+  <circle cx="540.0" cy="210.0" r="15.0" fill="#fff" stroke="#fb7185" stroke-width="2.2"/>
+  <line x1="135.0" y1="110.0" x2="325.0" y2="80.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="110.0" x2="325.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="110.0" x2="325.0" y2="220.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="110.0" x2="325.0" y2="290.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="180.0" x2="325.0" y2="80.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="180.0" x2="325.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="180.0" x2="325.0" y2="220.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="180.0" x2="325.0" y2="290.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="250.0" x2="325.0" y2="80.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="250.0" x2="325.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="250.0" x2="325.0" y2="220.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="135.0" y1="250.0" x2="325.0" y2="290.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="80.0" x2="525.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="80.0" x2="525.0" y2="210.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="150.0" x2="525.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="150.0" x2="525.0" y2="210.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="220.0" x2="525.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="220.0" x2="525.0" y2="210.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="290.0" x2="525.0" y2="150.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="355.0" y1="290.0" x2="525.0" y2="210.0" stroke="#d7def0" stroke-width="1.2" stroke-linecap="round"/>
+  <circle cx="120.0" cy="110.0" r="15.0" fill="#fff" stroke="#38bdf8" stroke-width="2.2"/>
+  <circle cx="120.0" cy="180.0" r="15.0" fill="#fff" stroke="#38bdf8" stroke-width="2.2"/>
+  <circle cx="120.0" cy="250.0" r="15.0" fill="#fff" stroke="#38bdf8" stroke-width="2.2"/>
+  <circle cx="340.0" cy="80.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="340.0" cy="150.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="340.0" cy="220.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="340.0" cy="290.0" r="15.0" fill="#fff" stroke="#6366f1" stroke-width="2.2"/>
+  <circle cx="540.0" cy="150.0" r="15.0" fill="#fff" stroke="#fb7185" stroke-width="2.2"/>
+  <circle cx="540.0" cy="210.0" r="15.0" fill="#fff" stroke="#fb7185" stroke-width="2.2"/>
+  <text x="120.0" y="322.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">input layer</text>
+  <text x="340.0" y="322.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">hidden layer</text>
+  <text x="540.0" y="322.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">output layer</text>
+  <text x="330.0" y="346.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">every arrow is a weight; deeper + wider = more capacity to fit complex patterns</text>
+</svg>

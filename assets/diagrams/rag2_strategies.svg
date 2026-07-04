@@ -1,0 +1,17 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="720" height="320" role="img">
+  <rect x="0" y="0" width="720" height="320" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Chunking strategies, from blunt to smart</text>
+  <rect x="80.0" y="100.0" width="560.0" height="56.0" rx="10" fill="#ffffff" stroke="#fb7185" stroke-width="1.6" opacity="1.0"/>
+  <text x="150.0" y="128.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Fixed-size</text>
+  <text x="230.0" y="120.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#1f2937" text-anchor="start" opacity="1.0" dominant-baseline="middle">cut every N characters</text>
+  <text x="230.0" y="138.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">simple, but splits mid-sentence</text>
+  <rect x="80.0" y="172.0" width="560.0" height="56.0" rx="10" fill="#ffffff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <text x="150.0" y="200.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Recursive</text>
+  <text x="230.0" y="192.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#1f2937" text-anchor="start" opacity="1.0" dominant-baseline="middle">split on paragraphs → sentences</text>
+  <text x="230.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">respects structure (common default)</text>
+  <rect x="80.0" y="244.0" width="560.0" height="56.0" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="150.0" y="272.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Semantic</text>
+  <text x="230.0" y="264.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#1f2937" text-anchor="start" opacity="1.0" dominant-baseline="middle">group by meaning (embedding shifts)</text>
+  <text x="230.0" y="282.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">cleanest, but more compute</text>
+  <text x="360.0" y="308.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">chunk size is a real tuning knob: too small loses context, too big dilutes the match</text>
+</svg>

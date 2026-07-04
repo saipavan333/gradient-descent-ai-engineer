@@ -1,0 +1,27 @@
+<svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" width="760" height="280" role="img">
+  <rect x="0" y="0" width="760" height="280" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">From base model to helpful assistant: the alignment pipeline</text>
+  <rect x="40.0" y="104.0" width="120.0" height="72.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="100.0" y="128.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">base model</text>
+  <text x="100.0" y="143.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">(raw, not</text>
+  <text x="100.0" y="159.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">helpful)</text>
+  <rect x="220.0" y="104.0" width="140.0" height="72.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="290.0" y="128.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">SFT</text>
+  <text x="290.0" y="143.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">train on good</text>
+  <text x="290.0" y="159.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">demonstrations</text>
+  <rect x="410.0" y="104.0" width="140.0" height="72.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="480.0" y="128.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">reward model</text>
+  <text x="480.0" y="143.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">learns human</text>
+  <text x="480.0" y="159.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">preferences</text>
+  <rect x="600.0" y="104.0" width="140.0" height="72.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="670.0" y="128.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">RLHF</text>
+  <text x="670.0" y="143.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">optimize policy</text>
+  <text x="670.0" y="159.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">for high reward</text>
+  <line x1="160.0" y1="140.0" x2="220.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M220.0,140.0 L210.9,135.9 L210.9,144.1 Z" fill="#475569"/>
+  <line x1="360.0" y1="140.0" x2="410.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M410.0,140.0 L400.9,135.9 L400.9,144.1 Z" fill="#475569"/>
+  <line x1="550.0" y1="140.0" x2="600.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M600.0,140.0 L590.9,135.9 L590.9,144.1 Z" fill="#475569"/>
+  <text x="380.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">SFT teaches the format; the reward model + RL teach it to be helpful, honest, and harmless</text>
+</svg>

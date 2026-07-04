@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-root="../../" data-lesson="t9-l01">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ablations &amp; controls · AI/ML Mastery</title>
+  <link rel="stylesheet" href="../../assets/vendor/katex/katex.min.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <aside id="sidebar"></aside>
+  <main>
+    <article class="lesson">
+      <h1>Ablations &amp; controls</h1>
+      <p class="subtitle">Your method has five new parts and it works. But <em>which</em> part made it work? An ablation answers that — by removing components one at a time and watching what breaks. It is the difference between “it works” and “I understand why.”</p>
+      <div class="meta-row">
+        <span class="chip b">Track 9 · Lesson 1</span>
+        <span class="chip">Method + code</span>
+        <span class="chip">~24 min</span>
+        <span class="chip">Builds on: Lesson 0</span>
+      </div>
+
+      <p class="lead prose">
+        New methods are usually bundles: a new architecture <em>and</em> a new loss <em>and</em> a new training trick. Reviewers — and good researchers — immediately ask which ingredient actually matters. The <span class="newterm">ablation study</span> answers this by turning each component off in turn, the controlled experiment of Lesson&nbsp;0 applied inside your own method.
+      </p>
+
+      <!-- CONCEPT -->
+      <h2><span class="sec-ico">💡</span> Concept: remove one part, measure the damage</h2>
+      <p class="prose">
+        The word <span class="newterm">ablation</span> comes from surgery — removing a part to learn its function. In ML it means: start from the full method, disable exactly one component, retrain and re-evaluate, and record the change in performance. The drop is that component’s <span class="newterm">contribution</span>. Each ablation is a controlled experiment — one independent variable (component on/off), everything else fixed — so the drop is attributable to that component alone.
+      </p>
+      <p class="prose">
+        Crucially, an ablation tells you the truth even when it is unflattering: components that contribute nothing, or hurt. Reporting those is not a weakness — it’s how the field learns what’s essential versus decorative, and it pre-empts the reviewer who suspects your gain comes from somewhere other than your headline idea.
+      </p>
+
+      <!-- CODE -->
+      <h2><span class="sec-ico">🛠️</span> From scratch: an ablation study</h2>
+      <p class="prose">
+        Our <code>ablation.py</code> classifies <em>concentric circles</em> (an inner disk vs an outer ring) with a logistic model whose feature pipeline has three optional parts: squared terms, an interaction term, and feature standardization. We measure the full model, then ablate each part:
+      </p>
+      <pre><code>full = dict(use_square=True, use_interaction=True, standardize=True)
+base = accuracy(full)                              # the complete method
+
+for name, change in [("- squared terms",     dict(use_square=False)),
+                     ("- interaction term",  dict(use_interaction=False)),
+                     ("- standardization",   dict(standardize=False))]:
+    cfg = {**full, **change}                       # turn ONE part off
+    print(name, accuracy(cfg), "drop:", base - accuracy(cfg))
+</code></pre>
+      <figure class="diagram">
+        <img src="data:image/png;base64,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" alt="Bar chart of accuracy drop per ablated component: squared terms minus 0.54, interaction 0.00, standardization minus 0.29." />
+        <figcaption><span class="fig-num">Figure 1.1.</span> Real output from <code>ablation.py</code> (full model = 1.00). Removing the <strong>squared terms</strong> collapses accuracy to chance (−0.54): a circle is separated by radius \(x^2+y^2\), so the quadratic features are essential. <strong>Standardization</strong> matters too (−0.29, it conditions the optimization). The <strong>interaction term</strong> contributes nothing (−0.00) — an honest finding that it’s decorative for this task.</figcaption>
+      </figure>
+      <div class="callout intuition ml-link">
+        <strong>Ablations vs. additions.</strong> Two directions probe the same question. An <em>ablation</em> removes a part from the full system (top-down: “is it necessary?”). An <em>additive</em> study starts from a bare baseline and adds parts one at a time (bottom-up: “is it sufficient?”). Strong papers often show both, because a component can look essential in ablation yet useless when added to a different base — interactions between components are real, which is why you change one thing at a time.
+      </div>
+
+      <!-- KEY RESULTS -->
+      <h2><span class="sec-ico">🔑</span> Key results to remember</h2>
+      <div class="keybox">
+        <ul>
+          <li><strong>Ablation</strong> = remove one component, retrain, measure the performance drop = that component’s contribution.</li>
+          <li><strong>Each ablation is a controlled experiment:</strong> one variable off, everything else fixed, so the drop is attributable.</li>
+          <li><strong>Report unflattering results:</strong> components that don’t help (or hurt) are real findings and strengthen credibility.</li>
+          <li><strong>Ablation (remove) vs additive (build up)</strong> answer “necessary?” vs “sufficient?”; components can interact.</li>
+          <li><strong>An ablation table is how you turn “it works” into “here is why it works.”</strong></li>
+        </ul>
+      </div>
+
+      <!-- QUIZ -->
+      <h2><span class="sec-ico">🧩</span> Quiz</h2>
+      <div class="quiz">
+        <div class="quiz-title">🧩 Check your understanding</div>
+        <div class="quiz-sub">Answer from memory, then read why.</div>
+
+        <div class="quiz-q" data-correct="2">
+          <p class="quiz-stem"><span class="qn">Q1.</span> What does an ablation study measure?</p>
+          <ul class="quiz-options">
+            <li>The total training time of the model.<div class="quiz-why">That’s a cost measurement, not an ablation.</div></li>
+            <li>How accuracy changes as you add more data.<div class="quiz-why">That’s a data-scaling study; ablation varies <em>components</em>, not dataset size.</div></li>
+            <li>Each component’s contribution, by removing it and measuring the performance drop.<div class="quiz-why">Correct. Disable one part at a time and the resulting drop is that part’s contribution — the controlled-experiment logic applied inside your method.</div></li>
+            <li>Whether the code has bugs.<div class="quiz-why">Debugging is separate; an ablation assumes a working method and asks which parts matter.</div></li>
+          </ul>
+        </div>
+
+        <div class="quiz-q" data-correct="0">
+          <p class="quiz-stem"><span class="qn">Q2.</span> In the circles example, removing the squared terms dropped accuracy to ~0.46 (chance). Why?</p>
+          <ul class="quiz-options">
+            <li>Concentric circles are separated by radius \(x^2+y^2\), so without quadratic features no linear boundary can split them.<div class="quiz-why">Correct. The classes differ only in distance from the origin; a linear model in \(x,y\) cannot capture that, but \(x^2+y^2\) makes it trivially separable. Hence the squared terms are essential.</div></li>
+            <li>The optimizer diverged.<div class="quiz-why">The model still trains fine; it simply lacks the features needed to represent a circular boundary.</div></li>
+            <li>The data became noisier.<div class="quiz-why">The data is unchanged; only the feature set was ablated.</div></li>
+            <li>Standardization was also removed.<div class="quiz-why">Only the squared terms were removed in that row; standardization was still on.</div></li>
+          </ul>
+        </div>
+
+        <div class="quiz-q" data-correct="3">
+          <p class="quiz-stem"><span class="qn">Q3.</span> Your ablation shows one component contributes \(-0.00\) (no effect). What should you do?</p>
+          <ul class="quiz-options">
+            <li>Hide it so the method looks cleaner.<div class="quiz-why">Hiding null results is dishonest and misleads readers about what’s actually needed.</div></li>
+            <li>Claim it’s essential anyway.<div class="quiz-why">That contradicts your own evidence and is exactly the kind of overclaim Track 8 warns against.</div></li>
+            <li>Add more components until something works.<div class="quiz-why">Throwing in parts without understanding is the opposite of what an ablation is for.</div></li>
+            <li>Report it honestly — a non-contributing component is a real, useful finding (and you might simplify by removing it).<div class="quiz-why">Correct. Honest null results tell readers what’s decorative, let you simplify the method, and build credibility. Strong papers report what didn’t matter alongside what did.</div></li>
+          </ul>
+        </div>
+
+        <div class="quiz-q" data-correct="1">
+          <p class="quiz-stem"><span class="qn">Q4.</span> Why must each ablation change only one component at a time?</p>
+          <ul class="quiz-options">
+            <li>To save compute.<div class="quiz-why">Compute isn’t the reason; it’s about attribution.</div></li>
+            <li>So the performance change can be attributed to that specific component.<div class="quiz-why">Correct. If you remove two parts at once and accuracy drops, you can’t tell which part was responsible — the same confounding problem from Lesson 0, now inside your method.</div></li>
+            <li>Because removing two parts always crashes the model.<div class="quiz-why">It usually runs fine; the issue is interpretability of the result, not stability.</div></li>
+            <li>To make the table shorter.<div class="quiz-why">Table length is irrelevant; clean attribution is the point.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PRACTICE -->
+      <h2><span class="sec-ico">✍️</span> Practice</h2>
+      <div class="practice">
+        <div class="problem">
+          <p class="problem-stem"><strong>1.</strong> Run <code>ablation.py</code>. Then ablate <em>two</em> components at once (e.g. squared terms <em>and</em> standardization). Why is the result harder to interpret?</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="solution-body">
+              <p>Removing both gives a single drop that mixes two causes — you can’t tell how much each contributed, and the combined effect need not equal the sum of the individual drops (components can interact). For instance, once the squared terms are gone the model is at chance, so removing standardization on top of that adds little further drop — masking standardization’s real contribution. This is exactly why ablations vary one component at a time: only then does each row’s number mean “this component’s contribution.” To study interactions deliberately, you’d run a small factorial design (all on/off combinations) and analyze it explicitly.</p>
+            </div>
+          </details>
+        </div>
+        <div class="problem">
+          <p class="problem-stem"><strong>2.</strong> The interaction term showed \(-0.00\). Construct a dataset where the interaction term \(xy\) <em>would</em> be the critical feature.</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="solution-body">
+              <p>Use an XOR-like pattern: label points by the sign of \(x\cdot y\) — class 1 in the upper-right and lower-left quadrants, class 0 in the other two. No linear or purely squared boundary separates these (the pattern is symmetric in \(x\) and \(y\) individually), but the single interaction feature \(xy\) splits them perfectly: \(xy>0\) vs \(xy<0\). Re-running the ablation on this data would flip the table — the interaction term becomes critical (large drop when removed) while the squared terms become decorative. This demonstrates the key lesson: a component’s importance is a property of the <em>task</em>, not the component, which is why ablations must be run for each problem rather than assumed.</p>
+            </div>
+          </details>
+        </div>
+        <div class="problem">
+          <p class="problem-stem"><strong>3.</strong> Conceptual: a paper claims a fancy new attention mechanism drives its gains, but provides no ablation. What experiment would settle it, and what result would <em>undercut</em> the claim?</p>
+          <details class="solution"><summary>Show solution</summary>
+            <div class="solution-body">
+              <p>Run the full model and a version with the fancy attention replaced by standard attention (or removed), holding everything else fixed — data, parameter count, training budget, seeds. If the gain largely survives the swap, the headline mechanism is <em>not</em> what drives the result — perhaps it’s the extra parameters, longer training, or better tuning. That outcome would undercut the claim. A credible paper pre-empts this by including the ablation itself and, ideally, a parameter-matched control so the comparison isn’t confounded by capacity (a Track-8 red flag: apples-to-oranges compute).</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- DEEP DIVE -->
+      <div class="deepdive">
+        <h3>🔬 Deep dive &amp; primary sources</h3>
+        <ul class="refs">
+          <li><span class="src-type">paper</span> Lipton &amp; Steinhardt (2018), “Troubling Trends in ML Scholarship” — on explanation vs. mere performance. <a href="https://arxiv.org/abs/1807.03341" target="_blank" rel="noopener">arXiv:1807.03341</a></li>
+          <li><span class="src-type">paper</span> Melis et al. (2018), “On the State of the Art of Evaluation in Neural Language Models” — ablations overturning reported gains. <a href="https://arxiv.org/abs/1707.05589" target="_blank" rel="noopener">arXiv:1707.05589</a></li>
+          <li><span class="src-type">paper</span> Sculley et al. (2018), “Winner’s Curse? On Pace, Progress, and Empirical Rigor.” <a href="https://openreview.net/forum?id=rJWF0Fywf" target="_blank" rel="noopener">openreview.net</a></li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <script src="../../assets/vendor/katex/katex.min.js"></script>
+  <script src="../../assets/vendor/katex/auto-render.min.js"></script>
+  <script src="../../assets/js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" width="720" height="380" role="img">
+  <rect x="0" y="0" width="720" height="380" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Bayes' rule: update belief with evidence</text>
+  <rect x="55.0" y="160.0" width="110.0" height="60.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="110.0" y="185.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">10,000</text>
+  <text x="110.0" y="203.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">people</text>
+  <rect x="275.0" y="71.0" width="110.0" height="58.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="330.0" y="95.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">100 sick</text>
+  <text x="330.0" y="113.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">(1%)</text>
+  <rect x="270.0" y="263.0" width="120.0" height="54.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="330.0" y="294.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">9,900 well</text>
+  <line x1="165.0" y1="167.5" x2="275.0" y2="122.5" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M275.0,122.5 L265.0,122.2 L268.1,129.7 Z" fill="#475569"/>
+  <rect x="184.8" y="124.6" width="70.3" height="20.2" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="220.0" y="135.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" fill="#475569" text-anchor="middle" dominant-baseline="middle">prior 1%</text>
+  <line x1="165.0" y1="215.0" x2="270.6" y2="263.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M270.6,263.0 L264.0,255.5 L260.6,262.9 Z" fill="#475569"/>
+  <rect x="481.0" y="71.0" width="128.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="545.0" y="95.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">99 test +</text>
+  <text x="545.0" y="112.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(99% sens.)</text>
+  <rect x="479.0" y="261.0" width="132.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="545.0" y="285.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">~495 test +</text>
+  <text x="545.0" y="302.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(5% false +)</text>
+  <line x1="385.0" y1="100.0" x2="481.0" y2="100.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M481.0,100.0 L471.9,95.9 L471.9,104.1 Z" fill="#475569"/>
+  <line x1="390.0" y1="290.0" x2="479.0" y2="290.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M479.0,290.0 L469.9,285.9 L469.9,294.1 Z" fill="#475569"/>
+  <text x="360.0" y="355.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Given a positive test: P(sick | +) = 99 / (99 + 495) ≈ 17%</text>
+</svg>

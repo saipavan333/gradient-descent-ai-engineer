@@ -1,0 +1,32 @@
+<svg viewBox="0 0 560 440" xmlns="http://www.w3.org/2000/svg" width="560" height="440" role="img">
+  <rect x="0" y="0" width="560" height="440" fill="#ffffff"/>
+  <text x="280.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">An EDA checklist: look before you model</text>
+  <rect x="130.0" y="64.0" width="300.0" height="48.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="280.0" y="83.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">1. Load &amp; peek</text>
+  <text x="280.0" y="101.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">.head(), .shape</text>
+  <rect x="130.0" y="122.0" width="300.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="280.0" y="141.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">2. Types &amp; missing</text>
+  <text x="280.0" y="159.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">.info(), .isna()</text>
+  <line x1="280.0" y1="112.0" x2="280.0" y2="122.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M280.0,122.0 L284.1,112.9 L275.9,112.9 Z" fill="#94a3b8"/>
+  <rect x="130.0" y="180.0" width="300.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="280.0" y="199.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">3. Distributions</text>
+  <text x="280.0" y="217.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">histograms, .describe()</text>
+  <line x1="280.0" y1="170.0" x2="280.0" y2="180.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M280.0,180.0 L284.1,170.9 L275.9,170.9 Z" fill="#94a3b8"/>
+  <rect x="130.0" y="238.0" width="300.0" height="48.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="280.0" y="257.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">4. Relationships</text>
+  <text x="280.0" y="275.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">scatter, .corr()</text>
+  <line x1="280.0" y1="228.0" x2="280.0" y2="238.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M280.0,238.0 L284.1,228.9 L275.9,228.9 Z" fill="#94a3b8"/>
+  <rect x="130.0" y="296.0" width="300.0" height="48.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="280.0" y="315.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">5. Check for leakage</text>
+  <text x="280.0" y="333.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">&amp; duplicates</text>
+  <line x1="280.0" y1="286.0" x2="280.0" y2="296.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M280.0,296.0 L284.1,286.9 L275.9,286.9 Z" fill="#94a3b8"/>
+  <rect x="130.0" y="354.0" width="300.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="280.0" y="373.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">6. Form hypotheses</text>
+  <text x="280.0" y="391.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">what to model</text>
+  <line x1="280.0" y1="344.0" x2="280.0" y2="354.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M280.0,354.0 L284.1,344.9 L275.9,344.9 Z" fill="#94a3b8"/>
+</svg>

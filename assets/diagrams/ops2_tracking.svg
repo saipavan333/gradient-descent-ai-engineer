@@ -1,0 +1,39 @@
+<svg viewBox="0 0 620 360" xmlns="http://www.w3.org/2000/svg" width="620" height="360" role="img">
+  <rect x="0" y="0" width="620" height="360" fill="#ffffff"/>
+  <text x="310.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Experiment tracking: log every run, compare</text>
+  <rect x="110.0" y="80.0" width="90.0" height="40.0" rx="6" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <text x="155.0" y="100.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Run</text>
+  <rect x="200.0" y="80.0" width="100.0" height="40.0" rx="6" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <text x="250.0" y="100.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">learn rate</text>
+  <rect x="300.0" y="80.0" width="80.0" height="40.0" rx="6" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <text x="340.0" y="100.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">layers</text>
+  <rect x="380.0" y="80.0" width="90.0" height="40.0" rx="6" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <text x="425.0" y="100.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">val acc</text>
+  <rect x="110.0" y="120.0" width="90.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="155.0" y="140.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">run 1</text>
+  <rect x="200.0" y="120.0" width="100.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="250.0" y="140.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0.10</text>
+  <rect x="300.0" y="120.0" width="80.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="340.0" y="140.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <rect x="380.0" y="120.0" width="90.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="425.0" y="140.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0.71</text>
+  <rect x="110.0" y="160.0" width="90.0" height="40.0" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="155.0" y="180.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">run 2</text>
+  <rect x="200.0" y="160.0" width="100.0" height="40.0" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="250.0" y="180.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0.01</text>
+  <rect x="300.0" y="160.0" width="80.0" height="40.0" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="340.0" y="180.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <rect x="380.0" y="160.0" width="90.0" height="40.0" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" opacity="1.0"/>
+  <text x="425.0" y="180.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0.86</text>
+  <rect x="110.0" y="200.0" width="90.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="155.0" y="220.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">run 3</text>
+  <rect x="200.0" y="200.0" width="100.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="250.0" y="220.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0.01</text>
+  <rect x="300.0" y="200.0" width="80.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="340.0" y="220.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">8</text>
+  <rect x="380.0" y="200.0" width="90.0" height="40.0" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" opacity="1.0"/>
+  <text x="425.0" y="220.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0.83</text>
+  <text x="528.0" y="140.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">← best</text>
+  <text x="310.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Each run logs its params, metrics, and artifacts (the model file).</text>
+  <text x="310.0" y="322.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Now you can compare runs and reproduce the winner exactly.</text>
+</svg>

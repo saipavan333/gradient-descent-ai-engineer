@@ -1,0 +1,43 @@
+<svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" width="720" height="340" role="img">
+  <rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Multi-head attention: several attentions in parallel</text>
+  <rect x="50.0" y="141.0" width="90.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="95.0" y="165.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">input</text>
+  <text x="95.0" y="182.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">tokens</text>
+  <rect x="260.0" y="51.0" width="120.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="320.0" y="71.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">head 1</text>
+  <text x="320.0" y="86.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">attention</text>
+  <rect x="260.0" y="113.0" width="120.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="320.0" y="133.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">head 2</text>
+  <text x="320.0" y="148.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">attention</text>
+  <rect x="260.0" y="175.0" width="120.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="320.0" y="195.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">head 3</text>
+  <text x="320.0" y="210.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">attention</text>
+  <rect x="260.0" y="237.0" width="120.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="320.0" y="257.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">head 4</text>
+  <text x="320.0" y="272.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">attention</text>
+  <rect x="457.0" y="141.0" width="86.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="500.0" y="174.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">concat</text>
+  <rect x="587.0" y="141.0" width="86.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="630.0" y="165.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">linear</text>
+  <text x="630.0" y="182.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">mix</text>
+  <line x1="140.0" y1="151.0" x2="263.2" y2="99.0" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M263.2,99.0 L253.2,98.8 L256.3,106.3 Z" fill="#94a3b8"/>
+  <line x1="140.0" y1="163.4" x2="260.0" y2="145.8" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M260.0,145.8 L250.4,143.1 L251.6,151.1 Z" fill="#94a3b8"/>
+  <line x1="140.0" y1="175.8" x2="260.0" y2="191.3" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M260.0,191.3 L251.5,186.1 L250.4,194.1 Z" fill="#94a3b8"/>
+  <line x1="140.0" y1="188.2" x2="260.7" y2="237.0" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M260.7,237.0 L253.7,229.8 L250.7,237.3 Z" fill="#94a3b8"/>
+  <line x1="365.5" y1="99.0" x2="457.0" y2="147.3" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M457.0,147.3 L450.8,139.4 L447.0,146.6 Z" fill="#94a3b8"/>
+  <line x1="380.0" y1="148.0" x2="457.0" y2="162.1" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M457.0,162.1 L448.7,156.5 L447.3,164.5 Z" fill="#94a3b8"/>
+  <line x1="380.0" y1="189.3" x2="457.0" y2="176.9" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M457.0,176.9 L447.3,174.4 L448.6,182.4 Z" fill="#94a3b8"/>
+  <line x1="367.5" y1="237.0" x2="457.0" y2="191.7" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M457.0,191.7 L447.0,192.2 L450.7,199.5 Z" fill="#94a3b8"/>
+  <line x1="543.0" y1="170.0" x2="587.0" y2="170.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M587.0,170.0 L577.9,165.9 L577.9,174.1 Z" fill="#475569"/>
+  <text x="360.0" y="312.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">each head learns a different relationship (syntax, coreference, …); their outputs are concatenated and mixed</text>
+</svg>

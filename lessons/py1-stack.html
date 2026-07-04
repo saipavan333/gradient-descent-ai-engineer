@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Python, and the scientific stack · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html" class="current"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 2</b> · Python for ML · Lesson 2.1</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 2 · Python for ML</div>
+<h1>Why Python, and the scientific stack</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 18 min</span>
+<span class="pill">Lesson 2.1</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py01_stack.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Before writing ML, you need to know which tool does what and why they're layered. Picking the right library (and notebook vs. script) is the difference between fighting your tools and flowing with them.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Name the core scientific-Python libraries and their jobs</li><li>Explain how pandas, Matplotlib, scikit-learn, and PyTorch build on NumPy</li><li>Choose between a notebook and a script</li><li>Set up a reproducible environment</li></ul></div>
+</header>
+<article class="content"><div class="callout note"><div class="ic">i</div><div class="bd">
+<div class="ti">A note before Track 2</div>
+<p>This track is about the everyday <em>tools</em>. You don't need prior coding experience — we'll define every
+term, including the plain programming words. If you've never written Python, that's fine: read the code as
+"recipes," and the companion notebooks let you run each one and watch what happens. Going slowly here pays off for
+the rest of the course.</p>
+</div></div>
+
+<h2><span class="sec-tag">Concept</span> Why Python, and what "the stack" means</h2>
+
+<p>First, two words. <span class="term">Python</span> is a programming language — a way of writing instructions a
+computer can follow, designed to read almost like English. It's the language nearly all of machine learning is
+written in. But Python has a reputation for being <em>slow</em> at heavy number-crunching, so how does it run
+billion-number models? The answer is the <span class="term">scientific stack</span>: a set of add-on toolkits
+that do the heavy lifting in fast, pre-compiled code (written in lower-level languages like C and C++ that run
+close to the hardware) while <em>you</em> write simple Python on top. You get Python's readability with C's
+speed.</p>
+
+<p>Each toolkit is called a <span class="term">library</span> — a bundle of ready-made code someone else wrote that
+you can pull into your own program with an <span class="term">import</span> statement (a line like
+<code>import numpy</code> that says "make this library's tools available here"). Knowing which library does what,
+and how they stack on top of each other, is the first practical skill of an ML engineer.</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" width="720" height="360" role="img">
+  <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The scientific Python stack: each tool builds on the one below</text>
+  <rect x="60.0" y="277.0" width="600.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="360.0" y="304.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">NumPy — fast n-dimensional arrays (the foundation everything sits on)</text>
+  <rect x="60.0" y="219.0" width="600.0" height="46.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="360.0" y="246.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">pandas — labeled tables, loading &amp; wrangling messy data</text>
+  <rect x="60.0" y="139.0" width="180.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="150.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Matplotlib</text>
+  <text x="150.0" y="181.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">plots &amp; charts</text>
+  <rect x="270.0" y="139.0" width="180.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="360.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">scikit-learn</text>
+  <text x="360.0" y="181.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">classical ML</text>
+  <rect x="485.0" y="139.0" width="180.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="575.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">PyTorch / TF</text>
+  <text x="575.0" y="181.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">deep learning</text>
+  <rect x="170.0" y="73.0" width="380.0" height="46.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="360.0" y="100.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">YOUR analysis, models &amp; results</text>
+  <line x1="360.0" y1="277.0" x2="360.0" y2="265.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M360.0,265.0 L356.7,272.3 L363.3,272.3 Z" fill="#94a3b8"/>
+  <line x1="360.0" y1="219.0" x2="360.0" y2="197.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M360.0,197.0 L356.7,204.3 L363.3,204.3 Z" fill="#94a3b8"/>
+  <text x="360.0" y="338.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">higher layers call the lower ones — learn them bottom-up</text>
+</svg>
+<figcaption><b>The scientific Python stack.</b> NumPy is the foundation; pandas adds labeled tables; Matplotlib, scikit-learn, and PyTorch/TensorFlow build on top. You usually learn it bottom-up.</figcaption></figure>
+
+<p>Reading the stack from the bottom up:</p>
+<ul>
+<li><strong>NumPy</strong> — fast lists and grids of numbers (it calls them "arrays") and the math on them. The
+foundation everything else stands on (you'll spend the next two lessons here).</li>
+<li><strong>pandas</strong> — labeled <em>tables</em> (rows and named columns) for loading and tidying messy,
+real-world data. Built on top of NumPy.</li>
+<li><strong>Matplotlib</strong> — drawing plots and charts, so you can actually <em>see</em> your data.</li>
+<li><strong>scikit-learn</strong> — classical machine-learning models (the regressions, trees, and clusterings of
+Track 3) with one clean, consistent way to use them.</li>
+<li><strong>PyTorch / TensorFlow</strong> — deep learning (neural networks), with automatic gradients and the
+ability to run on a GPU. Tracks 4–6 live here.</li>
+</ul>
+
+<h2><span class="sec-tag">Concept</span> The workflow is a loop, not a straight line</h2>
+
+<p>Beginners imagine machine learning as "load data → train model → done." In reality it's a
+<strong>loop</strong>: you explore the data, clean it, build a model, check how it did, and what you learn sends
+you right back to explore and clean some more. Most of the real work — and most of this track — is the unglamorous
+left side of that loop.</p>
+
+<figure class="diagram"><svg viewBox="0 0 640 430" xmlns="http://www.w3.org/2000/svg" width="640" height="430" role="img">
+  <rect x="0" y="0" width="640" height="430" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The data-science workflow is a loop, not a line</text>
+  <rect x="261.0" y="66.0" width="118.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="320.0" y="90.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">1. Collect</text>
+  <text x="320.0" y="108.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">data</text>
+  <rect x="394.1" y="162.7" width="118.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="453.1" y="187.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">2. Explore</text>
+  <text x="453.1" y="204.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">(EDA)</text>
+  <rect x="343.3" y="319.3" width="118.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="402.3" y="344.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">3. Clean</text>
+  <text x="402.3" y="361.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">&amp; prepare</text>
+  <rect x="178.7" y="319.3" width="118.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="237.7" y="344.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">4. Train</text>
+  <text x="237.7" y="361.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">a model</text>
+  <rect x="127.9" y="162.7" width="118.0" height="58.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="186.9" y="187.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">5. Evaluate</text>
+  <text x="186.9" y="204.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">&amp; iterate</text>
+  <line x1="359.9" y1="124.0" x2="413.2" y2="162.7" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M413.2,162.7 L408.2,154.1 L403.5,160.7 Z" fill="#94a3b8"/>
+  <line x1="443.7" y1="220.7" x2="411.7" y2="319.3" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M411.7,319.3 L418.4,311.8 L410.7,309.3 Z" fill="#94a3b8"/>
+  <line x1="343.3" y1="348.3" x2="296.7" y2="348.3" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M296.7,348.3 L305.8,352.3 L305.8,344.2 Z" fill="#94a3b8"/>
+  <line x1="228.3" y1="319.3" x2="196.3" y2="220.7" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M196.3,220.7 L195.2,230.7 L203.0,228.2 Z" fill="#94a3b8"/>
+  <line x1="226.8" y1="162.7" x2="280.1" y2="124.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M280.1,124.0 L270.3,126.1 L275.1,132.7 Z" fill="#94a3b8"/>
+  <text x="320.0" y="235.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">repeat</text>
+  <text x="320.0" y="253.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">until good</text>
+</svg>
+<figcaption><b>The real workflow.</b> Collect, explore, clean, train, evaluate — then iterate. Modeling is a small slice; understanding and preparing data is the bulk of the job.</figcaption></figure>
+
+<h2><span class="sec-tag">Concept</span> Notebooks vs. scripts, and keeping work reproducible</h2>
+
+<p>You'll write code in two forms. A <span class="term">notebook</span> (a Jupyter notebook, with the file
+extension <code>.ipynb</code>) runs in small chunks called <em>cells</em>, one at a time, mixing code, its output,
+and your notes on one page — perfect for <strong>exploring</strong>, where you want to poke at data and see results
+instantly (it's why this course ships runnable notebooks). A <span class="term">script</span> (a plain
+<code>.py</code> file) runs straight through from top to bottom, and is what you use for anything
+<strong>repeatable</strong> — training pipelines, production jobs, anything a person or machine must run reliably.
+A good rule: explore in a notebook, then move the keepers into scripts.</p>
+
+<div class="callout warn"><div class="ic">!</div><div class="bd">
+<div class="ti">Reproducibility starts on day one</div>
+<p>"It works on my machine" is the original sin of data work. Two habits prevent it. First, pin your
+<span class="term">dependencies</span> (the libraries your code needs) by recording their exact version numbers in
+a file, so anyone can install the same ones. Second, set a <span class="term">random seed</span> — a fixed
+starting number for the random-number generator — so that code using randomness produces the
+<em>same</em> result every run. ("Reproducible" means someone else, or future-you, can re-run your work and get
+identical numbers.) These habits cost minutes now and save days later.</p>
+</div></div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> The whole stack in fifteen lines</div>
+<div class="bd">
+<p>A miniature touch of every layer: NumPy makes numbers, pandas organizes them into a table, and Matplotlib
+(shown but not run here) would plot them. It's deliberately tiny — the point is to see the pieces click together.
+Read the comments (the text after <code>#</code>, which Python ignores) — they explain each line.</p>
+
+<pre><code>import numpy as np       # load NumPy, and nickname it "np" so we can type less
+import pandas as pd      # load pandas, nicknamed "pd"
+
+# NumPy: make some data, with reproducible randomness via a fixed seed (42)
+rng = np.random.default_rng(42)            # a random-number generator seeded at 42
+heights = rng.normal(170, 8, size=5).round(1)   # 5 random heights, avg 170, spread 8
+weights = rng.normal(70, 10, size=5).round(1)   # 5 random weights, avg 70,  spread 10
+
+# pandas: organize the two lists into a labeled table (a "DataFrame")
+people = pd.DataFrame({"height_cm": heights, "weight_kg": weights})
+print(people)
+print("\nsummary:\n", people.describe().round(1))   # .describe() = quick stats per column</code></pre>
+
+<div class="out"><span class="lbl">Output (identical every run, thanks to the seed)</span>   height_cm  weight_kg
+0      172.4       57.0
+1      161.7       71.3
+2      176.0       66.8
+3      177.5       69.8
+4      154.4       61.5
+
+summary:
+        height_cm  weight_kg
+count        5.0        5.0
+mean       168.4       65.3
+std         10.0        6.0
+...</div>
+
+<p>Those few lines touched NumPy (random arrays), pandas (a table and its <code>.describe()</code> summary), and
+reproducibility (the seeded generator, which is why your output will match exactly). The next lessons unpack each
+layer; <code>scikit-learn</code> and <code>PyTorch</code> arrive in later tracks. You don't need to memorize any of
+this yet — you need the mental map of <em>which tool to reach for</em>.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>Python is the language of ML because the <strong>scientific stack</strong> does the heavy number-crunching in fast compiled code underneath.</li>
+<li>The layers: <strong>NumPy</strong> (arrays) → <strong>pandas</strong> (tables) → <strong>Matplotlib</strong> (plots), <strong>scikit-learn</strong> (classic ML), <strong>PyTorch/TensorFlow</strong> (deep learning).</li>
+<li>The workflow is a <strong>loop</strong> (collect → explore → clean → train → evaluate → repeat); data prep dominates.</li>
+<li><strong>Notebooks</strong> for exploring, <strong>scripts</strong> for anything repeatable.</li>
+<li>Pin dependency versions and set random seeds for <strong>reproducibility</strong> from the very start.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> Which library is the foundation that pandas, scikit-learn, and PyTorch all build on?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Matplotlib</span></li>
+<li data-opt="b"><span class="mk">B</span><span>pandas</span></li>
+<li data-opt="c"><span class="mk">C</span><span>NumPy</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Jupyter</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Matplotlib is the plotting layer; it sits on top of NumPy, not under it.</div>
+<div class="ex" data-for="b">pandas itself is built on NumPy arrays.</div>
+<div class="ex" data-for="c">Correct. NumPy's array is the common foundation; the higher-level libraries all use it underneath.</div>
+<div class="ex" data-for="d">Jupyter is the notebook interface, not a numerical foundation.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> If Python is slow, how does the scientific stack make it fast enough for real numerical work?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It rewrites your Python into faster Python automatically</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The heavy work runs in compiled C/C++ code; Python just directs it</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It skips calculations to save time</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Modern Python is as fast as C</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">There's no magic Python-to-fast-Python rewrite; the speed comes from compiled libraries.</div>
+<div class="ex" data-for="b">Correct. NumPy and friends drop into optimized compiled code for the math, so you write simple Python while C does the crunching.</div>
+<div class="ex" data-for="c">It does the full computation — just in a fast language underneath.</div>
+<div class="ex" data-for="d">Pure Python is much slower than C for tight numerical loops; that gap is exactly why the stack exists.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> You're building a training pipeline a teammate must run nightly on a server. Notebook or script?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Notebook — they're always better</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Either; it makes no difference</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Notebook, because it shows outputs</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Script — it runs top to bottom reliably and is easy to automate</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Notebooks shine for exploring but are awkward to schedule and easy to run out of order.</div>
+<div class="ex" data-for="b">It matters: repeatable, automated jobs belong in scripts.</div>
+<div class="ex" data-for="c">Showing outputs is great for exploring, but a nightly job needs reliable, automatable execution.</div>
+<div class="ex" data-for="d">Correct. Scripts run start-to-finish deterministically and plug into schedulers and pipelines — the right tool for repeatable work.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> Why pin dependency versions and set random seeds at the start of a project?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>So the work is reproducible — you and others get the same results when re-running it</span></li>
+<li data-opt="b"><span class="mk">B</span><span>To make the code run faster</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Because newer library versions never work</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Seeds make models more accurate</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Pinned versions and fixed seeds make results stable across machines and time — essential for trustworthy work.</div>
+<div class="ex" data-for="b">Reproducibility isn't about speed.</div>
+<div class="ex" data-for="c">Newer versions usually work; pinning is about <em>consistency</em>, not avoiding upgrades forever.</div>
+<div class="ex" data-for="d">A seed fixes randomness for repeatability; it doesn't improve accuracy.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>For each task, name the library you'd reach for: (a) load a 2 GB spreadsheet and filter rows; (b) train a random forest; (c) make a histogram; (d) fine-tune a neural network; (e) multiply two large grids of numbers fast.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>(a) <strong>pandas</strong> — labeled tables, file loading, filtering. (b) <strong>scikit-learn</strong> —
+classical models like random forests. (c) <strong>Matplotlib</strong> — plotting. (d) <strong>PyTorch</strong>
+(or TensorFlow) — neural networks with autograd/GPU. (e) <strong>NumPy</strong> — fast array/matrix math.</p>
+<p>The reasoning: each library owns a layer of the stack. Knowing the map means you never waste time forcing one
+tool to do another's job (e.g. looping over a pandas table row by row when a vectorized NumPy operation would be
+100× faster — a Lesson 2.2 lesson).</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>A colleague sends you a notebook that "worked yesterday" but now crashes on your machine with a version error. What two habits would have prevented this, and how?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p><strong>(1) Pin dependencies</strong> — a file (commonly <code>requirements.txt</code>) recording the exact
+version of every library. Then you install the same versions they used, so the tools behave the same.
+<strong>(2) Use a fresh, isolated environment</strong> per project (a "virtual environment"), so projects don't
+share — and accidentally break — each other's libraries.</p>
+<p>The reasoning: most "works on my machine" failures are version mismatches. Capturing the exact environment turns
+an invisible, fragile setup into an explicit, shareable one. This is the seed of MLOps reproducibility (Track 9),
+where the same idea scales up to Docker images and locked pipelines.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>True or false, and explain: "Once I have a model, I'm done — the workflow ends at training."</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p><strong>False.</strong> The workflow is a loop. After training you <em>evaluate</em>, and the results almost
+always send you back: maybe the data had a leak, a feature was missing, the metric was wrong, or performance drops
+on new data. You re-explore, re-clean, re-train. And once deployed, models drift as the world changes (Track 9),
+forcing another lap.</p>
+<p>The reasoning: treating ML as a one-shot pipeline is the most common beginner misconception. Internalizing the
+loop — and that data work dominates it — sets realistic expectations, which is exactly why this Python/data track
+comes before any modeling.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: why NumPy is fast, and what "vectorization" really buys you<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>A plain Python <span class="term">list</span> (Python's built-in "bag of items") is a collection of pointers to
+separate objects scattered around memory, each carrying type information and overhead. Looping over it, Python
+handles one item at a time, interpreting each step — flexible, but slow. A NumPy <span class="term">array</span> is
+different: a single, unbroken block of raw numbers, all the same type (the <code>dtype</code>), laid out end to
+end. That layout unlocks three speedups at once.</p>
+<p><strong>(1) No per-element Python overhead.</strong> One array operation (<code>a + b</code>) makes a single call
+into compiled C that loops internally — the slow Python interpreter is out of the hot path. <strong>(2) Cache
+friendliness.</strong> Numbers sitting next to each other in memory let the processor stream them efficiently
+instead of chasing scattered pointers. <strong>(3) SIMD.</strong> Modern processors can apply one instruction to
+several numbers at the same time, and compiled array code exploits this; on a GPU the same idea scales to thousands
+of parallel lanes — which is why deep learning needs GPUs. This is what people mean by
+"<span class="term">vectorization</span>": expressing computation as operations on whole arrays so the fast,
+parallel machinery underneath can do its job. You'll feel the difference firsthand next lesson, where a vectorized
+operation beats a hand-written Python loop by 10–100×. It also explains a recurring theme of the whole field: the
+art is often in <em>removing loops</em> by reshaping work into array (and matrix) operations — the same matrix
+multiplications from Track 1, now running on hardware built to fly through them.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Next, in <strong>2.2 NumPy arrays &amp; vectorization</strong>, we go deep on
+the array — the one data structure under all of ML — and learn the vectorized style that makes Python fast.</p>
+</article>
+<nav class="pager"><a class="prev" href="m-interview.html"><span class="dir">← Previous</span><span class="ti">Interview check: Math Foundations</span></a><a class="next" href="py2-numpy.html"><span class="dir">Next →</span><span class="ti">NumPy arrays &amp; vectorization</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

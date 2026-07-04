@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" width="720" height="280" role="img">
+  <rect x="0" y="0" width="720" height="280" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Tokenization: text → tokens → integer IDs</text>
+  <rect x="50.0" y="115.0" width="140.0" height="50.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="120.0" y="144.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">"the cat sat"</text>
+  <rect x="287.0" y="70.0" width="86.0" height="40.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="330.0" y="94.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"the"</text>
+  <rect x="287.0" y="130.0" width="86.0" height="40.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="330.0" y="154.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"cat"</text>
+  <rect x="287.0" y="190.0" width="86.0" height="40.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="330.0" y="214.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">"sat"</text>
+  <rect x="525.0" y="70.0" width="70.0" height="40.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="560.0" y="94.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">1014</text>
+  <rect x="525.0" y="130.0" width="70.0" height="40.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="560.0" y="154.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">2543</text>
+  <rect x="525.0" y="190.0" width="70.0" height="40.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="560.0" y="214.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">3079</text>
+  <line x1="190.0" y1="123.3" x2="287.0" y2="100.2" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M287.0,100.2 L277.2,98.4 L279.1,106.3 Z" fill="#94a3b8"/>
+  <line x1="190.0" y1="143.3" x2="287.0" y2="148.0" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M287.0,148.0 L278.1,143.5 L277.7,151.6 Z" fill="#94a3b8"/>
+  <line x1="190.0" y1="163.3" x2="287.0" y2="195.7" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M287.0,195.7 L279.6,188.9 L277.0,196.6 Z" fill="#94a3b8"/>
+  <line x1="373.0" y1="90.0" x2="525.0" y2="90.0" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M525.0,90.0 L515.9,85.9 L515.9,94.1 Z" fill="#94a3b8"/>
+  <line x1="373.0" y1="150.0" x2="525.0" y2="150.0" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M525.0,150.0 L515.9,145.9 L515.9,154.1 Z" fill="#94a3b8"/>
+  <line x1="373.0" y1="210.0" x2="525.0" y2="210.0" stroke="#94a3b8" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M525.0,210.0 L515.9,205.9 L515.9,214.1 Z" fill="#94a3b8"/>
+  <text x="225.0" y="60.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">tokenize</text>
+  <text x="455.0" y="60.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">vocab lookup</text>
+  <text x="360.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the model never sees letters — only these integer IDs, which index into an embedding table next</text>
+</svg>

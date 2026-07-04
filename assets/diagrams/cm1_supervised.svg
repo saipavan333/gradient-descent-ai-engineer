@@ -1,0 +1,20 @@
+<svg viewBox="0 0 720 310" xmlns="http://www.w3.org/2000/svg" width="720" height="310" role="img">
+  <rect x="0" y="0" width="720" height="310" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Three kinds of machine learning</text>
+  <rect x="45.0" y="101.0" width="190.0" height="98.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="140.0" y="137.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Supervised</text>
+  <text x="140.0" y="154.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">learn X → y from</text>
+  <text x="140.0" y="171.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">labeled examples</text>
+  <rect x="265.0" y="101.0" width="190.0" height="98.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="360.0" y="137.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Unsupervised</text>
+  <text x="360.0" y="154.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">find hidden structure</text>
+  <text x="360.0" y="171.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">in unlabeled X</text>
+  <rect x="485.0" y="101.0" width="190.0" height="98.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="580.0" y="137.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Reinforcement</text>
+  <text x="580.0" y="154.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">act, get rewards,</text>
+  <text x="580.0" y="171.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">improve a policy</text>
+  <text x="140.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">spam? house price?</text>
+  <text x="360.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">customer segments</text>
+  <text x="580.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">game-playing, robotics</text>
+  <text x="360.0" y="278.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">This track is about SUPERVISED learning — the most common kind in practice.</text>
+</svg>

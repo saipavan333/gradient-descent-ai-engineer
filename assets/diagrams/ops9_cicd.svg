@@ -1,0 +1,33 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" width="720" height="360" role="img">
+  <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">CI/CD/CT: automate code — and data &amp; models too</text>
+  <text x="260.0" y="72.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">CI/CD · code</text>
+  <rect x="65.0" y="85.0" width="110.0" height="46.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="120.0" y="112.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">Commit</text>
+  <rect x="205.0" y="85.0" width="110.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="260.0" y="112.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Test</text>
+  <rect x="345.0" y="85.0" width="110.0" height="46.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="400.0" y="112.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Build</text>
+  <text x="260.0" y="238.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" opacity="1.0" dominant-baseline="middle">CT · data &amp; model</text>
+  <rect x="65.0" y="251.0" width="110.0" height="46.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="120.0" y="278.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">New data</text>
+  <rect x="205.0" y="251.0" width="110.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="260.0" y="278.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Retrain</text>
+  <rect x="345.0" y="251.0" width="110.0" height="46.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="400.0" y="278.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Validate</text>
+  <rect x="535.0" y="156.0" width="130.0" height="70.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="600.0" y="195.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">Production</text>
+  <line x1="175.0" y1="108.0" x2="205.0" y2="108.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M205.0,108.0 L195.9,103.9 L195.9,112.1 Z" fill="#475569"/>
+  <line x1="315.0" y1="108.0" x2="345.0" y2="108.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M345.0,108.0 L335.9,103.9 L335.9,112.1 Z" fill="#475569"/>
+  <line x1="175.0" y1="274.0" x2="205.0" y2="274.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M205.0,274.0 L195.9,269.9 L195.9,278.1 Z" fill="#475569"/>
+  <line x1="315.0" y1="274.0" x2="345.0" y2="274.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M345.0,274.0 L335.9,269.9 L335.9,278.1 Z" fill="#475569"/>
+  <line x1="455.0" y1="130.8" x2="535.0" y2="164.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M535.0,164.0 L528.1,156.8 L525.0,164.3 Z" fill="#475569"/>
+  <line x1="455.0" y1="251.2" x2="535.0" y2="218.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M535.0,218.0 L525.0,217.7 L528.1,225.2 Z" fill="#475569"/>
+  <text x="360.0" y="330.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The MLOps twist: version and test data and models in pipelines, not just code.</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" width="560" height="420" role="img">
+  <rect x="0" y="0" width="560" height="420" fill="#ffffff"/>
+  <text x="280.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">An agent loops: think, act, observe — until done</text>
+  <rect x="235.0" y="52.0" width="90.0" height="40.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="280.0" y="76.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">goal</text>
+  <rect x="220.0" y="102.0" width="120.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="280.0" y="126.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">1. Think</text>
+  <text x="280.0" y="142.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">plan / reason</text>
+  <rect x="323.9" y="282.0" width="120.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="383.9" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">2. Act</text>
+  <text x="383.9" y="322.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">use a tool</text>
+  <rect x="116.1" y="282.0" width="120.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="176.1" y="306.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">3. Observe</text>
+  <text x="176.1" y="322.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">read the result</text>
+  <line x1="296.2" y1="158.0" x2="367.8" y2="282.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M367.8,282.0 L366.7,272.1 L359.7,276.1 Z" fill="#94a3b8"/>
+  <line x1="323.9" y1="310.0" x2="236.1" y2="310.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M236.1,310.0 L245.2,314.1 L245.2,305.9 Z" fill="#94a3b8"/>
+  <line x1="192.2" y1="282.0" x2="263.8" y2="158.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M263.8,158.0 L255.7,163.9 L262.8,167.9 Z" fill="#94a3b8"/>
+  <line x1="280.0" y1="92.0" x2="280.0" y2="102.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M280.0,102.0 L284.1,92.9 L275.9,92.9 Z" fill="#94a3b8"/>
+  <text x="280.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">loop until</text>
+  <text x="280.0" y="262.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">goal met</text>
+  <rect x="425.0" y="225.0" width="90.0" height="50.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="470.0" y="246.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">done →</text>
+  <text x="470.0" y="261.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">answer</text>
+  <path d="M340.0,130.0 L425.0,250.0" fill="none" stroke="#10b981" stroke-width="1.6" stroke-dasharray="6 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M425.0,250.0 L423.0,240.2 L416.4,244.9 Z" fill="#10b981"/>
+  <rect x="393.9" y="233.0" width="62.2" height="15.5" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="425.0" y="241.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" fill="#10b981" text-anchor="middle" dominant-baseline="middle">if solved</text>
+</svg>

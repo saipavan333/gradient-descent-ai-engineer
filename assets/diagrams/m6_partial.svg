@@ -1,0 +1,19 @@
+<svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" width="520" height="360" role="img">
+  <rect x="0" y="0" width="520" height="360" fill="#ffffff"/>
+  <text x="260.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Partial derivatives assemble into the gradient</text>
+  <circle cx="270.0" cy="190.0" r="34.0" fill="none" stroke="#c7d2fe" stroke-width="1.6"/>
+  <circle cx="270.0" cy="190.0" r="66.0" fill="none" stroke="#c7d2fe" stroke-width="1.6"/>
+  <circle cx="270.0" cy="190.0" r="98.0" fill="none" stroke="#c7d2fe" stroke-width="1.6"/>
+  <circle cx="270.0" cy="190.0" r="130.0" fill="none" stroke="#c7d2fe" stroke-width="1.6"/>
+  <circle cx="350.3" cy="133.8" r="4.5" fill="#1f2937"/>
+  <line x1="350.3" y1="133.8" x2="420.3" y2="133.8" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M420.3,133.8 L411.1,129.7 L411.1,137.9 Z" fill="#38bdf8"/>
+  <text x="424.3" y="137.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#075985" text-anchor="start" opacity="1.0" dominant-baseline="middle">∂f/∂x</text>
+  <line x1="350.3" y1="133.8" x2="350.3" y2="63.8" stroke="#10b981" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M350.3,63.8 L346.2,72.9 L354.3,72.9 Z" fill="#10b981"/>
+  <text x="354.3" y="57.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#065f46" text-anchor="start" opacity="1.0" dominant-baseline="middle">∂f/∂y</text>
+  <line x1="350.3" y1="133.8" x2="420.3" y2="63.8" stroke="#fb7185" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M420.3,63.8 L409.1,68.1 L416.0,75.0 Z" fill="#fb7185"/>
+  <text x="424.3" y="59.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#9f1239" text-anchor="start" opacity="1.0" dominant-baseline="middle">gradient ∇f</text>
+  <text x="270.0" y="330.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">∇f = (∂f/∂x, ∂f/∂y): combine the per-axis slopes</text>
+</svg>

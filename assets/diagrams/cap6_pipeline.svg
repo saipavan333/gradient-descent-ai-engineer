@@ -1,0 +1,27 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="720" height="320" role="img">
+  <rect x="0" y="0" width="720" height="320" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Capstone: the full training → serving pipeline</text>
+  <rect x="37.5" y="94.0" width="115.0" height="52.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="95.0" y="124.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Data</text>
+  <rect x="172.5" y="94.0" width="115.0" height="52.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="230.0" y="124.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Train</text>
+  <rect x="312.5" y="94.0" width="115.0" height="52.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="370.0" y="124.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Evaluate</text>
+  <rect x="452.5" y="94.0" width="115.0" height="52.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="510.0" y="124.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Deploy</text>
+  <rect x="587.5" y="94.0" width="115.0" height="52.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="645.0" y="124.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Monitor</text>
+  <line x1="152.5" y1="120.0" x2="172.5" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M172.5,120.0 L163.4,115.9 L163.4,124.1 Z" fill="#475569"/>
+  <line x1="287.5" y1="120.0" x2="312.5" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M312.5,120.0 L303.4,115.9 L303.4,124.1 Z" fill="#475569"/>
+  <line x1="427.5" y1="120.0" x2="452.5" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M452.5,120.0 L443.4,115.9 L443.4,124.1 Z" fill="#475569"/>
+  <line x1="567.5" y1="120.0" x2="587.5" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M587.5,120.0 L578.4,115.9 L578.4,124.1 Z" fill="#475569"/>
+  <path d="M645.0,146.0 L645.0,235.0 L95.0,235.0 L95.0,146.0" fill="none" stroke="#94a3b8" stroke-width="2.0" stroke-dasharray="6 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M95.0,146.0 L90.9,155.1 L99.1,155.1 Z" fill="#94a3b8"/>
+  <rect x="309.3" y="225.4" width="121.4" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="370.0" y="235.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle" dominant-baseline="middle">retrain on drift</text>
+  <text x="370.0" y="283.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Automate the whole loop: version data and models, evaluate against a baseline, deploy, monitor, and retrain.</text>
+</svg>

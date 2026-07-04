@@ -1,0 +1,29 @@
+<svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" width="560" height="420" role="img">
+  <rect x="0" y="0" width="560" height="420" fill="#ffffff"/>
+  <text x="280.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The full transformer: a stack of identical blocks</text>
+  <rect x="110.0" y="359.0" width="340.0" height="42.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="280.0" y="384.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">token embeddings + positional encoding</text>
+  <rect x="150.0" y="288.0" width="260.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="280.0" y="314.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">transformer block 1</text>
+  <line x1="280.0" y1="359.0" x2="280.0" y2="332.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M280.0,332.0 L275.9,341.1 L284.1,341.1 Z" fill="#475569"/>
+  <rect x="150.0" y="228.0" width="260.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="280.0" y="254.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">transformer block 2</text>
+  <line x1="280.0" y1="288.0" x2="280.0" y2="272.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M280.0,272.0 L275.9,281.1 L284.1,281.1 Z" fill="#475569"/>
+  <rect x="150.0" y="168.0" width="260.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="280.0" y="194.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">transformer block 3</text>
+  <line x1="280.0" y1="228.0" x2="280.0" y2="212.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M280.0,212.0 L275.9,221.1 L284.1,221.1 Z" fill="#475569"/>
+  <rect x="200.0" y="123.0" width="160.0" height="34.0" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="280.0" y="144.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#334155" text-anchor="middle" dominant-baseline="middle">⋮  (N blocks)</text>
+  <line x1="280.0" y1="168.0" x2="280.0" y2="157.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M280.0,157.0 L275.9,166.1 L284.1,166.1 Z" fill="#475569"/>
+  <rect x="110.0" y="59.0" width="340.0" height="42.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="280.0" y="84.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">output head → next-token probabilities</text>
+  <line x1="280.0" y1="123.0" x2="280.0" y2="101.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M280.0,101.0 L275.9,110.1 L284.1,110.1 Z" fill="#475569"/>
+  <text x="500.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">each block</text>
+  <text x="500.0" y="264.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">refines the</text>
+  <text x="500.0" y="278.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.4" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">representation</text>
+</svg>

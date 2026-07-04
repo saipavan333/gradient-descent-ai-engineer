@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NumPy arrays &amp; vectorization · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html" class="current"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 2</b> · Python for ML · Lesson 2.2</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 2 · Python for ML</div>
+<h1>NumPy arrays &amp; vectorization</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 26 min</span>
+<span class="pill">Lesson 2.2</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py02_numpy.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>NumPy's array is the structure under everything in ML, and vectorization is what makes Python fast enough for real numerical work. Master arrays and you've mastered the substrate the field runs on.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Create arrays and read shape, dtype, and axes</li><li>Replace loops with vectorized operations</li><li>Index and slice arrays, including boolean masks</li><li>Know when you have a view versus a copy</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> The array: one data structure under all of ML</h2>
+
+<p>Every dataset, image, sound clip, and neural-network tensor is, underneath, a NumPy
+<span class="term">array</span> (its full name is <code>ndarray</code>, for "n-dimensional array"). An array is just
+a grid of numbers, all of the same type. Three properties describe any array, and you'll reach for them
+constantly:</p>
+
+<ul>
+<li><strong>shape</strong> — the size along each dimension, written as a tuple (a fixed, comma-separated list in
+parentheses). A table with 3 rows and 4 columns has shape <code>(3, 4)</code>; a batch of 64 color 32×32 images
+has shape <code>(64, 3, 32, 32)</code>.</li>
+<li><strong>dtype</strong> — short for "data type," the kind of number every element is (<code>int64</code> for
+whole numbers, <code>float32</code> for decimals, <code>bool</code> for true/false). Having one dtype for the whole
+array is what makes it fast.</li>
+<li><strong>axes</strong> — the numbered directions of the grid. <code>axis=0</code> runs <em>down</em> the rows;
+<code>axis=1</code> runs <em>across</em> the columns. Getting axes right is half of NumPy.</li>
+</ul>
+
+<figure class="diagram"><svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg" width="620" height="330" role="img">
+  <rect x="0" y="0" width="620" height="330" fill="#ffffff"/>
+  <text x="310.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Anatomy of a 2-D NumPy array</text>
+  <rect x="180.0" y="90.0" width="232.0" height="138.0" rx="6" fill="#eef2ff" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <line x1="238.0" y1="93.0" x2="238.0" y2="225.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="296.0" y1="93.0" x2="296.0" y2="225.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="354.0" y1="93.0" x2="354.0" y2="225.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="183.0" y1="136.0" x2="409.0" y2="136.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="183.0" y1="182.0" x2="409.0" y2="182.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <rect x="180.0" y="90.0" width="232.0" height="138.0" rx="6" fill="none" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <text x="209.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="267.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="325.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="383.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="209.0" y="159.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5</text>
+  <text x="267.0" y="159.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">6</text>
+  <text x="325.0" y="159.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">7</text>
+  <text x="383.0" y="159.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">8</text>
+  <text x="209.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">9</text>
+  <text x="267.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">10</text>
+  <text x="325.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">11</text>
+  <text x="383.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">12</text>
+  <line x1="146.0" y1="90.0" x2="146.0" y2="228.0" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M146.0,228.0 L150.1,218.9 L141.9,218.9 Z" fill="#38bdf8"/>
+  <text x="134.0" y="159.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="end" opacity="1.0" dominant-baseline="middle">axis 0</text>
+  <text x="134.0" y="175.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">(rows)</text>
+  <line x1="180.0" y1="68.0" x2="412.0" y2="68.0" stroke="#10b981" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M412.0,68.0 L402.9,63.9 L402.9,72.1 Z" fill="#10b981"/>
+  <text x="296.0" y="56.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">axis 1 (columns)</text>
+  <text x="436.0" y="159.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#1f2937" text-anchor="start" opacity="1.0" dominant-baseline="middle">shape = (3, 4)</text>
+  <text x="436.0" y="181.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">dtype = int64</text>
+  <text x="436.0" y="199.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">12 numbers,</text>
+  <text x="436.0" y="215.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">one contiguous block</text>
+</svg>
+<figcaption><b>Anatomy of a 2-D array.</b> Shape <code>(3, 4)</code>, one dtype for all 12 numbers, stored as a single contiguous block. Axis 0 goes down; axis 1 goes across.</figcaption></figure>
+
+<p>You create arrays in a handful of ways: <code>np.array([1,2,3])</code> from a Python list,
+<code>np.zeros((3,4))</code> / <code>np.ones(...)</code> for grids pre-filled with 0s or 1s,
+<code>np.arange(12)</code> for the counting sequence 0…11, <code>np.linspace(0,1,5)</code> for 5 evenly-spaced
+points between 0 and 1, and <code>rng.normal(...)</code> for random numbers. <code>.reshape()</code> rearranges
+the <em>same</em> numbers into a new shape (e.g. turn a flat list of 12 into a 3×4 grid).</p>
+
+<h2><span class="sec-tag">Concept</span> Vectorization: operate on whole arrays, not one element at a time</h2>
+
+<p>The single most important habit in numerical Python is <span class="term">vectorization</span>: write an
+operation on the <em>entire array at once</em> instead of writing a <span class="term">loop</span> (a "do this for
+each item" instruction) that visits elements one by one. The expressions <code>a + b</code>, <code>a * 2</code>,
+and <code>np.sqrt(a)</code> all apply <span class="term">element-wise</span> (to every entry, position by position)
+— and the actual looping happens in fast compiled C, not in slow Python.</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" width="720" height="340" role="img">
+  <rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Vectorization: let NumPy do the loop in fast C, not slow Python</text>
+  <text x="170.0" y="80.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Python loop</text>
+  <rect x="65.0" y="103.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 1: a[0] * b[0]</text>
+  <line x1="170.0" y1="138.0" x2="170.0" y2="146.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M170.0,146.0 L172.8,139.6 L167.2,139.6 Z" fill="#94a3b8"/>
+  <rect x="65.0" y="147.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="168.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 2: a[1] * b[1]</text>
+  <line x1="170.0" y1="182.0" x2="170.0" y2="190.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M170.0,190.0 L172.8,183.6 L167.2,183.6 Z" fill="#94a3b8"/>
+  <rect x="65.0" y="191.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="212.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 3: a[2] * b[2]</text>
+  <line x1="170.0" y1="226.0" x2="170.0" y2="234.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M170.0,234.0 L172.8,227.6 L167.2,227.6 Z" fill="#94a3b8"/>
+  <rect x="65.0" y="235.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="256.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 4: a[3] * b[3]</text>
+  <text x="170.0" y="304.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">one Python op per element → slow</text>
+  <text x="545.0" y="80.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Vectorized: a * b</text>
+  <rect x="425.0" y="140.0" width="240.0" height="120.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="545.0" y="187.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">a * b</text>
+  <text x="545.0" y="204.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">one call into NumPy's C core,</text>
+  <text x="545.0" y="221.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">all elements at once</text>
+  <text x="545.0" y="304.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">≈ 10–100× faster, and shorter to write</text>
+  <line x1="290.0" y1="200.0" x2="420.0" y2="200.0" stroke="#6366f1" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M420.0,200.0 L410.0,195.5 L410.0,204.5 Z" fill="#6366f1"/>
+  <text x="355.0" y="186.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#6366f1" text-anchor="middle" opacity="1.0" dominant-baseline="middle">replace with</text>
+</svg>
+<figcaption><b>Loop vs. vectorized.</b> A Python loop pays interpreter overhead on every element. One vectorized call hands the whole job to NumPy's C core — typically 10–100× faster and far shorter.</figcaption></figure>
+
+<div class="callout tip"><div class="ic">★</div><div class="bd">
+<div class="ti">The mantra</div>
+<p>If you find yourself writing a <code>for</code> loop over the elements of an array, pause — there's almost
+always a vectorized one-liner that's both shorter <em>and</em> dramatically faster. "Remove the loop" is the
+recurring move of the whole field; it's why GPUs (which do thousands of operations at once) power deep learning.</p>
+</div></div>
+
+<h2><span class="sec-tag">Concept</span> Indexing, slicing, and boolean masks</h2>
+
+<p>You pull parts of an array out by position or by condition. An <span class="term">index</span> is a position
+number (counting starts at 0, so <code>a[0]</code> is the first element). <span class="term">Slicing</span> grabs a
+range with <code>start:stop</code> for each axis: <code>a[1:3, 0:2]</code> takes rows 1–2 and columns 0–1
+(important quirk: the <code>stop</code> index is <em>excluded</em>, so <code>1:3</code> gives positions 1 and 2,
+not 3). A <span class="term">boolean mask</span> selects by a true/false test: <code>a[a > 5]</code> keeps exactly
+the elements where the test is true — no loop needed. ("Boolean" just means true/false.)</p>
+
+<figure class="diagram"><svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" width="680" height="320" role="img">
+  <rect x="0" y="0" width="680" height="320" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Slicing and boolean masks select sub-arrays</text>
+  <rect x="70.0" y="100.0" width="208.0" height="132.0" rx="6" fill="#eef2ff" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <rect x="123.0" y="145.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="175.0" y="145.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="123.0" y="189.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="175.0" y="189.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <line x1="122.0" y1="103.0" x2="122.0" y2="229.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="174.0" y1="103.0" x2="174.0" y2="229.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="226.0" y1="103.0" x2="226.0" y2="229.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="73.0" y1="144.0" x2="275.0" y2="144.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="73.0" y1="188.0" x2="275.0" y2="188.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <rect x="70.0" y="100.0" width="208.0" height="132.0" rx="6" fill="none" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <text x="96.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="148.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="200.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="252.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="96.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5</text>
+  <text x="148.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">6</text>
+  <text x="200.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">7</text>
+  <text x="252.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">8</text>
+  <text x="96.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">9</text>
+  <text x="148.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">10</text>
+  <text x="200.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">11</text>
+  <text x="252.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">12</text>
+  <text x="174.0" y="256.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a[1:3, 1:3]  → the highlighted block</text>
+  <rect x="420.0" y="100.0" width="208.0" height="132.0" rx="6" fill="#ecfdf5" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <rect x="473.0" y="145.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="525.0" y="145.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="577.0" y="145.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="421.0" y="189.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="473.0" y="189.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="525.0" y="189.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="577.0" y="189.0" width="50.0" height="42.0" rx="3" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <line x1="472.0" y1="103.0" x2="472.0" y2="229.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="524.0" y1="103.0" x2="524.0" y2="229.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="576.0" y1="103.0" x2="576.0" y2="229.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="423.0" y1="144.0" x2="625.0" y2="144.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="423.0" y1="188.0" x2="625.0" y2="188.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <rect x="420.0" y="100.0" width="208.0" height="132.0" rx="6" fill="none" stroke="#10b981" stroke-width="1.8" opacity="1.0"/>
+  <text x="446.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="498.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="550.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="602.0" y="122.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="446.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5</text>
+  <text x="498.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">6</text>
+  <text x="550.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">7</text>
+  <text x="602.0" y="166.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">8</text>
+  <text x="446.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">9</text>
+  <text x="498.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">10</text>
+  <text x="550.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">11</text>
+  <text x="602.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">12</text>
+  <text x="524.0" y="256.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a[a &gt; 5]  → keep where True</text>
+</svg>
+<figcaption><b>Two ways to select.</b> Slicing grabs a rectangular block by position; a boolean mask keeps every element that passes a test.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Vectorization, timed — and masking in action</div>
+<div class="bd">
+<p>Let's normalize a million numbers to "z-scores" (subtract the mean, divide by the standard deviation — i.e.
+re-express each value as "how many spreads above or below average it is") in two ways — a hand-written loop and a
+vectorized expression — and time both. Then filter with a boolean mask.</p>
+
+<pre><code>import numpy as np, time
+
+rng = np.random.default_rng(0)
+x = rng.normal(50, 10, size=1_000_000)   # a million numbers, average 50, spread 10
+mu, sd = x.mean(), x.std()               # mu = mean, sd = standard deviation
+
+# SLOW: a Python loop, visiting each element one at a time
+t = time.perf_counter()
+z_loop = np.empty_like(x)                 # an empty array to fill
+for i in range(x.size):
+    z_loop[i] = (x[i] - mu) / sd
+loop_time = time.perf_counter() - t
+
+# FAST: one vectorized expression -- the same math on the whole array at once
+t = time.perf_counter()
+z_vec = (x - mu) / sd
+vec_time = time.perf_counter() - t
+
+print(f"loop:       {loop_time:.3f} s")
+print(f"vectorized: {vec_time:.4f} s")
+print(f"speedup:    ~{loop_time / vec_time:.0f}x")
+print("same result:", np.allclose(z_loop, z_vec))   # do both agree? yes</code></pre>
+
+<div class="out"><span class="lbl">Output (exact times vary by machine)</span>loop:       0.354 s
+vectorized: 0.0105 s
+speedup:    ~34x
+same result: True</div>
+
+<p>Same answer, ~34× faster, and the vectorized version is <em>one line</em>. That gap is why you avoid element
+loops. Now boolean masking — find and summarize the unusually large values:</p>
+
+<pre><code>big = x[x > 70]                      # keep only elements above 70
+print("count above 70:", big.size)
+print("their mean:", big.mean().round(2))
+
+# Masks can also WRITE: lift everything below 30 up to 30, in place, no loop
+x[x < 30] = 30</code></pre>
+<div class="out"><span class="lbl">Output</span>count above 70: 23017
+their mean: 73.72</div>
+
+<p>The expression <code>x > 70</code> produces an array of true/false values (the mask), and indexing
+<em>with</em> that mask keeps the elements where it's true. Reading and writing through masks — instead of looping
+with <code>if</code> statements — is the NumPy way, and it's exactly how you'll filter rows, apply thresholds, and
+clean data throughout this track.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>An <strong>array</strong> has a <strong>shape</strong> (sizes per dimension), one <strong>dtype</strong>, and numbered <strong>axes</strong> (0 = down rows, 1 = across columns).</li>
+<li><strong>Vectorize</strong>: operate on whole arrays (<code>a + b</code>, <code>np.sqrt(a)</code>) — element-wise, in fast C, 10–100× faster than a Python loop.</li>
+<li>If you're looping over an array's elements in NumPy, there's almost certainly a vectorized one-liner instead.</li>
+<li><strong>Slice</strong> by position (<code>a[1:3, 0:2]</code>, stop excluded, counting from 0); <strong>mask</strong> by condition (<code>a[a > 5]</code>).</li>
+<li>Masks can <strong>read and write</strong> (<code>a[a &lt; 0] = 0</code>) — no <code>if</code> loop needed.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q1.</span> <code>a = np.arange(12).reshape(3, 4)</code>. What is <code>a.shape</code>, and how many elements does <code>a</code> have?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>shape <code>(4, 3)</code>, 12 elements</span></li>
+<li data-opt="b"><span class="mk">B</span><span>shape <code>(3, 4)</code>, 12 elements</span></li>
+<li data-opt="c"><span class="mk">C</span><span>shape <code>(12,)</code>, 12 elements</span></li>
+<li data-opt="d"><span class="mk">D</span><span>shape <code>(3, 4)</code>, 7 elements</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Reshape was to <code>(3, 4)</code> — 3 rows, 4 columns — not <code>(4, 3)</code>.</div>
+<div class="ex" data-for="b">Correct. <code>arange(12)</code> makes 12 numbers; <code>reshape(3,4)</code> arranges them as 3 rows × 4 columns.</div>
+<div class="ex" data-for="c">That's the shape before reshaping; after <code>reshape(3,4)</code> it's 2-D.</div>
+<div class="ex" data-for="d">It has $3 \times 4 = 12$ elements.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q2.</span> Why is <code>(x - mu) / sd</code> on a million-element array so much faster than the equivalent Python <code>for</code> loop?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It skips most of the elements</span></li>
+<li data-opt="b"><span class="mk">B</span><span>NumPy uses a faster random number generator</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The loop has a bug</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The whole operation runs in compiled C with no per-element Python interpreter overhead</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">It processes every element — just without Python overhead per element.</div>
+<div class="ex" data-for="b">Random generation isn't part of the arithmetic being timed.</div>
+<div class="ex" data-for="c">Both produce the same result (the code checks with <code>allclose</code>); the loop is correct, just slow.</div>
+<div class="ex" data-for="d">Correct. Vectorized operations run one compiled C loop over contiguous memory, avoiding the interpreter overhead paid per element in a Python loop.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q3.</span> <code>a = np.array([10, 20, 30, 40, 50])</code>. What does <code>a[a >= 30]</code> return?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span><code>[30, 40, 50]</code></span></li>
+<li data-opt="b"><span class="mk">B</span><span><code>[True, True, True, False, False]</code></span></li>
+<li data-opt="c"><span class="mk">C</span><span><code>[2, 3, 4]</code> (the positions)</span></li>
+<li data-opt="d"><span class="mk">D</span><span><code>30</code></span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. The mask <code>a >= 30</code> is true at the last three positions, so indexing returns those values: <code>[30, 40, 50]</code>.</div>
+<div class="ex" data-for="b">That's the mask itself; indexing <em>with</em> it returns the selected values, not the true/false flags.</div>
+<div class="ex" data-for="c">Boolean indexing returns the values, not their positions (positions would be <code>np.where</code>).</div>
+<div class="ex" data-for="d">It returns all matching values, not just the first.</div>
+</div>
+</div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q4.</span> What does the slice <code>a[1:3]</code> select from a 1-D array?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Elements at positions 1, 2, and 3</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Just the element at position 1</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Elements at positions 1 and 2 (stop index 3 is excluded)</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The first three elements</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Python/NumPy slices exclude the stop index, so position 3 is not included.</div>
+<div class="ex" data-for="b">A slice returns a range, not a single element.</div>
+<div class="ex" data-for="c">Correct. <code>start:stop</code> includes <code>start</code> up to but not including <code>stop</code>, so <code>1:3</code> gives positions 1 and 2.</div>
+<div class="ex" data-for="d">The first three would be <code>a[0:3]</code>; this one starts at position 1.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>Without a loop, write NumPy to compute the element-wise square of <code>a = np.array([1, 2, 3, 4])</code>, then the sum of those squares.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<pre><code>sq = a ** 2          # array([1, 4, 9, 16])  -- element-wise square
+total = sq.sum()     # 30
+# or in one line: (a ** 2).sum()</code></pre>
+<p>The reasoning: <code>** 2</code> applies the square to every element (vectorized), and <code>.sum()</code>
+adds the results into one number. No index, no loop. As a bonus, <code>(a ** 2).sum()</code> is exactly the squared
+L2 norm from Lesson 1.1 — Track 1's math, now as one fast NumPy expression.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>Given a temperature array <code>temps</code>, write one line that replaces every reading below 0 with 0 (clip cold values to freezing), in place.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<pre><code>temps[temps < 0] = 0</code></pre>
+<p>The reasoning: <code>temps < 0</code> builds a true/false mask of the cold positions, and assigning to that
+masked selection writes <code>0</code> into exactly those slots — a vectorized conditional replacement that would
+otherwise be a <code>for</code> loop with an <code>if</code>. (NumPy also offers <code>np.clip(temps, 0, None)</code>
+for the same effect without changing the original.)</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>You expect a $10 \times 10$ array, but <code>a.shape</code> prints <code>(100,)</code>. Your later code <code>a[2, 3]</code> then errors. What happened, and how do you fix it?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The array is 1-D (100 elements in a single row), not 2-D, so two-position access <code>a[2, 3]</code> is invalid
+— NumPy expects one position for a 1-D array. Fix it with <code>a = a.reshape(10, 10)</code> (same numbers,
+rearranged into 10 rows × 10 columns); then <code>a[2, 3]</code> works.</p>
+<p>The reasoning: shape bugs are the #1 source of NumPy errors. The habit to build is <em>print the shape</em>
+whenever something behaves oddly — the shape almost always explains the error message. You'll lean on this constantly
+once broadcasting (next lesson) enters the picture.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: views vs. copies, and the dtype traps that bite beginners<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p><strong>Views vs. copies.</strong> A NumPy <em>slice</em> usually returns a <span class="term">view</span> — a
+window onto the <em>same</em> underlying memory, not a fresh array. So <code>b = a[0:3]; b[0] = 999</code> will
+change <code>a[0]</code> too, which surprises everyone the first time. This is a feature (slicing is free — no
+copying gigabytes), but it means you should call <code>.copy()</code> when you want an independent array.
+<em>Boolean</em> indexing and <em>fancy</em> indexing (selecting with a list of positions), by contrast, return
+copies. When in doubt, check with <code>np.shares_memory(a, b)</code>.</p>
+<p><strong>dtype traps.</strong> Because an array has one fixed type, a few sharp edges appear — and none of them
+throw an error, they just produce <em>wrong numbers</em>, which is exactly why they're worth knowing:</p>
+<ul>
+<li><strong>Integer overflow.</strong> <code>np.array([200], dtype=np.uint8) + 100</code> silently wraps around to
+44 (8-bit math caps at 255). Use a wider dtype (<code>int64</code>) or floats when values may grow.</li>
+<li><strong>Accidental truncation.</strong> Storing a decimal into an integer array drops the fraction:
+<code>a = np.array([1,2,3]); a[0] = 2.9</code> keeps <code>2</code>, not <code>2.9</code>.</li>
+<li><strong>float32 vs float64.</strong> Deep learning uses <code>float32</code> (half the memory, fast on GPUs) and
+sometimes <code>float16</code>; scientific code often defaults to <code>float64</code>. Mixing them can quietly cost
+precision or speed, so be deliberate.</li>
+</ul>
+<p>A five-second <code>print(a.dtype, a.shape)</code> when results look off will save you hours, and it's the single
+most useful debugging reflex in numerical Python.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Next, in <strong>2.3 Broadcasting &amp; array operations</strong>, we learn the
+rule that lets arrays of different shapes combine — the elegant idea behind normalizing columns and adding a bias to a
+whole batch, and the source of the most common shape bug.</p>
+</article>
+<nav class="pager"><a class="prev" href="py1-stack.html"><span class="dir">← Previous</span><span class="ti">Why Python, and the scientific stack</span></a><a class="next" href="py3-broadcasting.html"><span class="dir">Next →</span><span class="ti">Broadcasting &amp; array operations</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

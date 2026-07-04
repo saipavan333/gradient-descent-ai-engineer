@@ -1,0 +1,31 @@
+<svg viewBox="0 0 760 285" xmlns="http://www.w3.org/2000/svg" width="760" height="285" role="img">
+  <rect x="0" y="0" width="760" height="285" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 11 in one line: measure quality, ensure safety</text>
+  <rect x="12.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="70.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Metrics</text>
+  <text x="70.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">= proxies</text>
+  <rect x="136.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="194.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Offline</text>
+  <text x="194.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">eval</text>
+  <rect x="260.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="318.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Online</text>
+  <text x="318.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">A/B</text>
+  <rect x="384.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="442.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Fairness</text>
+  <rect x="508.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="566.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Guardrails</text>
+  <rect x="632.0" y="121.0" width="116.0" height="58.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="690.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">Governance</text>
+  <line x1="128.0" y1="150.0" x2="136.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M136.0,150.0 L126.9,145.9 L126.9,154.1 Z" fill="#475569"/>
+  <line x1="252.0" y1="150.0" x2="260.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M260.0,150.0 L250.9,145.9 L250.9,154.1 Z" fill="#475569"/>
+  <line x1="376.0" y1="150.0" x2="384.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M384.0,150.0 L374.9,145.9 L374.9,154.1 Z" fill="#475569"/>
+  <line x1="500.0" y1="150.0" x2="508.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M508.0,150.0 L498.9,145.9 L498.9,154.1 Z" fill="#475569"/>
+  <line x1="624.0" y1="150.0" x2="632.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M632.0,150.0 L622.9,145.9 L622.9,154.1 Z" fill="#475569"/>
+  <text x="380.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Measure the right thing (metrics are proxies), validate offline and online, and ensure the system</text>
+  <text x="380.0" y="253.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">is fair, safe, and governed — responsibility is part of the engineering, not an afterthought.</text>
+</svg>

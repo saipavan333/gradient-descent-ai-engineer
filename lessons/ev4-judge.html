@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM-as-judge · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html" class="current"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 11</b> · Evals, Safety &amp; Responsible AI · Lesson 11.4</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 11 · Evals, Safety &amp; Responsible AI</div>
+<h1>LLM-as-judge</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 24 min</span>
+<span class="pill">Lesson 11.4</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev04_judge.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Generative outputs have no single correct answer, so human evaluation is the gold standard but doesn't scale. LLM-as-judge grades outputs against a rubric at scale — but must be validated against human labels, since the judge is itself biased.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain LLM-as-judge</li><li>Validate a judge via human agreement</li><li>Know judge biases (position, verbosity)</li><li>Recognize the circularity risk</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> How do you grade a million essays?</h2>
+
+<p>Evaluating generative outputs — the text an LLM writes — is hard because there's no single correct answer to compare
+against (Lesson 11.1). The gold standard is <strong>human evaluation</strong>: have people read the outputs and rate them.
+But humans are slow and expensive, so you can't have them grade the thousands of outputs you'd need to evaluate every model
+change or monitor a production system. This is the bottleneck <span class="term">LLM-as-judge</span> addresses: use a
+capable LLM to evaluate outputs in place of a human, scoring them against a rubric. Because an LLM can read and assess text
+in seconds for a fraction of a cent, it makes evaluation <em>scalable</em> — you can grade thousands of responses
+automatically, enabling the fast iteration that human-only evaluation makes impossible.</p>
+
+<figure class="diagram"><svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" width="700" height="320" role="img">
+  <rect x="0" y="0" width="700" height="320" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">LLM-as-judge: a model grades outputs against a rubric</text>
+  <rect x="35.0" y="77.0" width="150.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="110.0" y="101.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Model output</text>
+  <text x="110.0" y="117.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">to grade</text>
+  <rect x="35.0" y="177.0" width="150.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="110.0" y="201.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Rubric</text>
+  <text x="110.0" y="217.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">criteria</text>
+  <rect x="315.0" y="125.0" width="150.0" height="60.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="390.0" y="159.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Judge LLM</text>
+  <rect x="540.0" y="125.0" width="120.0" height="60.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="600.0" y="150.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Score</text>
+  <text x="600.0" y="167.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">+ reason</text>
+  <line x1="185.0" y1="118.4" x2="315.0" y2="141.6" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M315.0,141.6 L306.7,136.0 L305.3,144.0 Z" fill="#475569"/>
+  <line x1="185.0" y1="191.6" x2="315.0" y2="168.4" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M315.0,168.4 L305.3,166.0 L306.7,174.0 Z" fill="#475569"/>
+  <line x1="465.0" y1="155.0" x2="540.0" y2="155.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M540.0,155.0 L530.9,150.9 L530.9,159.1 Z" fill="#475569"/>
+  <rect x="315.0" y="248.0" width="150.0" height="44.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="390.0" y="274.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">Human labels</text>
+  <line x1="390.0" y1="248.0" x2="390.0" y2="185.0" stroke="#475569" stroke-width="1.6" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <path d="M390.0,185.0 L385.9,194.1 L394.1,194.1 Z" fill="#475569"/>
+  <rect x="359.5" y="200.7" width="61.0" height="17.1" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="390.0" y="209.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" fill="#475569" text-anchor="middle" dominant-baseline="middle">validate</text>
+  <text x="360.0" y="304.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Scalable and cheap — but you must validate the judge against human labels before trusting it.</text>
+</svg>
+<figcaption><b>LLM-as-judge: a model grades outputs against a rubric.</b> A model output and a rubric of criteria go to a judge LLM, which produces a score plus its reasoning. It's scalable and cheap compared to human grading — but you must validate the judge against human labels before trusting it, since a judge is itself a model with biases.</figcaption></figure>
+
+<p>The setup is straightforward: you give the judge LLM the output to evaluate, a <span class="term">rubric</span> (clear
+criteria — "rate 1–5 for factual accuracy, relevance, and clarity"), and often the input and a reference, then ask it to
+produce a score <em>and its reasoning</em>. Asking for reasoning (not just a number) both improves the judgment quality
+(chain-of-thought, Track 6) and gives you an explanation you can inspect. But there's a catch you must never forget: the
+judge is <strong>itself a model with biases and blind spots</strong>. So the cardinal rule of LLM-as-judge is
+<strong>validate the judge against human labels</strong> — check that its scores agree with human judgment on a sample
+before you trust it at scale. An unvalidated judge can confidently produce systematically wrong evaluations.</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Validating a judge against humans</div>
+<div class="bd">
+<p>Before trusting an LLM judge, you measure its <strong>agreement</strong> with human ratings on a labeled sample. Here,
+humans and the judge each rated five responses on a 1–5 scale:</p>
+
+<pre><code>human = [5, 4, 2, 5, 3]          # human ratings (1-5)
+judge = [5, 4, 3, 5, 3]          # LLM-judge ratings
+exact  = sum(h == j for h, j in zip(human, judge))
+within1 = sum(abs(h - j) <= 1 for h, j in zip(human, judge))
+n = len(human)
+print(f"exact agreement   : {exact}/{n} = {exact/n:.0%}")
+print(f"within-1 agreement: {within1}/{n} = {within1/n:.0%}")</code></pre>
+<div class="out"><span class="lbl">Output</span>exact agreement   : 4/5 = 80%
+within-1 agreement: 5/5 = 100%</div>
+
+<p>The judge exactly matched the human on 4 of 5 responses (<strong>80% exact agreement</strong>), and on the fifth it was
+off by only one point (rating 3 vs the human's 2), so <strong>within-1 agreement is 100%</strong>. This is the validation
+step in miniature: you compare the judge to humans on a sample, and if agreement is high enough, you can trust the judge to
+grade the thousands of responses humans can't. Here 80% exact / 100% within-1 is reasonably strong — the judge tracks human
+judgment closely, disagreeing only mildly on one borderline case — so it's probably safe to deploy for this task. If instead
+the judge had agreed only 40% of the time, or systematically rated everything higher than humans, you'd <em>not</em> trust
+it and would fix the rubric, use a stronger judge model, or fall back to more human evaluation. The reasoning skill is that
+<strong>an LLM judge is only as good as its validated agreement with humans</strong> — the scalability is worthless if the
+scores are wrong, so you always measure agreement first, on real human-labeled data, and re-check it periodically. "Within-1
+agreement" often matters more than exact agreement for subjective 1–5 scales, since even two humans rarely agree exactly but
+usually agree closely; the judge tracking humans <em>closely</em> is the realistic bar. This validate-then-scale pattern —
+prove the cheap automated evaluator matches the expensive trusted one, then use the cheap one at scale — is the entire logic
+of LLM-as-judge, and getting it right is what makes automated generative evaluation trustworthy rather than a source of
+confident nonsense.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Human evaluation</strong> is the gold standard for generative outputs but too slow/expensive to scale.</li>
+<li><strong>LLM-as-judge</strong> uses a capable LLM to grade outputs against a <strong>rubric</strong> — scalable and cheap, enabling fast iteration.</li>
+<li>Ask the judge for a <strong>score and its reasoning</strong> — reasoning improves quality and gives an inspectable explanation.</li>
+<li>The judge is <strong>itself a model with biases</strong> — the cardinal rule is to <strong>validate it against human labels</strong> before trusting it.</li>
+<li>Measure <strong>agreement</strong> (exact and within-1) with humans; high agreement earns trust, low agreement means fix it or use humans.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What problem does LLM-as-judge solve?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It trains models faster</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It eliminates the need for any evaluation</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Human evaluation of generative outputs is the gold standard but too slow/expensive to scale — a judge LLM grades at scale cheaply</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It makes models bigger</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">It's about evaluation, not training speed.</div>
+<div class="ex" data-for="b">It automates evaluation, not removes it.</div>
+<div class="ex" data-for="c">Correct. It approximates human judgment at scale, enabling evaluation of thousands of outputs humans couldn't grade.</div>
+<div class="ex" data-for="d">Unrelated to model size.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> What is the cardinal rule when using an LLM as a judge?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Always use the biggest judge model</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Validate the judge against human labels before trusting it, since the judge is itself a biased model</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Never give it a rubric</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Only judge one output at a time</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Size helps but doesn't replace validation.</div>
+<div class="ex" data-for="b">Correct. A judge can be systematically wrong, so you must confirm it agrees with humans before relying on it.</div>
+<div class="ex" data-for="c">A rubric improves judging; you should give one.</div>
+<div class="ex" data-for="d">Batch judging is fine — the issue is trustworthiness, not quantity.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> Why ask the judge for its reasoning, not just a score?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To make it slower</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Reasoning is required by law</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It uses more tokens</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Reasoning improves the judgment quality (chain-of-thought) and gives an inspectable explanation you can check</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Speed isn't the aim.</div>
+<div class="ex" data-for="b">Not a legal requirement.</div>
+<div class="ex" data-for="c">More tokens is a cost, not the reason.</div>
+<div class="ex" data-for="d">Correct. Thinking before scoring yields better judgments and a rationale you can audit for errors or bias.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> Your LLM judge agrees with humans only 45% of the time and rates everything higher than humans do. What should you conclude?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Don't trust this judge yet — low agreement and a systematic upward bias mean fix the rubric/model or use more human eval</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Ship it — any automation is fine</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The humans are wrong</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Agreement doesn't matter</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Low agreement plus a consistent bias make the judge untrustworthy — validation failed, so fix it before use.</div>
+<div class="ex" data-for="b">Automating a wrong evaluator just produces wrong scores at scale.</div>
+<div class="ex" data-for="c">Human labels are the reference you're validating against here.</div>
+<div class="ex" data-for="d">Agreement is exactly the validation criterion — it matters most.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>What biases can an LLM judge have, and how would you detect and mitigate them?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>LLM judges have documented, systematic biases. <strong>Position bias:</strong> when comparing two responses (A vs B), the
+judge may favor whichever is presented first (or second) regardless of quality. <strong>Verbosity/length bias:</strong>
+judges tend to rate longer, more elaborate answers higher even when they're not better. <strong>Self-preference bias:</strong>
+a judge may favor outputs from its own model family or in its own style. <strong>Sycophancy/leniency:</strong> a tendency to
+rate things generously, or to agree with assertions in the text. <strong>Formatting bias:</strong> preferring nicely
+formatted answers over substance. These matter because they make the judge's scores systematically wrong in ways that can
+mislead model development (e.g., you'd "learn" to make outputs longer because the judge rewards length, not quality —
+Goodhart again).</p>
+<p>To <strong>detect</strong> them, you probe deliberately: for position bias, run each comparison both ways (A-then-B and
+B-then-A) and check if the verdict flips; for length bias, check whether score correlates with length independent of
+quality; and always validate against human labels, which will reveal systematic divergence. To <strong>mitigate</strong>:
+<em>randomize and average over positions</em> (present both orders, average), <em>control for length</em> in the rubric or
+analysis, <em>write explicit rubrics</em> that focus the judge on substance ("ignore length; rate factual accuracy") and
+require reasoning tied to specific criteria, <em>use multiple judges</em> and aggregate (an ensemble reduces individual
+biases), and <em>calibrate</em> against human scores. The reasoning skill is treating the judge as a measuring instrument
+that has systematic error, exactly as you'd treat any sensor: you characterize its biases empirically, correct for them, and
+validate against a trusted reference. Naively trusting a judge's raw scores — without checking for position and length bias
+— is a common mistake that quietly corrupts evaluation, so the sophistication is knowing these biases exist, testing for
+them, and designing the judging protocol (randomized positions, length controls, clear rubrics, human validation) to
+neutralize them.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>When is LLM-as-judge appropriate, and when should you insist on human evaluation despite the cost?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>LLM-as-judge is appropriate when you need <strong>scale and speed</strong> and the task is one where a validated judge
+agrees well with humans: rapid iteration during development (comparing many model variants), automated regression testing
+(has quality dropped?), production monitoring (grading a sample of live outputs), and relatively objective or well-specified
+criteria (factual accuracy against a source, format compliance, presence of required elements). In these cases the judge's
+speed enables evaluation that would be impossible with humans alone, and validated agreement makes it trustworthy enough.</p>
+<p>You should insist on <strong>human evaluation</strong> when the stakes or subtlety are high. <strong>High-stakes
+decisions:</strong> final quality bars before a major launch, safety-critical assessments, or anything where a wrong
+evaluation has serious consequences — you don't want an automated judge's blind spots deciding these. <strong>Subjective or
+nuanced quality</strong> that judges handle poorly: humor, creativity, cultural appropriateness, emotional tone, or genuine
+helpfulness, where human judgment captures things a model misses. <strong>Novel domains</strong> where you haven't
+validated the judge, or where the judge might share the <em>same</em> blind spots as the model being evaluated (a subtle
+danger — if the judge and the generator have correlated errors, the judge won't catch them). <strong>Establishing the
+ground truth</strong> itself: you need human labels to validate the judge in the first place, so humans are irreplaceable at
+the foundation. The reasoning is a cost-risk trade-off: the judge is a scalable approximation of human judgment, excellent
+for high-volume, lower-stakes, well-validated evaluation, but you keep humans in the loop for the high-stakes, subjective,
+and validation roles where the approximation's errors are unacceptable. The mature practice is a <strong>hybrid</strong>:
+use the judge for scale and continuous evaluation, anchored by periodic human evaluation that both validates the judge and
+handles the judgments too important or too subtle to automate. Knowing where that line falls — automate the volume, reserve
+humans for the stakes and the ground truth — is the key judgment.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Explain the potential circularity in using LLMs to evaluate LLMs, and why it's a genuine concern for the field.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The circularity is that <strong>if you use an LLM to judge LLMs, you're using the technology you're trying to evaluate to
+do the evaluating</strong> — so the evaluation inherits the judge's limitations, and those limitations may be exactly the
+ones you're trying to detect in the generator. Concretely: if LLMs as a class share certain blind spots (say, they're all
+bad at a certain kind of reasoning, or all share a cultural bias, or all find the same wrong answers plausible), then a
+judge LLM will <em>fail to penalize</em> those same flaws in the outputs it grades, because it doesn't recognize them as
+flaws. The judge and the generated text have <strong>correlated errors</strong>, so the judge systematically misses the very
+problems that matter most. Worse, if you then <em>optimize</em> the generator to please the judge (using the judge's scores
+as a training signal), you can amplify shared biases — the model learns to produce outputs the judge likes, which may drift
+from what humans actually want, a Goodhart failure with the judge as the gamed metric.</p>
+<p>It's a genuine concern because it means <strong>automated evaluation can create a closed loop that looks like progress but
+isn't</strong>: models improve on judge-measured quality while real quality stagnates or degrades on the dimensions the
+judges are blind to, and you wouldn't know without external ground truth. This is why <strong>human evaluation remains
+irreplaceable as the anchor</strong> — humans provide an <em>independent</em> signal that isn't subject to the same
+correlated blind spots, so periodic human validation is what keeps the automated loop honest. It's also why the field
+worries about evaluation as a whole becoming a bottleneck: as models grow more capable, they become harder to evaluate (only
+experts can judge expert-level outputs), and leaning on models to evaluate models risks the circularity. The deeper
+principle, connecting to the whole track, is that <strong>an evaluator must be more trustworthy than the thing it
+evaluates</strong>, at least on the dimension being measured — and an LLM judging LLMs violates this when they share
+weaknesses. The practical response is to use judges for scale but always keep an independent human anchor, to seek diverse
+and adversarial evaluation that probes for shared blind spots, and to stay humble that automated evaluation of frontier
+systems is an unsolved problem. Recognizing this circularity — rather than treating a judge's approval as ground truth — is
+a sign of real sophistication about AI evaluation.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: evaluation as the bottleneck of the LLM era<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>LLM-as-judge is one response to a defining challenge: <strong>evaluation has become the bottleneck of AI progress</strong>.
+In earlier ML, evaluation was comparatively easy — a classifier had labeled test data and clear metrics. Generative models
+broke this: outputs are open-ended, quality is multi-dimensional and subjective, and there's no label to compare against, so
+the old paradigm doesn't apply. As models have grown more capable, the problem has intensified in a striking way — the more
+capable a model, the <em>harder</em> it is to evaluate, because assessing expert-level outputs requires expert-level
+judgment. Evaluating a model that writes PhD-level physics or complex code demands evaluators who can themselves judge
+PhD-level physics or complex code, which are scarce and slow. This "evaluation gap" — capabilities outpacing our ability to
+measure them — is one of the most important and least glamorous problems in AI, because <em>you cannot reliably improve or
+safely deploy what you cannot measure</em>, so evaluation quality gates real progress and real safety.</p>
+<p>The field's toolkit for this gap is exactly what this track has built, and LLM-as-judge is a central, imperfect piece.
+The pieces fit together: <strong>human evaluation</strong> provides ground truth but doesn't scale; <strong>LLM-as-judge</strong>
+scales but needs validation and has biases and circularity risks; <strong>benchmarks</strong> give comparability but get
+gamed and contaminated (Lesson 11.1); <strong>online evaluation</strong> gives real signal but only for deployed systems and
+measurable outcomes; and <strong>red-teaming and adversarial testing</strong> (Lesson 11.6) probe for failures that
+average-case metrics miss. No single method suffices, so rigorous evaluation triangulates across all of them, with human
+judgment as the irreplaceable anchor that keeps the automated methods honest. The strategic insight for anyone building AI
+is that <strong>investment in evaluation is investment in the ability to improve at all</strong> — teams with strong,
+trustworthy, scalable evaluation can iterate quickly and safely and know when they've actually made progress; teams with weak
+evaluation optimize confidently in the dark, gaming their own metrics. As AI systems take on more consequential roles, the
+quality of our evaluation determines both how fast we can improve them and how safely we can deploy them — which is why
+evaluation, far from a formality, is arguably <em>the</em> central challenge of the current era, and why the ability to
+design trustworthy evaluation is among the most valuable skills an ML engineer can have. The remaining lessons turn from
+measuring quality to the specific safety concerns — bias, adversarial misuse, and governance — that responsible AI must also
+evaluate and control.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Evaluation isn't only about quality — it's also about harm. Next,
+<strong>11.5 Bias, fairness &amp; toxicity</strong> covers how AI systems can be unfair or harmful, how to measure it, and
+what to do about it.</p>
+</article>
+<nav class="pager"><a class="prev" href="ev3-online.html"><span class="dir">← Previous</span><span class="ti">Online evaluation &amp; A/B testing</span></a><a class="next" href="ev5-bias.html"><span class="dir">Next →</span><span class="ti">Bias, fairness &amp; toxicity</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

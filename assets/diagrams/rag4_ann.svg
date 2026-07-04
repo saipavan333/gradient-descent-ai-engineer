@@ -1,0 +1,39 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="720" height="320" role="img">
+  <rect x="0" y="0" width="720" height="320" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Exact vs approximate nearest-neighbor search</text>
+  <text x="185.0" y="84.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">exact (brute force)</text>
+  <rect x="80.0" y="138.0" width="80.0" height="44.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="120.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">query</text>
+  <circle cx="353.8" cy="224.3" r="3.6" fill="#94a3b8"/>
+  <circle cx="227.9" cy="129.3" r="3.6" fill="#94a3b8"/>
+  <circle cx="337.0" cy="201.0" r="3.6" fill="#94a3b8"/>
+  <circle cx="313.8" cy="153.9" r="3.6" fill="#94a3b8"/>
+  <circle cx="304.8" cy="186.7" r="3.6" fill="#94a3b8"/>
+  <circle cx="301.4" cy="137.4" r="3.6" fill="#94a3b8"/>
+  <circle cx="280.3" cy="163.3" r="3.6" fill="#94a3b8"/>
+  <circle cx="321.2" cy="229.4" r="3.6" fill="#94a3b8"/>
+  <circle cx="352.9" cy="179.9" r="3.6" fill="#94a3b8"/>
+  <circle cx="282.3" cy="149.5" r="3.6" fill="#94a3b8"/>
+  <circle cx="225.0" cy="123.0" r="3.6" fill="#94a3b8"/>
+  <circle cx="285.1" cy="155.0" r="3.6" fill="#94a3b8"/>
+  <text x="185.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">compare to ALL N vectors</text>
+  <text x="185.0" y="266.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">exact, but slow at scale</text>
+  <line x1="390.0" y1="90.0" x2="390.0" y2="290.0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <text x="560.0" y="84.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">approximate (ANN index)</text>
+  <rect x="430.0" y="138.0" width="80.0" height="44.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="470.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">query</text>
+  <circle cx="684.3" cy="224.3" r="3.2" fill="#cbd5e1"/>
+  <circle cx="567.4" cy="129.3" r="3.8" fill="#10b981"/>
+  <circle cx="668.6" cy="201.0" r="3.2" fill="#cbd5e1"/>
+  <circle cx="647.1" cy="153.9" r="3.2" fill="#cbd5e1"/>
+  <circle cx="638.8" cy="186.7" r="3.8" fill="#10b981"/>
+  <circle cx="635.6" cy="137.4" r="3.2" fill="#cbd5e1"/>
+  <circle cx="616.0" cy="163.3" r="3.2" fill="#cbd5e1"/>
+  <circle cx="654.0" cy="229.4" r="3.8" fill="#10b981"/>
+  <circle cx="683.4" cy="179.9" r="3.2" fill="#cbd5e1"/>
+  <circle cx="617.8" cy="149.5" r="3.2" fill="#cbd5e1"/>
+  <circle cx="564.7" cy="123.0" r="3.2" fill="#cbd5e1"/>
+  <circle cx="620.4" cy="155.0" r="3.2" fill="#cbd5e1"/>
+  <text x="560.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">check only a smart subset</text>
+  <text x="560.0" y="266.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">~100x faster, ~99% as good</text>
+</svg>

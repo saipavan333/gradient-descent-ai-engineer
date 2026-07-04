@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vision-language &amp; multimodal models · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html" class="current"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 14</b> · Computer Vision · Lesson 14.7</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 14 · Computer Vision</div>
+<h1>Vision-language &amp; multimodal models</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 40 min</span>
+<span class="pill">Lesson 14.7</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv07_multimodal.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>CLIP put images and text in one shared space, unlocking zero-shot classification and seeding the vision-language models inside modern assistants. This lesson closes the loop between vision and language — the defining convergence of current AI.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain how CLIP aligns images and text via contrastive learning</li><li>Do zero-shot classification by matching image and text embeddings</li><li>Distinguish captioning and visual question answering (VQA)</li><li>Describe how modern VLMs feed image tokens into a language model</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> One shared space for images and text</h2>
+
+<p>Until now, vision and language have been separate worlds. <span class="term">Multimodal</span> models join them — a
+<span class="term">modality</span> is a type of data (images, text, audio), and a multimodal model works across more than one.
+The model that opened this door is <span class="term">CLIP</span> (Contrastive Language–Image Pre-training), and its idea is
+elegant: train an <strong>image encoder</strong> and a <strong>text encoder</strong> so that a picture and its caption land at
+nearly the <em>same point</em> in a shared <span class="term">embedding space</span> (a space where each image and each piece
+of text becomes a vector, and closeness means "these mean similar things"). After training, a photo of a dog and the text "a
+photo of a dog" produce almost-identical vectors, while unrelated pairs land far apart. Vision and language now live in
+<em>one</em> coordinate system, and you can compare across them directly — measure how well any image matches any text just by
+checking whether their vectors are close.</p>
+
+<figure class="diagram"><svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" width="700" height="330" role="img">
+  <rect x="0" y="0" width="700" height="330" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">CLIP: align images and text in one shared space</text>
+  <rect x="55.0" y="86.0" width="110.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="110.0" y="114.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">image</text>
+  <rect x="45.0" y="206.0" width="130.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="110.0" y="234.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">text caption</text>
+  <rect x="240.0" y="82.0" width="120.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="300.0" y="106.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">image</text>
+  <text x="300.0" y="122.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">encoder</text>
+  <rect x="240.0" y="202.0" width="120.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="300.0" y="226.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">text</text>
+  <text x="300.0" y="242.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">encoder</text>
+  <rect x="440.0" y="135.0" width="160.0" height="70.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="520.0" y="165.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">shared</text>
+  <text x="520.0" y="182.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">embedding space</text>
+  <line x1="165.0" y1="110.0" x2="240.0" y2="110.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M240.0,110.0 L230.9,105.9 L230.9,114.1 Z" fill="#475569"/>
+  <line x1="175.0" y1="230.0" x2="240.0" y2="230.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M240.0,230.0 L230.9,225.9 L230.9,234.1 Z" fill="#475569"/>
+  <line x1="360.0" y1="126.4" x2="440.0" y2="148.2" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M440.0,148.2 L432.3,141.9 L430.1,149.7 Z" fill="#475569"/>
+  <line x1="360.0" y1="213.6" x2="440.0" y2="191.8" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M440.0,191.8 L430.1,190.3 L432.3,198.1 Z" fill="#475569"/>
+  <text x="350.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Trained so a photo and its caption land close together — enabling zero-shot classification, search, and captioning.</text>
+</svg>
+<figcaption><b>CLIP: align images and text in a shared space.</b> An image encoder and a text encoder are trained so that an image and its matching caption map to nearby vectors, while mismatched pairs map far apart. Once vision and language share one embedding space, you can compare any image to any text by vector similarity — the basis for zero-shot classification, image search, and captioning.</figcaption></figure>
+
+<p>How is this trained? By <span class="term">contrastive learning</span>: show the model a big batch of (image, caption)
+pairs and train it so each image's vector is <em>pulled close</em> to its own caption's vector and <em>pushed apart</em> from
+all the other captions in the batch — "match the true pairs, separate the mismatches." Do this over hundreds of millions of
+image-text pairs scraped from the web (captions, alt-text) and the encoders learn a rich, shared understanding of visual and
+linguistic concepts — no manual labels required, because the caption <em>is</em> the supervision. The stunning payoff is
+<span class="term">zero-shot classification</span>: to classify an image into categories you never explicitly trained on, just
+write each category as text ("a photo of a cat," "a photo of a dog"), embed them, and pick whichever caption-vector is
+closest to the image's vector. The model classifies into brand-new categories described in words alone — no fine-tuning, no
+labeled examples.</p>
+
+<h2><span class="sec-tag">Concept</span> From matching to describing and answering</h2>
+
+<p>CLIP <em>matches</em> images and text, but the same "join the modalities" idea powers models that <em>generate</em>
+language about images. <span class="term">Image captioning</span> takes an image and produces a sentence describing it (image
+→ text). <span class="term">Visual question answering</span> (VQA) takes an image <em>and</em> a question and produces an
+answer ("How many people are in this photo?" → "Three"). Modern <span class="term">vision-language models</span> (VLMs) — the
+image-understanding ability inside assistants like GPT-4V, Claude, and Gemini — generalize all of this: you show them an
+image and converse about it in natural language, and they can describe, answer, reason, read text in the image, and more.</p>
+
+<figure class="diagram"><svg viewBox="0 0 730 300" xmlns="http://www.w3.org/2000/svg" width="730" height="300" role="img">
+  <rect x="0" y="0" width="730" height="300" fill="#ffffff"/>
+  <text x="365.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Three vision-language tasks, one shared idea</text>
+  <rect x="40.0" y="66.0" width="200.0" height="150.0" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="56.0" y="82.0" width="168.0" height="44.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="140.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">CLIP / matching</text>
+  <text x="140.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">image + text</text>
+  <text x="140.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">→ similarity score</text>
+  <rect x="275.0" y="66.0" width="200.0" height="150.0" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="291.0" y="82.0" width="168.0" height="44.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="375.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Captioning</text>
+  <text x="375.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">image</text>
+  <text x="375.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">→ a sentence</text>
+  <rect x="500.0" y="66.0" width="200.0" height="150.0" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="516.0" y="82.0" width="168.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="600.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">VQA</text>
+  <text x="600.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">image + question</text>
+  <text x="600.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">→ an answer</text>
+  <text x="365.0" y="258.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">All connect pixels to language: match them (CLIP), describe them (captioning), or answer about them (VQA).</text>
+</svg>
+<figcaption><b>Three vision-language tasks, one shared idea.</b> CLIP-style matching scores how well an image and a text go together; captioning maps an image to a descriptive sentence; VQA answers a question about an image. All three connect pixels to language — the difference is only what you ask for: a match score, a description, or an answer.</figcaption></figure>
+
+<p>Architecturally, today's VLMs follow a common recipe that reuses everything you've learned: a <strong>vision encoder</strong>
+(often a ViT, sometimes CLIP's image encoder) turns the image into a set of visual tokens, a <strong>projection</strong> maps
+those into the <em>same token space</em> a language model understands, and a <strong>large language model</strong> (Track 6)
+then treats the image tokens just like text tokens — attending to them alongside the words of your question to generate an
+answer. In other words, an image becomes "words" the LLM can read (echoing the ViT patches-as-tokens idea), and the LLM's
+reasoning does the rest. This is why the frontier of vision is increasingly the frontier of language too: the strongest visual
+reasoners are language models that have been taught to see.</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Zero-shot matching with cosine similarity</div>
+<div class="bd">
+<p>Once images and text share a space, matching is just measuring vector closeness — with <span class="term">cosine
+similarity</span> (how aligned two vectors are: 1.0 = same direction, 0 = unrelated). Here one image embedding is compared
+against three caption embeddings; the closest caption wins — that's zero-shot classification in five lines:</p>
+
+<pre><code>import numpy as np
+def cos(a, b):
+    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
+
+img_emb = np.array([0.9, 0.1, 0.8, 0.2])     # the image's vector (from the image encoder)
+captions = {                                  # candidate labels, written as text
+    "a photo of a cat": np.array([0.85, 0.15, 0.75, 0.10]),
+    "a photo of a dog": np.array([0.20, 0.90, 0.15, 0.80]),
+    "a red bicycle":    np.array([0.10, 0.20, 0.10, 0.95]),
+}
+scores = {c: cos(img_emb, v) for c, v in captions.items()}
+for c, s in scores.items():
+    print(f"  {c:22s} cos = {s:.3f}")
+print("best match:", repr(max(scores, key=scores.get)))</code></pre>
+<div class="out"><span class="lbl">Output</span>  a photo of a cat       cos = 0.996
+  a photo of a dog       cos = 0.365
+  a red bicycle          cos = 0.316
+best match: 'a photo of a cat'</div>
+
+<p>The image vector <code>[0.9, 0.1, 0.8, 0.2]</code> is compared to each caption vector by cosine similarity. It scores
+<strong>0.996</strong> against "a photo of a cat" (nearly identical direction — a strong match), but only <strong>0.365</strong>
+and <strong>0.316</strong> against "dog" and "bicycle" (very different directions — weak matches). Taking the highest score,
+the model classifies the image as <strong>"a photo of a cat"</strong> — and here is the remarkable part: <em>the model was
+never trained on a "cat vs dog vs bicycle" task.</em> We invented those three categories on the spot by writing them as text,
+embedded them with the text encoder, and compared. That's <strong>zero-shot classification</strong>: because images and text
+share one space, you can classify into <em>any</em> categories you can describe in words, with no labeled training examples and
+no fine-tuning — just embed the candidate labels and pick the nearest. Change the label set to "a chihuahua / a husky / a
+poodle" and you have a dog-breed classifier, instantly, from the same model. Real CLIP uses ~512-dimensional vectors from
+encoders trained on hundreds of millions of web image-text pairs, but the operation is exactly this: <strong>embed the image,
+embed the candidate texts, take the most similar</strong>. This one trick — comparison in a shared space — is also how image
+search (embed a text query, find the nearest image vectors), deduplication, and retrieval for multimodal RAG (Track 7) all
+work. Aligning modalities into a shared space turns "understanding across vision and language" into simple vector arithmetic.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Multimodal</strong> models work across data types (modalities); <strong>CLIP</strong> aligns images and text into one <strong>shared embedding space</strong> where a picture and its caption land close together.</li>
+<li>It's trained by <strong>contrastive learning</strong> on hundreds of millions of web image-text pairs — pull true pairs together, push mismatches apart; the caption is the supervision (no manual labels).</li>
+<li>The shared space enables <strong>zero-shot classification</strong>: describe categories as text, embed them, and pick the caption closest to the image — classify into new categories with no training examples.</li>
+<li><strong>Captioning</strong> (image→text) and <strong>VQA</strong> (image+question→answer) generate language about images; matching, describing, and answering all connect pixels to language.</li>
+<li>Modern <strong>VLMs</strong> feed image tokens (from a ViT) into a <strong>large language model</strong>, so the image becomes "words" the LLM reasons over — the strongest visual reasoners are language models taught to see.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What does CLIP learn?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To generate images from text</span></li>
+<li data-opt="b"><span class="mk">B</span><span>To segment images</span></li>
+<li data-opt="c"><span class="mk">C</span><span>To map images and text into one shared space where matching pairs are close</span></li>
+<li data-opt="d"><span class="mk">D</span><span>To translate languages</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">That's a diffusion model; CLIP's text encoder can guide one, but CLIP itself aligns, not generates.</div>
+<div class="ex" data-for="b">Segmentation is a different task; CLIP aligns image and text embeddings.</div>
+<div class="ex" data-for="c">Correct. Image and text encoders trained so a picture and its caption land near each other.</div>
+<div class="ex" data-for="d">It relates images to text, not one language to another.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> How does CLIP classify an image into a category it was never explicitly trained on (zero-shot)?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It can't — you must fine-tune first</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Write each category as text, embed the candidates, and pick the one whose vector is closest to the image's vector</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It searches the web</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It retrains on the new categories automatically</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Zero-shot means <em>no</em> fine-tuning — that's the headline capability.</div>
+<div class="ex" data-for="b">Correct. Embed the image and the text labels in the shared space; nearest caption wins.</div>
+<div class="ex" data-for="c">No search — it compares embeddings it computes itself.</div>
+<div class="ex" data-for="d">No retraining happens; it just compares vectors.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> What is contrastive learning, as CLIP uses it?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Adding noise and removing it</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Predicting the next word</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Drawing bounding boxes</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Pulling matching image-text pairs together and pushing mismatched pairs apart in the embedding space</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">That's diffusion training, not contrastive learning.</div>
+<div class="ex" data-for="b">That's language-model pretraining; CLIP contrasts pairs instead.</div>
+<div class="ex" data-for="c">That's detection; unrelated to contrastive alignment.</div>
+<div class="ex" data-for="d">Correct. Match the true (image, caption) pairs, separate the mismatches — over huge web data.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> How do modern vision-language models (VLMs) let an LLM "see" an image?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>A vision encoder turns the image into tokens that are projected into the LLM's token space, so the LLM attends to them like words</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The LLM reads the raw pixel file as text</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The image is converted to a caption first and the pixels are discarded</span></li>
+<li data-opt="d"><span class="mk">D</span><span>LLMs cannot process images at all</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Image → visual tokens → projected into the LLM's space → attended to alongside text tokens.</div>
+<div class="ex" data-for="b">Raw pixels aren't fed as text; a vision encoder produces tokens.</div>
+<div class="ex" data-for="c">Strong VLMs keep visual tokens (not just a caption), preserving detail to reason over.</div>
+<div class="ex" data-for="d">Modern LLMs are multimodal — seeing is exactly what this lesson describes.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>You need to classify product photos into 500 fine-grained categories, but you have almost no labeled examples. Why might CLIP zero-shot be a better first move than training a CNN classifier?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Training a 500-class CNN classifier requires <em>labeled examples per class</em> — realistically dozens to hundreds each, so
+tens of thousands of labels — which you don't have. CLIP zero-shot sidesteps the labeling problem entirely. Because CLIP aligns
+images and text in a shared space, you can classify by simply <strong>writing each of the 500 categories as text</strong> ("a
+photo of a &lt;category&gt;"), embedding those 500 label-texts once, embedding each product photo, and assigning each photo to
+the nearest label-vector. No labeled training images, no fine-tuning — you get a working 500-way classifier immediately, out of
+a model that already learned visual and linguistic concepts from hundreds of millions of web pairs. That makes it the ideal
+<strong>first move</strong>: it's essentially free to set up, gives you a baseline in an afternoon, and tells you how far
+"understanding described in words" alone gets you on your specific categories. For many category sets it's surprisingly strong,
+especially when the categories are describable in natural language (which product taxonomies usually are).</p>
+<p>The reasoning skill is matching the method to the <strong>data constraint</strong>: when labels are the bottleneck (as here),
+prefer an approach whose "training" is writing text, not collecting labeled images. The mature plan is staged. Start with CLIP
+zero-shot as a no-label baseline. Then, if accuracy is insufficient on the hard/fine-grained categories, <em>improve
+incrementally</em> — better label wording (prompt engineering the class names, e.g., "a close-up photo of a &lt;category&gt;
+product"), or collect a <em>small</em> labeled set and do few-shot or light fine-tuning on top of CLIP's features (which are
+already excellent, so a little data goes far — transfer learning again). This ladder — zero-shot → prompt-tuned → few-shot →
+fine-tuned — lets you spend labeling effort only where it's actually needed, guided by where the baseline fails. Recognizing
+that CLIP converts a <em>labeling</em> problem into a <em>describing</em> problem — and using it as the cheap first rung before
+investing in labels — is exactly the practical, cost-aware judgment (echoing the data-is-the-bottleneck theme from segmentation
+and Track 2) that gets a working classifier shipped fast.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>Explain how the "patches as tokens" idea from the ViT lesson connects to how modern VLMs let a language model reason about an image.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The connection is that <strong>both turn an image into tokens so a transformer can process it</strong> — VLMs just take one
+more step. Recall the ViT insight: an image can be cut into patches, each flattened into a vector (a token), and then a
+transformer processes the sequence exactly as it processes words. A modern VLM builds directly on this. Its <strong>vision
+encoder</strong> (usually a ViT) turns the image into a set of visual tokens — the same patches-as-tokens move. Then comes the
+extra step: a <strong>projection layer</strong> maps those visual tokens into the <em>same embedding space</em> the language
+model uses for word tokens, so from the LLM's perspective the image tokens are just more tokens in its vocabulary's space. The
+LLM then does what it always does — <strong>attention over a sequence of tokens</strong> — but now that sequence contains both
+the image's visual tokens and the words of your question. Because attention lets every token attend to every other, the LLM's
+answer-generation can freely relate the question's words to the image's regions, which is exactly what "reasoning about the
+image" requires. So the image becomes "words the LLM can read," and the LLM's existing language reasoning does the visual
+reasoning.</p>
+<p>The reasoning principle — and the through-line of the whole modern-AI story — is that the <strong>transformer is a
+universal token processor</strong>, so bringing a new modality to it means (1) <em>tokenize</em> that modality and (2)
+<em>align</em> its tokens with the space the model already uses. ViT solved step 1 for images (patches → tokens); CLIP and VLM
+projections solve step 2 (map those image tokens into a text-compatible space). This is why the pieces across this track and
+Track 5/6 snap together: patches-as-tokens (ViT), a shared image-text space (CLIP), and image-tokens-fed-to-an-LLM (VLM) are
+three uses of the same core move. Being able to trace that single idea — represent everything as tokens in a shared space, then
+let attention relate them — from ViT through CLIP to multimodal assistants demonstrates that you understand modern AI as one
+coherent architecture rather than a pile of separate tricks. That unifying view is precisely what makes the difference between
+memorizing model names and actually understanding why the field looks the way it does.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>CLIP learned from hundreds of millions of image-text pairs scraped from the web. What capabilities does that scale unlock, and what risks does it carry?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The web-scale training is the source of both CLIP's power and its problems. On <strong>capabilities</strong>: training on
+hundreds of millions of diverse, naturally-captioned images gives CLIP astonishingly broad coverage — it has "seen" a huge
+range of objects, scenes, styles, and the words people use for them, which is exactly why it generalizes <strong>zero-shot</strong>
+to categories no one curated a labeled dataset for. The breadth of the web <em>is</em> the breadth of its competence; you get a
+model that recognizes concepts from "golden retriever" to "art deco building" to "a diagram of a cell" because all of those
+appeared, captioned, somewhere in its training data. This scale-driven generality — capability emerging from massive, weakly-
+labeled data rather than careful curation — is the same force behind large language models (Track 6), here applied to vision-
+language. On <strong>risks</strong>: the web is uncurated, so the model inherits the web's <strong>biases and gaps</strong>. It
+absorbs societal stereotypes present in captions and their associations (which can surface as biased classifications or
+associations across gender, race, and culture — a fairness problem in the sense of Track 11); it reflects <strong>what the web
+over- and under-represents</strong> (strong on internet-common concepts, weak on rare or under-documented ones, and skewed
+toward the languages and cultures that dominate web text); and the training data raises <strong>consent and copyright</strong>
+questions, since images and captions were scraped without their creators' explicit permission.</p>
+<p>The reasoning skill is recognizing the <strong>double-edged nature of web-scale training</strong>: the same
+indiscriminate ingestion that grants broad zero-shot capability also ingests the web's biases, imbalances, and rights issues —
+you cannot get one without confronting the other. This has concrete practical consequences: you should <em>evaluate CLIP-based
+systems for bias</em> before deploying them (especially for consequential classification of people), expect <em>weaker
+performance</em> on concepts and communities the web underrepresents, and be aware of the <em>legal and ethical</em> debate
+around scraped training data. It connects the exciting capability of this lesson straight back to the responsible-AI discipline
+of Track 11: a model's competence and its harms often flow from the <em>same</em> source — its training data — so understanding
+where a model learned from is inseparable from understanding both what it can do and how it can fail. Holding capability and
+risk together, and tracing both to the data, is exactly the mature, responsible perspective that distinguishes an engineer who
+can deploy these systems safely from one who only marvels at what they can do.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: the convergence of vision and language, and where the field is heading<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>This lesson marks a convergence that defines the current era: <strong>vision and language are merging into unified
+systems</strong>. For most of deep learning's history they were separate fields with separate architectures, conferences, and
+experts. CLIP was a hinge point — by putting images and text in one space, it showed the two could be learned <em>together</em>,
+and it immediately became a component in other systems (it guides diffusion models' text conditioning, powers multimodal
+retrieval, and seeds VLM vision encoders). The trajectory since has been steadily toward <strong>generality</strong>: from
+CLIP (align two modalities) to captioning/VQA (generate language about images) to today's <strong>vision-language models</strong>
+that hold a fluent conversation about any image, read text within it, reason over charts and documents, and increasingly handle
+video and audio too. The frontier assistants — GPT-4V, Claude, Gemini — are <em>natively multimodal</em>: a single model that
+sees, reads, and reasons, because (as the practice problem traced) an image can be tokenized and fed into a language model's
+attention just like words. The practical upshot for an aspiring engineer is that "computer vision" and "NLP" are no longer
+separate careers so much as facets of one skill set built on the transformer — which is exactly why this curriculum taught them
+as connected tracks rather than silos.</p>
+<p>Standing at the end of the Computer Vision track, look at how the whole thing coheres. You began with the most basic fact —
+an image is a grid of numbers (a tensor) — and built up: CNNs learned to extract visual features; the task hierarchy
+(classification → detection → segmentation) showed increasing spatial granularity over those features; Vision Transformers
+re-expressed images as token sequences so the language-model architecture could process them; diffusion models flipped analysis
+into generation; and now multimodal models fuse vision with language into unified reasoners. The connective tissue is the
+themes this curriculum has hammered throughout: <em>transfer learning and pretraining</em> (don't start from scratch — reuse
+learned features), <em>the transformer as a universal token processor</em> (tokenize a modality and attention handles the
+rest), <em>scale and data as the engines of capability</em> (and the sources of bias), and <em>responsible evaluation</em>
+(capability and harm often share a root in the data). Computer vision is no longer an island; it's one province of a unified
+landscape of AI, connected to language, generation, and reasoning — and you now have the map of the whole territory. The final
+lesson is a short interview check to consolidate it; after that, you can carry this integrated understanding of how machines
+see, create, and reason about the visual world into real work.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">That completes the core of computer vision — seeing, creating, and reasoning
+about images. Next, a short <strong>interview check</strong> consolidates the whole track: the task ladder, CNN vs ViT,
+diffusion, and CLIP.</p>
+</article>
+<nav class="pager"><a class="prev" href="cv6-diffusion.html"><span class="dir">← Previous</span><span class="ti">Image generation with diffusion</span></a><a class="next" href="cv-interview.html"><span class="dir">Next →</span><span class="ti">Interview check: Computer Vision</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

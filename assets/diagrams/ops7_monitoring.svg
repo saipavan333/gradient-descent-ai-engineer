@@ -1,0 +1,18 @@
+<svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" width="700" height="330" role="img">
+  <rect x="0" y="0" width="700" height="330" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Monitor two layers: the system and the model</text>
+  <rect x="40.0" y="137.0" width="150.0" height="66.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="115.0" y="165.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Live model</text>
+  <text x="115.0" y="182.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">in production</text>
+  <rect x="310.0" y="80.0" width="320.0" height="64.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="470.0" y="108.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">System health (ops)</text>
+  <text x="470.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">latency · throughput · errors</text>
+  <rect x="310.0" y="210.0" width="320.0" height="64.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="470.0" y="238.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Model quality</text>
+  <text x="470.0" y="254.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">accuracy · drift · data quality</text>
+  <line x1="190.0" y1="157.7" x2="310.0" y2="138.1" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M310.0,138.1 L300.3,135.6 L301.6,143.6 Z" fill="#475569"/>
+  <line x1="190.0" y1="185.2" x2="312.2" y2="210.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M312.2,210.0 L304.1,204.2 L302.5,212.2 Z" fill="#475569"/>
+  <text x="350.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Ops metrics catch outages fast; model metrics catch silent quality decay (drift).</text>
+</svg>

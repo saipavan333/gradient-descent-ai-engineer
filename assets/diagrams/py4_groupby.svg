@@ -1,0 +1,54 @@
+<svg viewBox="0 0 740 330" xmlns="http://www.w3.org/2000/svg" width="740" height="330" role="img">
+  <rect x="0" y="0" width="740" height="330" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">groupby = split · apply · combine</text>
+  <rect x="60.0" y="110.0" width="92.0" height="160.0" rx="6" fill="#eef2ff" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <line x1="106.0" y1="113.0" x2="106.0" y2="267.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="63.0" y1="150.0" x2="149.0" y2="150.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="63.0" y1="190.0" x2="149.0" y2="190.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="63.0" y1="230.0" x2="149.0" y2="230.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <rect x="60.0" y="110.0" width="92.0" height="160.0" rx="6" fill="none" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <text x="83.0" y="130.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A</text>
+  <text x="129.0" y="130.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">10</text>
+  <text x="83.0" y="170.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">B</text>
+  <text x="129.0" y="170.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">20</text>
+  <text x="83.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A</text>
+  <text x="129.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">30</text>
+  <text x="83.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">B</text>
+  <text x="129.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">40</text>
+  <text x="83.0" y="97.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">key</text>
+  <text x="129.0" y="97.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">val</text>
+  <text x="106.0" y="292.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1. split by key</text>
+  <line x1="165.0" y1="170.0" x2="215.0" y2="170.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M215.0,170.0 L206.8,166.3 L206.8,173.7 Z" fill="#94a3b8"/>
+  <rect x="230.0" y="90.0" width="92.0" height="80.0" rx="6" fill="#ecfdf5" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <line x1="276.0" y1="93.0" x2="276.0" y2="167.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="233.0" y1="130.0" x2="319.0" y2="130.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <rect x="230.0" y="90.0" width="92.0" height="80.0" rx="6" fill="none" stroke="#10b981" stroke-width="1.8" opacity="1.0"/>
+  <text x="253.0" y="110.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A</text>
+  <text x="299.0" y="110.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">10</text>
+  <text x="253.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A</text>
+  <text x="299.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">30</text>
+  <rect x="230.0" y="210.0" width="92.0" height="80.0" rx="6" fill="#f0f9ff" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <line x1="276.0" y1="213.0" x2="276.0" y2="287.0" stroke="#bae6fd" stroke-width="1" stroke-linecap="round"/>
+  <line x1="233.0" y1="250.0" x2="319.0" y2="250.0" stroke="#bae6fd" stroke-width="1" stroke-linecap="round"/>
+  <rect x="230.0" y="210.0" width="92.0" height="80.0" rx="6" fill="none" stroke="#38bdf8" stroke-width="1.8" opacity="1.0"/>
+  <text x="253.0" y="230.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">B</text>
+  <text x="299.0" y="230.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">20</text>
+  <text x="253.0" y="270.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">B</text>
+  <text x="299.0" y="270.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" opacity="1.0" dominant-baseline="middle">40</text>
+  <text x="276.0" y="188.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2. apply mean()</text>
+  <line x1="335.0" y1="170.0" x2="385.0" y2="170.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M385.0,170.0 L376.8,166.3 L376.8,173.7 Z" fill="#94a3b8"/>
+  <rect x="400.0" y="130.0" width="116.0" height="88.0" rx="6" fill="#fffbeb" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <line x1="458.0" y1="133.0" x2="458.0" y2="215.0" stroke="#fde68a" stroke-width="1" stroke-linecap="round"/>
+  <line x1="403.0" y1="174.0" x2="513.0" y2="174.0" stroke="#fde68a" stroke-width="1" stroke-linecap="round"/>
+  <rect x="400.0" y="130.0" width="116.0" height="88.0" rx="6" fill="none" stroke="#f59e0b" stroke-width="1.8" opacity="1.0"/>
+  <text x="429.0" y="152.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A</text>
+  <text x="487.0" y="152.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">20</text>
+  <text x="429.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">B</text>
+  <text x="487.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">30</text>
+  <text x="429.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">key</text>
+  <text x="487.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">mean</text>
+  <text x="458.0" y="240.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3. combine</text>
+  <text x="370.0" y="308.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">df.groupby('key')['val'].mean()</text>
+</svg>

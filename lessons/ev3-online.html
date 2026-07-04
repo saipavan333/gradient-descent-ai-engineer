@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Online evaluation &amp; A/B testing · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html" class="current"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 11</b> · Evals, Safety &amp; Responsible AI · Lesson 11.3</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 11 · Evals, Safety &amp; Responsible AI</div>
+<h1>Online evaluation &amp; A/B testing</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 25 min</span>
+<span class="pill">Lesson 11.3</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev03_online.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Offline results are a proxy that often doesn't transfer. Online evaluation via A/B testing measures a model's true effect on real users — randomized, and trusted only after checking statistical significance, not a raw lift.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain online vs offline evaluation</li><li>Describe an A/B test and randomization</li><li>Compute lift</li><li>Know A/B pitfalls (peeking, significance, guardrails)</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> The only verdict that counts is real users</h2>
+
+<p>Offline evaluation (Lesson 11.2) tells you a model looks better on a fixed dataset. <span class="term">Online
+evaluation</span> tells you whether it <em>actually is</em> better when real users interact with it — and the two often
+disagree. Online evaluation measures a model's true effect on live traffic, using real user behavior (clicks, purchases,
+engagement, task success) as the signal. It's the ground truth that offline proxies approximate, because it measures what
+you actually care about — real outcomes — rather than a stand-in. The catch is that it's slower (you must wait for real
+traffic and results), riskier (a bad model affects real users), and noisier (real behavior is variable), which is why you
+do offline evaluation first and reserve online for the final verdict.</p>
+
+<figure class="diagram"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" width="640" height="300" role="img">
+  <rect x="0" y="0" width="640" height="300" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Why online eval: a model can look better offline yet do worse live</text>
+  <text x="320.0" y="64.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">same new model, two verdicts</text>
+  <rect x="85.0" y="113.0" width="210.0" height="74.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="190.0" y="145.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Offline test</text>
+  <text x="190.0" y="163.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">accuracy  +2%  ▲</text>
+  <rect x="365.0" y="113.0" width="210.0" height="74.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="470.0" y="145.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">Online A/B</text>
+  <text x="470.0" y="163.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">engagement  −5%  ▼</text>
+  <line x1="295.0" y1="150.0" x2="365.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M365.0,150.0 L355.9,145.9 L355.9,154.1 Z" fill="#475569"/>
+  <rect x="281.6" y="133.8" width="96.7" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="330.0" y="143.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">reality check</text>
+  <text x="320.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Offline metrics are proxies; only real users reveal the true effect —</text>
+  <text x="320.0" y="254.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">so an offline win must be confirmed online before you trust it.</text>
+</svg>
+<figcaption><b>A model can look better offline yet do worse live.</b> The same new model might show a +2% offline accuracy gain but a −5% drop in real engagement when A/B tested. Offline metrics are proxies; only real users reveal the true effect. This is why an offline win is a hypothesis to confirm online, never a final verdict.</figcaption></figure>
+
+<p>The workhorse of online evaluation is the <span class="term">A/B test</span> (a randomized controlled experiment): you
+randomly split live traffic into a <span class="term">control</span> group that gets the current system (A) and a
+<span class="term">treatment</span> group that gets the new one (B), run both simultaneously, and compare a chosen metric
+between them. Randomization is what makes it rigorous — because the two groups differ <em>only</em> in which model they
+got, any difference in outcomes can be attributed to the model, not to confounding factors. It's the same logic as a
+medical drug trial, applied to software.</p>
+
+<figure class="diagram"><svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" width="700" height="320" role="img">
+  <rect x="0" y="0" width="700" height="320" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A/B testing: compare models on real users</text>
+  <rect x="30.0" y="127.0" width="110.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="85.0" y="150.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Live</text>
+  <text x="85.0" y="167.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">traffic</text>
+  <rect x="180.0" y="127.0" width="110.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="235.0" y="150.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Split</text>
+  <text x="235.0" y="167.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">50 / 50</text>
+  <rect x="355.0" y="63.0" width="150.0" height="54.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="430.0" y="85.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Control</text>
+  <text x="430.0" y="102.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">(model A)</text>
+  <rect x="355.0" y="193.0" width="150.0" height="54.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="430.0" y="215.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Treatment</text>
+  <text x="430.0" y="232.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">(model B)</text>
+  <rect x="550.0" y="127.0" width="120.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="610.0" y="151.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Compare</text>
+  <text x="610.0" y="167.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">the metric</text>
+  <line x1="140.0" y1="155.0" x2="180.0" y2="155.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M180.0,155.0 L170.9,150.9 L170.9,159.1 Z" fill="#475569"/>
+  <line x1="290.0" y1="136.7" x2="355.0" y2="115.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M355.0,115.0 L345.0,114.0 L347.6,121.7 Z" fill="#475569"/>
+  <line x1="290.0" y1="173.3" x2="355.0" y2="195.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M355.0,195.0 L347.6,188.3 L345.0,196.0 Z" fill="#475569"/>
+  <line x1="504.8" y1="117.0" x2="550.0" y2="133.3" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M550.0,133.3 L542.8,126.4 L540.0,134.1 Z" fill="#475569"/>
+  <line x1="504.8" y1="193.0" x2="550.0" y2="176.7" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M550.0,176.7 L540.0,175.9 L542.8,183.6 Z" fill="#475569"/>
+  <text x="350.0" y="296.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Randomly split traffic, run both live, and test whether B's metric beats A's — significantly, not by luck.</text>
+</svg>
+<figcaption><b>A/B testing compares models on real users.</b> Live traffic is randomly split 50/50 into a control group (current model A) and a treatment group (new model B), both run simultaneously, and the key metric is compared. Random assignment means the groups differ only in the model, so any metric difference is caused by the model — the rigor that makes A/B tests trustworthy.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Reading an A/B test result</div>
+<div class="bd">
+<p>Suppose you A/B test a new checkout model. 10,000 users each see the old (control) and new (treatment) versions, and you
+measure the conversion rate — the fraction who complete a purchase:</p>
+
+<pre><code>control_n, control_conv = 10_000, 500
+treat_n,   treat_conv   = 10_000, 560
+control_rate = control_conv / control_n
+treat_rate   = treat_conv / treat_n
+lift = (treat_rate - control_rate) / control_rate
+print(f"control   : {control_rate:.1%}")
+print(f"treatment : {treat_rate:.1%}")
+print(f"lift      : {lift:+.1%}")</code></pre>
+<div class="out"><span class="lbl">Output</span>control   : 5.0%
+treatment : 5.6%
+lift      : +12.0%</div>
+
+<p>The control converts at <strong>5.0%</strong> (500 of 10,000) and the treatment at <strong>5.6%</strong> (560 of
+10,000), a relative <strong>lift of +12%</strong> — the new model converted 12% more users. That sounds like a clear win,
+and it may well be — but here's the crucial discipline of online evaluation: <strong>you can't stop there</strong>. The
+difference of 60 conversions could partly be <em>noise</em> — random variation that would appear even between two identical
+models — so before declaring victory you must check <span class="term">statistical significance</span>: is the difference
+large enough, given the sample size, to be confident it's real and not chance? With these numbers (10,000 users each, a 12%
+lift), a significance test would likely confirm it's real, but with fewer users or a smaller lift it might not. This is why
+A/B tests need <strong>enough traffic and time</strong> — a small sample can show a big apparent lift that's pure luck. The
+skill of online evaluation is resisting the temptation to read a raw difference as a result: you compute the lift,
+<em>then</em> ask whether it's statistically significant, and only then whether it's practically meaningful (a real but
+tiny lift may not justify the change). The number 5.0% vs 5.6% is the start of the analysis, not the end — real online
+evaluation is as much about statistics (is this difference trustworthy?) as about the metric itself.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Online evaluation</strong> measures a model's true effect on live traffic via real user behavior — the ground truth offline only approximates.</li>
+<li>Offline and online results often <strong>disagree</strong>: a model can win offline yet lose online (and vice versa).</li>
+<li>An <strong>A/B test</strong> randomly splits traffic into <strong>control</strong> (current) and <strong>treatment</strong> (new), runs both, and compares a metric.</li>
+<li><strong>Randomization</strong> is what makes it rigorous — the groups differ only in the model, so differences are causal.</li>
+<li>A raw lift isn't a result: check <strong>statistical significance</strong> (is it beyond chance?) — which needs enough traffic and time.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q1.</span> What does online evaluation measure that offline evaluation can't?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The training loss</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The model's true effect on real users' behavior in the live system</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The number of parameters</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Nothing — they're identical</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Loss is an offline training quantity.</div>
+<div class="ex" data-for="b">Correct. Online eval captures real outcomes with real users — the ground truth offline proxies only approximate.</div>
+<div class="ex" data-for="c">Unrelated to online evaluation.</div>
+<div class="ex" data-for="d">They frequently disagree — that's the whole point.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q2.</span> Why does randomly assigning users to control and treatment make an A/B test rigorous?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It makes the test faster</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It reduces the number of users needed</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It trains the model better</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The groups then differ only in which model they got, so any outcome difference can be attributed to the model, not confounders</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Randomization is about validity, not speed.</div>
+<div class="ex" data-for="b">It doesn't reduce sample needs — it enables causal attribution.</div>
+<div class="ex" data-for="c">A/B testing evaluates, it doesn't train.</div>
+<div class="ex" data-for="d">Correct. Random assignment removes confounds, so the model is the only systematic difference — enabling a causal conclusion.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q3.</span> Your A/B test shows treatment converting 5.6% vs control 5.0%. What must you check before declaring the new model better?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Statistical significance — whether the difference is real or could be chance, given the sample size</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The model's file size</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The training time</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Nothing — 5.6 &gt; 5.0, so ship it</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. A raw difference can be noise; significance testing tells you whether it's trustworthy, not luck.</div>
+<div class="ex" data-for="b">File size is irrelevant to the result's validity.</div>
+<div class="ex" data-for="c">Training time doesn't bear on the A/B outcome.</div>
+<div class="ex" data-for="d">The raw difference could be random variation — you must test significance first.</div>
+</div>
+</div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q4.</span> Why can't a very small A/B test (say 50 users each) be trusted even if it shows a big lift?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Small tests are illegal</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Small tests always show no difference</span></li>
+<li data-opt="c"><span class="mk">C</span><span>With few users, a large apparent lift can easily be random chance — small samples are too noisy to be confident</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Small tests are faster to run, so they're less accurate</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Nothing illegal — just statistically unreliable.</div>
+<div class="ex" data-for="b">They can show big differences — that's the danger, since those differences may be noise.</div>
+<div class="ex" data-for="c">Correct. Small samples have high variance, so even a big lift may not be significant — you need enough traffic for confidence.</div>
+<div class="ex" data-for="d">Speed isn't the issue; sample size and noise are.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>A team runs an A/B test, sees the treatment "winning" after 2 hours, stops the test, and ships. List the mistakes and how to run it properly.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Several mistakes. <strong>Stopping early ("peeking"):</strong> checking the test repeatedly and stopping the moment it
+looks good dramatically inflates false positives — with enough peeks, random noise will cross the "winning" line at some
+point even between identical models. This is the multiple-comparisons problem applied over time, and it's one of the most
+common A/B testing errors. <strong>Too short a duration (2 hours):</strong> user behavior varies by time of day and day of
+week (weekday vs weekend, morning vs night), so a 2-hour window samples an unrepresentative slice — you typically run for at
+least full days or weeks to average over these cycles. <strong>Ignoring significance and sample size:</strong> "winning" by
+some margin isn't meaningful without checking it's statistically significant at an adequate sample size.
+<strong>Novelty effects:</strong> a new experience can spike engagement briefly just because it's new, then regress — short
+tests catch the novelty, not the steady state.</p>
+<p>Doing it properly: <strong>decide the sample size and duration in advance</strong> (a power calculation for the effect
+you want to detect), <strong>run for full weekly cycles</strong> to cover behavioral variation, <strong>don't peek-and-stop</strong>
+— either wait for the pre-planned end or use proper sequential-testing methods designed for continuous monitoring, and
+<strong>check statistical significance</strong> (and practical significance) before concluding. You'd also watch for
+novelty effects by looking at the trend over time, and guard against other pitfalls like sample-ratio mismatch (the split
+isn't actually 50/50, signaling a bug). The reasoning skill is recognizing that A/B testing is a statistical experiment
+with a rigorous protocol, and the intuitive shortcuts — peek, stop when happy, ship — systematically produce false wins.
+Running experiments honestly (pre-committed sample size and duration, no peeking, real significance testing) is what makes
+online evaluation trustworthy rather than a way to confirm what you hoped.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>Your new recommendation model improves clicks by 3% in an A/B test. Should you ship it? What else would you check?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>A significant +3% on clicks is encouraging, but "ship it" is premature, because a single metric can improve while the
+system gets worse in ways that metric doesn't capture (Goodhart, Lesson 11.1). I'd check <strong>guardrail metrics</strong> —
+metrics that must <em>not</em> degrade even as the target improves: did the click gain come at the cost of long-term
+satisfaction, retention, or revenue? Did it increase clickbait or reduce diversity? Did user complaints or unsubscribes
+rise? A classic failure is a recommender that boosts short-term clicks by pushing sensational content while quietly harming
+retention and trust. I'd also check <strong>segment effects</strong> (did clicks rise overall but fall for an important
+subgroup?), <strong>the metric's durability</strong> (is the +3% a novelty spike that fades, or stable over the full test?),
+and <strong>secondary/long-term metrics</strong> that a short test can't fully capture (which might warrant a longer
+holdback group).</p>
+<p>The reasoning is that <strong>a real online experiment tracks a small suite of metrics, not one</strong>: the primary
+metric you hope to move (clicks), plus guardrail metrics that catch harmful side effects, plus long-term/holistic metrics
+that guard against short-term gaming. Only if clicks rose <em>and</em> the guardrails held <em>and</em> the effect is durable
+would I ship — and even then, I'd often ramp gradually (Lesson 10.4's canary) while monitoring. This is the online version
+of Lesson 11.1's core warning: optimizing and testing on a single proxy invites Goodhart failures, so you evaluate against
+multiple metrics that together approximate the true goal. Recognizing that "+3% clicks" is necessary but not sufficient —
+and knowing to check guardrails, segments, and durability — is exactly the maturity that separates rigorous online
+evaluation from metric-chasing that ships harmful changes.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Sometimes you can't A/B test (e.g., a medical AI where a worse model could harm patients, or a change affecting all users at once). What are the alternatives and trade-offs?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>When a live A/B test is too risky or infeasible, several alternatives trade off rigor against safety and practicality.
+<strong>Shadow mode</strong> (Lesson 9.4): run the new model alongside the old on real traffic but <em>don't act on its
+outputs</em> — just log what it <em>would</em> have done and compare to the old model (and to eventual outcomes). This gets
+real-data evaluation with zero user risk, though it can't measure the new model's effect on user <em>behavior</em> (since
+users never see it). <strong>Staged/canary rollout</strong>: expose the new model to a tiny fraction of users first,
+monitor closely, and expand only if safe — limiting blast radius, useful when you must eventually go live but want to
+de-risk. <strong>Offline evaluation on rich historical data</strong> (including counterfactual/off-policy methods that
+estimate how a new policy would have performed on logged data) — no user risk but reliant on assumptions. <strong>Human
+expert review</strong>: for high-stakes domains, have experts (doctors, for medical AI) evaluate the model's outputs on
+real cases before any deployment. <strong>Rigorous prospective trials</strong>: in medicine, a formal clinical trial with
+oversight, rather than a casual A/B test.</p>
+<p>The trade-off is between <strong>evaluation rigor and risk/feasibility</strong>. A live A/B test is the gold standard for
+measuring real effect, but it exposes some users to the new model, which is unacceptable when harm is possible or when you
+can't split traffic. The alternatives reduce or eliminate that exposure — shadow mode and offline methods at the cost of not
+measuring true user-behavior effects, canary at the cost of speed, expert review at the cost of scale — so you choose based
+on the stakes: the higher the potential harm, the more you lean on no-risk methods (shadow, expert review, formal trials)
+before any real exposure, and the more gradually you roll out. The deeper principle, which connects to the whole safety
+theme of this track, is that <strong>evaluation methodology must respect the stakes</strong>: you don't experiment on people
+who could be harmed just to get a cleaner metric, so high-stakes AI demands evaluation approaches that establish safety
+<em>before</em> exposure, accepting some loss of experimental purity as the price of responsibility. Knowing this menu of
+alternatives — and when each is appropriate — is what lets you evaluate responsibly when a simple A/B test isn't an option.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: the statistics of experimentation and building a culture of testing<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>Rigorous A/B testing rests on a foundation of statistics worth understanding at least conceptually. The core question is
+<strong>statistical significance</strong>: given natural variation, how confident are we that the observed difference is real
+and not chance? This is formalized with <strong>hypothesis testing</strong> — a p-value estimates the probability of seeing
+a difference this large if the models were actually identical, and a small p-value (conventionally &lt;0.05) suggests the
+difference is real. <strong>Statistical power</strong> and <strong>sample size</strong> determine whether your test can
+detect an effect of a given size: small effects need large samples, which is why detecting a 0.5% lift can require millions
+of users. Two error types matter: a <strong>false positive</strong> (concluding a difference exists when it doesn't — the
+danger of peeking and multiple comparisons) and a <strong>false negative</strong> (missing a real difference because the
+test was underpowered). Modern experimentation platforms handle these with pre-registered sample sizes, correction for
+multiple tests, sequential testing methods that allow safe continuous monitoring, and variance-reduction techniques — but
+the intuition to carry is that <em>a difference isn't a result until the statistics say it's unlikely to be noise</em>, and
+that the common shortcuts (peeking, tiny samples, short windows) manufacture false wins.</p>
+<p>Beyond the mechanics, the deeper lesson is cultural. The best product and ML teams build a <strong>culture of
+experimentation</strong>: nearly every meaningful change ships behind an A/B test, because intuition about what will work is
+unreliable — a large fraction of changes that experts are confident will help turn out to be neutral or harmful when
+actually tested, and only rigorous online experiments reveal which ideas are real. This is humbling and powerful: it
+replaces "the highest-paid person's opinion" with evidence, catches harmful changes before full launch, and compounds many
+small validated improvements into large gains over time. It also connects the whole arc of this track — offline evaluation
+proposes, online experimentation disposes, and the discipline of not trusting a change until real users validate it is the
+antidote to the metric-goal gap (Lesson 11.1) and the offline/online divergence that plagues ML. For an ML engineer, being
+fluent in experimentation — designing valid tests, reading them honestly, and respecting the statistics — is as important as
+model-building itself, because it's how you know whether your models actually help. The counterpart for generative systems,
+where there's no click to count, is judging open-ended quality at scale — which is where LLM-as-judge comes in, next.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">A/B tests need a metric to compare — but how do you measure the quality of
+open-ended text, where there's no click to count? Next, <strong>11.4 LLM-as-judge</strong> covers using models to evaluate
+generative outputs at scale, and how to keep that trustworthy.</p>
+</article>
+<nav class="pager"><a class="prev" href="ev2-offline.html"><span class="dir">← Previous</span><span class="ti">Offline evaluation &amp; datasets</span></a><a class="next" href="ev4-judge.html"><span class="dir">Next →</span><span class="ti">LLM-as-judge</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Behavioral &amp; project deep-dives · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html" class="current"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 12</b> · Interview Bank · Lesson 12.7</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 12 · Interview Bank</div>
+<h1>Behavioral &amp; project deep-dives</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 22 min</span>
+<span class="pill">Lesson 12.7</span>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Behavioral rounds and project deep-dives decide close calls — they test whether teams want to work with you. Structure answers with STAR, prepare project stories that lead with decisions and trade-offs, and own your failures.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Structure answers with STAR</li><li>Deliver a deep project deep-dive</li><li>Handle failure and conflict questions</li><li>See the whole interview as one story</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> Teams hire people, not just skills</h2>
+
+<p>Behavioral rounds and project deep-dives are where technically strong candidates most often stumble — precisely because
+they under-prepare, treating these as an afterthought to the "real" technical rounds. That's a mistake: interviewers use
+these rounds to answer questions your coding can't — <em>Would I want to work with this person? Can they communicate,
+collaborate, handle setbacks, and drive impact?</em> In close calls (and many are close), these human factors decide the
+offer. The two pillars are <strong>behavioral questions</strong> ("tell me about a time when...") and the
+<strong>project deep-dive</strong> (a detailed discussion of your work), and both reward structure and specificity over
+vague generalities.</p>
+
+<figure class="diagram"><svg viewBox="0 0 700 270" xmlns="http://www.w3.org/2000/svg" width="700" height="270" role="img">
+  <rect x="0" y="0" width="700" height="270" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Behavioral answers: the STAR method</text>
+  <rect x="50.0" y="85.0" width="120.0" height="60.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="110.0" y="110.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">S</text>
+  <text x="110.0" y="128.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">Situation</text>
+  <text x="110.0" y="165.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the context</text>
+  <rect x="240.0" y="85.0" width="120.0" height="60.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="300.0" y="110.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">T</text>
+  <text x="300.0" y="128.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Task</text>
+  <text x="300.0" y="165.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">your responsibility</text>
+  <rect x="430.0" y="85.0" width="120.0" height="60.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="490.0" y="110.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">A</text>
+  <text x="490.0" y="128.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Action</text>
+  <text x="490.0" y="165.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">what YOU did</text>
+  <rect x="590.0" y="85.0" width="120.0" height="60.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="650.0" y="110.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">R</text>
+  <text x="650.0" y="128.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Result</text>
+  <text x="650.0" y="165.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the outcome</text>
+  <line x1="170.0" y1="115.0" x2="240.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M240.0,115.0 L230.9,110.9 L230.9,119.1 Z" fill="#475569"/>
+  <line x1="360.0" y1="115.0" x2="430.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M430.0,115.0 L420.9,110.9 L420.9,119.1 Z" fill="#475569"/>
+  <line x1="550.0" y1="115.0" x2="590.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M590.0,115.0 L580.9,110.9 L580.9,119.1 Z" fill="#475569"/>
+  <text x="360.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Structure every story: set the scene, your specific role, the actions you took, and the measurable result.</text>
+</svg>
+<figcaption><b>Behavioral answers: the STAR method.</b> Structure every story as Situation (the context), Task (your specific responsibility), Action (what YOU did — the heart of it), and Result (the measurable outcome). STAR keeps your answer focused and complete, prevents rambling, and ensures you actually answer the question with a concrete story rather than generalities.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "How should you structure a behavioral answer?"</div>
+<div class="bd">
+<p>"I use the <strong>STAR method</strong>, because behavioral questions ask for a specific story and STAR keeps it focused
+and complete. <strong>Situation:</strong> briefly set the context — the project, the problem, the stakes — in a sentence or
+two, enough to understand what follows. <strong>Task:</strong> my specific responsibility or the challenge I owned — this
+clarifies my role, so the story is about <em>me</em>, not just the team. <strong>Action:</strong> what I actually did — the
+heart of the answer, and where I spend most of the time, explaining the specific decisions and steps <em>I</em> took (using
+'I,' not just 'we,' so my contribution is clear). <strong>Result:</strong> the outcome, ideally quantified ('cut latency 40%,'
+'improved recall from 0.7 to 0.85'), plus what I learned. STAR matters because without structure, behavioral answers ramble
+or stay abstract, and the interviewer can't extract what they need; with it, every answer is a concrete, complete story that
+actually demonstrates the quality being probed. I prepare several STAR stories in advance covering common themes — a
+challenge overcome, a conflict resolved, a failure and its lesson, leadership, impact — so I can adapt one to almost any
+behavioral question." <em>Why it lands:</em> knowing and applying STAR, emphasizing "I" over "we," and quantifying results
+shows you can communicate about your work clearly — itself a hireable skill.</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "Tell me about a challenging technical project." (how to answer)</div>
+<div class="bd">
+<p>"I'd pick a project that was genuinely challenging <em>and</em> that I can discuss in real depth, then structure it with
+STAR while emphasizing the technical decisions. <strong>Situation/Task:</strong> the problem and why it was hard (scale,
+ambiguity, a tricky constraint) and my specific role. <strong>Action — the core:</strong> the key technical decisions I
+made and, crucially, the <em>trade-offs</em> I weighed and <em>why</em> I chose as I did — this is where I demonstrate
+judgment. I'd explain not just what I built but the alternatives I considered and rejected, the obstacles I hit, and how I
+worked through them. <strong>Result:</strong> the impact, quantified, and what I learned. The keys to doing this well: pick a
+project I know cold (so I can go arbitrarily deep when probed — interviewers dig in), be honest about what was hard and what
+went wrong (real projects have messy parts; pretending otherwise reads as inexperience), and make my specific contribution
+clear. What I'd avoid is a superficial 'we built X and it worked' — the value is in the <em>decisions and trade-offs</em>,
+because that's what reveals how I think and whether I have real depth." <em>Why it lands:</em> the project deep-dive is often
+decisive for senior candidates, and leading with decisions, trade-offs, and honest obstacles — on a project you know deeply
+— is exactly what distinguishes real applied experience from a résumé line.</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "Tell me about a time you failed." (how to answer)</div>
+<div class="bd">
+<p>"I'd choose a real, meaningful failure — not a humblebrag ('I worked too hard') — and structure it around <em>what I
+learned and how I changed</em>, because that's what the question actually tests: self-awareness, accountability, and growth.
+<strong>Situation/Task:</strong> the context and what I was responsible for. <strong>Action:</strong> honestly what went
+wrong and my role in it — owning my part rather than blaming others or circumstances, which signals maturity.
+<strong>Result:</strong> the consequence, and then the crucial part: what I learned and the concrete way I've applied that
+lesson since (so the failure led to growth). For example, shipping a model without adequate monitoring and having it degrade
+unnoticed, learning the hard way that deployment is the start of the work, and now always building monitoring in from the
+start. The keys: pick a genuine failure with real stakes (a trivial one signals I'm hiding), <strong>take ownership</strong>
+(the fastest red flag is blaming others), and focus on the <strong>growth</strong> — the failure is the setup; the learning
+and changed behavior are the point. Interviewers ask this because everyone fails, and how you handle failure — with honesty,
+accountability, and learning — predicts how you'll handle the inevitable setbacks on their team." <em>Why it lands:</em>
+genuine ownership plus a concrete lesson-and-change shows the self-awareness and accountability that failure questions are
+designed to reveal, whereas a fake or blame-shifting answer is an immediate red flag.</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "How do you handle disagreement with a teammate?" (how to answer)</div>
+<div class="bd">
+<p>"I'd tell a real STAR story that shows I handle disagreement <strong>constructively and with respect</strong>, because
+that's the collaboration skill being tested. The shape: a genuine technical disagreement (say, over an approach or a
+trade-off), where I <strong>first sought to understand their view</strong> (asked why they preferred it, made sure I
+actually grasped their reasoning rather than assuming), <strong>grounded the discussion in shared goals and evidence</strong>
+(what does the data or the requirements say? what are we both optimizing for?), <strong>disagreed respectfully</strong>
+(focused on the ideas, not the person), and <strong>reached a resolution</strong> — sometimes I was persuaded, sometimes
+they were, sometimes we ran a small experiment to decide, and sometimes we escalated or committed to a decision and moved on
+even without full agreement (disagree-and-commit). The result: a decision made on merits, and a preserved working
+relationship. The keys: show I can hold a position <em>and</em> update on good arguments (neither a pushover nor stubborn),
+that I keep it about ideas not ego, and that I prioritize the team's outcome over 'winning.' I'd avoid stories where I either
+steamrolled someone or caved without reason — both are red flags. The honest version, where I sometimes changed my mind
+because their argument was better, is actually the strongest, because it shows intellectual humility." <em>Why it lands:</em>
+demonstrating that you seek to understand, argue on merits, disagree respectfully, and can both persuade and be persuaded is
+exactly the collaborative maturity teams need — conflict questions screen for people who make teams better, not worse.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>Behavioral rounds decide close calls — don't under-prepare them; they test whether teams want to work with you.</li>
+<li>Structure every behavioral answer with <strong>STAR</strong>: Situation, Task, Action (the core — use "I"), Result (quantified).</li>
+<li>Prepare several <strong>STAR stories</strong> in advance (challenge, conflict, failure, leadership, impact) and adapt them.</li>
+<li>For the <strong>project deep-dive</strong>: pick a project you know cold; lead with decisions, trade-offs, and honest obstacles — not "we built X."</li>
+<li>For <strong>failure</strong> questions: pick a real one, <strong>own it</strong>, and focus on the lesson and how you changed.</li>
+<li>For <strong>conflict</strong> questions: seek to understand, argue on merits, disagree respectfully, and be willing to update.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What does STAR stand for?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Study, Test, Analyze, Report</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Situation, Timing, Answer, Review</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Situation, Task, Action, Result</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Solve, Test, Automate, Rerun</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Not the behavioral framework.</div>
+<div class="ex" data-for="b">Close-sounding but wrong.</div>
+<div class="ex" data-for="c">Correct. Situation (context), Task (your role), Action (what you did), Result (outcome) — the standard structure.</div>
+<div class="ex" data-for="d">Not STAR.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> In a project deep-dive, what most distinguishes a strong answer?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Saying "we built X and it worked" and moving on</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Explaining the key decisions, the trade-offs you weighed and why, and honest obstacles — on a project you know deeply</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Using as much jargon as possible</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Only discussing what went perfectly</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Superficial summaries hide the judgment interviewers want to see.</div>
+<div class="ex" data-for="b">Correct. Decisions, trade-offs, and honest obstacles reveal how you think — the point of the deep-dive.</div>
+<div class="ex" data-for="c">Jargon without substance is a red flag; clarity wins.</div>
+<div class="ex" data-for="d">Real projects have messy parts; pretending otherwise reads as inexperience.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> For a "tell me about a failure" question, the biggest red flag is:</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Describing what you learned</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Picking a real failure</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Owning your part</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Blaming others/circumstances, or giving a fake "failure" like "I work too hard"</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Describing the lesson is exactly what you should do.</div>
+<div class="ex" data-for="b">A real failure is the right choice.</div>
+<div class="ex" data-for="c">Ownership is the mature move.</div>
+<div class="ex" data-for="d">Correct. Blame-shifting or a humblebrag signals a lack of self-awareness and accountability — the traits the question probes.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> Why do interviewers weight behavioral rounds heavily?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>They reveal collaboration, communication, accountability, and impact — whether the team wants to work with you, which decides close calls</span></li>
+<li data-opt="b"><span class="mk">B</span><span>They test coding speed</span></li>
+<li data-opt="c"><span class="mk">C</span><span>They're just a formality</span></li>
+<li data-opt="d"><span class="mk">D</span><span>They measure typing</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. They assess the human qualities technical rounds can't, and those often decide the offer.</div>
+<div class="ex" data-for="b">They're not about coding speed.</div>
+<div class="ex" data-for="c">They're often decisive, not a formality.</div>
+<div class="ex" data-for="d">Unrelated to typing.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Prepare your stories</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>"Walk me through your most significant ML project." Prepare the outline of a strong deep-dive.</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>"I'd outline it as a STAR story with the technical depth front-loaded, on a project I know cold. <strong>Situation:</strong>
+the problem and why it mattered — 'our support team was overwhelmed; we wanted an assistant that answers from our docs' — with
+the constraints (accuracy bar, latency, privacy). <strong>Task:</strong> my specific ownership — 'I designed and built the
+retrieval and evaluation pipeline.' <strong>Action (the depth):</strong> the key decisions and trade-offs — why RAG over
+fine-tuning (knowledge vs behavior), how I chose chunking and embeddings, why I added reranking and hybrid search after
+seeing retrieval failures, how I built an evaluation set to measure faithfulness and recall@k, and the cost/latency
+trade-offs I managed (k, caching). I'd be honest about what was hard — 'our first version hallucinated because retrieval was
+missing the relevant chunks, and I diagnosed it by inspecting what was retrieved' — because the obstacles and how I worked
+through them are the most revealing part. <strong>Result:</strong> quantified impact — 'cut support response time X%,
+achieved Y faithfulness' — and lessons — 'I learned retrieval quality is the ceiling on RAG, so I now invest there first.'
+Then I'd be ready to go <em>arbitrarily deep</em> on any part the interviewer probes, since it's my project. The keys: real
+depth on decisions and trade-offs, honesty about obstacles, clear personal contribution, quantified impact, and knowing it
+well enough to withstand drilling. A polished but shallow 'we built a chatbot and it helped' would waste the opportunity;
+the deep, honest, decision-focused version is what makes a project deep-dive the highlight of an interview." This lands
+because it models exactly what a strong deep-dive looks like — technical decisions and trade-offs, honest obstacles and how
+they were solved, quantified impact, and the depth to be probed — which is where applied experience shines.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>"Why do you want to work here?" seems generic, but candidates lose points on it. How do you answer well?</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>"I'd give a <strong>specific, researched, genuine</strong> answer, because generic ones ('you're a great company, I love
+AI') are forgettable and signal I didn't do my homework. A strong answer connects <em>three things</em>: something specific
+about <strong>the company</strong> (a product, a technical problem they're solving, their approach or mission that I've
+actually looked into), <strong>my interests/strengths</strong> (why this genuinely fits what I want to work on and am good
+at), and <strong>the mutual value</strong> (what I'd contribute and grow from). For example: 'I've been building RAG systems
+and I'm drawn to how your team is tackling retrieval quality at scale — that's exactly the problem I find most interesting,
+and my experience building and evaluating retrieval pipelines is directly relevant, so I'd contribute while learning from
+people who've solved it at a scale I haven't.' The keys: <strong>be specific</strong> (name the actual thing that draws me,
+proving I researched them), <strong>be genuine</strong> (a real reason, not flattery — interviewers detect canned
+enthusiasm), and <strong>connect it to substance</strong> (the technical work, not just brand or perks). I'd avoid generic
+praise, purely self-interested framing ('great for my career'), or anything that could apply to any company. Done well, this
+question is a chance to show I'm thoughtful about my choices and genuinely engaged with their work — which reads as someone
+who'll be motivated and committed, not just collecting offers." This stands out because it turns a 'throwaway' question into
+a demonstration of research, genuine fit, and thoughtfulness — the specific-and-sincere answer that separates an engaged
+candidate from one giving rote flattery.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Beyond preparing stories, what mindset makes behavioral rounds go well — and why do strong engineers sometimes fail them?</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>"The mindset that works is treating the behavioral round as a <strong>genuine conversation about how I work and think</strong>,
+not a test to be gamed — being authentic, reflective, and specific, while remembering the interviewer is assessing whether
+I'd be a good colleague. Strong engineers sometimes fail these rounds for a few reasons. <strong>They under-prepare</strong>,
+assuming technical skill is all that matters, so they ramble or give shallow answers to questions that deserved thought.
+<strong>They can't communicate their impact</strong> — brilliant work described vaguely ('we did some ML stuff') doesn't
+land, because the round tests communication as much as the work itself. <strong>They struggle with the human dimension</strong>
+— dismissing collaboration, blaming others for failures, or showing they don't work well with people — which is a genuine
+disqualifier no matter how strong the code. And <strong>they undervalue the round</strong>, treating it as a formality, so
+they don't bring the same rigor they'd bring to a system design question. The fix is to <strong>take it as seriously as the
+technical rounds</strong>: prepare real stories, practice telling them concisely and with STAR structure, reflect honestly
+on failures and lessons, and internalize that communication, collaboration, and self-awareness <em>are</em> core engineering
+skills, not soft extras — increasingly so on teams where the hard part is often working together on ambiguous problems. The
+deeper truth is that companies are hiring a <em>person</em> who will work on a team for years, so being someone others want
+to work with — thoughtful, communicative, accountable, collaborative — is not separate from being a good engineer; it's part
+of it. Candidates who internalize that, and prepare accordingly, turn the behavioral round from a liability into an
+advantage." This lands because it reframes behavioral rounds as testing genuine, hireable qualities (communication,
+collaboration, self-awareness) that strong engineers ignore at their peril — the mindset shift that prevents the classic
+'great coder, failed the behavioral' outcome.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: why the human factors decide, and the whole interview as one story<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>It's tempting to see behavioral rounds as the soft, secondary part of an interview, but they're often the deciding factor,
+and understanding why reframes how you prepare. Companies are not hiring an answer machine for a one-hour test — they're
+hiring a <strong>person who will work on a team for years</strong>, on ambiguous problems, through setbacks and
+disagreements, communicating and collaborating the whole way. The technical rounds establish that you <em>can</em> do the
+work; the behavioral rounds establish whether you'd be someone the team can <em>work with</em> to do it — and on real teams,
+where the hard problems are as much about coordination, communication, and judgment as about raw technical skill, that
+matters enormously. This is why a technically brilliant candidate who blames others, can't communicate their impact, or
+seems difficult to collaborate with will lose to a strong-but-not-brilliant candidate who is clearly thoughtful,
+accountable, and easy to work with. The human qualities aren't a tiebreaker bolted on; they're a core part of what makes
+someone effective, and interviewers know it. Preparing your stories, practicing communicating your work clearly, and
+genuinely developing self-awareness about your collaboration, failures, and growth is therefore not 'soft skills' fluff —
+it's preparing to demonstrate qualities that are central to the job.</p>
+<p>Stepping back, the entire interview — every round in this track — is really assessing one integrated thing: <strong>would
+this person be a valuable, trustworthy member of our team?</strong> The coding and technical rounds ask "can they do the
+work and do they understand it deeply?"; the system design round asks "can they reason about real, complex problems and
+trade-offs?"; and the behavioral rounds ask "can they communicate, collaborate, learn, and be trusted?" These aren't
+separate tests but facets of a single judgment, and the strongest candidates present a coherent story across all of them:
+genuine technical depth, sound judgment, clear communication, and the human qualities that make teams better. This is why the
+best interview preparation isn't cramming answers but genuinely becoming that kind of engineer — which is exactly what this
+curriculum has aimed at from the first lesson: not just teaching you techniques, but building the deep understanding,
+practical judgment, and responsible mindset that make you someone worth hiring and worth working with. The interview is your
+chance to <em>show</em> what you've become. Walk in prepared for the format (which this track has covered), with your
+fundamentals deep, your projects ready to discuss, and your stories structured — but underneath the preparation, trust that
+the real foundation is the genuine competence and judgment you've built. That combination — capability, judgment, and the
+human qualities to apply them on a team — is what gets you hired, and it's what turns a beginner who started at zero into an
+engineer teams want. The final step is proving it by building — which is what the capstone projects, next, are for.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">That completes the Interview Bank — you're ready to demonstrate what you know
+across every round. Next, Track 13 (<strong>Capstones</strong>) is where you prove it by building: a set of end-to-end
+projects that turn everything you've learned into a portfolio of real, working AI systems.</p>
+</article>
+<nav class="pager"><a class="prev" href="iv6-coding.html"><span class="dir">← Previous</span><span class="ti">Coding &amp; implementation — Q&amp;A</span></a><a class="next" href="cap0-setup.html"><span class="dir">Next →</span><span class="ti">Capstone 0: project setup &amp; reproducibility</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

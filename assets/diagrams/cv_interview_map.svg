@@ -1,0 +1,29 @@
+<svg viewBox="0 0 760 285" xmlns="http://www.w3.org/2000/svg" width="760" height="285" role="img">
+  <rect x="0" y="0" width="760" height="285" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 14 in one line: the computer-vision task ladder</text>
+  <rect x="16.0" y="121.0" width="128.0" height="58.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="146.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Classify</text>
+  <text x="80.0" y="162.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">(what)</text>
+  <rect x="176.0" y="121.0" width="128.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="240.0" y="146.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Detect</text>
+  <text x="240.0" y="162.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(where + what)</text>
+  <rect x="346.0" y="121.0" width="128.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="410.0" y="146.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Segment</text>
+  <text x="410.0" y="162.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">(every pixel)</text>
+  <rect x="496.0" y="121.0" width="128.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="560.0" y="146.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Generate</text>
+  <text x="560.0" y="162.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">(diffusion)</text>
+  <rect x="626.0" y="121.0" width="128.0" height="58.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="690.0" y="146.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Multi-</text>
+  <text x="690.0" y="162.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">modal</text>
+  <line x1="144.0" y1="150.0" x2="176.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M176.0,150.0 L166.9,145.9 L166.9,154.1 Z" fill="#475569"/>
+  <line x1="304.0" y1="150.0" x2="346.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M346.0,150.0 L336.9,145.9 L336.9,154.1 Z" fill="#475569"/>
+  <line x1="474.0" y1="150.0" x2="496.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M496.0,150.0 L486.9,145.9 L486.9,154.1 Z" fill="#475569"/>
+  <line x1="624.0" y1="150.0" x2="626.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M626.0,150.0 L616.9,145.9 L616.9,154.1 Z" fill="#475569"/>
+  <text x="380.0" y="232.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">From labeling a whole image, to boxing objects, to per-pixel masks, to generating images, to joining vision</text>
+  <text x="380.0" y="253.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">with language — each task built on the CNNs and transformers you already know.</text>
+</svg>

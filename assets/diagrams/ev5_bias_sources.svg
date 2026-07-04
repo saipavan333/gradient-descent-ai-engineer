@@ -1,0 +1,28 @@
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" width="720" height="300" role="img">
+  <rect x="0" y="0" width="720" height="300" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Bias enters at every stage of the pipeline</text>
+  <rect x="40.0" y="82.0" width="130.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="105.0" y="105.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Data</text>
+  <text x="105.0" y="122.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">collection</text>
+  <text x="105.0" y="182.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" font-style="italic" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">unrepresentative</text>
+  <rect x="220.0" y="82.0" width="130.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="285.0" y="105.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Labels</text>
+  <text x="285.0" y="122.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">annotation</text>
+  <text x="285.0" y="182.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" font-style="italic" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">annotator bias</text>
+  <rect x="400.0" y="82.0" width="130.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="465.0" y="105.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Model</text>
+  <text x="465.0" y="122.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">training</text>
+  <text x="465.0" y="182.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" font-style="italic" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">amplifies patterns</text>
+  <rect x="580.0" y="82.0" width="130.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="645.0" y="105.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Feedback</text>
+  <text x="645.0" y="122.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">deployment</text>
+  <text x="645.0" y="182.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" font-style="italic" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">loops entrench it</text>
+  <line x1="170.0" y1="110.0" x2="220.0" y2="110.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M220.0,110.0 L210.9,105.9 L210.9,114.1 Z" fill="#475569"/>
+  <line x1="350.0" y1="110.0" x2="400.0" y2="110.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M400.0,110.0 L390.9,105.9 L390.9,114.1 Z" fill="#475569"/>
+  <line x1="530.0" y1="110.0" x2="580.0" y2="110.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M580.0,110.0 L570.9,105.9 L570.9,114.1 Z" fill="#475569"/>
+  <text x="360.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Bias isn't one bug — it enters through the data, the labels, the model, and feedback loops,</text>
+  <text x="360.0" y="266.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">so you must look for it at every stage, not just blame 'the algorithm.'</text>
+</svg>

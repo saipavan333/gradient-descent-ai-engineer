@@ -1,0 +1,48 @@
+<svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" width="640" height="320" role="img">
+  <rect x="0" y="0" width="640" height="320" fill="#ffffff"/>
+  <text x="320.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Max pooling: keep the strongest value in each block</text>
+  <rect x="80.0" y="90.0" width="176.0" height="176.0" rx="6" fill="#eef2ff" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <rect x="81.0" y="91.0" width="42.0" height="42.0" rx="3" fill="#c7d2fe" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="125.0" y="91.0" width="42.0" height="42.0" rx="3" fill="#c7d2fe" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="81.0" y="135.0" width="42.0" height="42.0" rx="3" fill="#c7d2fe" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <rect x="125.0" y="135.0" width="42.0" height="42.0" rx="3" fill="#c7d2fe" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <line x1="124.0" y1="93.0" x2="124.0" y2="263.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="168.0" y1="93.0" x2="168.0" y2="263.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="212.0" y1="93.0" x2="212.0" y2="263.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="83.0" y1="134.0" x2="253.0" y2="134.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="83.0" y1="178.0" x2="253.0" y2="178.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="83.0" y1="222.0" x2="253.0" y2="222.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <rect x="80.0" y="90.0" width="176.0" height="176.0" rx="6" fill="none" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <text x="102.0" y="112.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="146.0" y="112.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="190.0" y="112.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="234.0" y="112.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="102.0" y="156.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5</text>
+  <text x="146.0" y="156.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">6</text>
+  <text x="190.0" y="156.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="234.0" y="156.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="102.0" y="200.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="146.0" y="200.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="190.0" y="200.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0</text>
+  <text x="234.0" y="200.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="102.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="146.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">0</text>
+  <text x="190.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="234.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="168.0" y="74.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">feature map (4×4)</text>
+  <line x1="272.0" y1="178.0" x2="314.0" y2="178.0" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M314.0,178.0 L304.9,173.9 L304.9,182.1 Z" fill="#94a3b8"/>
+  <text x="293.0" y="164.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2×2 max</text>
+  <rect x="332.0" y="134.0" width="96.0" height="96.0" rx="6" fill="#ecfdf5" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <rect x="333.0" y="135.0" width="46.0" height="46.0" rx="3" fill="#bbf7d0" stroke="none" stroke-width="1.5" opacity="0.85"/>
+  <line x1="380.0" y1="137.0" x2="380.0" y2="227.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="335.0" y1="182.0" x2="425.0" y2="182.0" stroke="#bbf7d0" stroke-width="1" stroke-linecap="round"/>
+  <rect x="332.0" y="134.0" width="96.0" height="96.0" rx="6" fill="none" stroke="#10b981" stroke-width="1.8" opacity="1.0"/>
+  <text x="356.0" y="158.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">6</text>
+  <text x="404.0" y="158.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="356.0" y="206.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="404.0" y="206.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="380.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">pooled (2×2)</text>
+  <text x="380.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">max(1,3,5,6) = 6</text>
+  <text x="320.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">halves the spatial size, keeps the strongest activations, adds translation tolerance</text>
+</svg>

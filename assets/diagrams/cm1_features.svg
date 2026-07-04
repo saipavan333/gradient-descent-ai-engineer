@@ -1,0 +1,41 @@
+<svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg" width="660" height="320" role="img">
+  <rect x="0" y="0" width="660" height="320" fill="#ffffff"/>
+  <text x="330.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Your data is a table: feature columns (X) and a target column (y)</text>
+  <rect x="150.0" y="95.0" width="352.0" height="176.0" rx="6" fill="#eef2ff" stroke="none" stroke-width="1.5" opacity="1.0"/>
+  <rect x="414.0" y="95.0" width="88.0" height="176.0" rx="10" fill="#fde68a" stroke="none" stroke-width="1.5" opacity="0.55"/>
+  <line x1="238.0" y1="98.0" x2="238.0" y2="268.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="326.0" y1="98.0" x2="326.0" y2="268.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="414.0" y1="98.0" x2="414.0" y2="268.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="153.0" y1="139.0" x2="499.0" y2="139.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="153.0" y1="183.0" x2="499.0" y2="183.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <line x1="153.0" y1="227.0" x2="499.0" y2="227.0" stroke="#cdd6f4" stroke-width="1" stroke-linecap="round"/>
+  <rect x="150.0" y="95.0" width="352.0" height="176.0" rx="6" fill="none" stroke="#6366f1" stroke-width="1.8" opacity="1.0"/>
+  <text x="194.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1800</text>
+  <text x="282.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="370.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">12</text>
+  <text x="458.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">240</text>
+  <text x="194.0" y="161.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">950</text>
+  <text x="282.0" y="161.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="370.0" y="161.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">40</text>
+  <text x="458.0" y="161.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">135</text>
+  <text x="194.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">2400</text>
+  <text x="282.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">4</text>
+  <text x="370.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">5</text>
+  <text x="458.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">355</text>
+  <text x="194.0" y="249.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">1500</text>
+  <text x="282.0" y="249.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">3</text>
+  <text x="370.0" y="249.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">25</text>
+  <text x="458.0" y="249.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">210</text>
+  <text x="194.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">size</text>
+  <text x="282.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">beds</text>
+  <text x="370.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">age</text>
+  <text x="458.0" y="82.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">price</text>
+  <text x="140.0" y="117.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">0</text>
+  <text x="140.0" y="161.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">1</text>
+  <text x="140.0" y="205.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">2</text>
+  <text x="140.0" y="249.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="end" opacity="1.0" dominant-baseline="middle">3</text>
+  <rect x="150.0" y="95.0" width="264.0" height="176.0" rx="6" fill="none" stroke="#6366f1" stroke-width="2.2" stroke-dasharray="5 4" opacity="1.0"/>
+  <text x="282.0" y="295.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">features X (the inputs)</text>
+  <text x="458.0" y="295.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">target y</text>
+  <text x="326.0" y="55.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">one row = one example (a house)</text>
+</svg>

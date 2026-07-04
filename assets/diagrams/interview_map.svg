@@ -1,0 +1,47 @@
+<svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" width="760" height="430" role="img">
+  <rect x="0" y="0" width="760" height="430" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 1 concept map — how the pieces connect</text>
+  <rect x="60.0" y="66.0" width="120.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="120.0" y="95.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Vectors</text>
+  <rect x="240.0" y="66.0" width="120.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="300.0" y="95.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Matrices</text>
+  <rect x="415.0" y="66.0" width="130.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="480.0" y="95.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Dot product</text>
+  <rect x="595.0" y="66.0" width="130.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="660.0" y="95.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Eigen / PCA</text>
+  <line x1="180.0" y1="90.0" x2="240.0" y2="90.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M240.0,90.0 L230.9,85.9 L230.9,94.1 Z" fill="#475569"/>
+  <line x1="360.0" y1="90.0" x2="415.0" y2="90.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M415.0,90.0 L405.9,85.9 L405.9,94.1 Z" fill="#475569"/>
+  <line x1="545.0" y1="90.0" x2="595.0" y2="90.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M595.0,90.0 L585.9,85.9 L585.9,94.1 Z" fill="#475569"/>
+  <text x="120.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#6366f1" text-anchor="middle" opacity="1.0" dominant-baseline="middle">LINEAR ALGEBRA</text>
+  <rect x="85.0" y="222.0" width="130.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="150.0" y="245.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Derivatives</text>
+  <text x="150.0" y="263.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">&amp; gradient</text>
+  <rect x="300.0" y="226.0" width="120.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="360.0" y="255.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Chain rule</text>
+  <rect x="500.0" y="222.0" width="120.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="560.0" y="245.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Gradient</text>
+  <text x="560.0" y="263.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">descent</text>
+  <line x1="215.0" y1="250.0" x2="300.0" y2="250.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M300.0,250.0 L290.9,245.9 L290.9,254.1 Z" fill="#475569"/>
+  <line x1="420.0" y1="250.0" x2="500.0" y2="250.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M500.0,250.0 L490.9,245.9 L490.9,254.1 Z" fill="#475569"/>
+  <text x="150.0" y="310.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#f59e0b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">CALCULUS → LEARNING</text>
+  <rect x="135.0" y="347.0" width="130.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="200.0" y="370.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Probability</text>
+  <text x="200.0" y="388.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">&amp; Bayes</text>
+  <rect x="350.0" y="347.0" width="120.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="410.0" y="370.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Statistics</text>
+  <text x="410.0" y="388.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">&amp; MLE</text>
+  <line x1="265.0" y1="375.0" x2="350.0" y2="375.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M350.0,375.0 L340.9,370.9 L340.9,379.1 Z" fill="#475569"/>
+  <text x="200.0" y="418.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle" opacity="1.0" dominant-baseline="middle">PROBABILITY → INFERENCE</text>
+  <line x1="430.5" y1="114.0" x2="207.8" y2="222.0" stroke="#cbd5e1" stroke-width="2.0" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <path d="M207.8,222.0 L217.7,221.7 L214.2,214.4 Z" fill="#cbd5e1"/>
+  <line x1="526.4" y1="278.0" x2="443.6" y2="347.0" stroke="#cbd5e1" stroke-width="2.0" stroke-dasharray="6 5" stroke-linecap="round"/>
+  <path d="M443.6,347.0 L453.2,344.3 L448.0,338.0 Z" fill="#cbd5e1"/>
+  <text x="640.0" y="375.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">all feed →
+Tracks 3–6</text>
+</svg>

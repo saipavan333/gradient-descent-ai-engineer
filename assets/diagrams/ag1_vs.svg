@@ -1,0 +1,46 @@
+<svg viewBox="0 0 740 330" xmlns="http://www.w3.org/2000/svg" width="740" height="330" role="img">
+  <rect x="0" y="0" width="740" height="330" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">From a single call to an autonomous agent</text>
+  <text x="70.0" y="92.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="start" opacity="1.0" dominant-baseline="middle">Single call</text>
+  <rect x="190.0" y="75.0" width="80.0" height="34.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="230.0" y="95.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">prompt</text>
+  <rect x="325.0" y="75.0" width="70.0" height="34.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="360.0" y="95.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">LLM</text>
+  <rect x="440.0" y="75.0" width="80.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="480.0" y="95.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">answer</text>
+  <line x1="270.0" y1="92.0" x2="325.0" y2="92.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M325.0,92.0 L315.9,87.9 L315.9,96.1 Z" fill="#475569"/>
+  <line x1="395.0" y1="92.0" x2="440.0" y2="92.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M440.0,92.0 L430.9,87.9 L430.9,96.1 Z" fill="#475569"/>
+  <text x="620.0" y="92.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">one shot, fixed</text>
+  <text x="70.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#312e81" text-anchor="start" opacity="1.0" dominant-baseline="middle">Pipeline</text>
+  <rect x="190.0" y="155.0" width="80.0" height="34.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="230.0" y="175.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">step 1</text>
+  <rect x="300.0" y="155.0" width="80.0" height="34.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="340.0" y="175.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">step 2</text>
+  <rect x="410.0" y="155.0" width="80.0" height="34.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="450.0" y="175.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">step 3</text>
+  <line x1="270.0" y1="172.0" x2="300.0" y2="172.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M300.0,172.0 L290.9,167.9 L290.9,176.1 Z" fill="#475569"/>
+  <line x1="380.0" y1="172.0" x2="410.0" y2="172.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M410.0,172.0 L400.9,167.9 L400.9,176.1 Z" fill="#475569"/>
+  <text x="620.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">fixed sequence</text>
+  <text x="70.0" y="255.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#9f1239" text-anchor="start" opacity="1.0" dominant-baseline="middle">Agent</text>
+  <rect x="240.0" y="233.0" width="120.0" height="44.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="300.0" y="258.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">LLM decides</text>
+  <rect x="410.0" y="225.0" width="120.0" height="60.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="470.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">tools</text>
+  <text x="470.0" y="258.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(search, code,</text>
+  <text x="470.0" y="273.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">APIs)</text>
+  <line x1="360.0" y1="255.0" x2="410.0" y2="255.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M410.0,255.0 L400.9,250.9 L400.9,259.1 Z" fill="#475569"/>
+  <rect x="371.3" y="240.0" width="27.4" height="15.5" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="385.0" y="248.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" fill="#475569" text-anchor="middle" dominant-baseline="middle">act</text>
+  <line x1="410.0" y1="255.0" x2="360.0" y2="255.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M360.0,255.0 L369.1,259.1 L369.1,250.9 Z" fill="#475569"/>
+  <rect x="359.7" y="240.0" width="50.6" height="15.5" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="385.0" y="248.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10" fill="#475569" text-anchor="middle" dominant-baseline="middle">observe</text>
+  <text x="620.0" y="255.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">dynamic loop —</text>
+  <text x="620.0" y="270.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="start" opacity="1.0" dominant-baseline="middle">the model chooses</text>
+  <text x="370.0" y="312.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">an agent = an LLM that decides which actions to take, in a loop, to reach a goal</text>
+</svg>

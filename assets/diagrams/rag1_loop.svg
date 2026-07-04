@@ -1,0 +1,34 @@
+<svg viewBox="0 0 760 290" xmlns="http://www.w3.org/2000/svg" width="760" height="290" role="img">
+  <rect x="0" y="0" width="760" height="290" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Retrieval-augmented generation: retrieve, then generate</text>
+  <rect x="35.0" y="102.0" width="90.0" height="56.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="80.0" y="126.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">user</text>
+  <text x="80.0" y="142.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">question</text>
+  <rect x="185.0" y="96.0" width="110.0" height="68.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="240.0" y="118.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">retriever</text>
+  <text x="240.0" y="133.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">find relevant</text>
+  <text x="240.0" y="149.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">chunks</text>
+  <rect x="185.0" y="213.0" width="110.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="240.0" y="231.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">vector DB</text>
+  <text x="240.0" y="246.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">(your docs)</text>
+  <rect x="365.0" y="102.0" width="90.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="410.0" y="126.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">top-k</text>
+  <text x="410.0" y="141.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">chunks</text>
+  <rect x="505.0" y="96.0" width="110.0" height="68.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="560.0" y="118.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">prompt =</text>
+  <text x="560.0" y="133.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">question +</text>
+  <text x="560.0" y="149.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">chunks</text>
+  <rect x="664.0" y="105.0" width="72.0" height="50.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="700.0" y="134.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">LLM</text>
+  <line x1="125.0" y1="130.0" x2="185.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M185.0,130.0 L175.9,125.9 L175.9,134.1 Z" fill="#475569"/>
+  <line x1="240.0" y1="213.0" x2="240.0" y2="164.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M240.0,164.0 L235.9,173.1 L244.1,173.1 Z" fill="#94a3b8"/>
+  <line x1="295.0" y1="130.0" x2="365.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M365.0,130.0 L355.9,125.9 L355.9,134.1 Z" fill="#475569"/>
+  <line x1="455.0" y1="130.0" x2="505.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M505.0,130.0 L495.9,125.9 L495.9,134.1 Z" fill="#475569"/>
+  <line x1="615.0" y1="130.0" x2="664.0" y2="130.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M664.0,130.0 L654.9,125.9 L654.9,134.1 Z" fill="#475569"/>
+  <text x="380.0" y="265.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the model answers FROM your retrieved documents, not its frozen memory — grounded &amp; up to date</text>
+</svg>

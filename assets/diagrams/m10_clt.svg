@@ -1,0 +1,27 @@
+<svg viewBox="0 0 660 330" xmlns="http://www.w3.org/2000/svg" width="660" height="330" role="img">
+  <rect x="0" y="0" width="660" height="330" fill="#ffffff"/>
+  <text x="330.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Central Limit Theorem: averages become normal</text>
+  <line x1="58.0" y1="230.0" x2="280.0" y2="230.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="70.0" y1="242.0" x2="70.0" y2="60.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M280.0,230.0 L272.7,226.7 L272.7,233.3 Z" fill="#94a3b8"/>
+  <path d="M70.0,60.0 L66.7,67.3 L73.3,67.3 Z" fill="#94a3b8"/>
+  <text x="283.0" y="245.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">x</text>
+  <rect x="84.0" y="80.0" width="20.0" height="150.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <rect x="110.0" y="135.0" width="20.0" height="95.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <rect x="136.0" y="170.0" width="20.0" height="60.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <rect x="162.0" y="190.0" width="20.0" height="40.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <rect x="188.0" y="204.0" width="20.0" height="26.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <rect x="214.0" y="214.0" width="20.0" height="16.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <rect x="240.0" y="221.0" width="20.0" height="9.0" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.2" opacity="1.0"/>
+  <text x="175.0" y="246.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">skewed population</text>
+  <line x1="300.0" y1="150.0" x2="360.0" y2="150.0" stroke="#475569" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M360.0,150.0 L350.0,145.5 L350.0,154.5 Z" fill="#475569"/>
+  <text x="330.0" y="138.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">average</text>
+  <text x="330.0" y="168.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">samples</text>
+  <line x1="384.0" y1="230.0" x2="620.0" y2="230.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="400.0" y1="242.0" x2="400.0" y2="60.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M620.0,230.0 L612.7,226.7 L612.7,233.3 Z" fill="#94a3b8"/>
+  <path d="M400.0,60.0 L396.7,67.3 L403.3,67.3 Z" fill="#94a3b8"/>
+  <path d="M332.2,227.0 L335.4,226.5 L338.7,225.8 L342.0,225.1 L345.3,224.2 L348.6,223.2 L351.9,222.1 L355.2,220.8 L358.4,219.4 L361.7,217.8 L365.0,216.0 L368.3,214.0 L371.6,211.8 L374.9,209.3 L378.2,206.7 L381.4,203.7 L384.7,200.6 L388.0,197.1 L391.3,193.4 L394.6,189.5 L397.9,185.3 L401.2,180.8 L404.4,176.1 L407.7,171.2 L411.0,166.1 L414.3,160.8 L417.6,155.4 L420.9,149.9 L424.1,144.3 L427.4,138.6 L430.7,133.0 L434.0,127.4 L437.3,121.9 L440.6,116.5 L443.9,111.3 L447.1,106.4 L450.4,101.8 L453.7,97.5 L457.0,93.6 L460.3,90.1 L463.6,87.1 L466.9,84.6 L470.1,82.6 L473.4,81.2 L476.7,80.3 L480.0,80.0 L483.3,80.3 L486.6,81.2 L489.9,82.6 L493.1,84.6 L496.4,87.1 L499.7,90.1 L503.0,93.6 L506.3,97.5 L509.6,101.8 L512.9,106.4 L516.1,111.3 L519.4,116.5 L522.7,121.9 L526.0,127.4 L529.3,133.0 L532.6,138.6 L535.9,144.3 L539.1,149.9 L542.4,155.4 L545.7,160.8 L549.0,166.1 L552.3,171.2 L555.6,176.1 L558.8,180.8 L562.1,185.3 L565.4,189.5 L568.7,193.4 L572.0,197.1 L575.3,200.6 L578.6,203.7 L581.8,206.7 L585.1,209.3 L588.4,211.8 L591.7,214.0 L595.0,216.0 L598.3,217.8 L601.6,219.4 L604.8,220.8 L608.1,222.1 L611.4,223.2 L614.7,224.2 L618.0,225.1 L621.3,225.8 L624.6,226.5 L627.8,227.0" fill="none" stroke="#10b981" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="510.0" y="246.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">means → bell-shaped</text>
+</svg>

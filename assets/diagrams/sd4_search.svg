@@ -1,0 +1,28 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="720" height="320" role="img">
+  <rect x="0" y="0" width="720" height="320" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Search &amp; ranking: retrieve, then rank</text>
+  <rect x="30.0" y="126.0" width="100.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Query</text>
+  <rect x="215.0" y="53.0" width="170.0" height="54.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="300.0" y="76.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Inverted index</text>
+  <text x="300.0" y="92.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(BM25 keyword)</text>
+  <rect x="215.0" y="183.0" width="170.0" height="54.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="300.0" y="206.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#075985" text-anchor="middle" dominant-baseline="middle">Vector index</text>
+  <text x="300.0" y="222.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">(ANN semantic)</text>
+  <rect x="455.0" y="121.0" width="130.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="520.0" y="145.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Ranking</text>
+  <text x="520.0" y="162.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">model</text>
+  <rect x="610.0" y="126.0" width="100.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="660.0" y="154.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Results</text>
+  <line x1="130.0" y1="134.1" x2="215.1" y2="107.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M215.1,107.0 L205.2,105.9 L207.7,113.6 Z" fill="#475569"/>
+  <line x1="130.0" y1="163.6" x2="215.0" y2="186.8" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M215.0,186.8 L207.3,180.5 L205.1,188.3 Z" fill="#475569"/>
+  <line x1="384.9" y1="107.0" x2="455.0" y2="129.3" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M455.0,129.3 L447.5,122.7 L445.1,130.4 Z" fill="#475569"/>
+  <line x1="385.0" y1="186.8" x2="455.0" y2="167.7" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M455.0,167.7 L445.1,166.2 L447.3,174.1 Z" fill="#475569"/>
+  <line x1="585.0" y1="150.0" x2="610.0" y2="150.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M610.0,150.0 L600.9,145.9 L600.9,154.1 Z" fill="#475569"/>
+  <text x="360.0" y="288.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Hybrid retrieval gathers candidates (keyword + semantic); a ranking model orders them by relevance.</text>
+</svg>

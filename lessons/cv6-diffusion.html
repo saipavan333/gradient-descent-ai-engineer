@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image generation with diffusion · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html" class="current"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 14</b> · Computer Vision · Lesson 14.6</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 14 · Computer Vision</div>
+<h1>Image generation with diffusion</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 45 min</span>
+<span class="pill">Lesson 14.6</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv06_diffusion.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Diffusion models power Stable Diffusion, DALL-E, and Midjourney. The idea — learn to reverse noise, then denoise from static into a new image — is beautiful and, once seen clearly, demystifies how machines generate images from a text prompt.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the forward (add noise) and reverse (learned denoise) processes</li><li>Describe generation as repeated denoising starting from pure noise</li><li>Explain text conditioning and how a prompt steers the output</li><li>Say why latent diffusion (compress, then diffuse) makes it fast</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> Generate by learning to undo noise</h2>
+
+<p>Every vision task so far has <em>analyzed</em> an image — labeled it, boxed it, segmented it. Now we flip the problem:
+<span class="term">generative models</span> create brand-new images that never existed. The technology behind Stable
+Diffusion, DALL·E, and Midjourney is the <span class="term">diffusion model</span>, and its central idea is beautiful and
+almost paradoxical: to learn to <em>create</em> images, first learn to <em>destroy</em> them, then run the destruction
+backward. There are two processes. The <span class="term">forward process</span> takes a real training image and adds a tiny
+bit of random <span class="term">noise</span> (small random numbers) over and over — hundreds of steps — until the image is
+pure static, indistinguishable from random noise. This part involves no learning at all; it's just "gradually smear the
+image into noise," and we control it exactly. The <span class="term">reverse process</span> is where the model lives: a neural
+network is trained to <strong>undo one step of noising</strong> — given a noisy image, predict the noise that was added so it
+can be subtracted, yielding a slightly cleaner image.</p>
+
+<figure class="diagram"><svg viewBox="0 0 730 320" xmlns="http://www.w3.org/2000/svg" width="730" height="320" role="img">
+  <rect x="0" y="0" width="730" height="320" fill="#ffffff"/>
+  <text x="365.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Diffusion: add noise step by step, then learn to remove it</text>
+  <rect x="70.0" y="100.0" width="70.0" height="70.0" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <circle cx="105.0" cy="135.0" r="16.0" fill="none" stroke="#10b981" stroke-width="2"/>
+  <rect x="210.0" y="100.0" width="70.0" height="70.0" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <circle cx="248.0" cy="125.4" r="1.4" fill="#334155"/>
+  <circle cx="266.4" cy="121.9" r="1.4" fill="#334155"/>
+  <circle cx="245.6" cy="125.3" r="1.4" fill="#334155"/>
+  <circle cx="239.8" cy="164.4" r="1.4" fill="#334155"/>
+  <circle cx="220.4" cy="131.6" r="1.4" fill="#334155"/>
+  <circle cx="227.9" cy="125.7" r="1.4" fill="#334155"/>
+  <circle cx="275.9" cy="124.4" r="1.4" fill="#334155"/>
+  <circle cx="251.7" cy="130.0" r="1.4" fill="#334155"/>
+  <circle cx="259.3" cy="131.7" r="1.4" fill="#334155"/>
+  <circle cx="224.6" cy="130.9" r="1.4" fill="#334155"/>
+  <circle cx="239.3" cy="153.1" r="1.4" fill="#334155"/>
+  <circle cx="248.9" cy="116.2" r="1.4" fill="#334155"/>
+  <circle cx="255.8" cy="122.5" r="1.4" fill="#334155"/>
+  <circle cx="245.7" cy="117.6" r="1.4" fill="#334155"/>
+  <circle cx="239.5" cy="152.7" r="1.4" fill="#334155"/>
+  <circle cx="246.0" cy="150.6" r="1.4" fill="#334155"/>
+  <circle cx="260.9" cy="140.4" r="1.4" fill="#334155"/>
+  <circle cx="254.0" cy="128.6" r="1.4" fill="#334155"/>
+  <circle cx="252.3" cy="152.2" r="1.4" fill="#334155"/>
+  <circle cx="245.0" cy="135.0" r="10.4" fill="none" stroke="#10b981" stroke-width="2"/>
+  <rect x="350.0" y="100.0" width="70.0" height="70.0" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <circle cx="413.9" cy="138.7" r="1.4" fill="#334155"/>
+  <circle cx="383.4" cy="136.4" r="1.4" fill="#334155"/>
+  <circle cx="401.6" cy="165.3" r="1.4" fill="#334155"/>
+  <circle cx="380.1" cy="118.3" r="1.4" fill="#334155"/>
+  <circle cx="377.2" cy="108.2" r="1.4" fill="#334155"/>
+  <circle cx="393.9" cy="165.5" r="1.4" fill="#334155"/>
+  <circle cx="366.8" cy="151.1" r="1.4" fill="#334155"/>
+  <circle cx="367.1" cy="161.6" r="1.4" fill="#334155"/>
+  <circle cx="388.5" cy="127.8" r="1.4" fill="#334155"/>
+  <circle cx="355.9" cy="113.6" r="1.4" fill="#334155"/>
+  <circle cx="409.9" cy="115.6" r="1.4" fill="#334155"/>
+  <circle cx="392.1" cy="138.6" r="1.4" fill="#334155"/>
+  <circle cx="381.5" cy="148.2" r="1.4" fill="#334155"/>
+  <circle cx="361.8" cy="145.6" r="1.4" fill="#334155"/>
+  <circle cx="357.9" cy="117.3" r="1.4" fill="#334155"/>
+  <circle cx="395.9" cy="115.8" r="1.4" fill="#334155"/>
+  <circle cx="362.4" cy="134.8" r="1.4" fill="#334155"/>
+  <circle cx="393.7" cy="104.3" r="1.4" fill="#334155"/>
+  <circle cx="395.8" cy="140.2" r="1.4" fill="#334155"/>
+  <circle cx="354.0" cy="139.2" r="1.4" fill="#334155"/>
+  <circle cx="354.1" cy="138.4" r="1.4" fill="#334155"/>
+  <circle cx="391.8" cy="127.9" r="1.4" fill="#334155"/>
+  <circle cx="376.3" cy="153.2" r="1.4" fill="#334155"/>
+  <circle cx="366.0" cy="132.8" r="1.4" fill="#334155"/>
+  <circle cx="385.0" cy="106.7" r="1.4" fill="#334155"/>
+  <circle cx="409.7" cy="115.2" r="1.4" fill="#334155"/>
+  <circle cx="403.0" cy="133.0" r="1.4" fill="#334155"/>
+  <circle cx="354.6" cy="122.8" r="1.4" fill="#334155"/>
+  <circle cx="390.1" cy="132.6" r="1.4" fill="#334155"/>
+  <circle cx="410.5" cy="105.8" r="1.4" fill="#334155"/>
+  <circle cx="405.4" cy="157.5" r="1.4" fill="#334155"/>
+  <circle cx="364.1" cy="135.5" r="1.4" fill="#334155"/>
+  <circle cx="357.1" cy="139.9" r="1.4" fill="#334155"/>
+  <circle cx="397.0" cy="121.9" r="1.4" fill="#334155"/>
+  <circle cx="402.7" cy="119.1" r="1.4" fill="#334155"/>
+  <circle cx="357.5" cy="133.9" r="1.4" fill="#334155"/>
+  <circle cx="400.2" cy="122.7" r="1.4" fill="#334155"/>
+  <circle cx="367.4" cy="144.6" r="1.4" fill="#334155"/>
+  <rect x="490.0" y="100.0" width="70.0" height="70.0" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <circle cx="525.4" cy="132.1" r="1.4" fill="#334155"/>
+  <circle cx="528.6" cy="127.8" r="1.4" fill="#334155"/>
+  <circle cx="545.7" cy="113.9" r="1.4" fill="#334155"/>
+  <circle cx="521.9" cy="151.3" r="1.4" fill="#334155"/>
+  <circle cx="531.6" cy="160.2" r="1.4" fill="#334155"/>
+  <circle cx="511.9" cy="126.2" r="1.4" fill="#334155"/>
+  <circle cx="512.9" cy="112.2" r="1.4" fill="#334155"/>
+  <circle cx="498.7" cy="135.9" r="1.4" fill="#334155"/>
+  <circle cx="512.5" cy="140.0" r="1.4" fill="#334155"/>
+  <circle cx="553.6" cy="165.7" r="1.4" fill="#334155"/>
+  <circle cx="542.3" cy="124.5" r="1.4" fill="#334155"/>
+  <circle cx="517.8" cy="159.7" r="1.4" fill="#334155"/>
+  <circle cx="508.5" cy="155.1" r="1.4" fill="#334155"/>
+  <circle cx="509.2" cy="131.8" r="1.4" fill="#334155"/>
+  <circle cx="528.6" cy="163.5" r="1.4" fill="#334155"/>
+  <circle cx="539.4" cy="156.0" r="1.4" fill="#334155"/>
+  <circle cx="515.7" cy="125.7" r="1.4" fill="#334155"/>
+  <circle cx="547.9" cy="140.3" r="1.4" fill="#334155"/>
+  <circle cx="538.6" cy="110.1" r="1.4" fill="#334155"/>
+  <circle cx="497.8" cy="130.5" r="1.4" fill="#334155"/>
+  <circle cx="513.0" cy="120.5" r="1.4" fill="#334155"/>
+  <circle cx="544.6" cy="161.0" r="1.4" fill="#334155"/>
+  <circle cx="507.9" cy="110.2" r="1.4" fill="#334155"/>
+  <circle cx="505.7" cy="115.4" r="1.4" fill="#334155"/>
+  <circle cx="538.9" cy="127.7" r="1.4" fill="#334155"/>
+  <circle cx="554.7" cy="105.2" r="1.4" fill="#334155"/>
+  <circle cx="527.2" cy="112.2" r="1.4" fill="#334155"/>
+  <circle cx="546.6" cy="127.6" r="1.4" fill="#334155"/>
+  <circle cx="508.9" cy="140.1" r="1.4" fill="#334155"/>
+  <circle cx="548.1" cy="104.9" r="1.4" fill="#334155"/>
+  <circle cx="508.3" cy="160.0" r="1.4" fill="#334155"/>
+  <circle cx="520.1" cy="110.0" r="1.4" fill="#334155"/>
+  <circle cx="551.7" cy="162.7" r="1.4" fill="#334155"/>
+  <circle cx="520.5" cy="116.1" r="1.4" fill="#334155"/>
+  <circle cx="495.7" cy="150.0" r="1.4" fill="#334155"/>
+  <circle cx="541.8" cy="149.7" r="1.4" fill="#334155"/>
+  <circle cx="536.9" cy="125.9" r="1.4" fill="#334155"/>
+  <circle cx="511.8" cy="139.6" r="1.4" fill="#334155"/>
+  <circle cx="543.2" cy="133.2" r="1.4" fill="#334155"/>
+  <circle cx="525.9" cy="128.1" r="1.4" fill="#334155"/>
+  <circle cx="545.0" cy="163.3" r="1.4" fill="#334155"/>
+  <circle cx="511.0" cy="163.5" r="1.4" fill="#334155"/>
+  <circle cx="544.4" cy="129.1" r="1.4" fill="#334155"/>
+  <circle cx="509.7" cy="146.4" r="1.4" fill="#334155"/>
+  <circle cx="527.6" cy="140.6" r="1.4" fill="#334155"/>
+  <circle cx="555.6" cy="164.8" r="1.4" fill="#334155"/>
+  <circle cx="537.6" cy="136.1" r="1.4" fill="#334155"/>
+  <circle cx="504.3" cy="108.7" r="1.4" fill="#334155"/>
+  <circle cx="544.9" cy="119.8" r="1.4" fill="#334155"/>
+  <circle cx="536.3" cy="122.9" r="1.4" fill="#334155"/>
+  <circle cx="507.3" cy="146.4" r="1.4" fill="#334155"/>
+  <circle cx="504.6" cy="108.4" r="1.4" fill="#334155"/>
+  <circle cx="555.7" cy="128.7" r="1.4" fill="#334155"/>
+  <circle cx="516.4" cy="153.0" r="1.4" fill="#334155"/>
+  <circle cx="507.1" cy="153.2" r="1.4" fill="#334155"/>
+  <circle cx="508.4" cy="149.1" r="1.4" fill="#334155"/>
+  <rect x="630.0" y="100.0" width="70.0" height="70.0" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <circle cx="670.0" cy="116.1" r="1.4" fill="#334155"/>
+  <circle cx="693.8" cy="161.3" r="1.4" fill="#334155"/>
+  <circle cx="663.0" cy="145.1" r="1.4" fill="#334155"/>
+  <circle cx="647.3" cy="117.7" r="1.4" fill="#334155"/>
+  <circle cx="651.9" cy="146.9" r="1.4" fill="#334155"/>
+  <circle cx="647.2" cy="164.2" r="1.4" fill="#334155"/>
+  <circle cx="638.4" cy="116.0" r="1.4" fill="#334155"/>
+  <circle cx="639.5" cy="151.7" r="1.4" fill="#334155"/>
+  <circle cx="656.7" cy="133.2" r="1.4" fill="#334155"/>
+  <circle cx="654.2" cy="143.5" r="1.4" fill="#334155"/>
+  <circle cx="659.0" cy="116.9" r="1.4" fill="#334155"/>
+  <circle cx="660.7" cy="122.9" r="1.4" fill="#334155"/>
+  <circle cx="640.9" cy="155.1" r="1.4" fill="#334155"/>
+  <circle cx="676.2" cy="145.2" r="1.4" fill="#334155"/>
+  <circle cx="688.7" cy="128.5" r="1.4" fill="#334155"/>
+  <circle cx="657.5" cy="130.2" r="1.4" fill="#334155"/>
+  <circle cx="659.1" cy="145.5" r="1.4" fill="#334155"/>
+  <circle cx="634.4" cy="132.8" r="1.4" fill="#334155"/>
+  <circle cx="667.2" cy="125.4" r="1.4" fill="#334155"/>
+  <circle cx="635.4" cy="147.7" r="1.4" fill="#334155"/>
+  <circle cx="634.6" cy="139.0" r="1.4" fill="#334155"/>
+  <circle cx="643.5" cy="106.1" r="1.4" fill="#334155"/>
+  <circle cx="645.2" cy="108.1" r="1.4" fill="#334155"/>
+  <circle cx="643.3" cy="146.5" r="1.4" fill="#334155"/>
+  <circle cx="679.2" cy="126.5" r="1.4" fill="#334155"/>
+  <circle cx="674.4" cy="133.5" r="1.4" fill="#334155"/>
+  <circle cx="664.9" cy="158.3" r="1.4" fill="#334155"/>
+  <circle cx="653.3" cy="157.9" r="1.4" fill="#334155"/>
+  <circle cx="676.8" cy="146.4" r="1.4" fill="#334155"/>
+  <circle cx="634.4" cy="109.2" r="1.4" fill="#334155"/>
+  <circle cx="636.0" cy="125.4" r="1.4" fill="#334155"/>
+  <circle cx="692.7" cy="158.3" r="1.4" fill="#334155"/>
+  <circle cx="686.0" cy="111.4" r="1.4" fill="#334155"/>
+  <circle cx="677.8" cy="152.0" r="1.4" fill="#334155"/>
+  <circle cx="684.2" cy="153.1" r="1.4" fill="#334155"/>
+  <circle cx="642.7" cy="115.1" r="1.4" fill="#334155"/>
+  <circle cx="683.1" cy="149.8" r="1.4" fill="#334155"/>
+  <circle cx="689.3" cy="131.7" r="1.4" fill="#334155"/>
+  <circle cx="689.2" cy="112.6" r="1.4" fill="#334155"/>
+  <circle cx="693.3" cy="158.8" r="1.4" fill="#334155"/>
+  <circle cx="654.9" cy="108.2" r="1.4" fill="#334155"/>
+  <circle cx="668.0" cy="146.7" r="1.4" fill="#334155"/>
+  <circle cx="655.7" cy="107.6" r="1.4" fill="#334155"/>
+  <circle cx="651.3" cy="155.1" r="1.4" fill="#334155"/>
+  <circle cx="639.6" cy="162.1" r="1.4" fill="#334155"/>
+  <circle cx="649.5" cy="116.7" r="1.4" fill="#334155"/>
+  <circle cx="641.0" cy="164.8" r="1.4" fill="#334155"/>
+  <circle cx="689.9" cy="123.8" r="1.4" fill="#334155"/>
+  <circle cx="639.9" cy="144.5" r="1.4" fill="#334155"/>
+  <circle cx="689.0" cy="104.8" r="1.4" fill="#334155"/>
+  <circle cx="673.2" cy="157.1" r="1.4" fill="#334155"/>
+  <circle cx="662.4" cy="139.3" r="1.4" fill="#334155"/>
+  <circle cx="683.9" cy="118.8" r="1.4" fill="#334155"/>
+  <circle cx="650.9" cy="144.9" r="1.4" fill="#334155"/>
+  <circle cx="668.2" cy="137.2" r="1.4" fill="#334155"/>
+  <circle cx="654.7" cy="162.1" r="1.4" fill="#334155"/>
+  <circle cx="651.9" cy="146.1" r="1.4" fill="#334155"/>
+  <circle cx="689.4" cy="128.8" r="1.4" fill="#334155"/>
+  <circle cx="637.4" cy="117.7" r="1.4" fill="#334155"/>
+  <circle cx="638.1" cy="113.2" r="1.4" fill="#334155"/>
+  <circle cx="641.5" cy="125.2" r="1.4" fill="#334155"/>
+  <circle cx="656.9" cy="131.7" r="1.4" fill="#334155"/>
+  <circle cx="675.2" cy="146.0" r="1.4" fill="#334155"/>
+  <circle cx="676.6" cy="126.6" r="1.4" fill="#334155"/>
+  <circle cx="675.1" cy="138.1" r="1.4" fill="#334155"/>
+  <circle cx="641.9" cy="137.8" r="1.4" fill="#334155"/>
+  <circle cx="653.7" cy="145.9" r="1.4" fill="#334155"/>
+  <circle cx="679.6" cy="118.9" r="1.4" fill="#334155"/>
+  <circle cx="661.0" cy="132.2" r="1.4" fill="#334155"/>
+  <circle cx="652.4" cy="106.5" r="1.4" fill="#334155"/>
+  <line x1="150.0" y1="90.0" x2="555.0" y2="90.0" stroke="#fb7185" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M555.0,90.0 L546.8,86.3 L546.8,93.7 Z" fill="#fb7185"/>
+  <text x="360.0" y="78.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">forward: add noise →</text>
+  <line x1="555.0" y1="190.0" x2="150.0" y2="190.0" stroke="#10b981" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M150.0,190.0 L158.2,193.7 L158.2,186.3 Z" fill="#10b981"/>
+  <text x="360.0" y="206.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">← reverse: the model removes noise (denoise)</text>
+  <text x="365.0" y="296.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Train a model to predict the noise, then run it backward from pure noise to a fresh image — that's how it generates.</text>
+</svg>
+<figcaption><b>Diffusion: destroy, then learn to reverse.</b> The forward process (left→right) adds noise step by step until a real image becomes pure static — no learning needed. The reverse process (right→left) is a trained network that removes noise one step at a time. To generate, start from pure random noise and run the learned reverse process, and a fresh image emerges from the static.</figcaption></figure>
+
+<p>Here is the payoff. Once the network can reliably remove a step of noise, you can <strong>generate from nothing</strong>:
+start with a fresh sheet of pure random noise (not derived from any image) and apply the learned denoising step hundreds of
+times. Each step nudges the static a little closer to something image-like, and after all the steps a brand-new, coherent
+image emerges — one the model was never shown, sampled from the distribution of images it learned. That's the whole trick:
+<strong>generation is repeated denoising, starting from noise</strong>. It's stable to train (each step is a simple, well-
+posed "predict the noise" regression problem) and it produces stunning quality, which is why diffusion displaced earlier
+generative approaches like GANs for most image generation.</p>
+
+<h2><span class="sec-tag">Concept</span> Steering it with text, and doing it cheaply in latent space</h2>
+
+<p>Two additions turn this from "generate a random image" into "generate <em>the image I asked for</em>, fast." First,
+<span class="term">conditioning</span>: to make the output follow a text prompt like "a cat astronaut," the text (encoded by
+a language model, often a CLIP text encoder from the next lesson) is fed into the denoising network at every step, so the
+denoising is <em>steered</em> toward images matching the words. The model doesn't just remove noise toward "any image" but
+toward "an image consistent with this caption" — that's <span class="term">text-to-image</span> generation. Second, and
+crucial for practicality, <span class="term">latent diffusion</span> (the "Stable Diffusion" design): running hundreds of
+denoising steps on full-resolution pixels is enormously expensive, so instead an <span class="term">autoencoder</span>
+compresses the image into a much smaller <span class="term">latent</span> representation, the whole diffusion process runs in
+that small latent space (far cheaper), and a decoder expands the final latent back into a full image.</p>
+
+<figure class="diagram"><svg viewBox="0 0 740 320" xmlns="http://www.w3.org/2000/svg" width="740" height="320" role="img">
+  <rect x="0" y="0" width="740" height="320" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Latent diffusion (Stable Diffusion): denoise in a compressed space</text>
+  <rect x="40.0" y="96.0" width="90.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="85.0" y="124.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">image</text>
+  <rect x="165.0" y="96.0" width="100.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="215.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">encoder</text>
+  <rect x="300.0" y="92.0" width="140.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="370.0" y="116.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">small latent</text>
+  <text x="370.0" y="131.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">(diffuse here)</text>
+  <rect x="485.0" y="96.0" width="100.0" height="48.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="535.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">decoder</text>
+  <rect x="620.0" y="96.0" width="90.0" height="48.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="665.0" y="124.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">image</text>
+  <line x1="130.0" y1="120.0" x2="165.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M165.0,120.0 L155.9,115.9 L155.9,124.1 Z" fill="#475569"/>
+  <line x1="265.0" y1="120.0" x2="300.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M300.0,120.0 L290.9,115.9 L290.9,124.1 Z" fill="#475569"/>
+  <line x1="440.0" y1="120.0" x2="485.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M485.0,120.0 L475.9,115.9 L475.9,124.1 Z" fill="#475569"/>
+  <line x1="585.0" y1="120.0" x2="620.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M620.0,120.0 L610.9,115.9 L610.9,124.1 Z" fill="#475569"/>
+  <rect x="285.0" y="212.0" width="170.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="370.0" y="238.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">"a cat astronaut"</text>
+  <path d="M370.0,212.0 L370.0,205.0 L370.0,205.0 L370.0,148.0" fill="none" stroke="#92400e" stroke-width="2.0" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M370.0,148.0 L365.9,157.1 L374.1,157.1 Z" fill="#92400e"/>
+  <rect x="408.8" y="187.2" width="118.5" height="17.1" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="468.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" fill="#92400e" text-anchor="middle" dominant-baseline="middle">text conditioning</text>
+  <text x="370.0" y="286.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Diffusing in a small latent (not full pixels) makes it fast; the text prompt steers denoising toward the words.</text>
+</svg>
+<figcaption><b>Latent diffusion (Stable Diffusion).</b> An encoder compresses the image into a small latent; all the noising/denoising happens in that compact space (much cheaper than full pixels); a decoder expands the result back to an image. The text prompt is injected as conditioning so denoising is steered toward the words. Compression + conditioning are what made high-quality text-to-image fast enough to run widely.</figcaption></figure>
+
+<p>Latent diffusion is the breakthrough that made text-to-image <em>accessible</em>: by diffusing in a compressed latent
+(perhaps 48× smaller in area) rather than raw pixels, it cut the compute enough to run on a single consumer GPU while keeping
+quality high — the decoder restores the fine detail at the end. Put the pieces together and you have modern text-to-image:
+<strong>encode to a small latent, denoise many steps while conditioning on the prompt, decode back to pixels</strong>. Every
+term here is one you've met — noise, neural network regression, encoders/decoders (the U-Net from segmentation is the usual
+denoiser), text embeddings — recombined into a system that turns a sentence into a picture.</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> One forward-noising step (and undoing it)</div>
+<div class="bd">
+<p>The heart of diffusion is one noising step and its inverse. The standard forward step mixes the clean signal
+<code>x0</code> with noise using a factor <code>alpha_bar</code> (how much signal is retained):
+<code>x_t = √(alpha_bar)·x0 + √(1−alpha_bar)·noise</code>. If the model can predict that noise, subtracting it recovers the
+original. Here it is on a 4-pixel "image":</p>
+
+<pre><code>import numpy as np
+np.random.seed(0)
+x0 = np.array([0.8, 0.2, 0.5, 0.9])   # a clean signal (4 pixels)
+alpha_bar = 0.64                       # fraction of signal retained at step t
+noise = np.random.randn(4)             # standard Gaussian noise
+xt = np.sqrt(alpha_bar)*x0 + np.sqrt(1-alpha_bar)*noise   # the forward step
+print("clean x0:   ", np.round(x0,3))
+print("noise:      ", np.round(noise,3))
+print("sqrt(a)=", round(np.sqrt(alpha_bar),3), " sqrt(1-a)=", round(np.sqrt(1-alpha_bar),3))
+print("noisy x_t:  ", np.round(xt,3))
+# The model's job: predict 'noise' from x_t. Predict it perfectly -> recover x0:
+pred_noise = noise
+x0_recovered = (xt - np.sqrt(1-alpha_bar)*pred_noise)/np.sqrt(alpha_bar)
+print("recovered x0:", np.round(x0_recovered,3))</code></pre>
+<div class="out"><span class="lbl">Output</span>clean x0:    [0.8 0.2 0.5 0.9]
+noise:       [1.764 0.4   0.979 2.241]
+sqrt(a)= 0.8  sqrt(1-a)= 0.6
+noisy x_t:   [1.698 0.4   0.987 2.065]
+recovered x0: [0.8 0.2 0.5 0.9]</div>
+
+<p>Follow the mechanics. With <code>alpha_bar = 0.64</code>, the mixing weights are <code>√0.64 = 0.8</code> on the signal
+and <code>√0.36 = 0.6</code> on the noise. So the noisy image <code>x_t</code> is <code>0.8·x0 + 0.6·noise</code> — the
+clean pixels <code>[0.8, 0.2, 0.5, 0.9]</code> get partly buried under scaled noise, becoming <code>[1.698, 0.4, 0.987,
+2.065]</code>. That's <strong>one forward step</strong>: signal shrunk toward 0.8× and noise mixed in. Now the reverse: the
+network's <em>only job</em> is to look at <code>x_t</code> and predict what noise was added. In this toy we cheat and hand it
+the true noise (<code>pred_noise = noise</code>), then run the algebra backward — subtract the scaled noise and divide by
+0.8 — and it <strong>recovers x0 exactly</strong>: <code>[0.8, 0.2, 0.5, 0.9]</code>. That is the entire principle in
+miniature. A real diffusion model does exactly this, except (1) it doesn't get the true noise — it <em>learns</em> to predict
+it, trained on millions of (clean image, noised image) pairs; (2) it repeats the step hundreds of times; and (3) to generate,
+it starts <code>x_t</code> from pure random noise (no <code>x0</code> at all) and denoises step by step until an image
+appears. The "predict the noise, then subtract it" loop you just saw <em>is</em> how Stable Diffusion turns static into a
+picture — everything else is scale, learning, and repetition.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>A <strong>diffusion model</strong> learns to generate by learning to <strong>reverse noising</strong>: the forward process smears an image into pure noise; the reverse process (a trained network) removes noise step by step.</li>
+<li>The network's job each step is simple: <strong>predict the noise</strong> in a noisy image so it can be subtracted — a well-posed regression that's stable to train.</li>
+<li>To <strong>generate</strong>, start from pure random noise and run the learned denoiser many times — a brand-new image emerges.</li>
+<li><strong>Text conditioning</strong> feeds an encoded prompt into every denoising step, steering output toward the words (text-to-image).</li>
+<li><strong>Latent diffusion (Stable Diffusion)</strong> runs the whole process in a small compressed latent (encoder→diffuse→decoder), making high-quality text-to-image fast enough to run widely.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q1.</span> What does the neural network in a diffusion model actually learn to do?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Classify the image</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Predict the noise in a noisy image, so it can be removed one step at a time</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Draw the whole image in one shot</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Add noise to images</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Diffusion generates, not classifies.</div>
+<div class="ex" data-for="b">Correct. Each step it predicts the added noise; subtracting it denoises toward a cleaner image.</div>
+<div class="ex" data-for="c">It works iteratively over many steps, not one shot.</div>
+<div class="ex" data-for="d">Adding noise is the forward process — no learning; the network learns to <em>remove</em> it.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q2.</span> How does a trained diffusion model generate a new image?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It copies the nearest training image</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It runs the forward noising process</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It needs a real image to start</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It starts from pure random noise and applies the learned denoising step many times</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">It samples new images, not copies (though avoiding memorization is a real concern).</div>
+<div class="ex" data-for="b">Forward = destroy; generation uses the <em>reverse</em> process.</div>
+<div class="ex" data-for="c">Generation starts from noise, not a real image — that's the point.</div>
+<div class="ex" data-for="d">Correct. Pure noise in, repeated learned denoising, a fresh image out.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q3.</span> How does a diffusion model follow a text prompt like "a cat astronaut"?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The encoded text is fed into the denoising network at each step, steering denoising toward matching images (conditioning)</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It searches the internet for the image</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Text can't influence a diffusion model</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It translates the text into pixels directly</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Conditioning injects the prompt's embedding into every denoising step, biasing output toward the words.</div>
+<div class="ex" data-for="b">No search — it generates from its learned distribution.</div>
+<div class="ex" data-for="c">Conditioning is exactly how text guides it.</div>
+<div class="ex" data-for="d">There's no direct text→pixel map; the prompt steers iterative denoising.</div>
+</div>
+</div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q4.</span> Why does Stable Diffusion run the diffusion process in a compressed "latent" space instead of on full pixels?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Latents look nicer</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Pixels can't be denoised</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Hundreds of denoising steps on full-resolution pixels is very expensive; a small latent makes it fast enough to run widely, with a decoder restoring detail</span></li>
+<li data-opt="d"><span class="mk">D</span><span>To avoid using text prompts</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">It's about compute cost, not aesthetics.</div>
+<div class="ex" data-for="b">Pixels can be denoised — it's just costly, which is the point.</div>
+<div class="ex" data-for="c">Correct. Diffusing in a small latent slashes compute; the decoder expands the final latent back to a detailed image.</div>
+<div class="ex" data-for="d">Latent diffusion is fully compatible with (and usually uses) text conditioning.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>A friend says: "Diffusion is magic — it makes images out of nothing." Explain, without magic, how starting from random noise can produce a coherent image.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>There's no magic — the "nothing" (random noise) is just the <em>starting point</em>, and all the structure comes from the
+<strong>learned denoising network</strong>. Here's the demystified account. During training, the model saw millions of real
+images, each progressively noised, and learned one narrow skill: <em>given a noisy image, predict the noise that was added.</em>
+Learning that skill well means the model has, implicitly, learned what real images look like — because to know what's "noise"
+in a picture, you must know what's "signal" (a plausible image). Now to generate: we hand the model a sheet of pure random
+noise and ask it to do its one skill — predict the noise and remove a bit. The model has never seen this particular noise, but
+it responds as trained: it nudges the static a hair toward "what a real image would look like." Repeat hundreds of times, and
+each nudge accumulates — random static → vague blobs → rough shapes → a coherent image. The image emerges because <em>every
+step pulls toward the distribution of real images the model learned</em>. So the coherence doesn't come from the noise; it
+comes from the millions of images baked into the denoiser's weights, applied step by step.</p>
+<p>The reasoning skill is locating <strong>where the information actually lives</strong>: not in the random seed, but in the
+learned model. This dissolves the apparent paradox ("something from nothing") — the noise supplies <em>randomness</em> (so you
+get a different image each time, which is why it's generative rather than deterministic), while the network supplies all the
+<em>structure</em> (learned from data). It also clarifies a real limitation people miss: a diffusion model can only generate
+things consistent with what it learned, so its outputs reflect its training data — including its gaps and biases. And it frames
+the ethical issues correctly: because the structure comes from training images, questions of memorization (occasionally
+reproducing a training image too closely), copyright (what was in the training set), and misuse (deepfakes) are all really
+questions about the <em>data</em> and the <em>learned model</em>, not the noise. Being able to explain generation as "repeated
+learned denoising pulling noise toward the data distribution" — no magic — is exactly the clear mental model that lets you
+reason about what these systems can and can't do, and where their outputs really come from.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>Diffusion needs many denoising steps (often 20–1000) to make one image, while a classifier needs one forward pass. Why the difference, and what's the practical consequence?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The difference is intrinsic to the two problems. Classification is a <strong>one-shot mapping</strong>: image in, label out
+— a single forward pass suffices because you're reading off an answer that's directly present. Generation by diffusion is an
+<strong>iterative refinement</strong>: turning pure noise into a coherent image is too hard to do in one jump, so the model
+breaks it into many small, each-one-easy steps ("remove a little noise"), and the image is built up gradually across all of
+them. It's the difference between recognizing a finished drawing (one glance) and <em>creating</em> one (many strokes). Each
+denoising step is one forward pass of the network, so generating an image costs <em>N forward passes</em> where N is the number
+of steps — making generation fundamentally slower and more compute-heavy than classification. That's the practical consequence:
+<strong>latency and cost scale with the number of steps</strong>, so text-to-image is far more expensive per output than
+recognition, and reducing the step count is a major goal.</p>
+<p>This directly motivates two big engineering thrusts you should know. First, <strong>faster samplers</strong>: clever numerical
+methods (DDIM and successors) that get good images in far fewer steps (e.g., 20–50 instead of 1000), and <strong>distillation</strong>
+techniques that train a student model to take giant steps — some can generate in just 1–4 steps. Second, <strong>latent
+diffusion</strong> (this lesson): making each step cheaper by working in a compressed space, which multiplies with fewer steps
+to make the whole thing practical. The reasoning principle is recognizing that <em>iterative</em> generation trades speed for
+quality and stability — many small well-posed steps are easier to learn than one impossible leap, but you pay in compute per
+image. Understanding this "N forward passes per image" cost structure explains why generation feels slow, why step-count and
+sampler choice are the knobs users and engineers tune, and why so much research targets fewer steps. It's the Track 10
+efficiency mindset applied to generative models: know your cost model (here, cost ∝ steps), then attack the dominant term.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>Latent diffusion inserts an encoder (image→latent) and decoder (latent→image) around the diffusion process. What does each buy you, and what's the risk of compressing too aggressively?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>The encoder/decoder pair exists to make diffusion <strong>affordable</strong> by shrinking what the expensive part operates
+on. The <strong>encoder</strong> compresses a full-resolution image into a much smaller latent (say reducing a 512×512×3 image
+to a 64×64 latent — dramatically fewer numbers), and this is the payoff: the hundreds of denoising steps then run on the small
+latent instead of full pixels, cutting compute and memory by a large factor — enough to turn "needs a datacenter" into "runs on
+a consumer GPU." The <strong>decoder</strong> does the inverse at the very end, expanding the final denoised latent back into a
+full-resolution image and restoring fine detail. So the division of labor is elegant: the <em>autoencoder</em> (encoder+decoder)
+handles the expensive job of moving between pixels and a compact code, and the <em>diffusion model</em> does its iterative
+generation cheaply in that compact code. This is why "latent" diffusion was the unlock for widely-usable text-to-image — the
+quality stayed high while the cost dropped by roughly the compression factor.</p>
+<p>The risk of compressing <strong>too aggressively</strong> is loss of detail and fidelity. The latent is a lossy compression:
+if you squeeze too hard, the encoder throws away information the decoder can't recover, so fine textures, small text, sharp
+edges, and precise details get blurred or hallucinated — no amount of good denoising in the latent can restore detail the
+encoding already discarded. So there's a <strong>fidelity-vs-efficiency trade-off</strong> in the compression ratio: more
+compression means cheaper diffusion but a coarser ceiling on achievable detail; less compression preserves detail but costs
+more. The reasoning skill is seeing latent diffusion as a two-stage system where the autoencoder sets a <em>quality ceiling</em>
+and the diffusion model works beneath it — so the compression ratio is a deliberate design choice balancing cost against the
+finest detail you need. This is a recurring systems pattern: put the expensive computation in a compressed representation, but
+respect that compression is lossy and bounds your quality. Recognizing that the encoder's compression is both the source of the
+speedup <em>and</em> the source of a fidelity limit — and can be pushed too far — is exactly the trade-off-aware thinking that
+distinguishes understanding a system from just naming its parts.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: diffusion vs GANs, and why "predict the noise" won<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>It's illuminating to contrast diffusion with the approach it largely displaced: the <strong>GAN</strong> (Generative
+Adversarial Network). A GAN pits two networks against each other — a <em>generator</em> that tries to produce realistic images
+and a <em>discriminator</em> that tries to tell real from fake — training them in competition until the generator's fakes fool
+the discriminator. GANs can produce sharp images in a <em>single</em> forward pass (fast generation, a real advantage), but the
+adversarial training is notoriously <strong>unstable and finicky</strong>: it can fail to converge, oscillate, or collapse to
+producing a few repetitive outputs (<em>mode collapse</em>), and getting a GAN to train well was something of a dark art.
+Diffusion won most of image generation for the opposite virtues: its training is <strong>stable and simple</strong> — there's
+no adversary, just a straightforward regression ("predict the noise") with a clear loss that reliably decreases — and it
+produces excellent, diverse quality that covers the full data distribution rather than collapsing. The price is slow, multi-step
+generation (the previous practice problem), which is why the whole ecosystem of faster samplers and distillation exists. The
+interview-ready contrast: <em>GANs — one-shot and fast but unstable to train and prone to mode collapse; diffusion — multi-step
+and slower but stable to train, easy to scale, and higher fidelity/diversity.</em> The shift from GANs to diffusion is a case
+study in how <em>trainability</em> and <em>stability</em> can matter more than raw generation speed when you're pushing quality
+and scale.</p>
+<p>Zoom out and diffusion ties the whole track together. Its denoising network is almost always a <strong>U-Net</strong> — the
+exact encoder-decoder-with-skips architecture from the segmentation lesson — because denoising, like segmentation, is a
+<em>dense</em> image-to-image task (in at full resolution, out at full resolution), so the same architecture that predicts a
+per-pixel mask is ideal for predicting per-pixel noise. The text conditioning uses embeddings from a <strong>CLIP-style text
+encoder</strong>, the subject of the very next lesson, and increasingly the denoiser itself uses <strong>transformer</strong>
+blocks (diffusion transformers) rather than pure convolutions — the ViT influence from the last lesson, reaching generation.
+So a modern text-to-image model is a synthesis of nearly everything you've learned: an autoencoder for compression, a U-Net or
+transformer denoiser, attention for conditioning, text embeddings for the prompt, and the noise-prediction training objective
+that makes it all stable. That synthesis is the point of this track — the analytical tasks (classify, detect, segment), the
+architectures (CNN, ViT), and now generation are not separate topics but one interconnected toolkit. The final lesson closes
+the loop by joining vision and language directly (CLIP and multimodal models), completing the picture of how machines both
+<em>understand</em> and <em>create</em> in the visual world.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Diffusion already borrowed a text encoder to follow prompts. Next,
+<strong>vision-language models</strong> like CLIP make that image-text connection the main event — learning a shared space
+where a picture and its caption line up.</p>
+</article>
+<nav class="pager"><a class="prev" href="cv5-vit.html"><span class="dir">← Previous</span><span class="ti">Vision Transformers: attention for images</span></a><a class="next" href="cv7-multimodal.html"><span class="dir">Next →</span><span class="ti">Vision-language &amp; multimodal models</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

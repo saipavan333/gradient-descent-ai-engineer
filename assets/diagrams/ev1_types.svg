@@ -1,0 +1,23 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" width="720" height="320" role="img">
+  <rect x="0" y="0" width="720" height="320" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Three ways to evaluate, in tension</text>
+  <rect x="55.0" y="66.0" width="190.0" height="214.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="75.0" y="87.0" width="150.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="150.0" y="114.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Offline</text>
+  <text x="150.0" y="168.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">test set</text>
+  <text x="150.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">fast &amp; cheap,</text>
+  <text x="150.0" y="216.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">but a proxy</text>
+  <rect x="295.0" y="66.0" width="190.0" height="214.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="315.0" y="87.0" width="150.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="390.0" y="114.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Online</text>
+  <text x="390.0" y="168.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">A/B on users</text>
+  <text x="390.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">real signal,</text>
+  <text x="390.0" y="216.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">slow &amp; risky</text>
+  <rect x="520.0" y="66.0" width="190.0" height="214.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="540.0" y="87.0" width="150.0" height="46.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="615.0" y="114.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Human</text>
+  <text x="615.0" y="168.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">expert labels</text>
+  <text x="615.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">gold standard,</text>
+  <text x="615.0" y="216.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">expensive &amp; slow</text>
+  <text x="360.0" y="300.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Offline for fast iteration, online for ground truth, human for the hardest judgments.</text>
+</svg>

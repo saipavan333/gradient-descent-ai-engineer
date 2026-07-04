@@ -1,0 +1,24 @@
+<svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" width="700" height="290" role="img">
+  <rect x="0" y="0" width="700" height="290" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Transfer learning: reuse a pretrained backbone</text>
+  <rect x="30.0" y="113.0" width="110.0" height="54.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="85.0" y="135.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Input</text>
+  <text x="85.0" y="152.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">image</text>
+  <rect x="190.0" y="108.0" width="190.0" height="64.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="285.0" y="135.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Pretrained backbone</text>
+  <text x="285.0" y="152.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">(frozen)</text>
+  <rect x="420.0" y="110.0" width="140.0" height="60.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="490.0" y="135.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">New head</text>
+  <text x="490.0" y="152.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">(trained)</text>
+  <rect x="590.0" y="116.0" width="90.0" height="48.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="635.0" y="144.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Class</text>
+  <line x1="140.0" y1="140.0" x2="190.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M190.0,140.0 L180.9,135.9 L180.9,144.1 Z" fill="#475569"/>
+  <line x1="380.0" y1="140.0" x2="420.0" y2="140.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M420.0,140.0 L410.9,135.9 L410.9,144.1 Z" fill="#475569"/>
+  <line x1="560.0" y1="140.0" x2="590.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M590.0,140.0 L580.9,135.9 L580.9,144.1 Z" fill="#475569"/>
+  <text x="285.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" font-style="italic" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">frozen: keep learned features</text>
+  <text x="490.0" y="200.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" font-style="italic" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">trained on your labels</text>
+  <text x="350.0" y="254.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Freeze the pretrained feature extractor; train only a small new head — strong accuracy from little data.</text>
+</svg>

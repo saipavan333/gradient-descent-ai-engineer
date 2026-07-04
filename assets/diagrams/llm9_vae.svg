@@ -1,0 +1,24 @@
+<svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" width="700" height="290" role="img">
+  <rect x="0" y="0" width="700" height="290" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">VAE: compress to a latent distribution, then decode</text>
+  <rect x="40.0" y="125.0" width="80.0" height="50.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="154.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">input</text>
+  <rect x="172.0" y="125.0" width="96.0" height="50.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="220.0" y="154.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">encoder</text>
+  <rect x="305.0" y="122.0" width="130.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="370.0" y="146.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">latent z</text>
+  <text x="370.0" y="161.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">(μ, σ) → sample</text>
+  <rect x="482.0" y="125.0" width="96.0" height="50.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="530.0" y="154.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">decoder</text>
+  <rect x="610.0" y="125.0" width="80.0" height="50.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="650.0" y="154.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">output</text>
+  <line x1="120.0" y1="150.0" x2="172.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M172.0,150.0 L162.9,145.9 L162.9,154.1 Z" fill="#475569"/>
+  <line x1="268.0" y1="150.0" x2="305.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M305.0,150.0 L295.9,145.9 L295.9,154.1 Z" fill="#475569"/>
+  <line x1="435.0" y1="150.0" x2="482.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M482.0,150.0 L472.9,145.9 L472.9,154.1 Z" fill="#475569"/>
+  <line x1="578.0" y1="150.0" x2="610.0" y2="150.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M610.0,150.0 L600.9,145.9 L600.9,154.1 Z" fill="#475569"/>
+  <text x="350.0" y="240.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">sample new latents z to generate new data; the smooth latent space is the VAE's signature</text>
+</svg>

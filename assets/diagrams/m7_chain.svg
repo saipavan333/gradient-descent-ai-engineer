@@ -1,0 +1,20 @@
+<svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" width="700" height="230" role="img">
+  <rect x="0" y="0" width="700" height="230" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Chain rule: multiply the local slopes</text>
+  <rect x="50.0" y="82.0" width="60.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="80.0" y="115.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">x</text>
+  <rect x="270.0" y="82.0" width="60.0" height="56.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="300.0" y="115.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">u</text>
+  <rect x="510.0" y="82.0" width="60.0" height="56.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="540.0" y="115.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">y</text>
+  <line x1="110.0" y1="110.0" x2="270.0" y2="110.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M270.0,110.0 L260.9,105.9 L260.9,114.1 Z" fill="#475569"/>
+  <rect x="166.2" y="87.6" width="47.7" height="20.2" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="190.0" y="98.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" fill="#475569" text-anchor="middle" dominant-baseline="middle">du/dx</text>
+  <line x1="330.0" y1="110.0" x2="510.0" y2="110.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M510.0,110.0 L500.9,105.9 L500.9,114.1 Z" fill="#475569"/>
+  <rect x="396.1" y="87.6" width="47.7" height="20.2" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="420.0" y="98.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" fill="#475569" text-anchor="middle" dominant-baseline="middle">dy/du</text>
+  <text x="390.0" y="185.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">dy/dx = (dy/du) × (du/dx)</text>
+  <text x="390.0" y="208.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a change in x ripples through u to y</text>
+</svg>

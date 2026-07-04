@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backpropagation, step by step · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html" class="current"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 4</b> · Deep Learning · Lesson 4.3</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 4 · Deep Learning</div>
+<h1>Backpropagation, step by step</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 30 min</span>
+<span class="pill">Lesson 4.3</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl03_backprop.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>Backpropagation computes how to adjust every weight — the chain rule, systematized, and the engine that makes learning possible. Understand it and autograd stops being magic.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain backprop as forward values then backward gradients</li><li>Apply the chain rule along a computational graph</li><li>Verify a gradient numerically</li><li>Use loss.backward() and autograd</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> The problem: which way should each weight move?</h2>
+
+<p>A fresh network predicts nonsense because its weights are random. To improve, we run gradient descent (Lesson 1.8):
+nudge each weight a little in the direction that reduces the loss. But that requires knowing, for <em>every single
+weight</em>, how the loss would change if we wiggled it — its partial derivative $\partial L/\partial w$. A real
+network has millions of weights. Computing each derivative separately would be impossibly slow.
+<span class="term">Backpropagation</span> is the clever algorithm that computes <em>all</em> of these gradients in a
+single backward sweep, about as cheaply as one forward pass. It's the engine that makes training deep networks
+possible.</p>
+
+<p>The whole thing is the chain rule from Lesson 1.7, applied systematically. Recall: if a small change flows through
+a chain of functions, you multiply the local slopes to get the overall slope. A network is exactly a long chain of
+functions (layer after layer), so its gradients are products of local slopes — and backprop is just the bookkeeping
+that computes those products efficiently.</p>
+
+<h2><span class="sec-tag">Concept</span> Forward values, then backward gradients</h2>
+
+<p>Picture the network as a <span class="term">computational graph</span>: nodes are operations (multiply, add,
+activate, loss), edges carry values. Training is two passes over this graph. The <strong>forward pass</strong> flows
+left to right, computing each value and finally the loss. The <strong>backward pass</strong> flows right to left,
+computing how sensitive the loss is to each intermediate value — the gradients.</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" width="720" height="330" role="img">
+  <rect x="0" y="0" width="720" height="330" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Backprop: forward values (top), then backward gradients (bottom)</text>
+  <rect x="50.0" y="117.0" width="60.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="80.0" y="145.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">x</text>
+  <rect x="195.0" y="117.0" width="110.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="250.0" y="144.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">z = w·x</text>
+  <rect x="365.0" y="117.0" width="130.0" height="46.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="430.0" y="144.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">a = ReLU(z)</text>
+  <rect x="572.0" y="117.0" width="96.0" height="46.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="620.0" y="144.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">loss L</text>
+  <line x1="110.0" y1="140.0" x2="195.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M195.0,140.0 L185.9,135.9 L185.9,144.1 Z" fill="#475569"/>
+  <line x1="305.0" y1="140.0" x2="365.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M365.0,140.0 L355.9,135.9 L355.9,144.1 Z" fill="#475569"/>
+  <line x1="495.0" y1="140.0" x2="572.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M572.0,140.0 L562.9,135.9 L562.9,144.1 Z" fill="#475569"/>
+  <path d="M620.0,170.0 L430.0,170.0" fill="none" stroke="#fb7185" stroke-width="1.8" stroke-dasharray="6 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M430.0,170.0 L439.1,174.1 L439.1,165.9 Z" fill="#fb7185"/>
+  <rect x="503.3" y="188.8" width="43.3" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="525.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#fb7185" text-anchor="middle" dominant-baseline="middle">∂L/∂a</text>
+  <path d="M430.0,170.0 L250.0,170.0" fill="none" stroke="#fb7185" stroke-width="1.8" stroke-dasharray="6 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M250.0,170.0 L259.1,174.1 L259.1,165.9 Z" fill="#fb7185"/>
+  <rect x="318.3" y="188.8" width="43.3" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="340.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#fb7185" text-anchor="middle" dominant-baseline="middle">∂L/∂z</text>
+  <path d="M250.0,170.0 L80.0,170.0" fill="none" stroke="#fb7185" stroke-width="1.8" stroke-dasharray="6 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M80.0,170.0 L89.1,174.1 L89.1,165.9 Z" fill="#fb7185"/>
+  <rect x="143.3" y="188.8" width="43.3" height="17.8" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="165.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" fill="#fb7185" text-anchor="middle" dominant-baseline="middle">∂L/∂w</text>
+  <text x="360.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">forward computes the loss; backward multiplies local slopes right-to-left to get every gradient</text>
+  <text x="360.0" y="272.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">this is just the chain rule applied along the graph — the engine behind .backward()</text>
+</svg>
+<figcaption><b>Two passes over the graph.</b> Forward (top, solid) computes values up to the loss. Backward (bottom, dashed) starts from the loss and multiplies local slopes right-to-left, handing each node its gradient. The same graph powers both passes.</figcaption></figure>
+
+<p>The backward pass starts with a trivial fact ($\partial L/\partial L = 1$) and works backward: at each node it takes
+the gradient flowing in from the right and multiplies by that node's <em>local</em> derivative to get the gradient
+flowing out to the left. Because every node only needs to know its own simple local derivative and the gradient handed
+to it, the whole sweep is local and mechanical — perfect for a computer.</p>
+
+<figure class="diagram"><svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" width="700" height="280" role="img">
+  <rect x="0" y="0" width="700" height="280" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The chain rule multiplies local gradients along the path</text>
+  <rect x="60.0" y="98.0" width="60.0" height="44.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="90.0" y="125.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">w</text>
+  <rect x="230.0" y="98.0" width="60.0" height="44.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="260.0" y="125.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">z</text>
+  <rect x="400.0" y="98.0" width="60.0" height="44.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="430.0" y="125.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">a</text>
+  <rect x="570.0" y="98.0" width="60.0" height="44.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="600.0" y="125.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">L</text>
+  <line x1="120.0" y1="120.0" x2="230.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M230.0,120.0 L220.9,115.9 L220.9,124.1 Z" fill="#475569"/>
+  <rect x="152.6" y="103.4" width="44.8" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="175.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#475569" text-anchor="middle" dominant-baseline="middle">∂z/∂w</text>
+  <line x1="290.0" y1="120.0" x2="400.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M400.0,120.0 L390.9,115.9 L390.9,124.1 Z" fill="#475569"/>
+  <rect x="322.6" y="103.4" width="44.8" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="345.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#475569" text-anchor="middle" dominant-baseline="middle">∂a/∂z</text>
+  <line x1="460.0" y1="120.0" x2="570.0" y2="120.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M570.0,120.0 L560.9,115.9 L560.9,124.1 Z" fill="#475569"/>
+  <rect x="492.6" y="103.4" width="44.8" height="18.6" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="515.0" y="113.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" fill="#475569" text-anchor="middle" dominant-baseline="middle">∂L/∂a</text>
+  <text x="350.0" y="210.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">∂L/∂w = (∂L/∂a) · (∂a/∂z) · (∂z/∂w)</text>
+  <text x="350.0" y="242.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">to know how a weight affects the loss, multiply the slopes of each step between them</text>
+</svg>
+<figcaption><b>Chain rule along the path.</b> To find how a weight affects the loss, multiply the local derivatives of every step between them: ∂L/∂w = (∂L/∂a)(∂a/∂z)(∂z/∂w). Backprop computes these products for all weights at once.</figcaption></figure>
+
+<p>The key efficiency: gradients for early layers reuse the gradients already computed for later layers (the
+$\partial L/\partial a$ term gets passed along), so nothing is recomputed. That reuse is why backprop costs about the
+same as one forward pass, instead of one pass <em>per weight</em>.</p>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Backprop by hand, checked against the definition</div>
+<div class="bd">
+<p>Take a tiny chain: input $x$, weight $w$, a ReLU, a second weight $v$, and a squared-error loss against target $t$.
+We'll compute the gradient $\partial L/\partial w$ by the chain rule, then verify it against a brute-force numerical
+derivative — the gold-standard sanity check.</p>
+
+<pre><code>x, w, v, t = 2.0, 0.5, 1.5, 3.0
+# forward pass
+z  = w * x            # 1.0
+a  = max(0.0, z)      # ReLU -> 1.0
+yhat = a * v          # 1.5
+L  = (yhat - t) ** 2  # (1.5 - 3.0)^2 = 2.25
+
+# backward pass: multiply local slopes right-to-left (chain rule)
+dL_dyhat = 2 * (yhat - t)          # d/dyhat of (yhat-t)^2  = -3.0
+dyhat_da = v                       # yhat = a*v             =  1.5
+da_dz    = 1.0 if z > 0 else 0.0   # ReLU slope             =  1.0
+dz_dw    = x                       # z = w*x                =  2.0
+grad = dL_dyhat * dyhat_da * da_dz * dz_dw
+print("loss:", L, " analytic dL/dw:", grad)
+
+# numerical check: nudge w and see how L changes
+eps = 1e-6
+def Lf(w): 
+    z = w*x; a = max(0.0, z); return (a*v - t)**2
+numerical = (Lf(w+eps) - Lf(w-eps)) / (2*eps)
+print("numerical dL/dw:", round(numerical, 5))</code></pre>
+<div class="out"><span class="lbl">Output</span>loss: 2.25  analytic dL/dw: -9.0
+numerical dL/dw: -9.0</div>
+
+<p>The chain rule gives $\partial L/\partial w = (-3.0)(1.5)(1.0)(2.0) = -9.0$, and the numerical derivative — literally
+"change $w$ a hair and measure the loss change" — agrees exactly. The negative sign tells gradient descent to
+<em>increase</em> $w$ to reduce the loss. That's backprop in miniature: multiply local slopes along the path. A real
+network does this for millions of weights at once, and PyTorch automates it entirely:</p>
+
+<pre><code>import torch
+x = torch.tensor(2.0); t = torch.tensor(3.0)
+w = torch.tensor(0.5, requires_grad=True)    # track gradients for w
+v = torch.tensor(1.5, requires_grad=True)
+
+loss = (torch.relu(w * x) * v - t) ** 2
+loss.backward()                              # backprop: fills w.grad, v.grad
+print(w.grad)                                # tensor(-9.)</code></pre>
+
+<p>One call to <code>loss.backward()</code> runs the entire backward pass and stores each parameter's gradient in its
+<code>.grad</code> — and it reports $-9.0$ for <code>w.grad</code>, matching our hand calculation. This automatic
+differentiation (<span class="term">autograd</span>) is why you never hand-derive gradients in practice; you just build
+the forward computation and call <code>backward()</code>.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li><strong>Backpropagation</strong> computes $\partial L/\partial w$ for every weight in one backward sweep — the chain rule, systematized.</li>
+<li>Training is two passes: <strong>forward</strong> computes values and the loss; <strong>backward</strong> computes gradients right-to-left.</li>
+<li>At each node, gradient out = (incoming gradient) × (local derivative); early layers reuse later layers' gradients.</li>
+<li>That reuse makes backprop cost ≈ one forward pass, not one pass per weight.</li>
+<li>In PyTorch, <code>loss.backward()</code> does it all (<strong>autograd</strong>); you never hand-derive gradients.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> What does backpropagation compute?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The network's predictions</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The best learning rate</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The gradient of the loss with respect to every weight</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The number of layers</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Predictions come from the forward pass; backprop computes gradients.</div>
+<div class="ex" data-for="b">The learning rate is a hyperparameter you choose, not a backprop output.</div>
+<div class="ex" data-for="c">Correct. Backprop produces $\partial L/\partial w$ for all weights, which gradient descent then uses to update them.</div>
+<div class="ex" data-for="d">Architecture is fixed by you; backprop computes gradients within it.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> Backpropagation is fundamentally an application of which rule?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Bayes' rule</span></li>
+<li data-opt="b"><span class="mk">B</span><span>The chain rule</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The product rule for counting</span></li>
+<li data-opt="d"><span class="mk">D</span><span>L'Hôpital's rule</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Bayes' rule is about probabilities; backprop is about derivatives.</div>
+<div class="ex" data-for="b">Correct. A network is a composition of functions, and the chain rule (Lesson 1.7) gives the derivative of a composition by multiplying local slopes.</div>
+<div class="ex" data-for="c">That's combinatorics, unrelated to gradients.</div>
+<div class="ex" data-for="d">L'Hôpital's is for limits of ratios, not relevant here.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> Why is backprop efficient — roughly the cost of one forward pass rather than one pass per weight?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>It skips most weights</span></li>
+<li data-opt="b"><span class="mk">B</span><span>It uses a faster computer</span></li>
+<li data-opt="c"><span class="mk">C</span><span>It approximates gradients randomly</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Gradients for earlier layers reuse the gradients already computed for later layers</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">It computes a gradient for every weight — it skips none.</div>
+<div class="ex" data-for="b">Efficiency comes from the algorithm, not the hardware.</div>
+<div class="ex" data-for="c">Backprop computes exact gradients, not random approximations.</div>
+<div class="ex" data-for="d">Correct. The backward sweep passes shared partial results along, so nothing is recomputed — that reuse is the key to its speed.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> In the worked example, <code>dL/dw</code> came out to $-9.0$. What does the negative sign tell gradient descent to do?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Increase $w$ (step opposite the gradient) to reduce the loss</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Decrease $w$</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Leave $w$ unchanged</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Set $w$ to $-9$</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Gradient descent steps opposite the gradient: $w \leftarrow w - \eta(\partial L/\partial w)$, so a negative gradient increases $w$.</div>
+<div class="ex" data-for="b">Decreasing $w$ would follow the gradient and raise the loss.</div>
+<div class="ex" data-for="c">A nonzero gradient means there's improvement to be had — you do update.</div>
+<div class="ex" data-for="d">The gradient is a direction/rate, not the new value of the weight.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Build the reasoning yourself</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>For the chain $z = wx$, $a = z^2$, $L = a$, with $x = 3$ and $w = 2$, compute $\partial L/\partial w$ by the chain rule. (Use $\frac{d}{dz}z^2 = 2z$.)</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Forward: $z = wx = 6$, $a = z^2 = 36$, $L = 36$.</p>
+<p>Backward: $\partial L/\partial a = 1$; $\partial a/\partial z = 2z = 12$; $\partial z/\partial w = x = 3$. Multiply:
+$\partial L/\partial w = 1 \times 12 \times 3 = \mathbf{36}$.</p>
+<p>Check directly: $L = (wx)^2 = w^2 x^2 = 9w^2$, so $dL/dw = 18w = 18(2) = 36$. ✓ The chain rule gave the same answer
+by multiplying local slopes — exactly what backprop automates.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>During the backward pass through a ReLU, the gradient flowing in is 5, but the neuron's forward input $z$ was $-2$. What gradient flows out the other side, and why?</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>It flows out as <strong>0</strong>. ReLU's local derivative is 1 when $z>0$ and 0 when $z<0$. Here $z=-2<0$, so the
+local slope is 0, and gradient out = (incoming 5) × (local 0) = 0.</p>
+<p>Intuition: the neuron was in its flat "off" region, so nudging its input wouldn't have changed its output at all —
+therefore it can't have affected the loss through this path, and no gradient should propagate. This is also the seed of
+the "dying ReLU" issue (Lesson 4.2): a neuron stuck at $z<0$ for all inputs gets zero gradient forever and never
+recovers.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>You hand-derive a gradient for a custom layer and aren't sure it's right. Describe the "gradient check" you'd run, using the worked example as a template.</span></div>
+<details><summary>Show solution &amp; reasoning</summary><div class="sol">
+<p>Compare your analytic gradient to a <strong>numerical</strong> one. For each parameter $w$, compute
+$\frac{L(w+\epsilon) - L(w-\epsilon)}{2\epsilon}$ with a tiny $\epsilon$ (say $10^{-6}$) — this is the derivative's
+definition, approximated. If your analytic gradient matches this number to several decimals (as $-9.0$ matched $-9.0$
+in the worked example), your derivation is almost certainly correct.</p>
+<p>This "finite-difference gradient check" is the standard way to validate hand-written backprop, and it's why the
+worked example computed both — the numerical version needs no calculus, just the forward pass, so it's a trustworthy
+referee. (It's too slow for actual training — one forward pass per parameter — but perfect for verifying a small
+custom piece.)</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: autograd, reverse mode, and why frameworks won<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>What PyTorch actually does is <strong>reverse-mode automatic differentiation</strong>. As you run the forward pass,
+it records every operation into a graph (the "tape"), remembering each op's local derivative rule. When you call
+<code>backward()</code>, it walks that graph in reverse, applying the chain rule mechanically — exactly the by-hand
+process from the worked example, but for arbitrary computations you wrote in plain Python. You get exact gradients for
+free, which is why nobody hand-derives backprop anymore and why frameworks (PyTorch, JAX, TensorFlow) transformed the
+field: researchers can dream up any architecture and the gradients come automatically.</p>
+<p>Why <em>reverse</em> mode specifically? Differentiation can sweep forward or backward through the graph. Forward
+mode is efficient when there are few inputs and many outputs; reverse mode wins when there are many inputs and few
+outputs. A neural network has millions of inputs (the weights) and exactly <em>one</em> output (the scalar loss) — the
+ideal case for reverse mode, which gets all million gradients in a single backward sweep. If the loss were vector-valued
+you'd pay once per output, but it's a single number, so reverse mode is essentially optimal. This match between the
+shape of the learning problem (many params, one loss) and the strength of reverse-mode autodiff is a quiet reason deep
+learning scales as well as it does.</p>
+<p>One practical gotcha that follows directly: because PyTorch <em>accumulates</em> gradients into <code>.grad</code>
+every time you call <code>backward()</code> (handy for some advanced tricks), you must zero them each step with
+<code>optimizer.zero_grad()</code> — the detail from Lesson 1.8 that bites every beginner. It makes sense now: the tape
+adds the new backward pass's gradients to whatever was already in <code>.grad</code>, so you clear it first. That's
+the bridge to the next lesson, where this backward pass becomes one beat in the training loop.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">You can compute every gradient. Now we wire forward, loss, backward, and
+update into the loop that actually trains a network. Next: <strong>4.4 The training loop, loss &amp; optimizers</strong>.</p>
+</article>
+<nav class="pager"><a class="prev" href="dl2-forward.html"><span class="dir">← Previous</span><span class="ti">Forward pass &amp; activation functions</span></a><a class="next" href="dl4-trainloop.html"><span class="dir">Next →</span><span class="ti">The training loop, loss &amp; optimizers</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

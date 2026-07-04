@@ -1,0 +1,29 @@
+<svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" width="720" height="340" role="img">
+  <rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Vectorization: let NumPy do the loop in fast C, not slow Python</text>
+  <text x="170.0" y="80.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Python loop</text>
+  <rect x="65.0" y="103.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="124.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 1: a[0] * b[0]</text>
+  <line x1="170.0" y1="138.0" x2="170.0" y2="146.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M170.0,146.0 L172.8,139.6 L167.2,139.6 Z" fill="#94a3b8"/>
+  <rect x="65.0" y="147.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="168.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 2: a[1] * b[1]</text>
+  <line x1="170.0" y1="182.0" x2="170.0" y2="190.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M170.0,190.0 L172.8,183.6 L167.2,183.6 Z" fill="#94a3b8"/>
+  <rect x="65.0" y="191.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="212.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 3: a[2] * b[2]</text>
+  <line x1="170.0" y1="226.0" x2="170.0" y2="234.0" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M170.0,234.0 L172.8,227.6 L167.2,227.6 Z" fill="#94a3b8"/>
+  <rect x="65.0" y="235.0" width="210.0" height="34.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="170.0" y="256.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">step 4: a[3] * b[3]</text>
+  <text x="170.0" y="304.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">one Python op per element → slow</text>
+  <text x="545.0" y="80.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Vectorized: a * b</text>
+  <rect x="425.0" y="140.0" width="240.0" height="120.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="545.0" y="187.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">a * b</text>
+  <text x="545.0" y="204.4" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">one call into NumPy's C core,</text>
+  <text x="545.0" y="221.8" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">all elements at once</text>
+  <text x="545.0" y="304.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">≈ 10–100× faster, and shorter to write</text>
+  <line x1="290.0" y1="200.0" x2="420.0" y2="200.0" stroke="#6366f1" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M420.0,200.0 L410.0,195.5 L410.0,204.5 Z" fill="#6366f1"/>
+  <text x="355.0" y="186.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#6366f1" text-anchor="middle" opacity="1.0" dominant-baseline="middle">replace with</text>
+</svg>

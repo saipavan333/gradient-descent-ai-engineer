@@ -1,0 +1,18 @@
+<svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" width="700" height="330" role="img">
+  <rect x="0" y="0" width="700" height="330" fill="#ffffff"/>
+  <text x="350.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">What makes a language model 'large': three kinds of scale</text>
+  <rect x="60.0" y="90.0" width="160.0" height="160.0" rx="12" fill="#ffffff" stroke="#6366f1" stroke-width="2" opacity="1.0"/>
+  <text x="140.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Parameters</text>
+  <text x="140.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">billions of weights</text>
+  <text x="140.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">GPT-3: 175B</text>
+  <rect x="270.0" y="90.0" width="160.0" height="160.0" rx="12" fill="#ffffff" stroke="#10b981" stroke-width="2" opacity="1.0"/>
+  <text x="350.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Data</text>
+  <text x="350.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">trillions of tokens</text>
+  <text x="350.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">most of the web,</text>
+  <text x="350.0" y="194.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">books &amp; code</text>
+  <rect x="480.0" y="90.0" width="160.0" height="160.0" rx="12" fill="#ffffff" stroke="#f59e0b" stroke-width="2" opacity="1.0"/>
+  <text x="560.0" y="118.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#92400e" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Compute</text>
+  <text x="560.0" y="150.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">thousands of GPUs</text>
+  <text x="560.0" y="172.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">months of training</text>
+  <text x="350.0" y="290.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">scaling up all three together makes models broadly more capable (scaling laws, Lesson 6.7)</text>
+</svg>

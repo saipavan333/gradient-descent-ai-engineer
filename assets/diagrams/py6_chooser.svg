@@ -1,0 +1,48 @@
+<svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" width="720" height="330" role="img">
+  <rect x="0" y="0" width="720" height="330" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Which chart? Match the plot to the question</text>
+  <rect x="50.0" y="110.0" width="150.0" height="150.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <rect x="90.0" y="158.0" width="11.0" height="14.0" rx="1" fill="#c7d2fe" stroke="#6366f1" stroke-width="1" opacity="1.0"/>
+  <rect x="104.0" y="144.0" width="11.0" height="28.0" rx="1" fill="#c7d2fe" stroke="#6366f1" stroke-width="1" opacity="1.0"/>
+  <rect x="118.0" y="132.0" width="11.0" height="40.0" rx="1" fill="#c7d2fe" stroke="#6366f1" stroke-width="1" opacity="1.0"/>
+  <rect x="132.0" y="142.0" width="11.0" height="30.0" rx="1" fill="#c7d2fe" stroke="#6366f1" stroke-width="1" opacity="1.0"/>
+  <rect x="146.0" y="156.0" width="11.0" height="16.0" rx="1" fill="#c7d2fe" stroke="#6366f1" stroke-width="1" opacity="1.0"/>
+  <text x="125.0" y="202.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Distribution</text>
+  <text x="125.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">of one variable</text>
+  <rect x="73.0" y="231.0" width="104.0" height="30.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="125.0" y="250.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Histogram</text>
+  <rect x="218.0" y="110.0" width="150.0" height="150.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <circle cx="268.6" cy="165.9" r="2.6" fill="#10b981"/>
+  <circle cx="308.9" cy="142.2" r="2.6" fill="#10b981"/>
+  <circle cx="291.7" cy="150.0" r="2.6" fill="#10b981"/>
+  <circle cx="301.7" cy="163.5" r="2.6" fill="#10b981"/>
+  <circle cx="266.0" cy="133.1" r="2.6" fill="#10b981"/>
+  <circle cx="313.5" cy="149.3" r="2.6" fill="#10b981"/>
+  <circle cx="308.8" cy="132.1" r="2.6" fill="#10b981"/>
+  <circle cx="288.5" cy="160.9" r="2.6" fill="#10b981"/>
+  <circle cx="274.6" cy="169.8" r="2.6" fill="#10b981"/>
+  <circle cx="317.7" cy="133.2" r="2.6" fill="#10b981"/>
+  <circle cx="261.6" cy="153.7" r="2.6" fill="#10b981"/>
+  <circle cx="320.1" cy="147.2" r="2.6" fill="#10b981"/>
+  <circle cx="273.9" cy="148.9" r="2.6" fill="#10b981"/>
+  <circle cx="261.9" cy="140.9" r="2.6" fill="#10b981"/>
+  <text x="293.0" y="202.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Relationship</text>
+  <text x="293.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">between two</text>
+  <rect x="241.0" y="231.0" width="104.0" height="30.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="293.0" y="250.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Scatter</text>
+  <rect x="386.0" y="110.0" width="150.0" height="150.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <path d="M426,168 L446,148 L466,156 L486,134" fill="none" stroke="#fb7185" stroke-width="2.2"/>
+  <text x="461.0" y="202.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Trend</text>
+  <text x="461.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">over time</text>
+  <rect x="409.0" y="231.0" width="104.0" height="30.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="461.0" y="250.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Line</text>
+  <rect x="554.0" y="110.0" width="150.0" height="150.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" opacity="1.0"/>
+  <rect x="596.0" y="152.0" width="11.0" height="20.0" rx="1" fill="#fde68a" stroke="#f59e0b" stroke-width="1" opacity="1.0"/>
+  <rect x="612.0" y="134.0" width="11.0" height="38.0" rx="1" fill="#fde68a" stroke="#f59e0b" stroke-width="1" opacity="1.0"/>
+  <rect x="628.0" y="144.0" width="11.0" height="28.0" rx="1" fill="#fde68a" stroke="#f59e0b" stroke-width="1" opacity="1.0"/>
+  <rect x="644.0" y="128.0" width="11.0" height="44.0" rx="1" fill="#fde68a" stroke="#f59e0b" stroke-width="1" opacity="1.0"/>
+  <text x="629.0" y="202.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Comparison</text>
+  <text x="629.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">across categories</text>
+  <rect x="577.0" y="231.0" width="104.0" height="30.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="629.0" y="250.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Bar</text>
+</svg>

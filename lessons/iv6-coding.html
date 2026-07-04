@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coding &amp; implementation — Q&amp;A · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html" class="current"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 12</b> · Interview Bank · Lesson 12.6</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 12 · Interview Bank</div>
+<h1>Coding &amp; implementation — Q&amp;A</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 26 min</span>
+<span class="pill">Lesson 12.6</span>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/iv06_coding.ipynb">⬇ Runnable notebook</a>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>The coding round tests implementation, including ML from scratch (gradient descent, k-means, metrics). With AI-assisted rounds emerging, the skill shifts to judging and integrating code — so prepare both unaided fluency and discerning AI-assisted building.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Implement ML algorithms from scratch</li><li>Communicate approach and test out loud</li><li>Handle edge cases in metrics code</li><li>Use an AI assistant with judgment</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> The coding round, old and new</h2>
+
+<p>The coding round tests whether you can actually implement, not just discuss. It spans two flavors: general
+problem-solving (data structures and algorithms) and <span class="term">ML-specific coding</span> — implementing algorithms
+or metrics from scratch (k-means, k-nearest-neighbors, gradient descent, precision/recall, cosine similarity), or writing
+practical data/model code. And there's a new reality: at some companies the coding round now <em>allows an AI assistant</em>,
+which shifts what's tested from "can you produce code" to "can you <strong>judge and integrate</strong> code" — prompt well,
+catch the assistant's mistakes, and build something correct. Prepare for both formats: enough unaided practice to be fluent,
+and enough AI-assisted building to be fast and discerning.</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" width="720" height="270" role="img">
+  <rect x="0" y="0" width="720" height="270" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The coding round: solve out loud, then judge</text>
+  <rect x="25.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="95.0" y="110.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Clarify</text>
+  <text x="95.0" y="127.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">the problem</text>
+  <rect x="200.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="270.0" y="110.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Approach</text>
+  <text x="270.0" y="127.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">out loud</text>
+  <rect x="375.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="445.0" y="119.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Implement</text>
+  <rect x="550.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="620.0" y="110.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Test &amp;</text>
+  <text x="620.0" y="127.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">debug</text>
+  <line x1="165.0" y1="115.0" x2="200.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M200.0,115.0 L190.9,110.9 L190.9,119.1 Z" fill="#475569"/>
+  <line x1="340.0" y1="115.0" x2="375.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M375.0,115.0 L365.9,110.9 L365.9,119.1 Z" fill="#475569"/>
+  <line x1="515.0" y1="115.0" x2="550.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M550.0,115.0 L540.9,110.9 L540.9,119.1 Z" fill="#475569"/>
+  <text x="360.0" y="190.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Communicate your reasoning throughout. With AI assistants now allowed at some firms,</text>
+  <text x="360.0" y="212.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the skill being tested is judging and integrating code, not just producing it.</text>
+</svg>
+<figcaption><b>The coding round: solve out loud, then judge.</b> Clarify the problem, state your approach out loud, implement, then test and debug — communicating your reasoning throughout. With AI assistants now allowed at some firms, the tested skill is increasingly judging and integrating code (spotting bugs, verifying correctness), not just producing it from memory.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Worked example</span> Implement gradient descent from scratch</div>
+<div class="bd">
+<p>A classic ML coding question: "fit a line to data using gradient descent, from scratch." Here we fit y = w·x (true w = 3)
+by repeatedly stepping w opposite the gradient of the mean-squared error — the core learning loop, in a few lines:</p>
+
+<pre><code>xs = [1, 2, 3, 4]
+ys = [3, 6, 9, 12]                 # true relationship: y = 3x
+w, lr = 0.0, 0.01                  # start at 0, learning rate 0.01
+for step in range(1000):
+    # gradient of mean squared error wrt w:  mean of 2*(w*x - y)*x
+    grad = sum(2 * (w * x - y) * x for x, y in zip(xs, ys)) / len(xs)
+    w -= lr * grad                 # step downhill
+print(f"learned w: {w:.3f}  (true 3.0)")
+print(f"predict x=5 -> {w*5:.2f}")</code></pre>
+<div class="out"><span class="lbl">Output</span>learned w: 3.000  (true 3.0)
+predict x=5 -> 15.00</div>
+
+<p>Starting from w = 0, the loop converges to <strong>w = 3.000</strong> — it learned the true relationship — and correctly
+predicts 15 for x = 5. This tiny example is exactly the kind of from-scratch implementation ML coding rounds ask for, and it
+tests several things at once: do you understand that gradient descent steps <em>opposite</em> the gradient to reduce loss;
+can you derive the MSE gradient (the <code>2*(w*x - y)*x</code> term); do you write a clean, correct loop; and do you sanity-check
+the result (converges to the known answer). In the interview you'd <strong>narrate as you go</strong>: "I'll compute the
+gradient of MSE with respect to w, then step w against it, and I expect it to converge to 3 since that's the true slope" —
+making your reasoning visible, which matters as much as the code. You'd also discuss extensions the interviewer might probe:
+adding a bias term (y = w·x + b), vectorizing with NumPy for speed, handling the learning rate (too high diverges, too low
+crawls), and using multiple features. The point of these from-scratch questions is that implementing an algorithm proves you
+<em>understand</em> it — you can't fake gradient descent if you have to code it — which is why they're a staple even in an era
+of AI assistants: the skill being tested is comprehension you can implement and verify, not memorized boilerplate. If an
+assistant were allowed, the test would shift to whether you can prompt it to write this, spot if it got the gradient wrong,
+and confirm the output converges — judging the code, not just producing it.</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>The coding round spans general algorithms <strong>and</strong> ML-specific implementation (k-means, kNN, gradient descent, metrics from scratch).</li>
+<li><strong>Communicate out loud</strong>: clarify → state your approach → implement → test/debug — your reasoning is judged, not just the final code.</li>
+<li>From-scratch ML implementations prove you <strong>understand</strong> the algorithm (you can't fake coding gradient descent).</li>
+<li><strong>AI-assisted coding rounds</strong> are emerging: the skill shifts to prompting, spotting the assistant's bugs, and verifying correctness — judging code.</li>
+<li>Prepare <strong>both modes</strong>: unaided fluency (for no-AI rounds and to judge AI output) and fast, discerning AI-assisted building.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q1.</span> In the gradient-descent example, why does <code>w</code> converge to 3?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>By random luck</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Each step moves w opposite the loss gradient, reducing error until w reaches the true slope that fits the data</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Because 3 is hardcoded</span></li>
+<li data-opt="d"><span class="mk">D</span><span>It doesn't converge</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">It's deterministic descent, not luck.</div>
+<div class="ex" data-for="b">Correct. Stepping down the MSE gradient drives w to the value that minimizes error — the true slope, 3.</div>
+<div class="ex" data-for="c">3 is never assigned; it's learned from the data.</div>
+<div class="ex" data-for="d">It converges to 3.000, as the output shows.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q2.</span> Why do interviewers ask you to implement ML algorithms from scratch?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To test typing speed</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Because libraries don't exist</span></li>
+<li data-opt="c"><span class="mk">C</span><span>To waste time</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Implementing an algorithm proves you understand it — you can't fake coding gradient descent or k-means</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Not about speed.</div>
+<div class="ex" data-for="b">Libraries exist; the point is demonstrating understanding.</div>
+<div class="ex" data-for="c">It's an efficient test of real comprehension.</div>
+<div class="ex" data-for="d">Correct. From-scratch coding reveals whether you truly understand the mechanism, not just the API.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q3.</span> In an AI-assisted coding round, what is primarily being evaluated?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Judging and integrating code — prompting well, catching the assistant's mistakes, verifying correctness</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Memorizing syntax</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Typing without the tool</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Avoiding the assistant entirely</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. With the tool available, your judgment — steering it and verifying its output — is what's assessed.</div>
+<div class="ex" data-for="b">The assistant handles syntax; your judgment is the point.</div>
+<div class="ex" data-for="c">These rounds allow the tool — the skill is using it well.</div>
+<div class="ex" data-for="d">You're expected to use it effectively, not avoid it.</div>
+</div>
+</div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q4.</span> During a coding interview, you should:</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Code silently and reveal the answer at the end</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Skip clarifying the problem</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Clarify, state your approach out loud, implement, and test/debug — communicating your reasoning throughout</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Never test your code</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">A silent solve, even if correct, hides the reasoning being evaluated.</div>
+<div class="ex" data-for="b">Clarifying the problem first prevents solving the wrong thing.</div>
+<div class="ex" data-for="c">Correct. Communicating your approach and testing as you go is exactly what interviewers want to see.</div>
+<div class="ex" data-for="d">Testing/debugging out loud demonstrates rigor.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Mock interview prompts</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>"Implement k-means clustering from scratch. Walk me through your approach before coding."</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>"I'd state the algorithm first: k-means partitions points into k clusters by alternating two steps until convergence.
+<strong>(1) Assign:</strong> assign each point to the nearest centroid (by Euclidean distance). <strong>(2) Update:</strong>
+move each centroid to the mean of the points assigned to it. Repeat until assignments stop changing (or a max iteration).
+Initialize the k centroids somehow — randomly picking k data points is simple; k-means++ is smarter. Before coding I'd note
+the pieces I need: a distance function, an assignment step (for each point, argmin over centroids), an update step (mean of
+each cluster's points), and a convergence check. Then I'd implement it cleanly, testing on a tiny dataset where I know the
+answer. I'd narrate trade-offs: k-means is sensitive to initialization (so real code runs it several times and keeps the
+best by inertia), you must choose k (the elbow method or silhouette score help), and it assumes roughly spherical, similarly
+-sized clusters — so it struggles with elongated or varied-density clusters, where other methods fit better. I'd also mention
+complexity (O(n·k·iterations·dimensions)) and that vectorizing with NumPy matters for real data." This lands because
+stating the algorithm and its properties <em>before</em> coding shows you understand it, the from-scratch implementation
+proves it, and volunteering the caveats (initialization sensitivity, choosing k, cluster-shape assumptions) demonstrates
+depth beyond a rote solution — exactly the reasoning-plus-implementation the round tests. If an assistant were allowed, I'd
+prompt it for the implementation and focus my attention on verifying the assignment/update logic and the convergence check
+are correct.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>"Write a function to compute precision, recall, and F1 given lists of predicted and true labels."</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>"I'd start by restating the definitions to make sure we agree, then implement directly. Count the four outcomes by
+comparing predictions to truth: <strong>TP</strong> (predicted positive, actually positive), <strong>FP</strong> (predicted
+positive, actually negative), <strong>FN</strong> (predicted negative, actually positive). Then precision = TP/(TP+FP),
+recall = TP/(TP+FN), F1 = 2·precision·recall/(precision+recall). The clean implementation:</p>
+<pre><code>def prf1(pred, true, pos=1):
+    tp = sum(p == pos and t == pos for p, t in zip(pred, true))
+    fp = sum(p == pos and t != pos for p, t in zip(pred, true))
+    fn = sum(p != pos and t == pos for p, t in zip(pred, true))
+    precision = tp / (tp + fp) if tp + fp else 0.0
+    recall    = tp / (tp + fn) if tp + fn else 0.0
+    f1 = 2*precision*recall/(precision+recall) if precision+recall else 0.0
+    return precision, recall, f1</code></pre>
+<p>The thing I'd emphasize while coding is <strong>the edge cases</strong>: division by zero when there are no positive
+predictions (precision) or no actual positives (recall) — I guard each with a check returning 0.0, which is exactly the kind
+of robustness interviewers watch for. I'd test it on a small hand-computed example to confirm. I'd also mention that this is
+binary; for multiclass you'd compute per-class and average (macro or weighted), and that in practice you'd use a library,
+but implementing it proves I understand what the metrics actually measure — which connects to knowing <em>why</em> you'd
+choose precision vs recall by error cost." This stands out because it pairs a correct, clean implementation with explicit
+edge-case handling (the zero-division guards) and the conceptual grounding — showing both coding rigor and ML understanding,
+the combination ML coding rounds reward.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>"If AI assistants are allowed in the coding round, how do you make the most of one without letting it hurt you?"</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>"I'd treat the assistant as a fast pair-programmer whose work I'm responsible for verifying — because the skill being
+tested is judgment, not the assistant's output. Concretely: I'd <strong>still clarify the problem and plan my approach
+first</strong>, so I'm directing the assistant with a clear intent rather than hoping it figures out the problem — a vague
+prompt gets vague code. I'd <strong>prompt for specific, bounded pieces</strong> and read every line it produces critically,
+because assistants confidently generate plausible-but-wrong code (off-by-one errors, wrong edge cases, subtle logic bugs,
+even a wrong gradient) — catching those is exactly what's being evaluated. I'd <strong>test the code</strong> (run it, try
+edge cases, trace a small example) rather than trusting it, and I'd <strong>keep narrating my reasoning</strong> — what I'm
+asking for, why, and how I'm verifying it — so the interviewer sees my judgment. The failure mode I'd avoid is
+<strong>over-reliance</strong>: pasting the assistant's output without understanding it, so I can't explain or debug it when
+the interviewer probes ('why does this work? what if the input is empty?'). If I don't understand what it wrote, I can't
+judge it, and that's the whole test. So the balance is: use the tool to move fast on boilerplate and syntax, but own the
+design, verify the correctness, and understand every line — because I'm accountable for the result. That's genuinely how
+good engineers use AI tools day-to-day, which is why the format exists." This lands because it demonstrates exactly the
+judgment-over-production mindset the new format tests: directing the tool with clear intent, critically verifying its output,
+testing rigorously, and never ceding understanding — the difference between using AI as a competent engineer versus as a
+crutch.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: what the coding round really tests, in an AI-assisted era<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>The coding round has always tested more than whether you can produce working code — it probes <strong>problem-solving,
+communication, and the ability to translate understanding into correct implementation</strong>. That's why interviewers care
+how you clarify the problem, how you reason about approach and trade-offs, how you handle edge cases, and how you debug —
+the process reveals how you'd actually work. For ML roles specifically, from-scratch implementation questions serve a sharp
+purpose: they verify that your conceptual knowledge is <em>real</em> and not just vocabulary. You can memorize that gradient
+descent steps opposite the gradient, but coding it forces you to actually know the gradient, the update rule, and the loop —
+comprehension you can't fake. This is why ML coding questions favor implementing the fundamentals (gradient descent, k-means,
+kNN, metrics, a forward pass) over obscure algorithm puzzles: they're checking that the machinery you discuss in the other
+rounds is machinery you genuinely understand.</p>
+<p>The emergence of <strong>AI-assisted coding interviews</strong> is reshaping this in a way that's worth understanding
+because it reflects a real shift in the profession. When an assistant can produce the code, the differentiating human skill
+becomes <em>judgment</em>: understanding the problem well enough to direct the tool, reading its output critically enough to
+catch its confident mistakes, testing and verifying rather than trusting, and integrating pieces into a correct whole. The
+often-quoted framing is that the skill being hired for is shifting from "can you produce code" to "can you <em>judge</em>
+code" — which is exactly how experienced engineers already work with AI tools. This doesn't make understanding <em>less</em>
+important; it makes it <em>more</em> important, because you can't judge code you don't understand — an assistant that writes a
+subtly wrong gradient is only caught by someone who knows what the right gradient is. So the deep preparation is the same as
+it's always been: genuinely understand the algorithms and the fundamentals, so that whether you're implementing from scratch
+unaided or verifying an assistant's output, you can tell correct from plausible-but-wrong. The practical advice is to build
+both muscles — enough unaided coding to be fluent and to have the understanding that lets you judge, and enough AI-assisted
+practice to be fast and discerning with the tool — because you may face either format, and both ultimately rest on real
+comprehension. The through-line, fitting this whole curriculum, is that in an era where code and answers are increasingly
+cheap to generate, the scarce and valuable skill is the <em>understanding and judgment</em> to direct, verify, and integrate
+them — which is precisely what deep learning of the fundamentals gives you, and what every round of the interview, coding
+included, is ultimately trying to measure.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">Technical skill gets you far, but teams hire people. Next, <strong>12.7
+Behavioral &amp; project deep-dives</strong> covers the non-technical rounds — the STAR method, your project stories, and
+the human qualities that decide close calls.</p>
+</article>
+<nav class="pager"><a class="prev" href="iv5-systemdesign.html"><span class="dir">← Previous</span><span class="ti">ML system design — Q&amp;A</span></a><a class="next" href="iv7-behavioral.html"><span class="dir">Next →</span><span class="ti">Behavioral &amp; project deep-dives</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" width="720" height="360" role="img">
+  <rect x="0" y="0" width="720" height="360" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The scientific Python stack: each tool builds on the one below</text>
+  <rect x="60.0" y="277.0" width="600.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="360.0" y="304.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">NumPy — fast n-dimensional arrays (the foundation everything sits on)</text>
+  <rect x="60.0" y="219.0" width="600.0" height="46.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="360.0" y="246.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">pandas — labeled tables, loading &amp; wrangling messy data</text>
+  <rect x="60.0" y="139.0" width="180.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="150.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Matplotlib</text>
+  <text x="150.0" y="181.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">plots &amp; charts</text>
+  <rect x="270.0" y="139.0" width="180.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="360.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">scikit-learn</text>
+  <text x="360.0" y="181.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">classical ML</text>
+  <rect x="485.0" y="139.0" width="180.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="575.0" y="163.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">PyTorch / TF</text>
+  <text x="575.0" y="181.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">deep learning</text>
+  <rect x="170.0" y="73.0" width="380.0" height="46.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="360.0" y="100.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">YOUR analysis, models &amp; results</text>
+  <line x1="360.0" y1="277.0" x2="360.0" y2="265.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M360.0,265.0 L356.7,272.3 L363.3,272.3 Z" fill="#94a3b8"/>
+  <line x1="360.0" y1="219.0" x2="360.0" y2="197.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+  <path d="M360.0,197.0 L356.7,204.3 L363.3,204.3 Z" fill="#94a3b8"/>
+  <text x="360.0" y="338.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">higher layers call the lower ones — learn them bottom-up</text>
+</svg>

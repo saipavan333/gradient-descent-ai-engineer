@@ -1,0 +1,40 @@
+<svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" width="720" height="340" role="img">
+  <rect x="0" y="0" width="720" height="340" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Anatomy of one artificial neuron</text>
+  <rect x="66.0" y="77.0" width="58.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="95.0" y="105.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">x₁</text>
+  <rect x="66.0" y="157.0" width="58.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="95.0" y="185.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">x₂</text>
+  <rect x="66.0" y="237.0" width="58.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="95.0" y="265.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="15" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">x₃</text>
+  <rect x="289.0" y="150.0" width="112.0" height="60.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="345.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">weighted</text>
+  <text x="345.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">sum  z</text>
+  <rect x="159.0" y="280.0" width="82.0" height="40.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="200.0" y="304.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">bias b</text>
+  <rect x="455.0" y="150.0" width="120.0" height="60.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="515.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">activation</text>
+  <text x="515.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">f(z)</text>
+  <rect x="607.0" y="150.0" width="86.0" height="60.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="650.0" y="175.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">output</text>
+  <text x="650.0" y="193.1" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="13" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">a</text>
+  <line x1="124.0" y1="109.3" x2="289.0" y2="162.1" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M289.0,162.1 L281.5,155.4 L279.1,163.2 Z" fill="#475569"/>
+  <rect x="194.2" y="118.7" width="24.5" height="19.4" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="206.5" y="128.7" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">w₁</text>
+  <line x1="124.0" y1="180.0" x2="289.0" y2="180.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M289.0,180.0 L279.9,175.9 L279.9,184.1 Z" fill="#475569"/>
+  <rect x="194.2" y="163.0" width="24.5" height="19.4" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="206.5" y="173.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">w₂</text>
+  <line x1="124.0" y1="250.7" x2="289.0" y2="197.9" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M289.0,197.9 L279.1,196.8 L281.5,204.6 Z" fill="#475569"/>
+  <rect x="194.2" y="207.3" width="24.5" height="19.4" rx="5" fill="#ffffff" opacity="0.92"/>
+  <text x="206.5" y="217.3" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" fill="#475569" text-anchor="middle" dominant-baseline="middle">w₃</text>
+  <line x1="224.2" y1="280.0" x2="308.8" y2="210.0" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M308.8,210.0 L299.1,212.7 L304.3,219.0 Z" fill="#94a3b8"/>
+  <line x1="401.0" y1="180.0" x2="455.0" y2="180.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M455.0,180.0 L445.9,175.9 L445.9,184.1 Z" fill="#475569"/>
+  <line x1="575.0" y1="180.0" x2="607.0" y2="180.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M607.0,180.0 L597.9,175.9 L597.9,184.1 Z" fill="#475569"/>
+  <text x="360.0" y="320.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">multiply each input by its weight, add them up plus a bias, then squash through a nonlinear activation</text>
+</svg>

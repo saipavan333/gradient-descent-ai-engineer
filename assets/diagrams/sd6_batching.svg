@@ -1,0 +1,25 @@
+<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" width="680" height="300" role="img">
+  <rect x="0" y="0" width="680" height="300" fill="#ffffff"/>
+  <text x="340.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Batching keeps the GPU full</text>
+  <text x="150.0" y="96.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">One at a time</text>
+  <rect x="250.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="282.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="314.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="346.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="378.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="410.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="442.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="474.0" y="84.0" width="26.0" height="26.0" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6" opacity="1.0"/>
+  <text x="560.0" y="97.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#9f1239" text-anchor="middle" opacity="1.0" dominant-baseline="middle">GPU mostly idle</text>
+  <text x="150.0" y="176.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Batched</text>
+  <rect x="250.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="282.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="314.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="346.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="378.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="410.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="442.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <rect x="474.0" y="164.0" width="26.0" height="26.0" rx="5" fill="#eef2ff" stroke="#6366f1" stroke-width="1.6" opacity="1.0"/>
+  <text x="560.0" y="177.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" font-style="italic" fill="#065f46" text-anchor="middle" opacity="1.0" dominant-baseline="middle">GPU full</text>
+  <text x="340.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Packing many requests into one GPU pass gives near-linear throughput for nearly the same latency.</text>
+</svg>

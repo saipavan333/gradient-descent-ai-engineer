@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview check: LLMs &amp; GenAI · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html" class="current"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 6</b> · LLMs &amp; Generative AI · Lesson 6.10</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 6 · LLMs &amp; Generative AI</div>
+<h1>Interview check: LLMs &amp; GenAI</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 15 min</span>
+<span class="pill">Lesson 6.10</span>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>LLM interviews test the full pipeline: explain RLHF, top-p vs temperature, how LoRA saves memory, fine-tune vs RAG. This checkpoint rehearses those questions with model answers that show the reasoning.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain RLHF, DPO, and reward hacking</li><li>Contrast temperature and top-p</li><li>Explain LoRA's memory savings</li><li>Decide prompt vs RAG vs fine-tune</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> What an LLM / GenAI interview tests</h2>
+
+<p>LLM interviews probe whether you understand how these systems are built and used end to end: the training pipeline,
+the practical levers (decoding, prompting, fine-tuning), and the trade-offs. The questions below are the ones that come
+up constantly; each model answer shows the reasoning interviewers want to hear.</p>
+
+<figure class="diagram"><svg viewBox="0 0 772 250" xmlns="http://www.w3.org/2000/svg" width="772" height="250" role="img">
+  <rect x="0" y="0" width="772" height="250" fill="#ffffff"/>
+  <text x="386.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Track 6 in one line: from a base model to a deployed assistant</text>
+  <rect x="36.0" y="111.0" width="120.0" height="58.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="96.0" y="143.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">pretrain</text>
+  <rect x="188.0" y="111.0" width="120.0" height="58.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="248.0" y="136.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">align</text>
+  <text x="248.0" y="151.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">(SFT+RLHF)</text>
+  <rect x="338.0" y="111.0" width="120.0" height="58.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="398.0" y="136.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">decode</text>
+  <text x="398.0" y="151.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">+ prompt</text>
+  <rect x="486.0" y="111.0" width="120.0" height="58.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="546.0" y="136.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">adapt</text>
+  <text x="546.0" y="151.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">(LoRA)</text>
+  <rect x="632.0" y="111.0" width="120.0" height="58.0" rx="12" fill="#fff1f3" stroke="#fb7185" stroke-width="1.8"/>
+  <text x="692.0" y="136.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">scale</text>
+  <text x="692.0" y="151.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#9f1239" text-anchor="middle" dominant-baseline="middle">+ diffusion</text>
+  <line x1="156.0" y1="140.0" x2="188.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M188.0,140.0 L178.9,135.9 L178.9,144.1 Z" fill="#475569"/>
+  <line x1="308.0" y1="140.0" x2="338.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M338.0,140.0 L328.9,135.9 L328.9,144.1 Z" fill="#475569"/>
+  <line x1="458.0" y1="140.0" x2="486.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M486.0,140.0 L476.9,135.9 L476.9,144.1 Z" fill="#475569"/>
+  <line x1="606.0" y1="140.0" x2="632.0" y2="140.0" stroke="#475569" stroke-width="2.0" stroke-linecap="round"/>
+  <path d="M632.0,140.0 L622.9,135.9 L622.9,144.1 Z" fill="#475569"/>
+  <text x="385.0" y="228.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">next-token prediction, scaled and aligned, became the assistants and image generators you use</text>
+</svg>
+<figcaption><b>The Track 6 mental model.</b> A pretrained base is aligned (SFT + RLHF), used via decoding and prompting, adapted cheaply with LoRA, scaled per scaling laws, and extended to images with diffusion. Most questions probe one stage of this pipeline.</figcaption></figure>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "Explain RLHF."</div>
+<div class="bd">
+<p>"RLHF — reinforcement learning from human feedback — is how you align a model to human preferences after supervised
+fine-tuning. Three steps. First, collect preference data: show humans two model responses to the same prompt and have
+them pick the better one. Second, train a reward model — a network that scores a response — to agree with those human
+choices; it's essentially logistic regression on preference pairs, using the Bradley-Terry model where the probability a
+human prefers A is the sigmoid of the reward difference. Third, optimize the policy (the LLM) with reinforcement
+learning, usually PPO, to produce responses the reward model scores highly, with a KL penalty that keeps it from
+drifting too far from the original model. The result is a model that's helpful, honest, and harmless rather than just
+capable. A simpler modern alternative is DPO, which optimizes directly on the preference pairs and skips the separate
+reward model and RL loop."</p>
+<p class="dd-note" style="color:var(--muted);font-size:13.5px;margin:.4rem 0 0">Strong addition: mention reward hacking — the policy can game an imperfect reward model (sycophancy, padding).</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "What's the difference between temperature and top-p?"</div>
+<div class="bd">
+<p>"Both control sampling, but differently. <strong>Temperature</strong> rescales the logits before the softmax: below 1
+it sharpens the distribution (more deterministic, more repetitive), above 1 it flattens it (more diverse, riskier), and
+near 0 it approaches greedy. It changes <em>how peaked</em> the whole distribution is. <strong>Top-p</strong> (nucleus
+sampling) instead <em>truncates</em>: it keeps the smallest set of tokens whose cumulative probability reaches p (say
+0.9) and samples only among them, cutting the unreliable tail. Its cutoff is adaptive — few tokens when the model is
+confident, many when it's uncertain — unlike top-k's fixed count. In practice you combine them: top-p removes the garbage
+tail, temperature controls diversity among the sensible options. A common default is temperature around 0.7–1.0 with
+top-p around 0.9; lower temperature for factual or code tasks, higher for creative writing."</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "How does LoRA save memory?"</div>
+<div class="bd">
+<p>"LoRA freezes the pretrained weights and trains a small low-rank update instead. For a weight matrix W of size d×d,
+rather than updating all d² parameters, it learns two skinny matrices B (d×r) and A (r×d) with rank r much smaller than
+d, so the update ΔW = BA has only 2dr trainable parameters — often under 1% of the full count. The memory savings are
+twofold: you train far fewer parameters, and crucially you only need gradients and optimizer state (Adam keeps two extra
+values per trainable weight) for those few parameters, not the billions in the frozen base. QLoRA adds 4-bit quantization
+of the frozen base to shrink the memory just to <em>hold</em> it, which together let you fine-tune a 65B model on a single
+GPU. It works because the weight change a task needs is empirically low-rank, and a side benefit is no catastrophic
+forgetting plus swappable adapters, since the base stays frozen."</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "Fine-tune, RAG, or prompt — how do you decide?"</div>
+<div class="bd">
+<p>"I match the tool to the need. <strong>Prompting</strong> changes what you ask — it's free and instant, so I start
+there; it handles a huge range of tasks via instructions and few-shot examples. <strong>RAG (retrieval)</strong> changes
+what the model knows — when the task needs fresh, private, or factual knowledge the model lacks, I retrieve relevant
+documents and put them in the prompt rather than trying to bake facts into weights, which is unreliable.
+<strong>Fine-tuning</strong> changes how the model behaves — I reach for it when I need a consistent skill, format, or
+style that prompting can't reliably enforce, or to make a smaller, cheaper model do one thing well. The mantra: prompt
+to direct, retrieve for knowledge, fine-tune for behavior. They're complementary layers, and most real systems use a
+combination — often a fine-tuned model with RAG and a carefully engineered prompt."</p>
+</div>
+</div>
+
+<div class="worked">
+<div class="hd"><span class="badge">Model answer</span> "How does a diffusion model generate images?"</div>
+<div class="bd">
+<p>"It learns to reverse a noising process. The forward process is fixed: gradually add Gaussian noise to a training
+image over many steps until it's pure static. The model is trained to undo one step — specifically, given a noisy image,
+predict the noise that was added, with a simple MSE loss. That's self-supervised, since you generated the noise and know
+it exactly. To generate, you start from pure random noise and run the learned denoising steps repeatedly, and a coherent
+image condenses out. To make it useful you condition on a text prompt via cross-attention so it denoises toward a
+matching image, and classifier-free guidance lets you dial up prompt adherence. Latent diffusion (Stable Diffusion) runs
+the whole thing in a compressed latent space from a VAE, which is what makes it efficient enough for a single GPU.
+Diffusion overtook GANs because its training is stable and it produces higher-quality, more diverse images, despite being
+slower to sample."</p>
+</div>
+</div>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Rapid-fire answers to have ready</div>
+<ul>
+<li><strong>Base vs chat model?</strong> Base = pretrained only (autocompletes); chat = + SFT + alignment (follows instructions).</li>
+<li><strong>Why hallucination?</strong> Trained for plausible text, not verified truth; fix with retrieval (RAG).</li>
+<li><strong>In-context learning?</strong> Learn a task from prompt examples, no weight updates.</li>
+<li><strong>Chain-of-thought?</strong> "Think step by step" — intermediate steps let the model compute, boosting reasoning.</li>
+<li><strong>Chinchilla?</strong> Scale params and data together (~20 tokens/param); many early models were undertrained.</li>
+<li><strong>DPO vs RLHF?</strong> DPO optimizes directly on preferences — no reward model or RL, simpler and more stable.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Rapid-fire check</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> "A user needs the bot to answer from our constantly-changing internal docs." Best approach?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Pretrain a new model</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Fine-tune nightly on the docs</span></li>
+<li data-opt="c"><span class="mk">C</span><span>RAG: retrieve relevant docs at query time and put them in the prompt</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Raise the temperature</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Pretraining is absurdly expensive and unnecessary.</div>
+<div class="ex" data-for="b">Fine-tuning to inject changing facts is unreliable and impractical to redo constantly.</div>
+<div class="ex" data-for="c">Correct. Fresh/private knowledge → retrieval, which supplies the right documents at query time (Track 7).</div>
+<div class="ex" data-for="d">Temperature affects randomness, not knowledge.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> An interviewer asks why RLHF needs a KL penalty. Best answer:</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>To increase the learning rate</span></li>
+<li data-opt="b"><span class="mk">B</span><span>To keep the policy from drifting too far from the original model and degenerating while chasing reward</span></li>
+<li data-opt="c"><span class="mk">C</span><span>To tokenize faster</span></li>
+<li data-opt="d"><span class="mk">D</span><span>To make the model larger</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Unrelated to learning rate.</div>
+<div class="ex" data-for="b">Correct. Without the KL leash, RL would chase reward into degenerate text that games the reward model; the penalty keeps it a sensible language model.</div>
+<div class="ex" data-for="c">Nothing to do with tokenization.</div>
+<div class="ex" data-for="d">It doesn't change model size.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> "Our story generator is repetitive and bland; we use greedy decoding." Quick fix?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Lower the temperature to 0</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Use beam search with more beams</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Fine-tune from scratch</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Switch to sampling with moderate temperature (~0.8–1.0) and top-p ~0.9</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Temperature 0 is greedy — exactly the problem.</div>
+<div class="ex" data-for="b">Beam search also tends to be repetitive for open-ended text.</div>
+<div class="ex" data-for="c">Decoding settings, not retraining, are the issue.</div>
+<div class="ex" data-for="d">Correct. Sampling with top-p adds controlled variety; greedy/beam cause the blandness.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> "Why can't I just fine-tune the model to know today's stock prices?"</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Fine-tuning reliably changes behavior, not specific facts; for changing knowledge, use retrieval</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Fine-tuning is illegal</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Models can't be fine-tuned</span></li>
+<li data-opt="d"><span class="mk">D</span><span>You must raise the temperature</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. Fine-tuning instills behavior/style; injecting specific, changing facts is unreliable — retrieval (RAG) is the right tool for live knowledge.</div>
+<div class="ex" data-for="b">It's a routine, legal technique.</div>
+<div class="ex" data-for="c">They can — it's just the wrong tool for live facts.</div>
+<div class="ex" data-for="d">Temperature is unrelated.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Mock interview prompts</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>"Walk me through how ChatGPT was built, from raw text to deployed assistant." (2-minute answer.)</span></div>
+<details><summary>Show a strong answer</summary><div class="sol">
+<p>"Start with <strong>pretraining</strong>: a decoder-only transformer trained with next-token prediction on a massive
+web/book/code corpus — self-supervised, hugely expensive, producing a knowledgeable but not-yet-helpful base model. Then
+<strong>supervised fine-tuning</strong> on high-quality (instruction → response) demonstrations teaches it to follow
+instructions and act like an assistant. Then <strong>alignment with RLHF</strong> (or DPO): collect human preference
+comparisons, train a reward model, and optimize the policy to produce preferred responses with a KL leash — making it
+helpful, honest, and harmless. At <strong>deployment</strong>, behavior is shaped by the system prompt and user prompt
+(prompting, possibly few-shot or chain-of-thought), <strong>decoding</strong> settings (temperature, top-p) control the
+output style, and the system is often augmented with <strong>retrieval</strong> for fresh knowledge and <strong>tools</strong>
+for actions. Smaller customized variants can be made cheaply with <strong>LoRA</strong>. So it's: pretrain for knowledge,
+fine-tune for instruction-following, align for values, then prompt/retrieve/decode at serve time."</p>
+<p>This hits every stage of the pipeline in order and connects them — exactly the end-to-end fluency interviewers want.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>"Your fine-tuned model started giving sycophantic, padded answers after alignment. Diagnose it."</span></div>
+<details><summary>Show a strong answer</summary><div class="sol">
+<p>"That's <strong>reward hacking</strong>. The RLHF reward model is an imperfect proxy for 'what humans actually want,' and
+RL ruthlessly maximizes whatever you actually measure. If raters slightly preferred polite, thorough-looking responses,
+the reward model learned 'flattery and length = good,' and the policy exploited that to the extreme — Goodhart's law in
+action. I'd address it by improving the preference data (more diverse, penalize padding and sycophancy explicitly),
+strengthening the KL penalty so the policy doesn't drift as far, evaluating the reward model directly for these failure
+modes, and possibly switching to DPO or adding rule-based checks. More broadly it's a reminder that alignment optimizes a
+proxy, and any gap between the proxy and true intent gets exploited — which is a core AI-safety concern (Track 11)."</p>
+<p>Naming reward hacking, Goodhart's law, and concrete mitigations shows real depth about the alignment process, not just
+its happy path.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>"Explain to a product manager why a smaller, well-trained model might be better than the biggest available one."</span></div>
+<details><summary>Show a strong answer</summary><div class="sol">
+<p>"Bigger isn't automatically better for a product. First, <strong>inference cost and latency</strong>: you pay for the
+model on <em>every single request</em>, forever, and a model half the size is roughly half the cost and faster — which
+matters enormously at scale and for user experience. Second, the <strong>Chinchilla insight</strong>: a smaller model
+trained on more data can match a larger, undertrained one in quality, so size doesn't equal capability. Third,
+<strong>diminishing returns</strong>: scaling laws mean each quality increment costs exponentially more, so the biggest
+model may be only marginally better while costing far more. And a smaller model is easier to fine-tune (LoRA), deploy on
+modest hardware, and even run on-device for privacy. So I'd recommend choosing the smallest model that meets our quality
+bar on <em>our</em> evaluation, not the biggest one available — and revisit if quality falls short."</p>
+<p>This translates technical concepts (inference economics, Chinchilla, diminishing returns) into business language —
+exactly the communication skill senior roles require.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: reasoning about LLM systems end to end<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>The strongest LLM candidates think in terms of the <strong>full system</strong>, not just the model. When asked to
+build something with an LLM, they reason through the layers: which <em>base model</em> (size/cost/quality trade-off), do
+we need <em>fine-tuning</em> (is there a consistent behavior to instill?) or just <em>prompting</em>, do we need
+<em>retrieval</em> (does it require knowledge the model lacks?), what <em>decoding</em> settings (deterministic for
+structured output, sampled for creative), how do we <em>evaluate</em> it (Track 11), and how do we <em>serve</em> it
+within latency and cost budgets (Track 9). That decomposition — model + adaptation + knowledge + decoding + evaluation +
+serving — is the mental checklist of someone who's actually shipped LLM products, and it turns a vague "use GPT" into a
+concrete, defensible architecture.</p>
+<p>Three habits sharpen LLM reasoning. First, <strong>always reason about cost</strong> — tokens, inference, and training
+are real money, and the right answer is usually the cheapest thing that meets the quality bar, not the most powerful. The
+prompt → retrieve → fine-tune ordering is partly a cost ordering (free → cheap → expensive). Second, <strong>connect to
+fundamentals</strong>: a reward model is logistic regression (Track 3); LoRA exploits low-rank structure (Track 3);
+attention conditions diffusion on text (Track 5); the next-token objective is cross-entropy (Track 3); fine-tuning is
+transfer learning (Track 4). Showing these threads proves you understand <em>why</em> things work, not just that they do.
+Third, <strong>hold the dual truth about scale</strong>: LLMs are astonishingly capable <em>and</em> fundamentally limited
+(hallucination, frozen knowledge, brittleness), so good systems pair a strong model with retrieval, tools, evaluation,
+and guardrails. The candidate who can say both "here's why this is incredibly powerful" and "here's exactly how it fails
+and what I'd add to handle that" demonstrates the mature, system-level understanding that the best teams hire for — and
+it's precisely what the rest of this curriculum (Tracks 7–11) equips you to do."</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">That completes Track 6 — you understand how LLMs are trained, aligned,
+steered, adapted, scaled, and extended to images. Next, Track 7 (<strong>RAG &amp; Vector Search</strong>) tackles the
+biggest practical limitation we kept hitting — frozen, ungrounded knowledge — by giving models your own documents to
+reason over.</p>
+</article>
+<nav class="pager"><a class="prev" href="llm9-othergen.html"><span class="dir">← Previous</span><span class="ti">VAEs &amp; GANs in context</span></a><a class="next" href="rag1-why.html"><span class="dir">Next →</span><span class="ti">Why RAG exists</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>

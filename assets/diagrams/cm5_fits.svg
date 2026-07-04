@@ -1,0 +1,49 @@
+<svg viewBox="0 0 760 310" xmlns="http://www.w3.org/2000/svg" width="760" height="310" role="img">
+  <rect x="0" y="0" width="760" height="310" fill="#ffffff"/>
+  <text x="380.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Underfit, just right, overfit — same data, three model complexities</text>
+  <rect x="14.0" y="74.0" width="230.0" height="180.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.3" opacity="1.0"/>
+  <line x1="30.0" y1="230.0" x2="216.0" y2="230.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="30.0" y1="230.0" x2="30.0" y2="98.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M38.8,168.0 L219.2,110.0" fill="none" stroke="#6366f1" stroke-width="2.6"/>
+  <circle cx="43.2" cy="178.0" r="3.4" fill="#475569"/>
+  <circle cx="63.0" cy="154.0" r="3.4" fill="#475569"/>
+  <circle cx="85.0" cy="162.0" r="3.4" fill="#475569"/>
+  <circle cx="104.8" cy="136.0" r="3.4" fill="#475569"/>
+  <circle cx="124.6" cy="144.0" r="3.4" fill="#475569"/>
+  <circle cx="146.6" cy="118.0" r="3.4" fill="#475569"/>
+  <circle cx="166.4" cy="126.0" r="3.4" fill="#475569"/>
+  <circle cx="190.6" cy="102.0" r="3.4" fill="#475569"/>
+  <circle cx="214.8" cy="110.0" r="3.4" fill="#475569"/>
+  <text x="127.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Underfit</text>
+  <text x="127.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">too simple (high bias)</text>
+  <rect x="256.0" y="74.0" width="230.0" height="180.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.3" opacity="1.0"/>
+  <line x1="272.0" y1="230.0" x2="458.0" y2="230.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="272.0" y1="230.0" x2="272.0" y2="98.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M280.8,169.7 L287.4,165.1 L294.0,160.8 L300.6,156.9 L307.2,153.4 L313.8,150.4 L320.4,147.8 L327.0,145.5 L333.6,143.5 L340.2,141.7 L346.8,139.9 L353.4,137.9 L360.0,135.8 L366.6,133.3 L373.2,130.4 L379.8,127.0 L386.4,123.2 L393.0,119.0 L399.6,114.5 L406.2,109.8 L412.8,105.0 L419.4,100.3 L426.0,95.7 L432.6,91.4 L439.2,87.6 L445.8,84.1 L452.4,81.1 L459.0,78.5" fill="none" stroke="#10b981" stroke-width="2.6"/>
+  <circle cx="285.2" cy="178.0" r="3.4" fill="#475569"/>
+  <circle cx="305.0" cy="154.0" r="3.4" fill="#475569"/>
+  <circle cx="327.0" cy="162.0" r="3.4" fill="#475569"/>
+  <circle cx="346.8" cy="136.0" r="3.4" fill="#475569"/>
+  <circle cx="366.6" cy="144.0" r="3.4" fill="#475569"/>
+  <circle cx="388.6" cy="118.0" r="3.4" fill="#475569"/>
+  <circle cx="408.4" cy="126.0" r="3.4" fill="#475569"/>
+  <circle cx="432.6" cy="102.0" r="3.4" fill="#475569"/>
+  <circle cx="456.8" cy="110.0" r="3.4" fill="#475569"/>
+  <text x="369.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Just right</text>
+  <text x="369.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">captures the trend</text>
+  <rect x="498.0" y="74.0" width="230.0" height="180.0" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.3" opacity="1.0"/>
+  <line x1="514.0" y1="230.0" x2="700.0" y2="230.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="514.0" y1="230.0" x2="514.0" y2="98.0" stroke="#475569" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M527.2,178.0 L547.0,154.0 L569.0,162.0 L588.8,136.0 L608.6,144.0 L630.6,118.0 L650.4,126.0 L674.6,102.0 L698.8,110.0" fill="none" stroke="#fb7185" stroke-width="2.4"/>
+  <circle cx="527.2" cy="178.0" r="3.4" fill="#475569"/>
+  <circle cx="547.0" cy="154.0" r="3.4" fill="#475569"/>
+  <circle cx="569.0" cy="162.0" r="3.4" fill="#475569"/>
+  <circle cx="588.8" cy="136.0" r="3.4" fill="#475569"/>
+  <circle cx="608.6" cy="144.0" r="3.4" fill="#475569"/>
+  <circle cx="630.6" cy="118.0" r="3.4" fill="#475569"/>
+  <circle cx="650.4" cy="126.0" r="3.4" fill="#475569"/>
+  <circle cx="674.6" cy="102.0" r="3.4" fill="#475569"/>
+  <circle cx="698.8" cy="110.0" r="3.4" fill="#475569"/>
+  <text x="611.0" y="244.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Overfit</text>
+  <text x="611.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">memorizes noise (high variance)</text>
+</svg>

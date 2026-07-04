@@ -1,0 +1,23 @@
+<svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" width="720" height="270" role="img">
+  <rect x="0" y="0" width="720" height="270" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The coding round: solve out loud, then judge</text>
+  <rect x="25.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="95.0" y="110.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Clarify</text>
+  <text x="95.0" y="127.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">the problem</text>
+  <rect x="200.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="270.0" y="110.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Approach</text>
+  <text x="270.0" y="127.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">out loud</text>
+  <rect x="375.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="445.0" y="119.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">Implement</text>
+  <rect x="550.0" y="87.0" width="140.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="620.0" y="110.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Test &amp;</text>
+  <text x="620.0" y="127.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">debug</text>
+  <line x1="165.0" y1="115.0" x2="200.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M200.0,115.0 L190.9,110.9 L190.9,119.1 Z" fill="#475569"/>
+  <line x1="340.0" y1="115.0" x2="375.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M375.0,115.0 L365.9,110.9 L365.9,119.1 Z" fill="#475569"/>
+  <line x1="515.0" y1="115.0" x2="550.0" y2="115.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M550.0,115.0 L540.9,110.9 L540.9,119.1 Z" fill="#475569"/>
+  <text x="360.0" y="190.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Communicate your reasoning throughout. With AI assistants now allowed at some firms,</text>
+  <text x="360.0" y="212.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the skill being tested is judging and integrating code, not just producing it.</text>
+</svg>

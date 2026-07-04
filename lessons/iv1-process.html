@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How AI/ML interviews are structured (this year) · Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/style.css">
+<script defer src="../assets/katex/katex.min.js"></script>
+<script defer src="../assets/katex/contrib/auto-render.min.js"></script>
+<script defer src="../assets/app.js"></script>
+</head>
+<body>
+<div class="scrim"></div>
+<div class="app">
+<aside class="sidebar">
+<a class="brand" href="../index.html"><span class="logo"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><b>Gradient Descent<span>zero → job-ready</span></b></a>
+<div class="progress-wrap"><div class="progress-bar"><i style="width:100%"></i></div><div class="progress-label">125 of 125 lessons built · 100%</div></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">1</span><span>Math Foundations for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="m1-vectors.html"><span class="ll-num">1.1</span><span>Vectors: the language of data</span></a></li>
+<li><a href="m2-matrices.html"><span class="ll-num">1.2</span><span>Matrices &amp; matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="ll-num">1.3</span><span>Dot products, similarity &amp; projection</span></a></li>
+<li><a href="m4-linear-systems.html"><span class="ll-num">1.4</span><span>Linear systems, span, rank &amp; the inverse</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="ll-num">1.5</span><span>Eigenvectors, eigenvalues &amp; a first look at PCA</span></a></li>
+<li><a href="m6-derivatives.html"><span class="ll-num">1.6</span><span>Derivatives &amp; gradients: slope as a signal to improve</span></a></li>
+<li><a href="m7-chain-rule.html"><span class="ll-num">1.7</span><span>The chain rule — backprop&#x27;s engine</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="ll-num">1.8</span><span>Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="ll-num">1.9</span><span>Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+<li><a href="m10-statistics.html"><span class="ll-num">1.10</span><span>Statistics for ML: expectation, variance, MLE &amp; the normal</span></a></li>
+<li><a href="m-interview.html"><span class="ll-num">1.11</span><span>Interview check: Math Foundations</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">2</span><span>Python for ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="py1-stack.html"><span class="ll-num">2.1</span><span>Why Python, and the scientific stack</span></a></li>
+<li><a href="py2-numpy.html"><span class="ll-num">2.2</span><span>NumPy arrays &amp; vectorization</span></a></li>
+<li><a href="py3-broadcasting.html"><span class="ll-num">2.3</span><span>Broadcasting &amp; array operations</span></a></li>
+<li><a href="py4-pandas.html"><span class="ll-num">2.4</span><span>pandas: Series &amp; DataFrames</span></a></li>
+<li><a href="py5-cleaning.html"><span class="ll-num">2.5</span><span>Data cleaning &amp; preparation</span></a></li>
+<li><a href="py6-plotting.html"><span class="ll-num">2.6</span><span>Plotting with Matplotlib</span></a></li>
+<li><a href="py7-eda.html"><span class="ll-num">2.7</span><span>Putting it together: an EDA workflow</span></a></li>
+<li><a href="py-interview.html"><span class="ll-num">2.8</span><span>Interview check: Python &amp; Data</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">3</span><span>Classical ML</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cm1-setup.html"><span class="ll-num">3.1</span><span>The ML problem setup: features, labels, train/test</span></a></li>
+<li><a href="cm2-linreg.html"><span class="ll-num">3.2</span><span>Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="ll-num">3.3</span><span>Logistic regression &amp; classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="ll-num">3.4</span><span>Loss functions &amp; evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="ll-num">3.5</span><span>Bias–variance tradeoff &amp; overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="ll-num">3.6</span><span>Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="ll-num">3.7</span><span>Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="ll-num">3.8</span><span>Ensembles: Random Forests &amp; Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="ll-num">3.9</span><span>Support Vector Machines</span></a></li>
+<li><a href="cm10-clustering.html"><span class="ll-num">3.10</span><span>Clustering &amp; unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="ll-num">3.11</span><span>Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm12-modelselection.html"><span class="ll-num">3.12</span><span>Model selection &amp; cross-validation</span></a></li>
+<li><a href="cm-interview.html"><span class="ll-num">3.13</span><span>Interview check: Classical ML</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">4</span><span>Deep Learning</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="dl1-neuron.html"><span class="ll-num">4.1</span><span>From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="ll-num">4.2</span><span>Forward pass &amp; activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="ll-num">4.3</span><span>Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="ll-num">4.4</span><span>The training loop, loss &amp; optimizers</span></a></li>
+<li><a href="dl5-regularization.html"><span class="ll-num">4.5</span><span>Regularization: dropout, weight decay, batchnorm</span></a></li>
+<li><a href="dl6-cnn.html"><span class="ll-num">4.6</span><span>Convolutional Neural Networks (CNNs)</span></a></li>
+<li><a href="dl7-rnn.html"><span class="ll-num">4.7</span><span>Sequence models: RNNs, LSTMs, GRUs</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="ll-num">4.8</span><span>Training dynamics &amp; debugging</span></a></li>
+<li><a href="dl9-transfer.html"><span class="ll-num">4.9</span><span>Transfer learning &amp; fine-tuning</span></a></li>
+<li><a href="dl-interview.html"><span class="ll-num">4.10</span><span>Interview check: Deep Learning</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">5</span><span>NLP &amp; Transformers</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="nlp1-tokenization.html"><span class="ll-num">5.1</span><span>Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="ll-num">5.2</span><span>Word embeddings</span></a></li>
+<li><a href="nlp3-lm.html"><span class="ll-num">5.3</span><span>Language modeling basics</span></a></li>
+<li><a href="nlp4-attention.html"><span class="ll-num">5.4</span><span>Attention, intuitively</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="ll-num">5.5</span><span>Self-attention &amp; multi-head attention</span></a></li>
+<li><a href="nlp6-transformer.html"><span class="ll-num">5.6</span><span>The Transformer architecture</span></a></li>
+<li><a href="nlp7-positional.html"><span class="ll-num">5.7</span><span>Positional encoding</span></a></li>
+<li><a href="nlp8-architectures.html"><span class="ll-num">5.8</span><span>Encoder/decoder vs decoder-only</span></a></li>
+<li><a href="nlp-interview.html"><span class="ll-num">5.9</span><span>Interview check: NLP &amp; Transformers</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">6</span><span>LLMs &amp; Generative AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="llm1-what.html"><span class="ll-num">6.1</span><span>What is a large language model</span></a></li>
+<li><a href="llm2-pretrain-finetune.html"><span class="ll-num">6.2</span><span>Pretraining vs fine-tuning</span></a></li>
+<li><a href="llm3-alignment.html"><span class="ll-num">6.3</span><span>Instruction tuning &amp; RLHF/DPO</span></a></li>
+<li><a href="llm4-decoding.html"><span class="ll-num">6.4</span><span>Decoding strategies</span></a></li>
+<li><a href="llm5-prompting.html"><span class="ll-num">6.5</span><span>Prompting techniques</span></a></li>
+<li><a href="llm6-peft.html"><span class="ll-num">6.6</span><span>Parameter-efficient fine-tuning (LoRA/QLoRA)</span></a></li>
+<li><a href="llm7-scaling.html"><span class="ll-num">6.7</span><span>Scaling laws &amp; emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="ll-num">6.8</span><span>Diffusion models &amp; image generation</span></a></li>
+<li><a href="llm9-othergen.html"><span class="ll-num">6.9</span><span>VAEs &amp; GANs in context</span></a></li>
+<li><a href="llm-interview.html"><span class="ll-num">6.10</span><span>Interview check: LLMs &amp; GenAI</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">7</span><span>RAG &amp; Vector Search</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="rag1-why.html"><span class="ll-num">7.1</span><span>Why RAG exists</span></a></li>
+<li><a href="rag2-chunking.html"><span class="ll-num">7.2</span><span>Chunking strategies</span></a></li>
+<li><a href="rag3-embeddings.html"><span class="ll-num">7.3</span><span>Embeddings for retrieval</span></a></li>
+<li><a href="rag4-vectordb.html"><span class="ll-num">7.4</span><span>Vector databases &amp; ANN search</span></a></li>
+<li><a href="rag5-rerank.html"><span class="ll-num">7.5</span><span>Retrieval, reranking &amp; hybrid search</span></a></li>
+<li><a href="rag6-pipeline.html"><span class="ll-num">7.6</span><span>Building a RAG pipeline</span></a></li>
+<li><a href="rag7-eval.html"><span class="ll-num">7.7</span><span>Evaluating RAG</span></a></li>
+<li><a href="rag-interview.html"><span class="ll-num">7.8</span><span>Interview check: RAG</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">8</span><span>AI Agents &amp; Tool Use</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ag1-what.html"><span class="ll-num">8.1</span><span>What is an agent</span></a></li>
+<li><a href="ag2-tools.html"><span class="ll-num">8.2</span><span>Function / tool calling</span></a></li>
+<li><a href="ag3-react.html"><span class="ll-num">8.3</span><span>ReAct: reasoning + acting</span></a></li>
+<li><a href="ag4-planning.html"><span class="ll-num">8.4</span><span>Planning &amp; task decomposition</span></a></li>
+<li><a href="ag5-memory.html"><span class="ll-num">8.5</span><span>Memory (short &amp; long-term)</span></a></li>
+<li><a href="ag6-multiagent.html"><span class="ll-num">8.6</span><span>Multi-agent patterns</span></a></li>
+<li><a href="ag7-reliability.html"><span class="ll-num">8.7</span><span>Guardrails &amp; reliability for agents</span></a></li>
+<li><a href="ag-interview.html"><span class="ll-num">8.8</span><span>Interview check: Agents</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">9</span><span>MLOps &amp; Serving</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ops1-lifecycle.html"><span class="ll-num">9.1</span><span>The ML lifecycle</span></a></li>
+<li><a href="ops2-tracking.html"><span class="ll-num">9.2</span><span>Experiment tracking &amp; reproducibility</span></a></li>
+<li><a href="ops3-pipelines.html"><span class="ll-num">9.3</span><span>Data &amp; feature pipelines, feature stores</span></a></li>
+<li><a href="ops4-registry.html"><span class="ll-num">9.4</span><span>Model registry &amp; versioning</span></a></li>
+<li><a href="ops5-serving.html"><span class="ll-num">9.5</span><span>Packaging &amp; serving</span></a></li>
+<li><a href="ops6-scaling.html"><span class="ll-num">9.6</span><span>Scaling inference</span></a></li>
+<li><a href="ops7-monitoring.html"><span class="ll-num">9.7</span><span>Monitoring &amp; observability</span></a></li>
+<li><a href="ops8-drift.html"><span class="ll-num">9.8</span><span>Data &amp; model drift, retraining</span></a></li>
+<li><a href="ops9-cicd.html"><span class="ll-num">9.9</span><span>CI/CD for ML</span></a></li>
+<li><a href="ops-interview.html"><span class="ll-num">9.10</span><span>Interview check: MLOps</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">10</span><span>AI System Design</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="sd1-framework.html"><span class="ll-num">10.1</span><span>How to approach an AI system design interview</span></a></li>
+<li><a href="sd2-requirements.html"><span class="ll-num">10.2</span><span>Requirements &amp; SLAs: latency, throughput, cost</span></a></li>
+<li><a href="sd3-recsys.html"><span class="ll-num">10.3</span><span>Designing a recommendation system</span></a></li>
+<li><a href="sd4-search.html"><span class="ll-num">10.4</span><span>Designing a search / ranking system</span></a></li>
+<li><a href="sd5-ragscale.html"><span class="ll-num">10.5</span><span>Designing a RAG assistant at scale</span></a></li>
+<li><a href="sd6-llmserving.html"><span class="ll-num">10.6</span><span>Designing an LLM serving platform</span></a></li>
+<li><a href="sd7-cost.html"><span class="ll-num">10.7</span><span>Caching, sharding &amp; cost control</span></a></li>
+<li><a href="sd-interview.html"><span class="ll-num">10.8</span><span>Interview check: System Design</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">11</span><span>Evals, Safety &amp; Responsible AI</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="ev1-why.html"><span class="ll-num">11.1</span><span>Why evaluation is the hard part</span></a></li>
+<li><a href="ev2-offline.html"><span class="ll-num">11.2</span><span>Offline evaluation &amp; datasets</span></a></li>
+<li><a href="ev3-online.html"><span class="ll-num">11.3</span><span>Online evaluation &amp; A/B testing</span></a></li>
+<li><a href="ev4-judge.html"><span class="ll-num">11.4</span><span>LLM-as-judge</span></a></li>
+<li><a href="ev5-bias.html"><span class="ll-num">11.5</span><span>Bias, fairness &amp; toxicity</span></a></li>
+<li><a href="ev6-guardrails.html"><span class="ll-num">11.6</span><span>Guardrails, red-teaming &amp; jailbreaks</span></a></li>
+<li><a href="ev7-governance.html"><span class="ll-num">11.7</span><span>Privacy, security &amp; governance</span></a></li>
+<li><a href="ev-interview.html"><span class="ll-num">11.8</span><span>Interview check: Evals &amp; Safety</span></a></li>
+</ul></div>
+<div class="nav-track">
+<button class="t-head"><span class="num">12</span><span>Interview Bank</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="iv1-process.html" class="current"><span class="ll-num">12.1</span><span>How AI/ML interviews are structured (this year)</span></a></li>
+<li><a href="iv2-fundamentals.html"><span class="ll-num">12.2</span><span>ML fundamentals — questions &amp; model answers</span></a></li>
+<li><a href="iv3-dl.html"><span class="ll-num">12.3</span><span>Deep learning &amp; transformers — Q&amp;A</span></a></li>
+<li><a href="iv4-llm.html"><span class="ll-num">12.4</span><span>LLM / GenAI &amp; RAG — Q&amp;A</span></a></li>
+<li><a href="iv5-systemdesign.html"><span class="ll-num">12.5</span><span>ML system design — Q&amp;A</span></a></li>
+<li><a href="iv6-coding.html"><span class="ll-num">12.6</span><span>Coding &amp; implementation — Q&amp;A</span></a></li>
+<li><a href="iv7-behavioral.html"><span class="ll-num">12.7</span><span>Behavioral &amp; project deep-dives</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">13</span><span>Capstones</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cap0-setup.html"><span class="ll-num">13.1</span><span>Capstone 0: project setup &amp; reproducibility</span></a></li>
+<li><a href="cap1-imageclf.html"><span class="ll-num">13.2</span><span>Capstone 1: image classifier (transfer learning)</span></a></li>
+<li><a href="cap2-finetune-llm.html"><span class="ll-num">13.3</span><span>Capstone 2: fine-tune a small LLM (LoRA)</span></a></li>
+<li><a href="cap3-rag.html"><span class="ll-num">13.4</span><span>Capstone 3: a RAG assistant over your docs</span></a></li>
+<li><a href="cap4-agent.html"><span class="ll-num">13.5</span><span>Capstone 4: a tool-using agent</span></a></li>
+<li><a href="cap5-serve.html"><span class="ll-num">13.6</span><span>Capstone 5: ship a monitored model API</span></a></li>
+<li><a href="cap6-pipeline.html"><span class="ll-num">13.7</span><span>Capstone 6: full training→serving pipeline</span></a></li>
+</ul></div>
+<div class="nav-track collapsed">
+<button class="t-head"><span class="num">14</span><span>Computer Vision</span><span class="chev">▾</span></button>
+<ul class="lessons">
+<li><a href="cv1-images.html"><span class="ll-num">14.1</span><span>How computers see: images as tensors</span></a></li>
+<li><a href="cv2-classification.html"><span class="ll-num">14.2</span><span>Image classification &amp; CNN architectures</span></a></li>
+<li><a href="cv3-detection.html"><span class="ll-num">14.3</span><span>Object detection: finding and boxing objects</span></a></li>
+<li><a href="cv4-segmentation.html"><span class="ll-num">14.4</span><span>Segmentation: a label for every pixel</span></a></li>
+<li><a href="cv5-vit.html"><span class="ll-num">14.5</span><span>Vision Transformers: attention for images</span></a></li>
+<li><a href="cv6-diffusion.html"><span class="ll-num">14.6</span><span>Image generation with diffusion</span></a></li>
+<li><a href="cv7-multimodal.html"><span class="ll-num">14.7</span><span>Vision-language &amp; multimodal models</span></a></li>
+<li><a href="cv-interview.html"><span class="ll-num">14.8</span><span>Interview check: Computer Vision</span></a></li>
+</ul></div>
+</aside>
+<div class="main">
+<div class="topbar">
+<button class="menu-btn" aria-label="Menu">☰</button>
+<div class="crumb"><b>Track 12</b> · Interview Bank · Lesson 12.1</div>
+<div class="spacer"></div>
+<a class="home-link" href="../index.html">All tracks ↗</a>
+</div>
+<div class="wrap">
+<header class="lesson-head">
+<div class="lesson-eyebrow">Track 12 · Interview Bank</div>
+<h1>How AI/ML interviews are structured (this year)</h1>
+<div class="lesson-meta">
+<span class="pill">⏱ 22 min</span>
+<span class="pill">Lesson 12.1</span>
+</div>
+<div class="why-box"><span class="lbl">Why this exists</span>AI/ML interviews are a funnel — recruiter screen, technical coding, ML/domain round, then a multi-hour onsite. Knowing the format (and what changed this year: AI-assisted coding, eval-as-system-design, GenAI everywhere) lets you prepare deliberately.</div>
+<div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Map the interview funnel and stages</li><li>Know what each round tests</li><li>Understand 2026 shifts (AI coding, eval focus)</li><li>Prepare strategically and think out loud</li></ul></div>
+</header>
+<article class="content"><h2><span class="sec-tag">Concept</span> Know the game you're playing</h2>
+
+<p>Before drilling questions, understand how AI/ML interviews are actually structured — because knowing the stages,
+what each tests, and what's changed recently lets you prepare deliberately instead of blindly. The process is a
+<span class="term">funnel</span>: a sequence of increasingly demanding stages that progressively filter candidates, so a
+strong showing at each stage earns you the next. The whole loop typically runs <strong>6–8 weeks</strong> and ends in an
+onsite (now often virtual) that is the real test.</p>
+
+<figure class="diagram"><svg viewBox="0 0 740 260" xmlns="http://www.w3.org/2000/svg" width="740" height="260" role="img">
+  <rect x="0" y="0" width="740" height="260" fill="#ffffff"/>
+  <text x="370.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">The AI/ML interview funnel (2026)</text>
+  <rect x="25.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8"/>
+  <text x="85.0" y="115.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="middle" dominant-baseline="middle">Recruiter</text>
+  <text x="85.0" y="132.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="middle" dominant-baseline="middle">screen</text>
+  <rect x="180.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="240.0" y="115.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#92400e" text-anchor="middle" dominant-baseline="middle">Technical</text>
+  <text x="240.0" y="132.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">coding</text>
+  <rect x="340.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="1.8"/>
+  <text x="400.0" y="115.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#312e81" text-anchor="middle" dominant-baseline="middle">ML / domain</text>
+  <text x="400.0" y="132.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#312e81" text-anchor="middle" dominant-baseline="middle">round</text>
+  <rect x="500.0" y="92.0" width="120.0" height="56.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="560.0" y="115.9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">Onsite</text>
+  <text x="560.0" y="132.6" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">loop</text>
+  <rect x="640.0" y="92.0" width="90.0" height="56.0" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="1.8"/>
+  <text x="685.0" y="124.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#065f46" text-anchor="middle" dominant-baseline="middle">Offer</text>
+  <line x1="145.0" y1="120.0" x2="180.0" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M180.0,120.0 L170.9,115.9 L170.9,124.1 Z" fill="#475569"/>
+  <line x1="300.0" y1="120.0" x2="340.0" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M340.0,120.0 L330.9,115.9 L330.9,124.1 Z" fill="#475569"/>
+  <line x1="460.0" y1="120.0" x2="500.0" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M500.0,120.0 L490.9,115.9 L490.9,124.1 Z" fill="#475569"/>
+  <line x1="620.0" y1="120.0" x2="640.0" y2="120.0" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M640.0,120.0 L630.9,115.9 L630.9,124.1 Z" fill="#475569"/>
+  <text x="370.0" y="196.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Typically 6–8 weeks: a phone screen, technical rounds, then a 4–6 hour onsite</text>
+  <text x="370.0" y="218.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">(coding + system design + behavioral + a past-project deep-dive).</text>
+</svg>
+<figcaption><b>The AI/ML interview funnel.</b> A recruiter screen, then technical coding, an ML/domain round, and a multi-hour onsite loop (coding + system design + behavioral + a past-project deep-dive), ending in an offer. The process usually spans 6–8 weeks, and the onsite loop — several back-to-back interviews — is where the decision is really made.</figcaption></figure>
+
+<p>The stages, in order. The <strong>recruiter screen</strong> is a non-technical chat about your background and the role.
+The <strong>technical coding</strong> screen tests programming and problem-solving (data structures, algorithms, and
+increasingly practical coding). The <strong>ML / domain round</strong> probes machine-learning knowledge — fundamentals,
+deep learning, LLMs — through conceptual questions and discussion. The <strong>onsite loop</strong> is the crux: a 4–6
+hour block of several interviews covering coding, ML system design, behavioral questions, and usually a deep-dive on a
+past project. Each of the next lessons in this track drills one of these areas.</p>
+
+<h2><span class="sec-tag">Concept</span> What's different this year</h2>
+
+<p>AI/ML interviewing has shifted meaningfully in the last couple of years, and preparing for the current reality — not
+the interview of five years ago — matters. Three changes stand out.</p>
+
+<figure class="diagram"><svg viewBox="0 0 720 310" xmlns="http://www.w3.org/2000/svg" width="720" height="310" role="img">
+  <rect x="0" y="0" width="720" height="310" fill="#ffffff"/>
+  <text x="360.0" y="26.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="17" font-weight="700" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">What changed this year</text>
+  <rect x="52.0" y="64.0" width="196.0" height="196.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="61.0" y="81.0" width="178.0" height="46.0" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text x="150.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#92400e" text-anchor="middle" dominant-baseline="middle">AI-assisted coding</text>
+  <text x="150.0" y="158.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">some firms let you use</text>
+  <text x="150.0" y="178.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">an AI assistant — the</text>
+  <text x="150.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">skill is judging code</text>
+  <rect x="292.0" y="64.0" width="196.0" height="196.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="301.0" y="81.0" width="178.0" height="46.0" rx="12" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.8"/>
+  <text x="390.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#075985" text-anchor="middle" dominant-baseline="middle">Eval is the new SD</text>
+  <text x="390.0" y="158.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">cost, latency, guardrails</text>
+  <text x="390.0" y="178.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">&amp; monitoring matter more</text>
+  <text x="390.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">than the architecture</text>
+  <rect x="517.0" y="64.0" width="196.0" height="196.0" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" opacity="1.0"/>
+  <rect x="526.0" y="81.0" width="178.0" height="46.0" rx="12" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.8"/>
+  <text x="615.0" y="108.2" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#5b21b6" text-anchor="middle" dominant-baseline="middle">GenAI everywhere</text>
+  <text x="615.0" y="158.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#1f2937" text-anchor="middle" opacity="1.0" dominant-baseline="middle">RAG, LLMs, and agents</text>
+  <text x="615.0" y="178.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">are now standard</text>
+  <text x="615.0" y="198.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">interview topics</text>
+  <text x="360.0" y="290.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Prepare for both modes (fluent without AI, fast with it) and lead every answer with trade-offs.</text>
+</svg>
+<figcaption><b>What changed this year.</b> AI-assisted coding rounds (some companies now let you use an AI assistant, so the tested skill is judging and integrating code, not typing it), evaluation as the new system design (interviewers weight cost, latency, guardrails, and monitoring over the architecture diagram), and GenAI everywhere (RAG, LLMs, and agents are now standard topics, not niche ones).</figcaption></figure>
+
+<p>First, <strong>AI-assisted coding interviews</strong> are emerging. Several major companies now let candidates use an
+approved AI assistant during the coding round — a change that reflects how engineers actually work — so the skill being
+tested is shifting from "can you produce code" to "can you <em>judge</em> and integrate code": prompt well, spot the
+assistant's mistakes, and build something correct and coherent. The pragmatic response is to practice <em>both</em> modes:
+enough unaided problems to be genuinely fluent, and enough AI-assisted building to be fast and discerning with a tool.
+Second, <strong>evaluation has become the new system design</strong>: for GenAI system design rounds, interviewers now
+care at least as much about how you'd measure quality, control cost and latency, and add guardrails and monitoring as
+about the architecture diagram itself — the central challenge is balancing quality, cost, latency, and safety, and
+explaining the trade-offs. Third, <strong>GenAI is everywhere</strong>: RAG, LLMs, prompting, and agents are now standard
+interview topics across many ML roles, not a niche specialty. If you've worked through this curriculum, you're prepared
+for all three — but go in expecting the modern format.</p>
+
+<div class="keypoints">
+<div class="ti"><span class="ic">★</span> Key points to remember</div>
+<ul>
+<li>The interview is a <strong>funnel</strong>: recruiter screen → technical coding → ML/domain round → onsite loop → offer, over ~6–8 weeks.</li>
+<li>The <strong>onsite loop</strong> (4–6 hours) is decisive — coding, ML system design, behavioral, and a past-project deep-dive.</li>
+<li><strong>AI-assisted coding</strong> rounds are emerging; the tested skill is judging/integrating code — practice both with and without an assistant.</li>
+<li><strong>Evaluation is the new system design</strong>: cost, latency, guardrails, and monitoring now weigh as much as the architecture.</li>
+<li><strong>GenAI</strong> (RAG, LLMs, agents) is now a standard topic across ML roles, not a niche.</li>
+</ul>
+</div>
+
+<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<div class="quiz">
+<div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
+
+<div class="q" data-answer="c">
+<p class="q-stem"><span class="qn">Q1.</span> Which stage of the interview funnel is typically the most decisive?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>The recruiter screen</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Submitting the résumé</span></li>
+<li data-opt="c"><span class="mk">C</span><span>The onsite loop — several back-to-back interviews covering coding, system design, behavioral, and a project deep-dive</span></li>
+<li data-opt="d"><span class="mk">D</span><span>The offer call</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">The recruiter screen is an early filter, not the main technical test.</div>
+<div class="ex" data-for="b">The résumé gets you in the door; it isn't the deciding evaluation.</div>
+<div class="ex" data-for="c">Correct. The multi-hour onsite loop is where the hiring decision is really made.</div>
+<div class="ex" data-for="d">The offer comes after the decision is already made.</div>
+</div>
+</div>
+
+<div class="q" data-answer="b">
+<p class="q-stem"><span class="qn">Q2.</span> In an AI-assisted coding round, what skill is primarily being tested?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Typing speed</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Judging and integrating code — prompting well, catching the assistant's mistakes, and building something correct</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Memorizing syntax</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Working without any tools</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">The point is not raw typing.</div>
+<div class="ex" data-for="b">Correct. With an assistant available, the value is your judgment — steering it, verifying it, and assembling correct code.</div>
+<div class="ex" data-for="c">Assistants handle syntax recall; your judgment is what's assessed.</div>
+<div class="ex" data-for="d">These rounds specifically <em>allow</em> the tool — the skill is using it well.</div>
+</div>
+</div>
+
+<div class="q" data-answer="d">
+<p class="q-stem"><span class="qn">Q3.</span> "Evaluation is the new system design" means interviewers now emphasize:</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Only the architecture diagram</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Only coding speed</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Memorized designs</span></li>
+<li data-opt="d"><span class="mk">D</span><span>How you'd measure quality, control cost and latency, and add guardrails and monitoring — the trade-offs, not just the boxes</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">The diagram matters less now than how you'd evaluate and operate the system.</div>
+<div class="ex" data-for="b">Coding speed isn't the system-design focus.</div>
+<div class="ex" data-for="c">They want reasoning, not recall.</div>
+<div class="ex" data-for="d">Correct. Cost, latency, guardrails, evaluation, and monitoring — and the trade-offs among them — are now central.</div>
+</div>
+</div>
+
+<div class="q" data-answer="a">
+<p class="q-stem"><span class="qn">Q4.</span> How should you prepare for the coding round given AI-assisted formats are emerging?</p>
+<ul class="q-options">
+<li data-opt="a"><span class="mk">A</span><span>Practice both modes — enough unaided problems to be fluent, and enough AI-assisted building to be fast and discerning</span></li>
+<li data-opt="b"><span class="mk">B</span><span>Only practice with AI, never without</span></li>
+<li data-opt="c"><span class="mk">C</span><span>Never use AI while practicing</span></li>
+<li data-opt="d"><span class="mk">D</span><span>Skip coding practice entirely</span></li>
+</ul>
+<div class="explain">
+<div class="ex" data-for="a">Correct. The two are different muscles — you may face either format, so build both.</div>
+<div class="ex" data-for="b">You still need unaided fluency for no-AI rounds and to judge AI output.</div>
+<div class="ex" data-for="c">AI-assisted rounds exist, so practicing with a tool matters too.</div>
+<div class="ex" data-for="d">Coding is still core to the process.</div>
+</div>
+</div>
+</div>
+
+<h2><span class="sec-tag">Practice</span> Prepare strategically</h2>
+<div class="practice">
+
+<div class="p-item">
+<div class="ph"><span class="pn">1</span><span>You have four weeks before an ML engineer onsite. How would you structure your preparation across the areas the loop tests?</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>Map your prep to the loop's components and your weakest areas. <strong>Coding (ongoing, daily):</strong> practice
+problems to stay fluent — data structures/algorithms and practical implementation — in both unaided and AI-assisted modes,
+since either format may appear; aim for communicating your reasoning out loud, not just solving. <strong>ML fundamentals &
+depth (steady):</strong> review the conceptual areas — bias-variance, metrics, deep learning, transformers, LLMs, RAG —
+using this curriculum's interview checkpoints; be able to explain each clearly and handle follow-ups. <strong>ML system
+design (heavy focus):</strong> practice designing systems end to end (recommenders, search, RAG assistants, LLM platforms),
+and — reflecting the current emphasis — rehearse reasoning about evaluation, cost, latency, and guardrails, not just the
+architecture. <strong>Behavioral & projects (don't neglect):</strong> prepare STAR-structured stories and a crisp
+deep-dive on your strongest project, since the project discussion is often decisive.</p>
+<p>The strategy is to <strong>allocate time by both importance and your gaps</strong>: everyone needs coding and
+fundamentals sharp, but system design and the behavioral/project rounds are where many strong coders under-prepare and lose
+offers. I'd do a little coding daily to stay warm, block dedicated sessions for system design (the highest-variance,
+most-coachable area), rehearse project stories out loud until they're crisp, and do at least one full mock interview per
+area to practice under pressure. The meta-point is that the onsite tests several distinct skills, so preparation must be
+<em>balanced across all of them</em> rather than over-investing in the one you enjoy — a brilliant coder who can't discuss
+trade-offs in system design or articulate their project impact will still struggle. Deliberate, gap-driven, balanced prep
+across the loop's components is what converts knowledge into offers.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">2</span><span>Why do interviewers consistently ask you to "think out loud," and how does that change how you should approach every round?</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>Interviewers ask you to think out loud because <strong>they're evaluating your reasoning process, not just your final
+answer</strong> — in real work, how you approach ambiguous problems, weigh options, and communicate matters as much as the
+solution, and the interview is a proxy for that. A correct answer with no visible reasoning tells them little about how
+you'd perform on novel problems; a well-reasoned approach (even to a problem you don't fully solve) shows exactly the
+thinking they're hiring for. This is especially true now that AI can produce code and answers — the differentiating human
+skill is <em>judgment</em>, which is only visible when you externalize it.</p>
+<p>This changes your approach across every round. In <strong>coding</strong>, narrate your plan before implementing,
+explain trade-offs of your approach, and talk through your debugging — a silent solve, even if correct, scores worse than a
+communicated one. In <strong>system design</strong>, the entire value is in reasoning out loud: state assumptions, justify
+each choice by requirements, and openly weigh trade-offs (this <em>is</em> the answer, since there's no single right
+design). In <strong>ML/conceptual</strong> rounds, don't just give the textbook definition — explain the intuition and the
+"why," and connect ideas. In <strong>behavioral</strong>, structure your stories so your reasoning and decisions are clear.
+The unifying practice is to treat the interviewer as a collaborator you're thinking with, making your mental process
+visible and inviting their input — which also lets them give hints and see you incorporate feedback. Candidates who go
+quiet and emerge with an answer, or who treat the interview as a test to be silently aced, systematically underperform
+those who make their reasoning a shared, spoken process. Given that the field increasingly values judgment over rote
+production, thinking out loud isn't just interview etiquette — it's how you demonstrate the exact skill being hired for.</p>
+</div></details>
+</div>
+
+<div class="p-item">
+<div class="ph"><span class="pn">3</span><span>The job market and interview bar for AI/ML roles are demanding. How do you think about standing out beyond just answering questions correctly?</span></div>
+<details><summary>Show a strong approach</summary><div class="sol">
+<p>Standing out comes from demonstrating <strong>the qualities that correct answers alone don't reveal</strong>: judgment,
+communication, depth, and genuine engagement with trade-offs and responsibility. Many candidates can recite that RAG
+retrieves-then-generates or that precision trades off with recall; fewer can reason crisply about <em>when</em> to use
+each, what breaks in production, and how they'd measure and safeguard it. So beyond correctness: <strong>show depth</strong>
+by going a level deeper than asked (mention the failure mode, the trade-off, the way you'd evaluate it) — signaling you've
+actually built and debugged these systems, not just read about them. <strong>Lead with trade-offs</strong> in every design
+discussion, since balancing quality, cost, latency, and safety is explicitly what modern interviews reward.
+<strong>Communicate clearly</strong> — structure your answers, define terms, and make your reasoning easy to follow, which
+is itself a hireable skill. <strong>Show responsibility</strong> — raising evaluation, fairness, and safety unprompted
+marks you as someone trustworthy to deploy real systems.</p>
+<p>The deeper reframing is that interviews test whether you'd be a <em>good colleague and engineer</em>, not a trivia
+database — and increasingly so as AI handles more rote production. Your projects are a huge lever here: a candidate who can
+deep-dive a real project, explaining the problem, their specific decisions and trade-offs, what went wrong and what they
+learned, demonstrates applied judgment far more convincingly than any memorized answer. Curiosity and honesty stand out
+too: saying "I'm not sure, but here's how I'd reason about it" or "I'd want to measure X before deciding" reads as mature
+and real, whereas confident bluffing reads as risky. In a demanding market, the goal isn't to be a flawless answer machine
+— it's to be visibly the kind of thoughtful, communicative, trade-off-aware, responsible engineer that teams want to work
+with and trust with consequential systems. That's what this whole curriculum has been building, and the interview is your
+chance to show it.</p>
+</div></details>
+</div>
+
+</div>
+
+<details class="deepdive">
+<summary><span class="ic">★</span> Deep dive: preparing for the modern AI/ML interview<span class="chev">▸</span></summary>
+<div class="dd-body">
+<p>A few principles make preparation efficient and effective. First, <strong>practice out loud and under realistic
+conditions</strong> — do mock interviews (with peers, mentors, or platforms) rather than only solving silently, because the
+gap between "I know this" and "I can explain this clearly under time pressure to a stranger" is large and only closed by
+rehearsal. Verbalizing also surfaces the shallow spots in your understanding. Second, <strong>go for depth on the
+fundamentals over breadth of memorized answers</strong>: interviewers probe with follow-ups ("why?", "what if?", "how would
+that fail?"), and genuine understanding lets you handle any follow-up, while memorized answers collapse at the first "why."
+The curriculum's emphasis on defining every term and explaining the intuition is exactly this depth. Third, <strong>prepare
+your projects as rigorously as the technical topics</strong> — for each significant project, be able to explain the problem
+and constraints, the key technical decisions and their alternatives, the trade-offs you made, what went wrong, and what
+you'd do differently; the project deep-dive is often where senior candidates most differentiate themselves, and vague
+project answers undermine otherwise-strong candidates.</p>
+<p>Fourth, <strong>calibrate to the specific role and company</strong>: an ML researcher role, an ML engineer role, an
+LLM/applied-AI role, and an ML infrastructure role weight these areas differently, so research the role and emphasize
+accordingly (though the fundamentals are universal). Fifth, <strong>stay current</strong>, given how fast the field and its
+interviews move — the shifts toward AI-assisted coding, evaluation-centric system design, and GenAI ubiquity are recent, so
+verify the current format for your target companies rather than assuming the interview of a few years ago. Finally, and
+most importantly, remember that the interview is testing whether you can <em>do the job</em>, so the best long-term
+preparation is genuinely learning to build, evaluate, and reason about AI systems — which is precisely what this curriculum
+has done. The interview-specific practice (mocks, project prep, knowing the format) sits on top of real competence; it
+polishes and reveals what you know, but can't substitute for it. Approach interview prep as the final, communication-focused
+layer over a foundation of actual understanding, and you'll walk in able to demonstrate not just that you know the answers,
+but that you can think — which, in an era where answers are cheap and judgment is scarce, is exactly what gets you hired.
+The rest of this track drills each area in turn, starting with the ML fundamentals that underpin everything.</p>
+</div>
+</details>
+
+<hr>
+<p style="color:var(--muted);font-size:14.5px">With the format understood, let's drill the questions. Next,
+<strong>12.2 ML fundamentals — questions &amp; model answers</strong> rehearses the core machine-learning questions that
+anchor nearly every ML interview.</p>
+</article>
+<nav class="pager"><a class="prev" href="ev-interview.html"><span class="dir">← Previous</span><span class="ti">Interview check: Evals &amp; Safety</span></a><a class="next" href="iv2-fundamentals.html"><span class="dir">Next →</span><span class="ti">ML fundamentals — questions &amp; model answers</span></a></nav>
+</div>
+</div>
+</div>
+<button class="totop" aria-label="Back to top">↑</button>
+</body>
+</html>
