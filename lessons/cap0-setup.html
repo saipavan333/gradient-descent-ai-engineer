@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 30 min</span>
 <span class="pill">Lesson 13.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cap0_setup.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cap0_setup.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The capstones prove you can build, not just discuss. This foundation — reproducibility — is where amateur projects fail: pin code (git), data (version), environment (lockfile), seed, and config so any result can be rebuilt, shared, and trusted.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Build a reproducible project foundation</li><li>Pin the five determinants</li><li>Fix the random seed</li><li>Set up for a portfolio of projects</li></ul></div>
@@ -281,17 +282,14 @@ your project is reproducible; leave any floating and it may not be.</p>
 <p>The most commonly-forgotten reproducibility determinant is the random seed. Setting it makes the random-number generator
 deterministic, so anything "random" — weight initialization, data shuffling — comes out identically every run:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 def run():
     np.random.seed(42)              # fix the seed before any randomness
     return np.random.rand(3).round(4).tolist()
 
 print("run 1:", run())
 print("run 2:", run())
-print("identical:", run() == run())</code></pre>
-<div class="out"><span class="lbl">Output</span>run 1: [0.3745, 0.9507, 0.732]
-run 2: [0.3745, 0.9507, 0.732]
-identical: True</div>
+print("identical:", run() == run())</textarea>
 
 <p>Both runs produce the <em>exact same</em> "random" numbers, because <code>seed(42)</code> makes the generator
 deterministic. Without the seed, each run would differ — and so would your model's initialization, its data shuffling, and
@@ -500,5 +498,6 @@ classifier with surprisingly little data.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

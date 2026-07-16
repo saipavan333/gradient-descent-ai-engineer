@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 4.8</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl08_dynamics.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl08_dynamics.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Training fails in recognizable ways. Reading loss curves and understanding initialization turns mysterious failures into quick diagnoses — the practical craft of making networks actually train.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Diagnose overfit/underfit/high-LR from loss curves</li><li>Explain how initialization controls gradient scale</li><li>Use He/Xavier init and normalization</li><li>Apply a debugging checklist (overfit a tiny batch first)</li></ul></div>
@@ -324,7 +325,7 @@ hyperparameter. <strong>(5) Then</strong> worry about architecture and regulariz
 <p>We pass a random signal through 6 linear layers and track the standard deviation (the "size") of the activations at
 each layer, for three weight scales: too small, the calibrated $\sqrt{1/n}$ (a He/Xavier-style value), and too big.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 n = 256                                       # layer width
 
@@ -335,10 +336,7 @@ for scale in [0.02, round(float(np.sqrt(1/n)), 3), 0.2]:
         W = rng.normal(0, scale, (n, n))
         a = W @ a                              # pass through one linear layer
         stds.append(round(float(a.std()), 3))
-    print(f"weight scale {scale}: activation std by layer {stds}")</code></pre>
-<div class="out"><span class="lbl">Output</span>weight scale 0.02: activation std by layer [0.319, 0.104, 0.034, 0.011, 0.004, 0.001]
-weight scale 0.062: activation std by layer [1.072, 1.088, 1.076, 1.094, 1.057, 1.047]
-weight scale 0.2: activation std by layer [3.23, 9.666, 28.861, 92.809, 299.948, 913.989]</code></div>
+    print(f"weight scale {scale}: activation std by layer {stds}")</textarea>
 
 <p>The three regimes are stark. With <strong>scale 0.02</strong> (too small), the signal's size halves and halves until
 it's $0.001$ by layer 6 — <em>vanished</em>; gradients flowing back would vanish identically, so early layers can't
@@ -518,5 +516,6 @@ learning &amp; fine-tuning</strong>.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

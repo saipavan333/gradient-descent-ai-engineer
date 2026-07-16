@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 6.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm02_pretrain_finetune.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm02_pretrain_finetune.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>LLMs are made in two phases: expensive pretraining that builds knowledge, and cheap fine-tuning that specializes behavior. Knowing which — versus prompting or retrieval — to reach for is core practical judgment.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast pretraining and fine-tuning</li><li>Explain SFT / instruction tuning</li><li>Decide between prompt, retrieve, and fine-tune</li><li>Recognize catastrophic forgetting</li></ul></div>
@@ -320,7 +321,7 @@ imagine the model choosing among three completions to a question — a helpful a
 and look at the probabilities a base model versus a fine-tuned model assigns (toy logits for illustration; the
 softmax is real).</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 def softmax(z):
     e = np.exp(z - z.max()); return e / e.sum()
 
@@ -329,9 +330,7 @@ base_logits = np.array([2.0, 1.9, 1.8])   # base model: all roughly equally like
 sft_logits  = np.array([4.0, 1.5, 1.0])   # after SFT on good demonstrations
 
 print("base model :", softmax(base_logits).round(2))
-print("after SFT  :", softmax(sft_logits).round(2))</code></pre>
-<div class="out"><span class="lbl">Output</span>base model : [0.37 0.33 0.3 ]
-after SFT  : [0.88 0.07 0.04]</div>
+print("after SFT  :", softmax(sft_logits).round(2))</textarea>
 
 <p>The base model spreads its probability almost evenly (0.37 / 0.33 / 0.30) — it might autocomplete with any of the
 three, including the unhelpful ones, because all are plausible continuations of text. After SFT on demonstrations of
@@ -508,5 +507,6 @@ genuinely <em>helpful, honest, and harmless</em>, matching human preferences? Ne
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

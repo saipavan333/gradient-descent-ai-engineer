@@ -11,6 +11,8 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +216,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 5.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp05_selfattention.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp05_selfattention.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Self-attention — softmax(QKᵀ/√d)V — is the one equation behind transformers. Understand the attention matrix, the √d scaling, and multi-head attention and you understand the computational core of modern AI.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Compute self-attention from scratch</li><li>Explain the √dₖ scaling</li><li>Read an attention matrix</li><li>Describe multi-head attention</li></ul></div>
@@ -269,6 +271,7 @@ fits in one line:</p>
   <text x="360.0" y="340.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" fill="#312e81" text-anchor="middle" opacity="1.0" dominant-baseline="middle">Attention(Q,K,V) = softmax(Q·Kᵀ / √dₖ) · V   —   the one equation behind transformers</text>
 </svg>
 <figcaption><b>Scaled dot-product attention.</b> Q·Kᵀ gives all pairwise relevance scores; dividing by √dₖ keeps them from getting too large; softmax turns each row into weights summing to 1; multiplying by V blends the values. This one equation is the heart of every transformer.</figcaption></figure>
+<div class="gdw" data-widget="attention"></div>
 
 <p>Read the equation right to left through the diagram. $QK^\top$ produces an $n \times n$ matrix of scores — every
 token's Query dotted with every token's Key. We divide by $\sqrt{d_k}$ (the square root of the key dimension) for
@@ -390,7 +393,7 @@ and linearly combined, giving the model a rich, multi-faceted view in a single l
 <p>We'll run the full equation on a tiny 3-token sequence with dimension 4. For clarity we use the embeddings directly
 as Q, K, and V (a real layer multiplies by learned $W_Q, W_K, W_V$ first, but the attention math is identical).</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 def softmax(x):
     e = np.exp(x - x.max(axis=-1, keepdims=True))
     return e / e.sum(axis=-1, keepdims=True)
@@ -407,16 +410,7 @@ output = A @ V                       # blend values by attention weights
 
 print("attention matrix (rows sum to 1):\n", A.round(2))
 print("row sums:", A.sum(axis=1).round(3))
-print("output:\n", output.round(2))</code></pre>
-<div class="out"><span class="lbl">Output</span>attention matrix (rows sum to 1):
- [[0.51 0.19 0.31]
- [0.19 0.51 0.31]
- [0.27 0.27 0.45]]
-row sums: [1. 1. 1.]
-output:
- [[0.81 0.49 0.51 0.19]
- [0.49 0.81 0.19 0.51]
- [0.73 0.73 0.27 0.27]]</code></div>
+print("output:\n", output.round(2))</textarea>
 
 <p>Read the attention matrix. Token&nbsp;0 attends most to <em>itself</em> (0.51) — its Query matches its own Key best —
 and gives some attention to token&nbsp;2 (0.31), which shares a feature with it. Token&nbsp;2, which shares features with
@@ -590,5 +584,7 @@ network, residual connections, and normalization, and you get the unit that, sta
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

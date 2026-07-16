@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 2.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py02_numpy.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/py02_numpy.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>NumPy's array is the structure under everything in ML, and vectorization is what makes Python fast enough for real numerical work. Master arrays and you've mastered the substrate the field runs on.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Create arrays and read shape, dtype, and axes</li><li>Replace loops with vectorized operations</li><li>Index and slice arrays, including boolean masks</li><li>Know when you have a view versus a copy</li></ul></div>
@@ -398,7 +399,7 @@ the elements where the test is true — no loop needed. ("Boolean" just means tr
 re-express each value as "how many spreads above or below average it is") in two ways — a hand-written loop and a
 vectorized expression — and time both. Then filter with a boolean mask.</p>
 
-<pre><code>import numpy as np, time
+<textarea class="gdrun-code" spellcheck="false">import numpy as np, time
 
 rng = np.random.default_rng(0)
 x = rng.normal(50, 10, size=1_000_000)   # a million numbers, average 50, spread 10
@@ -419,12 +420,7 @@ vec_time = time.perf_counter() - t
 print(f"loop:       {loop_time:.3f} s")
 print(f"vectorized: {vec_time:.4f} s")
 print(f"speedup:    ~{loop_time / vec_time:.0f}x")
-print("same result:", np.allclose(z_loop, z_vec))   # do both agree? yes</code></pre>
-
-<div class="out"><span class="lbl">Output (exact times vary by machine)</span>loop:       0.354 s
-vectorized: 0.0105 s
-speedup:    ~34x
-same result: True</div>
+print("same result:", np.allclose(z_loop, z_vec))   # do both agree? yes</textarea>
 
 <p>Same answer, ~34× faster, and the vectorized version is <em>one line</em>. That gap is why you avoid element
 loops. Now boolean masking — find and summarize the unusually large values:</p>
@@ -601,5 +597,6 @@ whole batch, and the source of the most common shape bug.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

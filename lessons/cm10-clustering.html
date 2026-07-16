@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 3.10</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm10_clustering.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm10_clustering.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Not all data comes labeled. Clustering finds structure on its own — customer segments, topic groups — and k-means is the workhorse. Knowing its assumptions and how to choose k is core unsupervised skill.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the k-means assign/update loop</li><li>Choose k with the elbow and silhouette</li><li>Know why to standardize first</li><li>Recognize k-means limits and alternatives</li></ul></div>
@@ -334,7 +335,7 @@ $k$ that maximizes it — higher means tighter, better-separated clusters.</p>
 tighter clusters, but always falls with $k$) and silhouette (higher = better-separated, with a real peak). A good
 method should point us to the true answer, 3.</p>
 
-<pre><code>from sklearn.datasets import make_blobs
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import make_blobs
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
@@ -343,10 +344,7 @@ X, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.8, random_state=0)
 for k in [2, 3, 4]:
     km = KMeans(n_clusters=k, n_init=10, random_state=0).fit(X)
     sil = silhouette_score(X, km.labels_)
-    print(f"k={k}:  inertia {km.inertia_:7.1f}   silhouette {sil:.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>k=2:  inertia   819.6   silhouette 0.493
-k=3:  inertia   367.6   silhouette 0.557
-k=4:  inertia   310.3   silhouette 0.460</code></div>
+    print(f"k={k}:  inertia {km.inertia_:7.1f}   silhouette {sil:.3f}")</textarea>
 
 <p>Watch both signals agree on 3. <strong>Inertia</strong> drops massively from k=2 to k=3 (819.6 → 367.6) but only a
 little from k=3 to k=4 (367.6 → 310.3) — that flattening is the elbow, pointing at 3. <strong>Silhouette</strong> peaks
@@ -513,5 +511,6 @@ few — for visualization, speed, and noise removal — with PCA, t-SNE, and UMA
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

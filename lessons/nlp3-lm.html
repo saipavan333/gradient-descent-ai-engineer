@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 23 min</span>
 <span class="pill">Lesson 5.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp03_lm.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp03_lm.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A language model predicts the next token — one simple, self-supervised objective that, at scale, yields grammar, facts, and reasoning. It is the objective behind every model from autocomplete to GPT.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define next-token prediction and self-supervision</li><li>Contrast n-gram and neural language models</li><li>Interpret perplexity</li><li>Explain autoregressive generation</li></ul></div>
@@ -323,7 +324,7 @@ engine behind modern text generation.</p>
 <p>Let's build the simplest possible language model — a bigram counter — and read off its next-token distribution. It
 estimates $P(\text{next} \mid \text{previous word})$ purely from how often pairs co-occur in a tiny corpus.</p>
 
-<pre><code>from collections import defaultdict, Counter
+<textarea class="gdrun-code" spellcheck="false">from collections import defaultdict, Counter
 corpus = "the cat sat on the mat the cat ran".split()
 
 # count what follows each word
@@ -334,8 +335,7 @@ for a, b in zip(corpus, corpus[1:]):
 # distribution of the next token after "the"
 ctx = "the"
 counts = bigrams[ctx]; total = sum(counts.values())
-print(f"P(next | '{ctx}'):", {w: round(c/total, 2) for w, c in counts.items()})</code></pre>
-<div class="out"><span class="lbl">Output</span>P(next | 'the'): {'cat': 0.67, 'mat': 0.33}</div>
+print(f"P(next | '{ctx}'):", {w: round(c/total, 2) for w, c in counts.items()})</textarea>
 
 <p>In this corpus, "the" was followed by "cat" twice and "mat" once, so the model predicts $P(\text{cat} \mid
 \text{the}) = 0.67$ and $P(\text{mat} \mid \text{the}) = 0.33$. To generate, you'd sample from this distribution, append
@@ -507,5 +507,6 @@ matter for the current one. The mechanism that does this — and powers every mo
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

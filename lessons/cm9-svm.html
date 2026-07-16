@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 3.9</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm09_svm.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm09_svm.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>SVMs bring an elegant geometric view: the widest-margin boundary, decided by a few support vectors. The kernel trick turns straight boundaries into curved ones — powerful on small, high-dimensional data.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the maximum-margin boundary</li><li>Define support vectors and the soft margin (C)</li><li>Describe the kernel trick and the RBF kernel</li><li>Know when SVMs shine vs trees</li></ul></div>
@@ -327,7 +328,7 @@ get. With kernels, the simple max-margin idea becomes a powerful nonlinear class
 <p>We use the classic "two moons" dataset — two interleaving crescent shapes that no straight line can separate — and
 compare a linear SVM against an RBF-kernel SVM. This is the situation the kernel trick was built for.</p>
 
-<pre><code>from sklearn.datasets import make_moons
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import make_moons
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
@@ -336,9 +337,7 @@ X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)
 
 for kernel in ["linear", "rbf"]:
     svm = SVC(kernel=kernel).fit(X_tr, y_tr)
-    print(f"{kernel:7s} SVM test accuracy: {svm.score(X_te, y_te):.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>linear  SVM test accuracy: 0.867
-rbf     SVM test accuracy: 1.0</code></div>
+    print(f"{kernel:7s} SVM test accuracy: {svm.score(X_te, y_te):.3f}")</textarea>
 
 <p>The linear SVM tops out at 86.7% — it's trying to slice two interlocking crescents with a single straight line, which
 is impossible to do well. Switch to the <strong>RBF kernel</strong> and accuracy jumps to a perfect
@@ -508,5 +507,6 @@ itself — discovering structure with k-means and its cousins.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

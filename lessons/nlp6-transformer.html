@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 30 min</span>
 <span class="pill">Lesson 5.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp06_transformer.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp06_transformer.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The transformer block — attention + FFN wrapped in residuals and layer norm — is the universal unit of modern AI. Stack it and you have GPT, BERT, and everything since.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Describe the transformer block's sub-layers</li><li>Explain the roles of attention vs the FFN</li><li>Know why residuals/layer norm enable depth</li><li>Assemble a block and stack it</li></ul></div>
@@ -317,7 +318,7 @@ blocks capture local/syntactic patterns, later ones capture meaning and long-ran
 <p>Let's assemble one full block: self-attention, residual + layer norm, feed-forward, residual + layer norm — and
 confirm the shape is preserved and layer norm does its job. (3 tokens, dimension 8.)</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 np.random.seed(0)
 softmax = lambda x: np.exp(x - x.max(-1, keepdims=True)) / np.exp(x - x.max(-1, keepdims=True)).sum(-1, keepdims=True)
 layernorm = lambda x: (x - x.mean(-1, keepdims=True)) / (x.std(-1, keepdims=True) + 1e-5)
@@ -335,10 +336,7 @@ out = layernorm(x1 + ffn)                        # residual + norm
 
 print("input shape:", X.shape, "-> output shape:", out.shape, "(same!)")
 print("output mean per token (~0):", out.mean(-1).round(3))
-print("output std  per token (~1):", out.std(-1).round(3))</code></pre>
-<div class="out"><span class="lbl">Output</span>input shape: (3, 8) -> output shape: (3, 8) (same!)
-output mean per token (~0): [ 0. -0. -0.]
-output std  per token (~1): [1. 1. 1.]</div>
+print("output std  per token (~1):", out.std(-1).round(3))</textarea>
 
 <p>The block took 3 token vectors and returned 3 token vectors of the <em>same</em> shape — which is exactly why you can
 stack 96 of them. The two residual additions (<code>X + ...</code> and <code>x1 + ...</code>) let the original signal
@@ -512,5 +510,6 @@ otherwise order-blind transformer which word came where.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

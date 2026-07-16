@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 7.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag02_chunking.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag02_chunking.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>You can only retrieve what your chunks contain, so how you split documents quietly decides answer quality. Chunk size, overlap, and structure-aware splitting are the first real tuning knobs of RAG.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain why documents are chunked</li><li>Reason about the chunk-size tradeoff</li><li>Use overlap and metadata</li><li>Compare fixed, recursive, and semantic chunking</li></ul></div>
@@ -294,7 +295,7 @@ splitting with overlap and good metadata.</p>
 <p>Here's the simplest chunker — fixed size with overlap — so you can see exactly how the pieces (and their shared
 regions) are produced.</p>
 
-<pre><code>text = "Machine learning learns patterns from data. Models improve with more examples given to them."
+<textarea class="gdrun-code" spellcheck="false">text = "Machine learning learns patterns from data. Models improve with more examples given to them."
 
 def chunk(text, size, overlap):
     chunks, i = [], 0
@@ -304,11 +305,7 @@ def chunk(text, size, overlap):
     return chunks
 
 for j, c in enumerate(chunk(text, size=40, overlap=10)):
-    print(f"chunk {j}: {c!r}")</code></pre>
-<div class="out"><span class="lbl">Output</span>chunk 0: 'Machine learning learns patterns from da'
-chunk 1: 'ns from data. Models improve with more e'
-chunk 2: 'ith more examples given to them.'
-chunk 3: 'm.'</code></div>
+    print(f"chunk {j}: {c!r}")</textarea>
 
 <p>Each chunk is 40 characters, and the step is <code>size − overlap = 30</code>, so consecutive chunks share 10
 characters — notice "ns from da" ends chunk 0 and "ns from data" begins chunk 1 (the overlap). Without overlap, the
@@ -487,5 +484,6 @@ and retrieve by semantic similarity.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

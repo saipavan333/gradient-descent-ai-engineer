@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 40 min</span>
 <span class="pill">Lesson 14.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv05_vit.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv05_vit.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The transformer that revolutionized language now processes images by treating patches as tokens. Understanding ViT — and the inductive-bias trade-off that decides CNN vs ViT — is essential to modern vision and to seeing why one architecture now spans every field.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain how a ViT splits an image into patch-tokens for a transformer</li><li>Define inductive bias and contrast a CNN's strong priors with a ViT's weak ones</li><li>Say when CNNs win (small data) and when ViTs win (scale/pretraining)</li><li>Explain why patch tokens need a positional embedding</li></ul></div>
@@ -317,7 +318,7 @@ data is abundant</strong>, because the model can learn a better solution than th
 <p>The one operation that makes a ViT possible is <strong>patchify</strong>: cut the image into a grid of small squares and
 flatten each into a vector. Here a tiny 4×4 image is split into four 2×2 patches — each becomes one token (one row):</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 img = np.array([[ 0,  1,  2,  3],
                 [ 4,  5,  6,  7],
                 [ 8,  9, 10, 11],
@@ -332,14 +333,7 @@ patches = np.array(patches)
 print("num patches:", patches.shape[0])
 print("each patch length:", patches.shape[1])
 print("patch matrix (each row = one flattened patch = one token):")
-print(patches)</code></pre>
-<div class="out"><span class="lbl">Output</span>num patches: 4
-each patch length: 4
-patch matrix (each row = one flattened patch = one token):
-[[ 0  1  4  5]
- [ 2  3  6  7]
- [ 8  9 12 13]
- [10 11 14 15]]</div>
+print(patches)</textarea>
 
 <p>The 4×4 image becomes <strong>four tokens</strong>, each a length-4 vector. Read the first row: the top-left 2×2 block is
 <code>[[0,1],[4,5]]</code>, which flattens to <code>[0, 1, 4, 5]</code> — exactly the first token. The four patches are the
@@ -558,5 +552,6 @@ Stable Diffusion, DALL·E, and Midjourney.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

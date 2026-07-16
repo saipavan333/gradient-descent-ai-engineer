@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 8.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag07_reliability.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag07_reliability.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>An agent that acts can also cause harm — wrong actions, runaway loops, prompt injection. Guardrails (permissions, budgets, human approval, sandboxing, monitoring) constrain it from the outside, so it stays safe even when it errs.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain defense in depth for agents</li><li>Use permission allowlists and budget caps</li><li>Describe human-in-the-loop and sandboxing</li><li>Explain prompt injection and why it is hard</li></ul></div>
@@ -281,7 +282,7 @@ debug, and catch problems). Notice these don't trust the model — they constrai
 <p>Here's a guardrail wrapping an agent's tool calls with two independent checks — a <strong>permission</strong> allowlist
 and a <strong>budget</strong> cap. Every action must pass both before it runs:</p>
 
-<pre><code>ALLOWED = {"search", "calculator"}   # permission allowlist
+<textarea class="gdrun-code" spellcheck="false">ALLOWED = {"search", "calculator"}   # permission allowlist
 BUDGET = 2                           # max actions per task
 count = 0
 
@@ -297,11 +298,7 @@ def guarded(tool, arg):
 print(guarded("search", "weather"))     # allowed, within budget
 print(guarded("delete_files", "/"))     # not on allowlist
 print(guarded("calculator", "2+2"))     # allowed, uses last budget
-print(guarded("search", "news"))        # budget now exhausted</code></pre>
-<div class="out"><span class="lbl">Output</span>OK: ran search(weather) [1/2 actions]
-BLOCKED: 'delete_files' not permitted
-OK: ran calculator(2+2) [2/2 actions]
-BLOCKED: budget 2 exceeded</div>
+print(guarded("search", "news"))        # budget now exhausted</textarea>
 
 <p>Trace the protection. The first call (<code>search</code>) is on the allowlist and within budget, so it runs. The
 second (<code>delete_files</code>) is <strong>blocked by the permission gate</strong> — it doesn't matter that the LLM
@@ -501,5 +498,6 @@ models that make your answers stand out.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

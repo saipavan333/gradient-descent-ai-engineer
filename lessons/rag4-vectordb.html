@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 7.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag04_vectordb.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag04_vectordb.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Comparing a query to millions of vectors naively is too slow. Approximate nearest-neighbor indexes (HNSW, IVF) make retrieval near-instant by trading a little accuracy for a huge speedup — packaged in vector databases.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast exact and approximate NN search</li><li>Explain the recall-latency tradeoff</li><li>Describe HNSW and IVF intuitively</li><li>Know what a vector database provides</li></ul></div>
@@ -343,7 +344,7 @@ vector DB.</p>
 <p>Let's do exact brute-force search — the ground truth that ANN approximates — over 1,000 vectors. We build a query near
 a known vector (index 42) and confirm search finds it.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 
 db = rng.standard_normal((1000, 8))            # 1000 chunk vectors, dimension 8
@@ -355,9 +356,7 @@ query /= np.linalg.norm(query)
 sims = db @ query                               # cosine sim = dot product (unit vectors), all N at once
 top5 = sims.argsort()[::-1][:5]                 # the 5 highest = nearest neighbors
 print("exact top-5 indices:", list(top5))
-print("their similarities :", sims[top5].round(3))</code></pre>
-<div class="out"><span class="lbl">Output</span>exact top-5 indices: [42, 995, 513, 583, 571]
-their similarities : [0.975 0.827 0.82  0.81  0.803]</div>
+print("their similarities :", sims[top5].round(3))</textarea>
 
 <p>Exact search correctly found vector 42 as the top match (similarity 0.975 — the query was built right next to it),
 followed by the next-closest vectors. The whole search is one matrix-vector product (<code>db @ query</code>), computing
@@ -544,5 +543,6 @@ layer that reorders candidates and blends semantic with keyword search.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

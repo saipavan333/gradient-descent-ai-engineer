@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 7.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag05_rerank.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag05_rerank.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The closest vector is not always the best chunk. Hybrid search (dense + keyword) and cross-encoder reranking add a precision layer that surfaces the truly-relevant chunks — often the biggest RAG quality win.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast bi-encoders and cross-encoders</li><li>Explain hybrid (dense + sparse) search</li><li>Use two-stage retrieve-then-rerank</li><li>Know when query rewriting helps</li></ul></div>
@@ -312,15 +313,13 @@ retriever finds in the first place.</p>
 <p>Let's see reranking in action. Five candidate chunks come back from a fast bi-encoder with one ranking; a
 cross-encoder, which actually reads each chunk with the query, scores them differently and reorders.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 docs   = ["A", "B", "C", "D", "E"]
 dense  = np.array([0.80, 0.78, 0.60, 0.55, 0.40])   # bi-encoder retrieval scores (fast, coarse)
 rerank = np.array([0.30, 0.95, 0.20, 0.88, 0.10])   # cross-encoder scores (slow, precise)
 
 print("retrieval order (bi-encoder):", [docs[i] for i in dense.argsort()[::-1]])
-print("rerank order (cross-encoder):", [docs[i] for i in rerank.argsort()[::-1]])</code></pre>
-<div class="out"><span class="lbl">Output</span>retrieval order (bi-encoder): ['A', 'B', 'C', 'D', 'E']
-rerank order (cross-encoder): ['B', 'D', 'A', 'C', 'E']</code></div>
+print("rerank order (cross-encoder):", [docs[i] for i in rerank.argsort()[::-1]])</textarea>
 
 <p>The fast retriever ranked A and B highest (closest vectors) and D fourth. But the cross-encoder — reading each chunk
 <em>together</em> with the query — discovered that B and D are actually the most relevant, promoting D from 4th to 2nd
@@ -505,5 +504,6 @@ citations — into a working system.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

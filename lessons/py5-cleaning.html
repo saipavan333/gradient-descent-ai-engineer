@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 2.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py05_cleaning.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/py05_cleaning.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Models are only as good as their data, and raw data is full of missing values, text categories, and unscaled numbers. One mistake here — data leakage — silently inflates scores and ruins models in production.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Handle missing values by dropping or imputing</li><li>Encode categoricals and scale numerics</li><li>Split train/test and fit preprocessing on train only</li><li>Recognize and prevent data leakage</li></ul></div>
@@ -396,7 +397,7 @@ called <span class="term">data leakage</span>.</p>
 <p>We split the data first, then "fit" the scaler (let it learn the mean and spread) on the training data, and apply
 those <em>same</em> learned numbers to the test data. This is the pattern for every preparation step.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
@@ -412,10 +413,7 @@ X_train_s = scaler.transform(X_train)    # apply them to train
 X_test_s  = scaler.transform(X_test)     # apply the SAME numbers to test
 
 print("train mean used:", scaler.mean_.round(1), " std:", scaler.scale_.round(1))
-print("test (scaled):", X_test_s.ravel().round(2))</code></pre>
-
-<div class="out"><span class="lbl">Output (the split depends on random_state)</span>train mean used: [1362.5]  std: [318.9]
-test (scaled): [5.13 3.25]</div>
+print("test (scaled):", X_test_s.ravel().round(2))</textarea>
 
 <p>Notice the test data was scaled using the <strong>training</strong> mean and spread — the test set's own
 statistics were never peeked at. (Here the two test houses happen to be large, so their scaled values come out big
@@ -596,5 +594,6 @@ find.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

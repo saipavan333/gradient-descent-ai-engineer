@@ -11,6 +11,9 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +217,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 23 min</span>
 <span class="pill">Lesson 4.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl02_forward.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl02_forward.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The forward pass is how a network turns inputs into predictions — matrix multiply, add bias, activate, repeat. Knowing the activations and shapes is the foundation for everything that trains.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Compute a forward pass layer by layer</li><li>Track shapes through the network</li><li>Choose hidden (ReLU) and output activations</li><li>Build a network with nn.Sequential</li></ul></div>
@@ -255,6 +258,7 @@ three-step move (multiply, add, activate) repeated through the stack.</p>
   <text x="390.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a layer = a matrix multiply, a bias add, and a nonlinear activation; chain layers to go deep</text>
 </svg>
 <figcaption><b>The forward pass.</b> The input vector is multiplied by the first weight matrix, biased, and passed through ReLU; the result feeds the next layer, and so on to the output. Watch the shapes change as each layer reshapes the representation.</figcaption></figure>
+<div class="gdw" data-widget="activations"></div>
 
 <p>The shapes have to line up exactly as in Lesson 1.2. If the input is a length-3 vector and the first layer has 4
 neurons, its weight matrix is $4\times 3$, producing a length-4 hidden vector; a final layer with 1 neuron has a
@@ -314,7 +318,7 @@ multi-class classification (probabilities summing to 1, Lesson 3.3), a single <s
 <p>We push one input through a network with a 4-neuron ReLU hidden layer and a 1-neuron linear output, computing every
 intermediate value explicitly:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 
 x  = np.array([1.0, 2.0, -1.0])      # input, shape (3,)
@@ -324,9 +328,7 @@ W2 = rng.normal(0, 1, (1, 4)); b2 = np.zeros(1)   # output layer: 4 -> 1
 h = np.maximum(0, W1 @ x + b1)       # hidden pre-activation, then ReLU
 y = W2 @ h + b2                      # linear output (regression)
 print("hidden (after ReLU):", h.round(3))
-print("output:", y.round(3))</code></pre>
-<div class="out"><span class="lbl">Output</span>hidden (after ReLU): [0.    0.    3.902 0.   ]
-output: [-4.861]</div>
+print("output:", y.round(3))</textarea>
 
 <p>Notice ReLU zeroed three of the four hidden neurons — their pre-activation sums were negative, so they output 0 and
 contributed nothing to this particular prediction. Only the third neuron "fired." Different inputs light up different
@@ -501,5 +503,8 @@ computes how to adjust <em>every</em> weight — the algorithm that makes learni
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

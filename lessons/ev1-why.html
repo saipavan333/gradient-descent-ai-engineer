@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 11.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev01_why.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev01_why.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Evaluation — measuring whether a system truly works — is often the hardest part of building AI. A metric is only a proxy for the goal (Goodhart's law), and the accuracy paradox shows how a single number can hide total failure.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain why evaluation is hard</li><li>State Goodhart's law</li><li>Explain the accuracy paradox</li><li>Triangulate offline, online, and human eval</li></ul></div>
@@ -287,17 +288,14 @@ real goal. Good evaluation triangulates: multiple metrics, multiple methods, and
 <p>Here's how a single metric lies. Imagine a fraud detector on 1,000 transactions where only 10 (1%) are fraud. Consider
 a lazy model that <em>always predicts "not fraud"</em> — and look at its accuracy:</p>
 
-<pre><code>total, fraud = 1000, 10          # 1% of transactions are fraud
+<textarea class="gdrun-code" spellcheck="false">total, fraud = 1000, 10          # 1% of transactions are fraud
 # a lazy model that always predicts "not fraud"
 correct = total - fraud          # it's right on all 990 legit ones
 accuracy = correct / total
 recall_fraud = 0 / fraud         # but catches none of the fraud
 print(f"accuracy    : {accuracy:.1%}")
 print(f"fraud recall: {recall_fraud:.0%}")
-print(f"caught 0 of {fraud} frauds — despite 99% accuracy")</code></pre>
-<div class="out"><span class="lbl">Output</span>accuracy    : 99.0%
-fraud recall: 0%
-caught 0 of 10 frauds — despite 99% accuracy</div>
+print(f"caught 0 of {fraud} frauds — despite 99% accuracy")</textarea>
 
 <p>The lazy model scores <strong>99% accuracy</strong> — which sounds excellent and would pass a naive evaluation — yet it
 catches <strong>zero fraud</strong>, making it completely useless for its actual purpose. This is the <span class="term">accuracy
@@ -504,5 +502,6 @@ how to evaluate rigorously before you ever touch real users.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

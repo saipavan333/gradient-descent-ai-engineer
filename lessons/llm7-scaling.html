@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 6.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm07_scaling.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm07_scaling.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>LLM performance is predictable: loss falls as a power law in scale, so you can forecast big models from small runs. Scaling laws, Chinchilla, and emergence explain why the field chased size — and where it has limits.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain scaling laws as power laws</li><li>Forecast loss from compute</li><li>State the Chinchilla compute-optimal rule</li><li>Describe emergence and its debate</li></ul></div>
@@ -288,14 +289,11 @@ holds — certain capabilities only become usable at scale, which kept pushing m
 estimated $a$ and $b$ from small runs, you can predict the loss at any compute budget. Let's forecast across two orders
 of magnitude.</p>
 
-<pre><code>a, b = 2.0, 0.05                    # constants fitted from small-scale experiments
+<textarea class="gdrun-code" spellcheck="false">a, b = 2.0, 0.05                    # constants fitted from small-scale experiments
 
 for C in [1e18, 1e20, 1e22]:       # compute budgets (FLOPs), each 100x the last
     predicted_loss = a * C ** (-b)
-    print(f"compute {C:.0e}:  predicted loss {predicted_loss:.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>compute 1e+18:  predicted loss 0.252
-compute 1e+20:  predicted loss 0.200
-compute 1e+22:  predicted loss 0.159</code></div>
+    print(f"compute {C:.0e}:  predicted loss {predicted_loss:.3f}")</textarea>
 
 <p>Each 100× increase in compute drops the loss by a constant <em>factor</em> (here ×0.794: 0.252 → 0.200 → 0.159) — the
 signature of a power law, and exactly why it's a straight line on a log-log plot. This is forecasting, not hindsight: a
@@ -482,5 +480,6 @@ we learn how adding and then removing noise creates pictures from scratch.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

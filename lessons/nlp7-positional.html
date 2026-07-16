@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 20 min</span>
 <span class="pill">Lesson 5.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp07_positional.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp07_positional.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Attention is order-blind, so a transformer needs to be told where each word sits. Positional encoding — a vector added per position — is the elegant fix, and it gates the long-context frontier of modern LLMs.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain why attention needs positional information</li><li>Describe sinusoidal, learned, and rotary encodings</li><li>Compute sinusoidal positional encodings</li><li>Connect positions to long-context extension</li></ul></div>
@@ -288,7 +289,7 @@ generalizes to longer contexts. Whatever the method, the goal is identical: give
 <p>Let's compute the classic sinusoidal encodings for 4 positions in a 6-dimensional space. Even dimensions use sine,
 odd dimensions cosine, each at a different frequency — producing a unique vector per position.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 def positional_encoding(seq_len, d):
     pos = np.arange(seq_len)[:, None]          # position index
     i   = np.arange(d)[None, :]                # dimension index
@@ -297,13 +298,7 @@ def positional_encoding(seq_len, d):
 
 P = positional_encoding(seq_len=4, d=6)
 print("positional encodings (4 positions, d=6):\n", P.round(2))
-print("position 0 identical to position 1?", np.allclose(P[0], P[1]))</code></pre>
-<div class="out"><span class="lbl">Output</span>positional encodings (4 positions, d=6):
- [[ 0.    1.    0.    1.    0.    1.  ]
- [ 0.84  0.54  0.05  1.    0.    1.  ]
- [ 0.91 -0.42  0.09  1.    0.    1.  ]
- [ 0.14 -0.99  0.14  0.99  0.01  1.  ]]
-position 0 identical to position 1? False</div>
+print("position 0 identical to position 1?", np.allclose(P[0], P[1]))</textarea>
 
 <p>Each row is the encoding for one position, and they're all different — position 0 is <code>[0,1,0,1,0,1]</code>,
 position 1 is <code>[0.84, 0.54, …]</code>, and so on. The left columns (high-frequency sine/cosine) change quickly from
@@ -477,5 +472,6 @@ GPT, and translation models arrange the same pieces differently.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

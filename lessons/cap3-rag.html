@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 120 min</span>
 <span class="pill">Lesson 13.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cap3_rag.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cap3_rag.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Build a RAG assistant that answers from your own documents — the most-deployed LLM pattern. Index offline (chunk, embed, store); serve online (retrieve, generate grounded and cited). Integrates most of the curriculum.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Build the offline index and online retrieve-generate loop</li><li>Focus on retrieval quality</li><li>Debug retrieval vs generation failures</li><li>See RAG as an integration project</li></ul></div>
@@ -283,7 +284,7 @@ than an ungrounded model.</p>
 three documents, retrieve the most relevant one for a query (using TF-IDF similarity as a stand-in for neural embeddings),
 and assemble the grounded prompt:</p>
 
-<pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 docs = {"[1]": "Our refund policy allows returns within 30 days.",
         "[2]": "The head office is in Seattle.",
@@ -296,9 +297,7 @@ def retrieve(q, k=1):
 q = "how many days do I have for a refund?"
 ctx = retrieve(q)
 print("query    :", q)
-print("retrieved:", ctx[0], "->", docs[ctx[0]])</code></pre>
-<div class="out"><span class="lbl">Output</span>query    : how many days do I have for a refund?
-retrieved: [1] -> Our refund policy allows returns within 30 days.</div>
+print("retrieved:", ctx[0], "->", docs[ctx[0]])</textarea>
 
 <p>The query "how many days do I have for a refund?" correctly retrieves document <strong>[1]</strong> — the refund policy —
 even though the wording differs, because similarity matching finds the relevant chunk by content. In the full assistant,
@@ -515,5 +514,6 @@ safely wrapped in guardrails.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

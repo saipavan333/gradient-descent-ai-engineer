@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 12.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/iv06_coding.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/iv06_coding.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The coding round tests implementation, including ML from scratch (gradient descent, k-means, metrics). With AI-assisted rounds emerging, the skill shifts to judging and integrating code — so prepare both unaided fluency and discerning AI-assisted building.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Implement ML algorithms from scratch</li><li>Communicate approach and test out loud</li><li>Handle edge cases in metrics code</li><li>Use an AI assistant with judgment</li></ul></div>
@@ -260,7 +261,7 @@ and enough AI-assisted building to be fast and discerning.</p>
 <p>A classic ML coding question: "fit a line to data using gradient descent, from scratch." Here we fit y = w·x (true w = 3)
 by repeatedly stepping w opposite the gradient of the mean-squared error — the core learning loop, in a few lines:</p>
 
-<pre><code>xs = [1, 2, 3, 4]
+<textarea class="gdrun-code" spellcheck="false">xs = [1, 2, 3, 4]
 ys = [3, 6, 9, 12]                 # true relationship: y = 3x
 w, lr = 0.0, 0.01                  # start at 0, learning rate 0.01
 for step in range(1000):
@@ -268,9 +269,7 @@ for step in range(1000):
     grad = sum(2 * (w * x - y) * x for x, y in zip(xs, ys)) / len(xs)
     w -= lr * grad                 # step downhill
 print(f"learned w: {w:.3f}  (true 3.0)")
-print(f"predict x=5 -> {w*5:.2f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>learned w: 3.000  (true 3.0)
-predict x=5 -> 15.00</div>
+print(f"predict x=5 -> {w*5:.2f}")</textarea>
 
 <p>Starting from w = 0, the loop converges to <strong>w = 3.000</strong> — it learned the true relationship — and correctly
 predicts 15 for x = 5. This tiny example is exactly the kind of from-scratch implementation ML coding rounds ask for, and it
@@ -484,5 +483,6 @@ the human qualities that decide close calls.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

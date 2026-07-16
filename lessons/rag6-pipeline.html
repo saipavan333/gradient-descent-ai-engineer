@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 7.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag06_pipeline.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag06_pipeline.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A RAG pipeline assembles the pieces into a working system: index offline, query online, generate cited answers. Knowing the two phases and prompt assembly is what turns components into a product.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Separate offline indexing from online querying</li><li>Assemble a grounded, cited prompt</li><li>Manage the token budget and top-k</li><li>Instruct the model to abstain when context is missing</li></ul></div>
@@ -296,7 +297,7 @@ token on every query.</p>
 <p>Here's the whole querying phase in a few lines: index a tiny corpus, retrieve the top chunks for a question, and
 assemble a cited, grounded prompt — the exact structure a production system uses, just scaled down.</p>
 
-<pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # --- indexing (offline): store docs with citation ids ---
@@ -316,12 +317,7 @@ context = retrieve(query)
 prompt = ("Answer with a citation [n] using only the context.\n"
           + "".join(f"{cid} {t}\n" for cid, t in context)
           + f"Question: {query}\nAnswer:")
-print(prompt)</code></pre>
-<div class="out"><span class="lbl">Output</span>Answer with a citation [n] using only the context.
-[1] A refund is processed within 5 business days.
-[2] You can request a refund within 30 days of purchase.
-Question: how long does a refund take?
-Answer:</div>
+print(prompt)</textarea>
 
 <p>The pipeline retrieved the two refund-related chunks (correctly excluding the irrelevant store-hours chunk [3]),
 tagged each with its citation id, and assembled a prompt that instructs the model to answer only from this context and
@@ -510,5 +506,6 @@ generation separately, with the metrics that catch each failure.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 9.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops07_monitoring.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops07_monitoring.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>ML models fail silently — wrong predictions, no crash. Monitoring needs two layers: operational (latency, errors) and model quality (drift, accuracy). A green ops dashboard says nothing about whether the model is still right.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain why ML fails silently</li><li>Distinguish operational vs model monitoring</li><li>Use proxy signals without labels</li><li>Define observability</li></ul></div>
@@ -278,16 +279,13 @@ making a system's internal state observable from the outside — through metrics
 <p>Here's the essence of a monitoring check: each metric has acceptable bounds, and anything outside them raises an alert.
 Notice the first two are operational (system health) and the third is model quality — and which one fires.</p>
 
-<pre><code>def alert(name, value, lo=None, hi=None):
+<textarea class="gdrun-code" spellcheck="false">def alert(name, value, lo=None, hi=None):
     bad = (lo is not None and value &lt; lo) or (hi is not None and value &gt; hi)
     print(f"{name:12s} = {value:&lt;5} [{'ALERT' if bad else 'ok'}]")
 
 alert("latency_ms", 95,   hi=200)    # system health: under 200ms budget
 alert("error_rate", 0.01, hi=0.05)   # system health: under 5% errors
-alert("accuracy",   0.78, lo=0.80)   # model quality: must stay above 0.80</code></pre>
-<div class="out"><span class="lbl">Output</span>latency_ms   = 95    [ok]
-error_rate   = 0.01  [ok]
-accuracy     = 0.78  [ALERT]</div>
+alert("accuracy",   0.78, lo=0.80)   # model quality: must stay above 0.80</textarea>
 
 <p>Each call checks one metric against its bounds. <strong>Latency</strong> (95ms, under the 200ms ceiling) and
 <strong>error rate</strong> (1%, under the 5% ceiling) are both fine — the <em>system</em> is healthy: fast and reliable.
@@ -491,5 +489,6 @@ the detect-drift-and-retrain loop keeps them current.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

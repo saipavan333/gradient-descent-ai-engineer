@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 8.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag04_planning.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag04_planning.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Complex goals need more than reacting step to step. Planning has the agent draft a strategy first; reflection has it check and correct its own work — the levers that let agents handle long, multi-step tasks.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast planning with pure reaction</li><li>Explain plan-then-execute</li><li>Describe reflection and self-correction</li><li>Know when planning is worth the cost</li></ul></div>
@@ -318,7 +319,7 @@ the model just second-guessing itself in the abstract.</p>
 <p>Here's the plan-and-execute skeleton: the planner breaks a goal into ordered steps, then the executor works through
 them. (The planner is a one-liner here; a real agent would prompt the LLM to generate the plan.)</p>
 
-<pre><code>goal = "Write a short blog post about coffee"
+<textarea class="gdrun-code" spellcheck="false">goal = "Write a short blog post about coffee"
 
 # PLAN: the model decomposes the goal into ordered subtasks
 plan = ["research coffee history", "outline the post", "write the draft", "proofread & polish"]
@@ -331,13 +332,7 @@ for i, step in enumerate(plan, 1):
 print("executing:")
 for step in plan:
     print(f"  [done] {step}")
-print("post complete.")</code></pre>
-<div class="out"><span class="lbl">Output</span>GOAL: Write a short blog post about coffee
-  plan step 1: research coffee history
-  plan step 2: outline the post
-  plan step 3: write the draft
-  plan step 4: proofread & polish
-post complete.</div>
+print("post complete.")</textarea>
 
 <p>The agent turned one vague goal into four concrete, ordered steps, then executed them in sequence. Notice the
 structure this provides: each step is a smaller, well-defined task the agent can tackle (and each could itself be a
@@ -535,5 +530,6 @@ to remember across steps and across conversations.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

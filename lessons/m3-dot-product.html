@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 1.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/03_dot_product.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/03_dot_product.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Search, recommendations, attention in transformers, embeddings — the way a machine decides 'how similar are these two things?' is almost always a dot product. It is the most important small operation in modern AI.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Compute a dot product and state the two things it measures</li><li>Use cosine similarity to compare direction regardless of size</li><li>Understand projection: how much of one vector lies along another</li><li>Connect dot products to similarity search and attention</li></ul></div>
@@ -439,7 +440,7 @@ multiply matching entries and add — is the exact mechanism a state-of-the-art 
 We represent each document as a word-count vector over a small five-word vocabulary
 <code>[data, model, train, cook, recipe]</code> (each slot counts how many times that word appears).</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 # vocabulary order: [data, model, train, cook, recipe]
 docs = {
@@ -453,11 +454,7 @@ def cosine(a, b):                                # cosine similarity = direction
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 for name, d in docs.items():
-    print(f"{name:12s}  cosine = {cosine(query, d):.3f}")</code></pre>
-
-<div class="out"><span class="lbl">Output</span>ML article    cosine = 0.577
-ML note       cosine = 0.816
-Recipe blog   cosine = 0.000</div>
+    print(f"{name:12s}  cosine = {cosine(query, d):.3f}")</textarea>
 
 <p>The query ranks <strong>ML note</strong> highest, <strong>ML article</strong> next, and the unrelated
 <strong>Recipe blog</strong> at exactly 0 — they share no words, so the vectors are orthogonal (right angle,
@@ -628,5 +625,6 @@ the outputs, can we find the inputs? — the foundation under linear regression 
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

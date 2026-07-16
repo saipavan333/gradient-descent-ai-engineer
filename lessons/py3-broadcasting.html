@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 2.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py03_broadcasting.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/py03_broadcasting.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Broadcasting lets you combine arrays of different shapes — add a bias to a batch, normalize every column — without loops or copies. It's also the source of the most common shape bug in numerical Python.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>State the broadcasting rules and predict output shapes</li><li>Apply per-row or per-column operations cleanly</li><li>Use axis arguments correctly in reductions</li><li>Read and fix a shape-mismatch error</li></ul></div>
@@ -347,7 +348,7 @@ back (4 vs 3 on the right). The fix is <code>keepdims=True</code>, which keeps t
 using bigger numbers — the trap from Lesson 1.1). It's one of the most common preparation steps, and broadcasting
 makes it a two-liner. Here are 4 samples with 3 features on wildly different scales:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 X = np.array([[1800, 3, 12],     # size, bedrooms, age
               [ 950, 2, 40],
@@ -361,16 +362,7 @@ Z = (X - col_mean) / col_std     # broadcasts (4,3) with (3,) -> (4,3)
 print("means used:", col_mean.round(1))
 print("standardized:\n", Z.round(2))
 print("new column means:", Z.mean(axis=0).round(6))   # ~0
-print("new column stds :", Z.std(axis=0).round(6))    # ~1</code></pre>
-
-<div class="out"><span class="lbl">Output</span>means used: [1662.5    3.    20.5]
-standardized:
- [[ 0.26  0.   -0.64]
- [-1.36 -1.41  1.46]
- [ 1.41  1.41 -1.16]
- [-0.31  0.    0.34]]
-new column means: [ 0.  0.  0.]
-new column stds : [1. 1. 1.]</div>
+print("new column stds :", Z.std(axis=0).round(6))    # ~1</textarea>
 
 <p>One expression, <code>(X - col_mean) / col_std</code>, subtracted a different mean and divided by a different
 spread for <em>each</em> column — that's broadcasting doing per-feature math with no loop. Notice the result has
@@ -541,5 +533,6 @@ join it.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 8.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag01_what.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag01_what.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>An agent is an LLM in a loop that can act in the world — use tools, observe results, and adapt — not just reply once. This is the shift from a model that talks to a system that does, and the foundation of everything in this track.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define an agent as LLM + tools + loop</li><li>Contrast a one-shot call with an act–observe loop</li><li>Explain why autonomy and risk rise together</li><li>Trace one iteration of the agent loop</li></ul></div>
@@ -333,7 +334,7 @@ trades control for capability.</p>
 trivial goal — find an $n$ whose square exceeds 50 — with a simple decision rule standing in for the LLM's reasoning, so
 you can watch the loop structure clearly.</p>
 
-<pre><code>def think(n):                          # the "LLM" decides the next action
+<textarea class="gdrun-code" spellcheck="false">def think(n):                          # the "LLM" decides the next action
     return "stop" if n * n > 50 else "increment"
 
 n, steps = 0, 0
@@ -344,12 +345,7 @@ while steps < 20:                      # a max-steps guard (Lesson 8.7)
         break
     n += 1                             # ACT (and OBSERVE the new n)
     steps += 1
-print(f"agent stopped at n={n} (n^2={n*n} > 50)")</code></pre>
-<div class="out"><span class="lbl">Output</span>step 0: n=0, n^2=0, decision=increment
-step 1: n=1, n^2=1, decision=increment
-...
-step 8: n=8, n^2=64, decision=stop
-agent stopped at n=8 (n^2=64 > 50)</div>
+print(f"agent stopped at n={n} (n^2={n*n} > 50)")</textarea>
 
 <p>This is the entire skeleton of every agent: a <strong>loop</strong> where the model looks at the current state,
 <strong>decides</strong> an action, the action changes the state, and it decides again — until a stopping condition. Here
@@ -535,5 +531,6 @@ reach out and do things in the world.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

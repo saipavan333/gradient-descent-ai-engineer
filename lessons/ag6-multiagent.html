@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 8.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag06_multiagent.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag06_multiagent.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Some tasks decompose into specialties — a researcher, a writer, a checker. Multi-agent systems coordinate focused agents (supervisor, pipeline, debate), trading coordination cost for specialization — powerful, but easy to over-use.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Describe supervisor, pipeline, and debate patterns</li><li>Explain the benefit of specialized agents</li><li>Weigh multi-agent costs and failure points</li><li>Decide when a single agent is better</li></ul></div>
@@ -287,7 +288,7 @@ passing messages and sometimes sharing state, with one usually acting as orchest
 researcher and a writer), passing one's output to the next. (Each worker would be its own LLM with a focused role; here
 they're simple functions.)</p>
 
-<pre><code>def researcher(topic):  # worker 1: focused on gathering info
+<textarea class="gdrun-code" spellcheck="false">def researcher(topic):  # worker 1: focused on gathering info
     return f"3 facts about {topic}"
 
 def writer(notes):      # worker 2: focused on composing prose
@@ -300,11 +301,7 @@ def supervisor(goal):   # coordinator: delegates and assembles
     return draft
 
 final = supervisor("electric cars")
-print("final output:", final)</code></pre>
-<div class="out"><span class="lbl">Output</span>supervisor: goal = 'electric cars'
-  -> researcher returns: 3 facts about electric cars
-  -> writer returns: a paragraph based on [3 facts about electric cars]
-final output: a paragraph based on [3 facts about electric cars]</div>
+print("final output:", final)</textarea>
 
 <p>The supervisor decomposed the goal and routed work: the <strong>researcher</strong> gathered information, its output
 fed the <strong>writer</strong>, which composed the result. Each worker had a focused role — and in a real system, each
@@ -501,5 +498,6 @@ dependable enough to trust with real actions.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

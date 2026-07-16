@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 3.11</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm11_dimred.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm11_dimred.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>High-dimensional data is hard to see, slow to model, and noisy. Dimensionality reduction compresses it while keeping the signal — PCA for modeling and compression, t-SNE/UMAP for visualization.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain PCA as rotating to max-variance axes</li><li>Read the explained-variance ratio</li><li>Use t-SNE/UMAP for visualization, with caution</li><li>Know why to standardize before PCA</li></ul></div>
@@ -394,7 +395,7 @@ to a downstream model (use PCA for that).</p>
 <p>The breast-cancer data has 30 features. We standardize them (PCA is variance-based, so scale matters — Lesson 2.5),
 run PCA, and ask how much of the total variation the top components capture.</p>
 
-<pre><code>from sklearn.datasets import load_breast_cancer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import load_breast_cancer
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 
@@ -404,9 +405,7 @@ X_scaled = StandardScaler().fit_transform(X)
 pca = PCA().fit(X_scaled)
 evr = pca.explained_variance_ratio_
 print("variance explained by first 5 PCs:", evr[:5].round(3))
-print(f"cumulative — first 2 PCs: {evr[:2].sum():.3f}   first 10 PCs: {evr[:10].sum():.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>variance explained by first 5 PCs: [0.443 0.19  0.094 0.066 0.055]
-cumulative — first 2 PCs: 0.632   first 10 PCs: 0.952</code></div>
+print(f"cumulative — first 2 PCs: {evr[:2].sum():.3f}   first 10 PCs: {evr[:10].sum():.3f}")</textarea>
 
 <p>The first component alone captures <strong>44.3%</strong> of all the variation across 30 features, and the second
 adds another 19% — so just <strong>two</strong> components hold <strong>63%</strong> of the information, enough to make
@@ -579,5 +578,6 @@ we learn to compare models and pick hyperparameters without fooling ourselves.</
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

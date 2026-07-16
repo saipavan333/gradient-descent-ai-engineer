@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 5.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp01_tokenization.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp01_tokenization.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Models do math on numbers, not text. Tokenization is the first step of every NLP system — splitting text into subword pieces and mapping them to IDs, a choice that quietly shapes cost, quality, and what the model can even perceive.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the text→tokens→IDs pipeline</li><li>Compare character, word, and subword tokenization</li><li>Explain why subwords (BPE/WordPiece) avoid out-of-vocabulary</li><li>Estimate token counts and their cost</li></ul></div>
@@ -325,7 +326,7 @@ Vocabularies also include <span class="term">special tokens</span> like a paddin
 <p>To make the pipeline concrete, here's a minimal <em>word-level</em> tokenizer — build a vocabulary, encode text to
 IDs, decode back. (Real models use subword tokenizers, but the encode/decode structure is identical.)</p>
 
-<pre><code>text = "the cat sat on the mat"
+<textarea class="gdrun-code" spellcheck="false">text = "the cat sat on the mat"
 words = text.split()
 
 # build the vocabulary: each unique word gets an integer id
@@ -338,10 +339,7 @@ print("token ids:", ids)
 
 # decode: ids -> text (the reverse lookup)
 inv = {i: w for w, i in vocab.items()}
-print("decoded:", " ".join(inv[i] for i in ids))</code></pre>
-<div class="out"><span class="lbl">Output</span>vocab: {'cat': 0, 'mat': 1, 'on': 2, 'sat': 3, 'the': 4}
-token ids: [4, 0, 3, 2, 4, 1]
-decoded: the cat sat on the mat</div>
+print("decoded:", " ".join(inv[i] for i in ids))</textarea>
 
 <p>"the cat sat on the mat" became the ID sequence <code>[4, 0, 3, 2, 4, 1]</code> — note "the" maps to <code>4</code>
 both times (same token, same ID), which is exactly what lets the model recognize repeated words. Decoding inverts the
@@ -512,5 +510,6 @@ and direction actually capture meaning.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

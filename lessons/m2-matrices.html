@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 1.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/02_matrices.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/02_matrices.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A single layer of a neural network, a batch of data, an image, a linear model — all of them are matrices, and the one operation they all run is matrix multiplication. Understand this and the machinery of ML stops being a black box.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>See a matrix as a stack of vectors AND as a transformation</li><li>Multiply a matrix by a vector and by another matrix, by hand</li><li>Connect matrix multiply to 'a layer of a network'</li><li>Vectorize it in NumPy and feel why it is fast</li></ul></div>
@@ -519,7 +520,7 @@ are for.</p>
 bedrooms, age) and apply a single set of weights $w$. One matrix-vector multiply scores the entire batch — no
 loop needed.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 # 3 houses (rows) x 3 features (columns): size_sqft, bedrooms, age_years
 X = np.array([[1800, 3, 12],
@@ -530,9 +531,7 @@ X = np.array([[1800, 3, 12],
 w = np.array([0.18, 15, -1.2])
 
 preds = X @ w        # '@' is Python's symbol for matrix multiplication
-print("predicted prices ($k):", preds)</code></pre>
-
-<div class="out"><span class="lbl">Output</span>predicted prices ($k): [354.6 153.  486. ]</div>
+print("predicted prices ($k):", preds)</textarea>
 
 <p>Three predictions from one expression — that's the power of vectorized matrix math. Let's trace the first
 house by hand to prove there's no magic: $1800(0.18) + 3(15) + 12(-1.2) = 324 + 45 - 14.4 = 354.6$. The weights
@@ -722,5 +721,6 @@ how search engines, recommendation systems, and the attention mechanism inside e
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

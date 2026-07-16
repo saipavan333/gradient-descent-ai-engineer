@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 29 min</span>
 <span class="pill">Lesson 3.8</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm08_ensembles.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm08_ensembles.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Combining many models is the most reliable accuracy boost in classical ML. Random forests and gradient boosting routinely win on tabular data — the first thing to try on a real spreadsheet.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain bagging and the random forest</li><li>Explain boosting (XGBoost/LightGBM)</li><li>Contrast variance vs bias reduction</li><li>Know why ensembles beat single trees</li></ul></div>
@@ -338,7 +339,7 @@ boosting, and they're the first thing most practitioners reach for on a new tabu
 To get a fair, stable read (not a lucky single split), we use 5-fold cross-validation — Lesson 3.12 — and report the
 mean accuracy and its standard deviation.</p>
 
-<pre><code>from sklearn.datasets import load_breast_cancer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -352,10 +353,7 @@ models = [
 ]
 for name, model in models:
     s = cross_val_score(model, X, y, cv=5)
-    print(f"{name:14s} {s.mean():.3f} +/- {s.std():.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>single tree    0.917 +/- 0.016
-random forest  0.963 +/- 0.021
-grad boosting  0.963 +/- 0.021</code></div>
+    print(f"{name:14s} {s.mean():.3f} +/- {s.std():.3f}")</textarea>
 
 <p>The single tree averages 91.7%. Both ensembles jump to <strong>96.3%</strong> — a 4.6-point gain, which is huge at
 this end of the scale (it nearly halves the error rate, from ~8.3% to ~3.7%). And we changed <em>nothing</em> about
@@ -525,5 +523,6 @@ the widest possible margin — and use the "kernel trick" to bend straight bound
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

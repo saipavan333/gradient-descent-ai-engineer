@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 3.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm06_regularization.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm06_regularization.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Overfitting's most common cure is to penalize complexity directly. Regularization keeps weights small — and one flavor performs automatic feature selection, a tool reused everywhere from linear models to neural nets.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Add an L1 or L2 penalty to a loss</li><li>Explain why L1 gives sparsity but L2 does not</li><li>Tune the strength lambda on validation data</li><li>Connect regularization to the bias-variance tradeoff</li></ul></div>
@@ -317,7 +318,7 @@ There's no formula for the best $\lambda$; you try several and keep the one that
 pure noise that the model should learn to ignore. Then we fit plain regression, ridge, and lasso, and compare what
 each does to the coefficients.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.preprocessing import StandardScaler
 
@@ -331,11 +332,7 @@ print("true ", true)
 print("OLS  ", np.round(LinearRegression().fit(Xs, y).coef_, 2))
 print("Ridge", np.round(Ridge(alpha=10).fit(Xs, y).coef_, 2))
 lasso = Lasso(alpha=0.3).fit(Xs, y).coef_
-print("Lasso", np.round(lasso, 2), " zeros:", int((np.abs(lasso) < 1e-8).sum()))</code></pre>
-<div class="out"><span class="lbl">Output</span>true  [ 3.  -2.   1.5  0.   0.   0.   0.   0. ]
-OLS   [ 2.56 -1.76  1.29 -0.07 -0.04  0.06 -0.02  0.04]
-Ridge [ 2.32 -1.6   1.15 -0.09 -0.01  0.09 -0.02  0.09]
-Lasso [ 2.27 -1.49  1.01 -0.    0.    0.    0.    0.  ]  zeros: 5</code></div>
+print("Lasso", np.round(lasso, 2), " zeros:", int((np.abs(lasso) < 1e-8).sum()))</textarea>
 
 <p>Look at the last five coefficients — the noise features. Plain <strong>OLS</strong> gives them small but nonzero
 weights (−0.07, −0.04, …): it can't resist fitting a little noise. <strong>Ridge</strong> shrinks everything a bit but
@@ -504,5 +501,6 @@ questions, carving the space into boxes and capturing nonlinear patterns no line
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

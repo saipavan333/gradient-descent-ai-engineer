@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 120 min</span>
 <span class="pill">Lesson 13.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cap2_finetune.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cap2_finetune.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Fine-tune a small LLM with LoRA — transfer learning for language. Freeze the model and train a tiny low-rank adapter (<1% of params), so customization fits on one GPU. How modern LLM fine-tuning actually happens.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain LoRA and the parameter savings</li><li>Choose fine-tuning vs RAG (behavior vs knowledge)</li><li>Plan and evaluate the fine-tune project</li><li>Connect LoRA to transfer learning</li></ul></div>
@@ -269,15 +270,12 @@ large models happens in practice — you almost never full-fine-tune a big LLM a
 fine-tuning updates d² parameters; LoRA replaces that with two small matrices of size d×r and r×d (rank r), training only
 their parameters:</p>
 
-<pre><code>d, r = 1000, 8
+<textarea class="gdrun-code" spellcheck="false">d, r = 1000, 8
 full = d * d                      # full fine-tune updates d x d weights
 lora = d * r + r * d              # LoRA: two small low-rank matrices (rank r)
 print(f"full fine-tune params : {full:,}")
 print(f"LoRA (rank {r}) params : {lora:,}")
-print(f"trainable: {lora/full:.1%} of full  ({full//lora}x fewer)")</code></pre>
-<div class="out"><span class="lbl">Output</span>full fine-tune params : 1,000,000
-LoRA (rank 8) params : 16,000
-trainable: 1.6% of full  (62x fewer)</div>
+print(f"trainable: {lora/full:.1%} of full  ({full//lora}x fewer)")</textarea>
 
 <p>For a single 1000×1000 weight matrix, full fine-tuning trains <strong>1,000,000</strong> parameters; LoRA with rank 8
 trains just <strong>16,000</strong> — <strong>1.6% of the full count, 62× fewer</strong>. Scaled across a billion-parameter
@@ -494,5 +492,6 @@ own knowledge base, the most-deployed LLM pattern in production.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

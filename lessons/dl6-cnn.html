@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 29 min</span>
 <span class="pill">Lesson 4.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl06_cnn.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl06_cnn.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Images need an architecture that exploits spatial structure. CNNs slide shared filters over the image, detecting patterns anywhere with few parameters — the backbone of computer vision.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain convolution and parameter sharing</li><li>Compute a convolution by hand</li><li>Describe pooling and the conv-pool-dense architecture</li><li>Build conv layers in PyTorch</li></ul></div>
@@ -420,7 +421,7 @@ classification.</p>
 positive weights on the left column, negative on the right, so it produces a large response where the image goes from
 bright to dark horizontally.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 image = np.array([[3,1,2,0,1],
                   [0,4,1,2,3],
                   [1,2,3,1,0],
@@ -436,10 +437,7 @@ for i in range(out.shape[0]):
     for j in range(out.shape[1]):
         patch = image[i:i+kh, j:j+kw]       # the 3x3 region under the filter
         out[i, j] = (patch * kernel).sum()  # weighted sum = one output value
-print(out)</code></pre>
-<div class="out"><span class="lbl">Output</span>[[-2.  4.  2.]
- [-2. -1.  0.]
- [-2.  0.  3.]]</div>
+print(out)</textarea>
 
 <p>A 5×5 image convolved with a 3×3 filter gives a 3×3 feature map (the filter fits in 3 horizontal and 3 vertical
 positions). Each value is the dot product of the filter with the 9 pixels beneath it — and the same 9 weights were
@@ -614,5 +612,6 @@ we build networks that carry information through time.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

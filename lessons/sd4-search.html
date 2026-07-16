@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 10.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/sd04_search.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/sd04_search.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Search is recommendation with a query. It reuses the retrieve-then-rank funnel: hybrid retrieval (keyword + semantic) gathers candidates, a ranking model orders them. Cheap-wide then expensive-narrow, the same pattern.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Relate search to recommendation</li><li>Contrast keyword and semantic retrieval</li><li>Explain hybrid retrieval</li><li>Apply the two-stage cost split</li></ul></div>
@@ -273,18 +274,14 @@ the other covers, so production search uses <span class="term">hybrid retrieval<
 <p>Search faces the same economics as recommendation: a cheap scorer can touch everything, an expensive one cannot. Here
 retrieval scores all documents cheaply, and a heavy reranker (a cross-encoder, Track 7) refines only the top few hundred:</p>
 
-<pre><code>docs, rerank_k = 10_000_000, 500
+<textarea class="gdrun-code" spellcheck="false">docs, rerank_k = 10_000_000, 500
 retrieve_cost, rerank_cost = 1, 50
 stage1 = docs     * retrieve_cost      # cheap: score every document
 stage2 = rerank_k * rerank_cost        # expensive: rerank the top-k
 print(f"stage 1 retrieve all : {stage1:,}")
 print(f"stage 2 rerank top {rerank_k}: {stage2:,}")
 print(f"two-stage total: {stage1 + stage2:,}")
-print(f"rerank everything: {docs * rerank_cost:,}")</code></pre>
-<div class="out"><span class="lbl">Output</span>stage 1 retrieve all : 10,000,000
-stage 2 rerank top 500: 25,000
-two-stage total: 10,025,000
-rerank everything: 500,000,000</div>
+print(f"rerank everything: {docs * rerank_cost:,}")</textarea>
 
 <p>The cheap retrieval scorer (cost 1 per document) can afford to touch all 10 million documents: 10 million units. The
 expensive reranker (cost 50 — think a cross-encoder that reads query and document together) runs only on the top 500 that
@@ -494,5 +491,6 @@ offline/online split into a complete, production-grade design.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

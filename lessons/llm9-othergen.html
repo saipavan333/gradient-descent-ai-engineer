@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 6.9</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm09_othergen.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm09_othergen.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Diffusion is one of four generative families. VAEs (latent spaces) and GANs (adversarial training) round out the map, with foundational ideas — reparameterization, adversarial games — used throughout modern AI.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Map the four generative families</li><li>Explain VAEs and the reparameterization trick</li><li>Explain GANs and mode collapse</li><li>Match a generative family to a task</li></ul></div>
@@ -346,7 +347,7 @@ $z \sim \mathcal{N}(\mu, \sigma)$ in a way that gradients can flow through (for 
 $z = \mu + \sigma \cdot \epsilon$ with $\epsilon \sim \mathcal{N}(0, 1)$. The randomness lives in $\epsilon$ (which has
 no parameters), so gradients pass cleanly through $\mu$ and $\sigma$.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 
 mu, sigma = np.array([0.5, -0.2]), np.array([0.3, 0.4])   # encoder output for one input
@@ -354,14 +355,7 @@ mu, sigma = np.array([0.5, -0.2]), np.array([0.3, 0.4])   # encoder output for o
 # reparameterization: z = mu + sigma * eps,  eps ~ N(0, 1)
 samples = np.array([mu + sigma * rng.standard_normal(2) for _ in range(5)])
 print("encoder gives  mu =", mu, " sigma =", sigma)
-print("5 sampled latents z:\n", samples.round(2))</code></pre>
-<div class="out"><span class="lbl">Output</span>encoder gives  mu = [ 0.5 -0.2]  sigma = [0.3 0.4]
-5 sampled latents z:
- [[ 0.54 -0.25]
- [ 0.69 -0.16]
- [ 0.34 -0.06]
- [ 0.89  0.18]
- [ 0.29 -0.71]]</code></div>
+print("5 sampled latents z:\n", samples.round(2))</textarea>
 
 <p>Each sampled latent $z$ scatters around the mean $\mu = [0.5, -0.2]$ with spread set by $\sigma = [0.3, 0.4]$ — so
 they cluster near $[0.5, -0.2]$ but vary (one reached $[0.89, 0.18]$, another $[0.29, -0.71]$). Decoding each would give
@@ -548,5 +542,6 @@ top-p vs temperature, how LoRA saves memory — with model answers that show the
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

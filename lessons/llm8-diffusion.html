@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 6.8</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm08_diffusion.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm08_diffusion.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Image generation works by learning to reverse a noising process. Diffusion — predict the noise, then remove it step by step — is the technology behind Stable Diffusion and DALL·E.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the forward and reverse diffusion processes</li><li>State the denoising training objective</li><li>Describe text conditioning and latent diffusion</li><li>Know why diffusion overtook GANs</li></ul></div>
@@ -418,16 +419,12 @@ single GPU.</p>
 \sqrt{1-\bar\alpha_t}\,\epsilon$, where $x_0$ is the clean image, $\epsilon$ is noise, and $\bar\alpha_t$ shrinks from 1
 toward 0 as $t$ grows. Let's watch the signal and noise weights trade off over time.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 # abar (alpha-bar) controls the mix; it decreases from 1 (clean) toward 0 (pure noise)
 for t, abar in [(0, 1.0), (250, 0.7), (500, 0.4), (1000, 0.04)]:
     signal_weight = np.sqrt(abar)
     noise_weight  = np.sqrt(1 - abar)
-    print(f"t={t:4d}:  signal weight {signal_weight:.2f},  noise weight {noise_weight:.2f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>t=   0:  signal weight 1.00,  noise weight 0.00
-t= 250:  signal weight 0.84,  noise weight 0.55
-t= 500:  signal weight 0.63,  noise weight 0.77
-t=1000:  signal weight 0.20,  noise weight 0.98</code></div>
+    print(f"t={t:4d}:  signal weight {signal_weight:.2f},  noise weight {noise_weight:.2f}")</textarea>
 
 <p>At $t=0$ the image is pure signal (weight 1.00, no noise). By $t=250$ it's a blend (0.84 signal, 0.55 noise — still
 recognizable). By $t=500$ noise dominates (0.77 vs 0.63). By $t=1000$ it's almost entirely noise (0.98) with a faint
@@ -612,5 +609,6 @@ build a single map of where each one fits.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

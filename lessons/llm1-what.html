@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 6.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm01_what.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm01_what.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>An LLM is the transformer you built in Track 5, scaled to billions of parameters. Knowing the lifecycle — pretrain, fine-tune, align, deploy — and what scale does and does not fix is the foundation for this whole track.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define an LLM as a scaled-up transformer</li><li>Walk the pretrain→finetune→align→deploy lifecycle</li><li>Explain in-context learning and emergence</li><li>Recognize failure modes (hallucination, frozen knowledge)</li></ul></div>
@@ -315,7 +316,7 @@ structure from Track 5. The parameters are in the token embedding table (vocab �
 attention and feed-forward weights (roughly $12 d^2$ per layer: about $4d^2$ for the Q/K/V/output projections and $8d^2$
 for the FFN).</p>
 
-<pre><code>d, L, vocab = 768, 12, 50257          # dimension, layers, vocabulary size (GPT-2 small)
+<textarea class="gdrun-code" spellcheck="false">d, L, vocab = 768, 12, 50257          # dimension, layers, vocabulary size (GPT-2 small)
 
 embedding = vocab * d                  # token embedding table
 per_layer = 12 * d**2                  # ~4d^2 attention + 8d^2 feed-forward
@@ -323,10 +324,7 @@ total = embedding + L * per_layer
 
 print(f"embedding: {embedding/1e6:.1f}M")
 print(f"per layer: {per_layer/1e6:.2f}M  x{L} layers = {L*per_layer/1e6:.1f}M")
-print(f"total ~ {total/1e6:.0f}M  parameters")</code></pre>
-<div class="out"><span class="lbl">Output</span>embedding: 38.6M
-per layer: 7.08M  x12 layers = 84.9M
-total ~ 124M  parameters</div>
+print(f"total ~ {total/1e6:.0f}M  parameters")</textarea>
 
 <p>That's 124 million parameters — and indeed GPT-2 small is a 124M-parameter model. Notice the quadratic $d^2$: the
 per-layer cost grows with the <em>square</em> of the dimension, so doubling the model width quadruples each layer's
@@ -496,5 +494,6 @@ cheap one that specializes it — and when to use each versus prompting or retri
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

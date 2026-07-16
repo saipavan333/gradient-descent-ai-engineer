@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 1.10</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/10_statistics.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/10_statistics.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Statistics turns a finite, noisy sample into trustworthy conclusions — why a test set estimates real performance and why most loss functions look the way they do. Maximum likelihood justifies cross-entropy and MSE.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define expectation and variance as center and spread</li><li>Explain sampling and why a held-out set estimates performance</li><li>State maximum likelihood and connect it to common losses</li><li>Describe the normal distribution and the Central Limit Theorem</li></ul></div>
@@ -380,7 +381,7 @@ the MSE-from-Gaussian-noise story above.</p>
 <p>Start with the basic summaries on a small sample, then watch a sample mean settle down, then compute a
 maximum-likelihood estimate by hand.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 sample = np.array([2, 4, 4, 4, 5, 5, 7, 9])
 print("mean:", sample.mean())            # 5.0  (the balance point)
@@ -391,13 +392,7 @@ print("std dev:", sample.std())          # 2.0  (spread, in the original units)
 rng = np.random.default_rng(0)
 for n in [10, 100, 10000]:
     rolls = rng.integers(1, 7, size=n)
-    print(f"n={n:5d}  sample mean = {rolls.mean():.3f}")   # approaches 3.5</code></pre>
-<div class="out"><span class="lbl">Output (varies slightly by seed)</span>mean: 5.0
-variance: 4.0
-std dev: 2.0
-n=   10  sample mean = 3.300
-n=  100  sample mean = 3.470
-n=10000  sample mean = 3.501</div>
+    print(f"n={n:5d}  sample mean = {rolls.mean():.3f}")   # approaches 3.5</textarea>
 
 <p>Quick check on the variance: the numbers $[2,4,4,4,5,5,7,9]$ have mean 5; their distances from 5 are
 $[-3,-1,-1,-1,0,0,2,4]$; squared, $[9,1,1,1,0,0,4,16]$; the average of those is $32/8 = 4$; and $\sqrt{4} = 2$ is
@@ -576,5 +571,6 @@ math and being hired for it.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 6.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm05_prompting.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm05_prompting.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Prompting is the zero-cost, highest-leverage way to steer an LLM. Few-shot, chain-of-thought, and good prompt structure reliably get better answers from the same frozen model.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Use zero-shot, few-shot, and chain-of-thought</li><li>Explain in-context learning</li><li>Structure a prompt (system/instruction/examples/format)</li><li>Know prompting's limits vs retrieval and fine-tuning</li></ul></div>
@@ -301,19 +302,14 @@ machine-usable. Clear role + task + examples + format is the recipe for prompts 
 <p>Few-shot prompting is mechanically just <em>string assembly</em>: concatenate a few solved examples, then the new
 query, and let the model continue the pattern. Here we build a sentiment classifier with three in-context examples.</p>
 
-<pre><code>examples = [("happy", "positive"), ("terrible", "negative"), ("okay", "neutral")]
+<textarea class="gdrun-code" spellcheck="false">examples = [("happy", "positive"), ("terrible", "negative"), ("okay", "neutral")]
 query = "wonderful"
 
 prompt = "Classify sentiment.\n"
 for word, label in examples:
     prompt += f"Text: {word} -> {label}\n"
 prompt += f"Text: {query} ->"
-print(prompt)</code></pre>
-<div class="out"><span class="lbl">Output</span>Classify sentiment.
-Text: happy -> positive
-Text: terrible -> negative
-Text: okay -> neutral
-Text: wonderful -></div>
+print(prompt)</textarea>
 
 <p>The prompt ends mid-pattern — <code>Text: wonderful -></code> — so the model's most natural continuation is to fill
 in the label (<code>positive</code>), having inferred the task from the three examples. No fine-tuning, no labels in a
@@ -496,5 +492,6 @@ fine-tune a billion-parameter model by training less than 1% of it, even on a si
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

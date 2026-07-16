@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 35 min</span>
 <span class="pill">Lesson 14.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv01_images.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv01_images.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A model never sees a 'picture' — it sees a grid of numbers. Every vision technique, from convolution to Vision Transformers, is just math on that tensor of pixels, so this is the foundation the whole track stands on.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain an image as a height x width x channels tensor of pixel numbers</li><li>Read a pixel as its [R,G,B] values and convert an image to grayscale</li><li>Say why vision needs its own tools (spatial structure, huge input size)</li><li>Describe data augmentation and why it improves generalization for free</li></ul></div>
@@ -328,18 +329,14 @@ structure.</p>
 <p>Here's a tiny 2×2 color image as a tensor, and a real operation on it — converting to grayscale by averaging the three
 color channels, which is exactly the kind of pixel math vision runs on:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 img = np.array([[[255,0,0],[0,255,0]],
                 [[0,0,255],[255,255,0]]])     # a 2x2 RGB image
 print("shape (H, W, channels):", img.shape)
 print("top-left pixel [R,G,B]:", img[0,0])
 gray = img.mean(axis=2).round().astype(int)    # grayscale = average the 3 channels
-print("grayscale:\n", gray)</code></pre>
-<div class="out"><span class="lbl">Output</span>shape (H, W, channels): (2, 2, 3)
-top-left pixel [R,G,B]: [255   0   0]
-grayscale:
- [[ 85  85]
- [ 85 170]]</div>
+print("grayscale:
+", gray)</textarea>
 
 <p>The image is a <strong>(2, 2, 3)</strong> tensor — 2 pixels tall, 2 wide, 3 channels — and the top-left pixel is
 <code>[255, 0, 0]</code>, pure red. Converting to grayscale just averages each pixel's three channels: pure red
@@ -574,5 +571,6 @@ and beyond) that made vision work.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+/* Gradient Descent — inline interactive lesson widgets. Namespaced .gdw */
+.gdw{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px 18px;margin:22px 0;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.gdw-title{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#4f46e5;margin-bottom:4px}
+.gdw-hint{color:#64748b;font-size:14px;margin:0 0 12px;line-height:1.55}
+.gdw canvas{max-width:100%;display:block;border-radius:8px;background:#f8fafc;border:1px solid #eef2ff;touch-action:none}
+.gdw-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 0}
+.gdw-btn{font:inherit;font-size:13px;font-weight:600;border:1px solid #e2e8f0;background:#fff;color:#1e293b;padding:6px 12px;border-radius:8px;cursor:pointer;transition:.14s}
+.gdw-btn:hover{border-color:#4f46e5;color:#4f46e5}
+.gdw-btn.on,.gdw-btn.primary{background:#4f46e5;color:#fff;border-color:#4f46e5}
+.gdw-btn.primary:hover{background:#4338ca;color:#fff}
+.gdw-read{font-family:ui-monospace,'Cascadia Code',Consolas,monospace;font-size:13px;color:#334155;background:#f8fafc;border:1px solid #eef2ff;border-radius:8px;padding:10px 12px;margin-top:12px;white-space:pre-wrap;line-height:1.5;min-height:20px}
+.gdw-sl{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13px;color:#64748b}
+.gdw-sl label{min-width:78px}
+.gdw-sl input[type=range]{flex:1;accent-color:#4f46e5}
+.gdw-sl .v{font-family:ui-monospace,monospace;color:#1e293b;min-width:48px;text-align:right}

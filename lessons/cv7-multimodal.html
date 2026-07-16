@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 40 min</span>
 <span class="pill">Lesson 14.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv07_multimodal.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv07_multimodal.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>CLIP put images and text in one shared space, unlocking zero-shot classification and seeding the vision-language models inside modern assistants. This lesson closes the loop between vision and language — the defining convergence of current AI.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain how CLIP aligns images and text via contrastive learning</li><li>Do zero-shot classification by matching image and text embeddings</li><li>Distinguish captioning and visual question answering (VQA)</li><li>Describe how modern VLMs feed image tokens into a language model</li></ul></div>
@@ -315,7 +316,7 @@ reasoners are language models that have been taught to see.</p>
 similarity</span> (how aligned two vectors are: 1.0 = same direction, 0 = unrelated). Here one image embedding is compared
 against three caption embeddings; the closest caption wins — that's zero-shot classification in five lines:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 def cos(a, b):
     return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
 
@@ -328,11 +329,7 @@ captions = {                                  # candidate labels, written as tex
 scores = {c: cos(img_emb, v) for c, v in captions.items()}
 for c, s in scores.items():
     print(f"  {c:22s} cos = {s:.3f}")
-print("best match:", repr(max(scores, key=scores.get)))</code></pre>
-<div class="out"><span class="lbl">Output</span>  a photo of a cat       cos = 0.996
-  a photo of a dog       cos = 0.365
-  a red bicycle          cos = 0.316
-best match: 'a photo of a cat'</div>
+print("best match:", repr(max(scores, key=scores.get)))</textarea>
 
 <p>The image vector <code>[0.9, 0.1, 0.8, 0.2]</code> is compared to each caption vector by cosine similarity. It scores
 <strong>0.996</strong> against "a photo of a cat" (nearly identical direction — a strong match), but only <strong>0.365</strong>
@@ -556,5 +553,6 @@ diffusion, and CLIP.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

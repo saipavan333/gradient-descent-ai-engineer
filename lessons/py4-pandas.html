@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 2.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py04_pandas.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/py04_pandas.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Real data arrives as messy labeled tables, not tidy arrays. pandas loads, filters, groups, and joins that data — where an ML engineer spends a huge fraction of every project.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the Series and DataFrame models</li><li>Select, filter, and sort rows and columns</li><li>Aggregate with groupby and join with merge</li><li>Go from a raw file to an analysis-ready DataFrame</li></ul></div>
@@ -409,7 +410,7 @@ related information together into one table.</p>
 <p>A small orders table. We'll inspect it, filter it, summarize per region, and join in customer info — the four
 moves you'll make on every dataset.</p>
 
-<pre><code>import pandas as pd
+<textarea class="gdrun-code" spellcheck="false">import pandas as pd
 
 orders = pd.DataFrame({
     "customer": ["Ann", "Bo", "Ann", "Cy", "Bo"],
@@ -426,21 +427,7 @@ print("\nbig orders:\n", big)
 
 # Group: total revenue per region (split-apply-combine)
 by_region = orders.groupby("region")["amount"].sum()
-print("\nrevenue per region:\n", by_region)</code></pre>
-
-<div class="out"><span class="lbl">Output</span>(5, 3)
-
-big orders:
-  customer region  amount
-0      Ann   West     120
-2      Ann   West     200
-4       Bo   East     300
-
-revenue per region:
- region
-East    430
-West    320
-Name: amount, dtype: int64</div>
+print("\nrevenue per region:\n", by_region)</textarea>
 
 <p>Three lines turned raw rows into a per-region revenue summary (East 430, West 320 — split the rows by region,
 sum each group, combine). Now join in a separate customers table to attach each order's customer tier:</p>
@@ -619,5 +606,6 @@ that silently ruins models: data leakage.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

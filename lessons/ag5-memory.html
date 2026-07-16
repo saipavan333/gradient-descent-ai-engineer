@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 8.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag05_memory.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag05_memory.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>An agent's context window is short-term memory that fills up and resets. External memory — often a vector database — gives long-term recall across steps and sessions, so it can remember facts, preferences, and past results.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast short-term (context) and long-term memory</li><li>Explain external memory via a vector store</li><li>Describe storing and recalling facts</li><li>Manage a filling context window</li></ul></div>
@@ -270,7 +271,7 @@ lets an agent maintain continuity over arbitrarily long interactions without exc
 relevant ones by keyword. (Real systems retrieve by embedding similarity — Track 7 — but the store-then-recall structure
 is identical.)</p>
 
-<pre><code>long_term = []
+<textarea class="gdrun-code" spellcheck="false">long_term = []
 def remember(fact): long_term.append(fact)
 def recall(keyword):  # retrieve facts matching the cue (embedding similarity in production)
     return [m for m in long_term if keyword.lower() in m.lower()]
@@ -281,10 +282,7 @@ remember("The user is allergic to peanuts.")
 
 print("stored", len(long_term), "facts")
 print("recall('python') ->", recall("python"))
-print("recall('peanut') ->", recall("peanut"))</code></pre>
-<div class="out"><span class="lbl">Output</span>stored 3 facts
-recall('python') -> ['The user prefers Python over Java.']
-recall('peanut') -> ['The user is allergic to peanuts.']</div>
+print("recall('peanut') ->", recall("peanut"))</textarea>
 
 <p>The agent <em>stored</em> three facts and later <em>retrieved</em> the relevant one on demand — recalling the Python
 preference when the topic is programming, and the peanut allergy when relevant (e.g., suggesting recipes). Crucially,
@@ -476,5 +474,6 @@ coordinate, and when that helps versus hurts.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

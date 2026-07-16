@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 4.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl07_rnn.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl07_rnn.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Sequences need memory. RNNs carry a hidden state through time; LSTMs/GRUs add a gated highway that fixes the vanishing gradients plain RNNs suffer — the ideas that motivate transformers.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the RNN hidden-state recurrence</li><li>Describe the vanishing/exploding gradient problem</li><li>Explain how LSTM/GRU gates fix it</li><li>Know why transformers replaced RNNs</li></ul></div>
@@ -368,17 +369,13 @@ understanding even as the architecture evolves.</p>
 <p>First, watch a tiny RNN carry a hidden state through a sequence. Each step blends the new input with the running
 memory through a tanh:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 seq = [1.0, 0.5, -1.0, 2.0]      # a length-4 input sequence
 Wh, Wx, h = 0.8, 0.5, 0.0        # recurrent weight, input weight, initial state
 
 for t, x in enumerate(seq):
     h = np.tanh(Wh * h + Wx * x)
-    print(f"step {t+1}: input {x:+.1f}  ->  hidden state {h:+.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>step 1: input +1.0  ->  hidden state +0.462
-step 2: input +0.5  ->  hidden state +0.551
-step 3: input -1.0  ->  hidden state -0.059
-step 4: input +2.0  ->  hidden state +0.741</code></div>
+    print(f"step {t+1}: input {x:+.1f}  ->  hidden state {h:+.3f}")</textarea>
 
 <p>The hidden state at each step depends on the new input <em>and</em> the previous state — it's a running memory. Step
 3's negative input pulls it down; step 4 recovers. Now the vanishing problem, in one line: backprop through $T$ steps
@@ -560,5 +557,6 @@ diagnosing initialization issues, and a practical checklist for when training go
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 150 min</span>
 <span class="pill">Lesson 13.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cap6_pipeline.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cap6_pipeline.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The capstone of capstones: a full training-to-serving pipeline automating the whole lifecycle — data, train, evaluate, deploy, monitor, retrain — with a baseline gate that makes automated retraining safe. Systems-level ML engineering.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Chain the lifecycle stages into a pipeline</li><li>Enforce a deployment gate</li><li>Close the loop with drift-triggered retraining</li><li>Integrate the whole curriculum</li></ul></div>
@@ -273,7 +274,7 @@ a schedule or triggered by drift), so the system largely maintains itself.</p>
 against the baseline, so automated retraining can't silently ship a worse model. Here the stages run in sequence, with the
 gate deciding deployment:</p>
 
-<pre><code>def load_data(): return "1,000 rows"
+<textarea class="gdrun-code" spellcheck="false">def load_data(): return "1,000 rows"
 def train(data):   return {"name": "model-v2", "acc": 0.88}
 def evaluate(m):   return m["acc"]
 def deploy(m):     return f"{m['name']} serving live"
@@ -285,8 +286,7 @@ baseline = 0.85
 if acc >= baseline:                              # the deployment gate (Track 9)
     print(f"eval {acc} >= baseline {baseline}  ->  DEPLOY:", deploy(model))
 else:
-    print(f"eval {acc} < baseline {baseline}  ->  BLOCKED")</code></pre>
-<div class="out"><span class="lbl">Output</span>eval 0.88 >= baseline 0.85  ->  DEPLOY: model-v2 serving live</div>
+    print(f"eval {acc} < baseline {baseline}  ->  BLOCKED")</textarea>
 
 <p>The pipeline runs its stages — load data, train, evaluate — and then the <strong>gate</strong> decides: the new model's
 0.88 accuracy beats the 0.85 baseline, so it deploys. Had it scored below the baseline (say 0.82), the gate would have
@@ -507,5 +507,6 @@ but the understanding, judgment, and discipline you've built are yours to keep. 
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

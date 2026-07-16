@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 3.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm01_setup.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm01_setup.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Before any model, you frame the problem: what are the features, what is the label, and how do you measure success on data you have not seen? Get the train/test discipline wrong and every later number is fiction.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Tell supervised, unsupervised, and reinforcement learning apart</li><li>Read data as a feature matrix X and target vector y</li><li>Explain generalization and why you hold out a test set</li><li>Split data without leaking, keeping class balance</li></ul></div>
@@ -372,7 +373,7 @@ malignant. The goal is the disciplined first step of every project — split int
 class proportions the same in both halves (called a <span class="term">stratified</span> split, so neither half
 accidentally gets too few of a rare class).</p>
 
-<pre><code>from sklearn.datasets import load_breast_cancer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 
 X, y = load_breast_cancer(return_X_y=True)   # X: features, y: 0/1 labels
@@ -383,11 +384,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=0, stratify=y)
 
 print("train:", X_train.shape[0], " test:", X_test.shape[0])
-print(f"benign fraction — train: {y_train.mean():.3f}, test: {y_test.mean():.3f}")</code></pre>
-
-<div class="out"><span class="lbl">Output</span>examples: 569  features: 30  positives: 357
-train: 455  test: 114
-benign fraction — train: 0.626, test: 0.632</div>
+print(f"benign fraction — train: {y_train.mean():.3f}, test: {y_test.mean():.3f}")</textarea>
 
 <p>The 569 examples split into 455 for training and 114 held back for the final test (20%). Crucially, the benign
 fraction is almost identical in both halves (0.626 vs 0.632) — that's stratification doing its job. The
@@ -551,5 +548,6 @@ real model — a straight line — and watch it learn its own slope and intercep
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

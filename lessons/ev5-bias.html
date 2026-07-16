@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 11.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev05_bias.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev05_bias.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Models learn and amplify human biases from data. Bias enters at every stage — data, labels, model, feedback. Measure fairness by comparing outcome rates across groups (the four-fifths rule); removing a protected attribute doesn't remove bias (proxies).</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Identify where bias enters the pipeline</li><li>Measure disparate impact (four-fifths rule)</li><li>Explain proxy features</li><li>Know fairness definitions conflict</li></ul></div>
@@ -302,15 +303,13 @@ intent to discriminate.</p>
 <p>Fairness starts with comparing outcome rates across groups. Here a model's loan-approval decisions are broken down by
 group, and we check each group's rate against the best group's using the four-fifths rule:</p>
 
-<pre><code>groups = {"A": (600, 1000), "B": (420, 1000)}   # (approved, total) per group
+<textarea class="gdrun-code" spellcheck="false">groups = {"A": (600, 1000), "B": (420, 1000)}   # (approved, total) per group
 rates = {g: a / t for g, (a, t) in groups.items()}
 best = max(rates.values())
 for g, r in rates.items():
     ratio = r / best
     flag = "OK" if ratio >= 0.80 else "DISPARATE IMPACT"
-    print(f"group {g}: rate {r:.0%}  ratio {ratio:.2f}  [{flag}]")</code></pre>
-<div class="out"><span class="lbl">Output</span>group A: rate 60%  ratio 1.00  [OK]
-group B: rate 42%  ratio 0.70  [DISPARATE IMPACT]</div>
+    print(f"group {g}: rate {r:.0%}  ratio {ratio:.2f}  [{flag}]")</textarea>
 
 <p>Group A is approved 60% of the time, Group B only 42%. Dividing each group's rate by the highest (A's 60%), Group B's
 ratio is 0.70 — below the 0.80 four-fifths threshold — so the model is flagged for <strong>disparate impact</strong>
@@ -534,5 +533,6 @@ concrete defenses of guardrails and red-teaming.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

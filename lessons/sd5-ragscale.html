@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 10.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/sd05_ragscale.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/sd05_ragscale.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Scaled RAG separates a heavy offline indexing pipeline from a light online serving path. The retrieved chunks become LLM input tokens, so k (chunks retrieved) is a direct cost and latency knob — token economics drive the design.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Separate offline indexing from online serving</li><li>Reason about RAG token cost</li><li>Tune k for cost vs recall</li><li>Apply the ML lifecycle to RAG</li></ul></div>
@@ -287,17 +288,14 @@ DB scales with corpus size, the LLM serving with query volume — and cache at m
 <p>A RAG-specific cost driver: the retrieved chunks become <em>input tokens</em> to the LLM, and you pay per token. The
 number of chunks you retrieve (k) directly sets the cost and latency of every query:</p>
 
-<pre><code>system_tokens, query_tokens, chunk_tokens, k = 100, 50, 200, 5
+<textarea class="gdrun-code" spellcheck="false">system_tokens, query_tokens, chunk_tokens, k = 100, 50, 200, 5
 input_tokens = system_tokens + query_tokens + k * chunk_tokens
 cost_per_1k = 0.003
 per_query = input_tokens / 1000 * cost_per_1k
 print(f"tokens sent to LLM: {input_tokens}")
 print(f"cost per query    : ${per_query:.5f}")
 qpd = 1_000_000
-print(f"daily cost (1M q) : ${per_query * qpd:,.0f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>tokens sent to LLM: 1150
-cost per query    : $0.00345
-daily cost (1M q) : $3,450</div>
+print(f"daily cost (1M q) : ${per_query * qpd:,.0f}")</textarea>
 
 <p>Each query sends the system prompt (100 tokens) + the question (50) + the <strong>5 retrieved chunks × 200 tokens =
 1,000</strong>, for <strong>1,150 input tokens</strong>. At $0.003 per thousand tokens, that's about a third of a cent per
@@ -515,5 +513,6 @@ fast and affordable — queuing, batching, KV caching, and GPU fleets.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

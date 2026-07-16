@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 11.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev03_online.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev03_online.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Offline results are a proxy that often doesn't transfer. Online evaluation via A/B testing measures a model's true effect on real users — randomized, and trusted only after checking statistical significance, not a raw lift.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain online vs offline evaluation</li><li>Describe an A/B test and randomization</li><li>Compute lift</li><li>Know A/B pitfalls (peeking, significance, guardrails)</li></ul></div>
@@ -293,17 +294,14 @@ medical drug trial, applied to software.</p>
 <p>Suppose you A/B test a new checkout model. 10,000 users each see the old (control) and new (treatment) versions, and you
 measure the conversion rate — the fraction who complete a purchase:</p>
 
-<pre><code>control_n, control_conv = 10_000, 500
+<textarea class="gdrun-code" spellcheck="false">control_n, control_conv = 10_000, 500
 treat_n,   treat_conv   = 10_000, 560
 control_rate = control_conv / control_n
 treat_rate   = treat_conv / treat_n
 lift = (treat_rate - control_rate) / control_rate
 print(f"control   : {control_rate:.1%}")
 print(f"treatment : {treat_rate:.1%}")
-print(f"lift      : {lift:+.1%}")</code></pre>
-<div class="out"><span class="lbl">Output</span>control   : 5.0%
-treatment : 5.6%
-lift      : +12.0%</div>
+print(f"lift      : {lift:+.1%}")</textarea>
 
 <p>The control converts at <strong>5.0%</strong> (500 of 10,000) and the treatment at <strong>5.6%</strong> (560 of
 10,000), a relative <strong>lift of +12%</strong> — the new model converted 12% more users. That sounds like a clear win,
@@ -519,5 +517,6 @@ generative outputs at scale, and how to keep that trustworthy.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

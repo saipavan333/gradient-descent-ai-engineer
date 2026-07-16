@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 7.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag01_why.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag01_why.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>LLMs have frozen knowledge, hallucinate, and do not know your private data. RAG fixes all three by retrieving relevant documents at query time and grounding the answer in them — the most-deployed LLM technique in production.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain why RAG exists (frozen knowledge, hallucination, private data)</li><li>Describe the retrieve-then-generate loop</li><li>Compare RAG vs fine-tuning vs long context</li><li>Assemble a grounded prompt</li></ul></div>
@@ -318,7 +319,7 @@ cheap. When the question is "how do I make the model know <em>my</em> data?", RA
 Here's the whole pattern with a tiny corpus and naive keyword scoring (real systems use embeddings — Lesson 7.3 — but
 the loop is identical).</p>
 
-<pre><code>corpus = {
+<textarea class="gdrun-code" spellcheck="false">corpus = {
   "doc1": "Our return policy allows refunds within 30 days of purchase.",
   "doc2": "The headquarters is located in Seattle, Washington.",
   "doc3": "To reset your password, click Forgot Password on the login page.",
@@ -332,12 +333,7 @@ print("retrieved:", best_id)
 
 # 2) GENERATE: build a prompt that grounds the answer in the retrieved context
 prompt = f"Answer using ONLY this context.\nContext: {best_text}\nQuestion: {query}\nAnswer:"
-print(prompt)</code></pre>
-<div class="out"><span class="lbl">Output</span>retrieved: doc1
-Answer using ONLY this context.
-Context: Our return policy allows refunds within 30 days of purchase.
-Question: what is the return policy?
-Answer:</div>
+print(prompt)</textarea>
 
 <p>The retriever found <code>doc1</code> (it shares "return" and "policy" with the query), and we built a prompt that
 hands the model that exact text and instructs it to answer <em>only</em> from it. The model would then respond "Refunds
@@ -514,5 +510,6 @@ so the right context can actually be found.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

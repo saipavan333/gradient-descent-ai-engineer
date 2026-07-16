@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 5.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp04_attention.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp04_attention.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Attention lets each token gather information directly from the words that matter to it — connecting any two positions in one step. It is the mechanism that beat recurrence and powers every transformer.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain what attention solves vs RNNs</li><li>Describe the Query/Key/Value mechanism</li><li>Compute attention weights with softmax of dot products</li><li>See attention as a soft, differentiable lookup</li></ul></div>
@@ -328,7 +329,7 @@ backprop.</p>
 <p>Let's compute attention for one query over three key/value pairs, by hand. The query is compared to each key (dot
 product), softmaxed into weights, and used to blend the values.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 q = np.array([1.0, 0.0])                       # the query: "looking in the x-direction"
 K = np.array([[1.0, 0.0],                      # key 0: matches q well
               [0.0, 1.0],                      # key 1: orthogonal (no match)
@@ -340,10 +341,7 @@ weights = np.exp(scores) / np.exp(scores).sum()  # softmax -> sums to 1
 output = weights @ V                           # weighted blend of the values
 print("scores (q·each key):", scores.round(2))
 print("attention weights:  ", weights.round(3))
-print("output:             ", output.round(2))</code></pre>
-<div class="out"><span class="lbl">Output</span>scores (q·each key): [1.   0.   0.9]
-attention weights:   [0.44  0.162 0.398]
-output:              [6.39 3.61]</div>
+print("output:             ", output.round(2))</textarea>
 
 <p>The query matched key&nbsp;0 (score 1.0) and key&nbsp;2 (0.9) well, and key&nbsp;1 not at all (0.0). After softmax,
 keys 0 and 2 get the most weight (0.44 and 0.40) while key 1 gets little (0.16). The output is the weighted blend of
@@ -516,5 +514,6 @@ inside every transformer — and see why using several attention "heads" at once
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

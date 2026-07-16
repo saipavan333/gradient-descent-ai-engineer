@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 2.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py07_eda.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/py07_eda.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>EDA is the disciplined first look that separates good projects from doomed ones — checking shape, types, missingness, distributions, relationships, and leaks before any model.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Run a repeatable EDA checklist on a new dataset</li><li>Find missing values, outliers, and suspicious correlations</li><li>Spot leakage and duplicates before modeling</li><li>Turn observations into modeling hypotheses</li></ul></div>
@@ -298,7 +299,7 @@ duplicated entries, and the garbled text that no <code>.describe()</code> will e
 <div class="bd">
 <p>Six customer records with planted problems — watch the checklist surface each one.</p>
 
-<pre><code>import pandas as pd, numpy as np
+<textarea class="gdrun-code" spellcheck="false">import pandas as pd, numpy as np
 
 df = pd.DataFrame({
     "customer_id": [1, 2, 3, 4, 5, 5],          # note: 5 appears twice
@@ -312,24 +313,7 @@ print("shape:", df.shape)
 print("\nmissing per column:\n", df.isna().sum())
 print("\nduplicate rows:", df.duplicated().sum())
 print("\nchannel counts:\n", df["channel"].value_counts())   # how many of each category
-print("\ncorrelations with spend:\n", df.corr(numeric_only=True)["spend"].round(2))</code></pre>
-
-<div class="out"><span class="lbl">Output (abridged)</span>shape: (6, 5)
-
-missing per column:
- age    1
-...
-
-duplicate rows: 1
-
-channel counts:
- web    4
- app    2
-
-correlations with spend:
- income_k   1.00
- age        0.99
- spend      1.00</div>
+print("\ncorrelations with spend:\n", df.corr(numeric_only=True)["spend"].round(2))</textarea>
 
 <p>In a few commands the checklist exposed three issues: a <strong>missing age</strong> (impute or drop — Lesson
 2.5), a <strong>duplicate row</strong> (customer 5 appears twice → <code>df.drop_duplicates()</code>), and a near-
@@ -501,5 +485,6 @@ skills under pressure — vectorizing on the spot, debugging a shape error, and 
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

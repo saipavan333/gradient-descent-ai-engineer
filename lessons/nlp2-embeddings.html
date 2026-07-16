@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 5.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp02_embeddings.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp02_embeddings.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>An ID is a meaningless label; an embedding is a learned vector where similar words sit close and directions encode meaning. Embeddings turn language into geometry — the substrate attention operates on, and the engine of semantic search.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain embeddings as learned dense vectors</li><li>Use cosine similarity to compare words</li><li>Understand analogies as vector arithmetic</li><li>Know how word2vec/GloVe learn from context</li></ul></div>
@@ -317,7 +318,7 @@ shortly.</p>
 [royalty, female, animateness]. We'll compute cosine similarities and do the king−man+woman analogy by finding the
 nearest word.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 emb = {"king":  np.array([0.9, 0.1, 0.8]),  "queen": np.array([0.9, 0.9, 0.8]),
        "man":   np.array([0.1, 0.1, 0.2]),  "woman": np.array([0.1, 0.9, 0.2]),
        "apple": np.array([0.2, 0.5, -0.7])}
@@ -330,10 +331,7 @@ print("similarity(king, apple):", round(cos(emb["king"], emb["apple"]), 3))
 analogy = emb["king"] - emb["man"] + emb["woman"]
 best = max((w for w in emb if w not in ["king","man","woman"]),
            key=lambda w: cos(analogy, emb[w]))
-print("king - man + woman  is closest to:", best)</code></pre>
-<div class="out"><span class="lbl">Output</span>similarity(king, queen): 0.848
-similarity(king, apple): -0.309
-king - man + woman  is closest to: queen</div>
+print("king - man + woman  is closest to:", best)</textarea>
 
 <p>"king" and "queen" are highly similar (cosine 0.848 — they share royalty and animateness), while "king" and "apple"
 are dissimilar (−0.309 — pointing different ways). And the vector arithmetic <code>king − man + woman</code> lands
@@ -502,5 +500,6 @@ meet the simple objective — predict the next token — that underlies every mo
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

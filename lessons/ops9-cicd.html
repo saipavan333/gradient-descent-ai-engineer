@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 23 min</span>
 <span class="pill">Lesson 9.9</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops09_cicd.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops09_cicd.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Hand-running the lifecycle doesn't scale. CI/CD automates test → build → deploy; ML adds CT (continuous training) and a baseline gate — the new model must beat production, not just pass tests — which makes automated retraining safe.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain CI/CD and the ML twist (CT)</li><li>Describe the baseline deployment gate</li><li>List ML test types (code, data, model)</li><li>Know why gates make CT safe</li></ul></div>
@@ -294,17 +295,14 @@ production by passing them.</p>
 <p>Here's the gate in miniature: a change only deploys if the tests pass <em>and</em> the new model beats the production
 baseline. Watch how each scenario is handled.</p>
 
-<pre><code>def ci_pipeline(tests_pass, new_acc, baseline_acc):
+<textarea class="gdrun-code" spellcheck="false">def ci_pipeline(tests_pass, new_acc, baseline_acc):
     if not tests_pass:          return "BLOCKED: tests failed"
     if new_acc &lt; baseline_acc:  return "BLOCKED: model worse than baseline"
     return "DEPLOY: all gates passed"
 
 print(ci_pipeline(True,  0.88, 0.86))   # tests pass, beats baseline
 print(ci_pipeline(False, 0.88, 0.86))   # tests fail
-print(ci_pipeline(True,  0.84, 0.86))   # worse than baseline</code></pre>
-<div class="out"><span class="lbl">Output</span>DEPLOY: all gates passed
-BLOCKED: tests failed
-BLOCKED: model worse than baseline</div>
+print(ci_pipeline(True,  0.84, 0.86))   # worse than baseline</textarea>
 
 <p>Three scenarios, three outcomes. The first change has passing tests <em>and</em> a new model (0.88) that beats the
 production baseline (0.86), so it clears both gates and <strong>deploys</strong>. The second has a new model that's better,
@@ -514,5 +512,6 @@ stand out.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

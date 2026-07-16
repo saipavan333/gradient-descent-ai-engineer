@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 10.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/sd03_recsys.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/sd03_recsys.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Recommenders pick the best few items from millions — you can't score everything with a heavy model. The two-stage funnel (cheap candidate generation → expensive ranking) is forced by cost and reused across ML systems.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the two-stage funnel</li><li>Contrast candidate generation and ranking</li><li>Justify the funnel with cost math</li><li>Reason about objectives and feedback loops</li></ul></div>
@@ -301,15 +302,12 @@ hundred candidates with rich features and orders them precisely, producing the f
 <p>The two-stage funnel isn't a stylistic choice; it's forced by cost. Compare ranking the whole catalog with the heavy
 model versus ranking only the candidates the cheap stage produced:</p>
 
-<pre><code>catalog, candidates, rank_cost = 10_000_000, 500, 100
+<textarea class="gdrun-code" spellcheck="false">catalog, candidates, rank_cost = 10_000_000, 500, 100
 naive     = catalog    * rank_cost     # rank the whole catalog with the heavy model
 two_stage = candidates * rank_cost     # rank only the 500 candidates
 print(f"rank all {catalog:,}: {naive:,} units")
 print(f"rank {candidates} candidates: {two_stage:,} units")
-print(f"cheaper by: {naive // two_stage:,}x")</code></pre>
-<div class="out"><span class="lbl">Output</span>rank all 10,000,000: 1,000,000,000 units
-rank 500 candidates: 50,000 units
-cheaper by: 20,000x</div>
+print(f"cheaper by: {naive // two_stage:,}x")</textarea>
 
 <p>If the heavy ranker costs 100 units to score one item, ranking all 10 million items costs a <strong>billion units per
 request</strong> — utterly infeasible at scale. But the cheap candidate-generation stage first narrows to ~500 items, so
@@ -519,5 +517,6 @@ two-stage pattern reappears.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

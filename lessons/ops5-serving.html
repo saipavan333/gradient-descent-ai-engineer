@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 9.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops05_serving.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops05_serving.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A trained model is just a file; serving turns it into a callable service. Packaging (a container) freezes the environment so it runs anywhere; serving patterns — online, batch, streaming — are chosen by how predictions are needed.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain packaging and containers</li><li>Contrast online, batch, and streaming serving</li><li>Distinguish latency and throughput</li><li>Know why serving cost dominates training</li></ul></div>
@@ -309,16 +310,14 @@ scoring events continuously as they flow through a real-time data stream (e.g., 
 function (standing in for the packaged model) is served <strong>online</strong> (one request) and <strong>batch</strong>
 (many inputs at once):</p>
 
-<pre><code>def predict(x): return x * 2                          # the packaged 'model'
+<textarea class="gdrun-code" spellcheck="false">def predict(x): return x * 2                          # the packaged 'model'
 
 # online: one request at a time, answered immediately
 print("online (1 request) :", predict(5))
 
 # batch: score many inputs at once, on a schedule
 batch = [1, 2, 3, 4, 5]
-print("batch (many at once):", [predict(x) for x in batch])</code></pre>
-<div class="out"><span class="lbl">Output</span>online (1 request) : 10
-batch (many at once): [2, 4, 6, 8, 10]</div>
+print("batch (many at once):", [predict(x) for x in batch])</textarea>
 
 <p>The exact same <code>predict</code> is used both ways. <strong>Online</strong>, it's called with a single input
 (<code>predict(5)</code> → 10) — this is the shape of a real-time endpoint: one request in, one prediction out,
@@ -519,5 +518,6 @@ over is not. Next, <strong>9.6 Scaling inference</strong> covers replicas, load 
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

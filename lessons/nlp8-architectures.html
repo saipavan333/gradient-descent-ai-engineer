@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 5.8</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/nlp08_architectures.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/nlp08_architectures.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The same transformer block, wired differently, gives BERT, GPT, and T5. The difference is just what each token may attend to — bidirectional vs causal — controlled by a single mask.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast encoder-only, decoder-only, encoder-decoder</li><li>Explain causal masking for generation</li><li>Match architectures to tasks</li><li>Understand why decoder-only dominates LLMs</li></ul></div>
@@ -277,7 +278,7 @@ target.</p>
 the scores for "future" positions to $-\infty$, so they get zero weight. Let's apply a causal mask to a 4-token score
 matrix and watch the attention become lower-triangular.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 softmax = lambda x: np.exp(x - x.max(-1, keepdims=True)) / np.exp(x - x.max(-1, keepdims=True)).sum(-1, keepdims=True)
 
 scores = np.array([[2., 1., .5, 1.], [1., 3., .5, 1.],
@@ -288,12 +289,7 @@ mask = np.triu(np.ones((4, 4)), k=1).astype(bool)   # True above the diagonal
 scores_masked = scores.copy()
 scores_masked[mask] = -np.inf                         # future -> -inf -> 0 after softmax
 A = softmax(scores_masked)
-print("causal attention (each token sees only itself + past):\n", A.round(2))</code></pre>
-<div class="out"><span class="lbl">Output</span>causal attention (each token sees only itself + past):
- [[1.   0.   0.   0.  ]
- [0.12 0.88 0.   0.  ]
- [0.14 0.23 0.63 0.  ]
- [0.1  0.1  0.1  0.71]]</div>
+print("causal attention (each token sees only itself + past):\n", A.round(2))</textarea>
 
 <p>The attention matrix is now <strong>lower-triangular</strong> — all the upper-right (future) entries are exactly 0.
 Token 0 can only attend to itself (weight 1.0 — it has no past). Token 1 attends to tokens 0 and 1, token 2 to 0–2, and
@@ -470,5 +466,6 @@ self-attention, justify the √d scaling, choose an architecture — with model 
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

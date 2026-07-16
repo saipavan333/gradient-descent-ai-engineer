@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 3.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm07_trees.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm07_trees.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Decision trees reason in human-readable yes/no questions and capture nonlinear patterns no line can. They are interpretable alone and the building block of the ensembles that dominate tabular ML.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Trace a decision tree from root to leaf</li><li>Explain how splits are chosen by impurity</li><li>Recognize the axis-aligned boundary</li><li>See why a single deep tree overfits</li></ul></div>
@@ -366,7 +367,7 @@ validation data.</p>
 <p>Back to the breast-cancer data. We grow trees of increasing maximum depth and compare training accuracy to test
 accuracy. Depth is the complexity knob, so we expect the now-familiar overfitting signature to appear.</p>
 
-<pre><code>from sklearn.datasets import load_breast_cancer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
@@ -375,10 +376,7 @@ X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=0, s
 
 for depth in [1, 3, None]:                       # None = grow until pure
     tree = DecisionTreeClassifier(max_depth=depth, random_state=0).fit(X_tr, y_tr)
-    print(f"depth {str(depth):4s}:  train {tree.score(X_tr, y_tr):.3f}   test {tree.score(X_te, y_te):.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>depth 1   :  train 0.927   test 0.886
-depth 3   :  train 0.974   test 0.921
-depth None:  train 1.000   test 0.939</code></div>
+    print(f"depth {str(depth):4s}:  train {tree.score(X_tr, y_tr):.3f}   test {tree.score(X_te, y_te):.3f}")</textarea>
 
 <p>Read the gap. A <strong>depth-1 stump</strong> (one question!) already gets 88.6% — underfitting a little, with
 train and test close. At <strong>depth 3</strong>, a tree a human could read on one page reaches 92.1% test. Let it
@@ -546,5 +544,6 @@ combine many trees into models that routinely win on tabular data.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

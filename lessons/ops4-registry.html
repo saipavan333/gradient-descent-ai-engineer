@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 22 min</span>
 <span class="pill">Lesson 9.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops04_registry.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops04_registry.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Once you train models regularly, you must track which version is live. A model registry versions models and stages them (staging → production → archived), making promotion explicit and rollback instant — like git for models.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain a model registry</li><li>Define versions and stages</li><li>Describe promotion and rollback</li><li>Know why old versions are archived, not deleted</li></ul></div>
@@ -296,7 +297,7 @@ rollback is one promotion away.</p>
 version to production — and crucially, it first archives whatever was previously in production, enforcing the rule that
 <em>one</em> model is live at a time. Watch the rollback at the end.</p>
 
-<pre><code>registry = {}
+<textarea class="gdrun-code" spellcheck="false">registry = {}
 def register(version): registry[version] = "staging"
 def promote(version):                          # one model is 'production' at a time
     for v in registry:
@@ -307,9 +308,7 @@ register("v1"); promote("v1")
 register("v2"); promote("v2")
 print("after v2 promote:", registry)
 promote("v1")                                  # rollback to the known-good v1
-print("after rollback  :", registry)</code></pre>
-<div class="out"><span class="lbl">Output</span>after v2 promote: {'v1': 'archived', 'v2': 'production'}
-after rollback  : {'v1': 'production', 'v2': 'archived'}</div>
+print("after rollback  :", registry)</textarea>
 
 <p>Trace the stages. We register and promote v1 — it's now production. Then v2 is registered and promoted; promoting v2
 first archives v1 (the old production model), so we get <code>{v1: archived, v2: production}</code> — v2 is live, v1 is
@@ -509,5 +508,6 @@ artifact and the patterns (online, batch, streaming) for serving its predictions
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

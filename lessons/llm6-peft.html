@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 6.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm06_peft.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm06_peft.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Full fine-tuning a billion-parameter model is expensive; LoRA trains under 1% of it by learning a low-rank update, and QLoRA fits it on one GPU. This is how customization happens at scale.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain LoRA's low-rank update</li><li>Compute the parameter savings</li><li>Describe QLoRA's quantization</li><li>Know LoRA's benefits (no forgetting, swappable adapters)</li></ul></div>
@@ -296,17 +297,14 @@ rack. This democratized fine-tuning, putting it within reach of individuals and 
 <p>Let's count the trainable parameters for one weight matrix of a large model — full fine-tuning versus LoRA with rank
 8. A typical hidden dimension is $d = 4096$.</p>
 
-<pre><code>d, r = 4096, 8                  # hidden dimension, LoRA rank
+<textarea class="gdrun-code" spellcheck="false">d, r = 4096, 8                  # hidden dimension, LoRA rank
 
 full = d * d                    # full fine-tune: the whole d x d matrix
 lora = 2 * d * r                # LoRA: B (d x r) + A (r x d)
 
 print(f"full fine-tune of one weight: {full:,} params")
 print(f"LoRA (rank {r}):              {lora:,} params")
-print(f"reduction: {full // lora}x fewer  ({lora / full * 100:.3f}% of the weights)")</code></pre>
-<div class="out"><span class="lbl">Output</span>full fine-tune of one weight: 16,777,216 params
-LoRA (rank 8):              65,536 params
-reduction: 256x fewer  (0.391% of the weights)</div>
+print(f"reduction: {full // lora}x fewer  ({lora / full * 100:.3f}% of the weights)")</textarea>
 
 <p>For this one matrix, full fine-tuning trains 16.8 million parameters; LoRA trains just 65,536 — a
 <strong>256× reduction</strong>, under 0.4% of the weights. Across a whole model, LoRA typically ends up training well
@@ -484,5 +482,6 @@ model's performance from its size, and the surprising abilities that appear only
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

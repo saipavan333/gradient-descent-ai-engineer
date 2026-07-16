@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 1.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/05_eigen_pca.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/05_eigen_pca.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Some directions a transformation only stretches, never rotates. Those eigenvectors reveal the hidden axes along which your data actually varies — exactly what dimensionality reduction (PCA) exploits.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define eigenvectors and eigenvalues and recognize them geometrically</li><li>Connect the covariance matrix to directions of greatest variance</li><li>Explain PCA as 'rotate to the informative axes, then drop the rest'</li><li>Read a scree plot to choose how many components to keep</li></ul></div>
@@ -462,7 +463,7 @@ the variance, often 90–95%.</p>
 <p>Five people, each described by height (cm) and weight (kg). These two features are highly correlated, so PCA
 should be able to summarize both with a single component.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 H = np.array([150, 160, 170, 180, 190.])
 W = np.array([ 50,  58,  65,  73,  80.])
@@ -478,11 +479,7 @@ print("explained variance ratio:", (vals / vals.sum()).round(4))
 pc1 = vecs[:, 0]
 if pc1[0] < 0: pc1 = -pc1                 # eigenvectors are sign-arbitrary; pin the sign
 print("PC1 direction:", pc1.round(2))
-print("each person on PC1:", (Xc @ pc1).round(1))</code></pre>
-
-<div class="out"><span class="lbl">Output (rounded; run the notebook for exact)</span>explained variance ratio: [0.9998 0.0002]
-PC1 direction: [0.8  0.6]
-each person on PC1: [-25.1 -12.3  -0.1  12.7  24.9]</div>
+print("each person on PC1:", (Xc @ pc1).round(1))</textarea>
 
 <p>PC1 alone explains <strong>99.98%</strong> of the variance — so the single column "position along PC1" captures
 nearly everything two features told us. The direction $[0.8, 0.6]$ says PC1 mixes height and weight in roughly a
@@ -654,5 +651,6 @@ that tells a model which way to adjust to do better — the first real step towa
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

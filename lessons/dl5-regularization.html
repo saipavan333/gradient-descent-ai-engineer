@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 4.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl05_regularization.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl05_regularization.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Deep nets have the capacity to memorize — regularization keeps them generalizing. Dropout, weight decay, batch norm, and early stopping are the everyday tools.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain dropout and inverted-dropout scaling</li><li>Connect weight decay to L2 regularization</li><li>Describe batch norm and early stopping</li><li>Toggle train/eval mode correctly</li></ul></div>
@@ -348,7 +349,7 @@ mismatch with test time (when nothing is dropped)? Inverted dropout fixes this b
 probability. Let's verify that this keeps the <em>average</em> activation unchanged, by simulating many random dropout
 masks:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 h = rng.normal(0, 1, 8)        # the 8 activations a layer would output
 p = 0.5                         # drop probability
@@ -357,9 +358,7 @@ p = 0.5                         # drop probability
 masks = rng.random((20000, 8)) > p          # 20k random keep/drop patterns
 dropped = h * masks / (1 - p)               # apply dropout + inverted scaling
 print("original h        :", h.round(2))
-print("avg over droppings:", dropped.mean(axis=0).round(2))</code></pre>
-<div class="out"><span class="lbl">Output</span>original h        : [ 0.13 -0.13  0.64  0.1  -0.54  0.36  1.3   0.95]
-avg over droppings: [ 0.12 -0.13  0.63  0.1  -0.53  0.36  1.31  0.95]</div>
+print("avg over droppings:", dropped.mean(axis=0).round(2))</textarea>
 
 <p>The average activation after dropout matches the original almost exactly — that's the point of the $1/(1-p)$ scaling.
 On any single step, half the values are 0 (a thinned network), but <em>on average</em> the signal passed forward is
@@ -540,5 +539,6 @@ images with filters that detect patterns anywhere in the frame.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

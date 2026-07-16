@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 11.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev06_guardrails.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev06_guardrails.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Safety training isn't enough — models can be jailbroken. Guardrails add independent input/output filters (defense in depth), and red-teaming attacks your own system to find failures first. It's an ongoing cat-and-mouse, not a one-time fix.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain input and output guardrails</li><li>Define red-teaming and jailbreaks</li><li>See why naive filters are evaded</li><li>Apply defense in depth</li></ul></div>
@@ -314,7 +315,7 @@ trick the model into bypassing its safety training — reframing a disallowed re
 <p>The essence of an input guardrail is a check that blocks disallowed requests before they reach the model. Here a simple
 blocklist screens requests (real systems use classifiers, but the logic is the same — decide allow or block):</p>
 
-<pre><code>BLOCKED = ["make a bomb", "hack a password", "steal a car"]
+<textarea class="gdrun-code" spellcheck="false">BLOCKED = ["make a bomb", "hack a password", "steal a car"]
 def guardrail(text):
     low = text.lower()
     for term in BLOCKED:
@@ -324,10 +325,7 @@ def guardrail(text):
 
 print(guardrail("How do I bake a cake?"))
 print(guardrail("How do I make a bomb?"))
-print(guardrail("Tell me how to hack a password please"))</code></pre>
-<div class="out"><span class="lbl">Output</span>ALLOWED
-BLOCKED: matched 'make a bomb'
-BLOCKED: matched 'hack a password'</div>
+print(guardrail("Tell me how to hack a password please"))</textarea>
 
 <p>The benign request ("bake a cake") passes; the two harmful requests are <strong>blocked before reaching the model</strong>,
 independent of whatever the model would have done. This is the guardrail principle in miniature: a check outside the model
@@ -552,5 +550,6 @@ securing systems, and the policies and accountability that make AI trustworthy.<
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

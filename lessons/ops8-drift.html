@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 9.8</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops08_drift.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops08_drift.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Models decay because the world drifts from the training snapshot. Data drift (inputs shift) and concept drift (the input→output rule changes) both degrade accuracy; the fix is detect-and-retrain, the loop that keeps a model current.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define drift and why models go stale</li><li>Distinguish data vs concept drift</li><li>Detect drift (often without labels)</li><li>Explain the retraining loop</li></ul></div>
@@ -313,15 +314,13 @@ keeps a model alive as the world changes.</p>
 <p>A simple drift detector compares a live feature's average to the training baseline; if it has moved too far, retrain.
 Here the training mean was 50; we score two weeks of live data.</p>
 
-<pre><code>train_mean = 50.0
+<textarea class="gdrun-code" spellcheck="false">train_mean = 50.0
 def drift_score(live):
     return round(abs(sum(live)/len(live) - train_mean) / train_mean, 3)
 
 for label, vals in [("week 1", [48,51,49,52,50]), ("week 8", [70,72,68,71,69])]:
     d = drift_score(vals)
-    print(f"{label}: drift={d}  ->", "RETRAIN" if d &gt; 0.10 else "ok")</code></pre>
-<div class="out"><span class="lbl">Output</span>week 1: drift=0.0  -> ok
-week 8: drift=0.4  -> RETRAIN</div>
+    print(f"{label}: drift={d}  ->", "RETRAIN" if d &gt; 0.10 else "ok")</textarea>
 
 <p>The detector measures how far the live data's average has moved from the training average, as a fraction. In
 <strong>week 1</strong>, the live values average 50 — exactly the training baseline — so the drift score is 0.0: the data
@@ -532,5 +531,6 @@ so the lifecycle loop runs reliably without manual steps.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

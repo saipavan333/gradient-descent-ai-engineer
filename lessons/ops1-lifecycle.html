@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 20 min</span>
 <span class="pill">Lesson 9.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops01_lifecycle.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops01_lifecycle.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>MLOps is the engineering of running ML in production — the 90% of work around the model. The lifecycle is a loop (data → train → deploy → monitor → retrain) because models decay as the world changes, unlike ordinary software.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define MLOps and the production gap</li><li>Describe the lifecycle loop</li><li>Explain why ML systems decay silently</li><li>See deployment as the middle, not the end</li></ul></div>
@@ -313,7 +314,7 @@ cycle.</p>
 the final <code>monitor</code> stage decides whether the deployed model is healthy or needs retraining — the feedback
 that closes the loop.</p>
 
-<pre><code>def collect():        return "1,000 labeled rows"
+<textarea class="gdrun-code" spellcheck="false">def collect():        return "1,000 labeled rows"
 def train(data):      return {"name": "fraud-v1", "data": data}
 def evaluate(model):  return 0.86                      # validation accuracy
 def deploy(model):    return f"{model['name']} serving live"
@@ -327,12 +328,7 @@ print("1 data    :", data)
 print("2 train   :", model["name"])
 print("3 evaluate:", acc)
 print("4 deploy  :", status)
-print("5 monitor :", monitor(acc))</code></pre>
-<div class="out"><span class="lbl">Output</span>1 data    : 1,000 labeled rows
-2 train   : fraud-v1
-3 evaluate: 0.86
-4 deploy  : fraud-v1 serving live
-5 monitor : healthy</div>
+print("5 monitor :", monitor(acc))</textarea>
 
 <p>The stages run in order — data, train, evaluate, deploy, monitor — exactly the lifecycle loop. The
 <code>monitor</code> stage is the crucial one: it checks the live model's accuracy against a threshold and returns
@@ -521,5 +517,6 @@ the winner exactly — the foundation everything else stands on.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

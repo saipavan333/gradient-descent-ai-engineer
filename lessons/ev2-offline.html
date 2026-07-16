@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 11.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev02_offline.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev02_offline.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Offline evaluation measures quality on a fixed dataset before deployment. Split data into train/validation/test (never peek at test), and choose metrics by error cost — precision, recall, and F1 from the confusion matrix, not misleading accuracy.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Split data and keep test unseen</li><li>Read the confusion matrix</li><li>Compute precision, recall, F1</li><li>Choose metrics by error cost</li></ul></div>
@@ -280,16 +281,13 @@ recall instead of misleading raw accuracy.</p>
 <p>From a confusion matrix — the counts of each prediction outcome — the meaningful metrics follow directly. Here a
 classifier flagged some items, with 80 true positives, 30 false positives, 20 false negatives, and 870 true negatives:</p>
 
-<pre><code>TP, FP, FN, TN = 80, 30, 20, 870
+<textarea class="gdrun-code" spellcheck="false">TP, FP, FN, TN = 80, 30, 20, 870
 precision = TP / (TP + FP)        # of what we flagged, how much was right?
 recall    = TP / (TP + FN)        # of the real positives, how many did we catch?
 f1 = 2 * precision * recall / (precision + recall)   # their harmonic mean
 print(f"precision: {precision:.3f}")
 print(f"recall   : {recall:.3f}")
-print(f"F1       : {f1:.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>precision: 0.727
-recall   : 0.800
-F1       : 0.762</div>
+print(f"F1       : {f1:.3f}")</textarea>
 
 <p>Each metric answers a different question. <strong>Precision (0.727)</strong>: of the 110 items the model flagged
 (80 + 30), 80 were truly positive — so ~73% of its alarms were real. <strong>Recall (0.800)</strong>: of the 100 actual
@@ -501,5 +499,6 @@ why offline wins so often fail to transfer.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

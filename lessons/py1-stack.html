@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 18 min</span>
 <span class="pill">Lesson 2.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/py01_stack.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/py01_stack.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Before writing ML, you need to know which tool does what and why they're layered. Picking the right library (and notebook vs. script) is the difference between fighting your tools and flowing with them.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Name the core scientific-Python libraries and their jobs</li><li>Explain how pandas, Matplotlib, scikit-learn, and PyTorch build on NumPy</li><li>Choose between a notebook and a script</li><li>Set up a reproducible environment</li></ul></div>
@@ -348,7 +349,7 @@ identical numbers.) These habits cost minutes now and save days later.</p>
 (shown but not run here) would plot them. It's deliberately tiny — the point is to see the pieces click together.
 Read the comments (the text after <code>#</code>, which Python ignores) — they explain each line.</p>
 
-<pre><code>import numpy as np       # load NumPy, and nickname it "np" so we can type less
+<textarea class="gdrun-code" spellcheck="false">import numpy as np       # load NumPy, and nickname it "np" so we can type less
 import pandas as pd      # load pandas, nicknamed "pd"
 
 # NumPy: make some data, with reproducible randomness via a fixed seed (42)
@@ -359,21 +360,7 @@ weights = rng.normal(70, 10, size=5).round(1)   # 5 random weights, avg 70,  spr
 # pandas: organize the two lists into a labeled table (a "DataFrame")
 people = pd.DataFrame({"height_cm": heights, "weight_kg": weights})
 print(people)
-print("\nsummary:\n", people.describe().round(1))   # .describe() = quick stats per column</code></pre>
-
-<div class="out"><span class="lbl">Output (identical every run, thanks to the seed)</span>   height_cm  weight_kg
-0      172.4       57.0
-1      161.7       71.3
-2      176.0       66.8
-3      177.5       69.8
-4      154.4       61.5
-
-summary:
-        height_cm  weight_kg
-count        5.0        5.0
-mean       168.4       65.3
-std         10.0        6.0
-...</div>
+print("\nsummary:\n", people.describe().round(1))   # .describe() = quick stats per column</textarea>
 
 <p>Those few lines touched NumPy (random arrays), pandas (a table and its <code>.describe()</code> summary), and
 reproducibility (the seeded generator, which is why your output will match exactly). The next lessons unpack each
@@ -537,5 +524,6 @@ the array — the one data structure under all of ML — and learn the vectorize
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 45 min</span>
 <span class="pill">Lesson 14.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv06_diffusion.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv06_diffusion.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Diffusion models power Stable Diffusion, DALL-E, and Midjourney. The idea — learn to reverse noise, then denoise from static into a new image — is beautiful and, once seen clearly, demystifies how machines generate images from a text prompt.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the forward (add noise) and reverse (learned denoise) processes</li><li>Describe generation as repeated denoising starting from pure noise</li><li>Explain text conditioning and how a prompt steers the output</li><li>Say why latent diffusion (compress, then diffuse) makes it fast</li></ul></div>
@@ -502,7 +503,7 @@ denoiser), text embeddings — recombined into a system that turns a sentence in
 <code>x_t = √(alpha_bar)·x0 + √(1−alpha_bar)·noise</code>. If the model can predict that noise, subtracting it recovers the
 original. Here it is on a 4-pixel "image":</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 np.random.seed(0)
 x0 = np.array([0.8, 0.2, 0.5, 0.9])   # a clean signal (4 pixels)
 alpha_bar = 0.64                       # fraction of signal retained at step t
@@ -515,12 +516,7 @@ print("noisy x_t:  ", np.round(xt,3))
 # The model's job: predict 'noise' from x_t. Predict it perfectly -> recover x0:
 pred_noise = noise
 x0_recovered = (xt - np.sqrt(1-alpha_bar)*pred_noise)/np.sqrt(alpha_bar)
-print("recovered x0:", np.round(x0_recovered,3))</code></pre>
-<div class="out"><span class="lbl">Output</span>clean x0:    [0.8 0.2 0.5 0.9]
-noise:       [1.764 0.4   0.979 2.241]
-sqrt(a)= 0.8  sqrt(1-a)= 0.6
-noisy x_t:   [1.698 0.4   0.987 2.065]
-recovered x0: [0.8 0.2 0.5 0.9]</div>
+print("recovered x0:", np.round(x0_recovered,3))</textarea>
 
 <p>Follow the mechanics. With <code>alpha_bar = 0.64</code>, the mixing weights are <code>√0.64 = 0.8</code> on the signal
 and <code>√0.36 = 0.6</code> on the noise. So the noisy image <code>x_t</code> is <code>0.8·x0 + 0.6·noise</code> — the
@@ -741,5 +737,6 @@ where a picture and its caption line up.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

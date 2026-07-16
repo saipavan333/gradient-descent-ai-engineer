@@ -11,6 +11,8 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +216,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 3.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm05_biasvar.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm05_biasvar.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Every model that disappoints is either too simple or too complex. Bias-variance is the one framework that names which, explains why, and points to the fix — the most useful diagnostic in applied ML.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Tell underfitting (bias) from overfitting (variance)</li><li>Read the U-shaped test-error curve</li><li>Use the train-test gap as a diagnostic</li><li>Name the bias-variance-noise decomposition</li></ul></div>
@@ -277,6 +279,7 @@ set but flopping on anything new (the trap we first met in Lesson 3.1).</p>
   <text x="611.0" y="260.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">memorizes noise (high variance)</text>
 </svg>
 <figcaption><b>Three complexities, one dataset.</b> Too simple underfits (misses the trend); just right captures the signal; too complex overfits (wiggles through every noisy point). The middle model will generalize best to new data.</figcaption></figure>
+<div class="gdw" data-widget="bias-variance"></div>
 
 <p>To name the cause precisely we use two words. <span class="term">Bias</span> is error from wrong assumptions —
 the model is too rigid to represent the truth (high bias = underfitting). <span class="term">Variance</span> is error
@@ -335,7 +338,7 @@ linear-regression worked example, where MSE bottomed out near the noise variance
 diverge. Degree is our complexity dial: degree 1 is a line, degree 15 is a wildly flexible curve. We hold out 40% as
 a test set and report mean squared error on each.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import make_pipeline
@@ -350,12 +353,7 @@ for deg in [1, 3, 5, 9, 15]:
     model = make_pipeline(PolynomialFeatures(deg), LinearRegression()).fit(X_tr, y_tr)
     tr = ((model.predict(X_tr) - y_tr) ** 2).mean()
     te = ((model.predict(X_te) - y_te) ** 2).mean()
-    print(f"degree {deg:2d}:  train MSE {tr:.3f}   test MSE {te:.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>degree  1:  train MSE 0.237   test MSE 0.255
-degree  3:  train MSE 0.102   test MSE 0.106
-degree  5:  train MSE 0.089   test MSE 0.129
-degree  9:  train MSE 0.083   test MSE 1.355
-degree 15:  train MSE 0.059   test MSE 499.265</code></div>
+    print(f"degree {deg:2d}:  train MSE {tr:.3f}   test MSE {te:.3f}")</textarea>
 
 <p>Read the two columns like the U-curve. <strong>Training MSE only ever falls</strong> (0.237 → 0.059) — more
 flexibility always fits the training points better. But <strong>test MSE bottoms out at degree 3</strong> (0.106) and
@@ -522,5 +520,7 @@ weights small — and discover why one flavor (lasso) sets some of them to exact
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 3.12</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm12_modelselection.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm12_modelselection.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The skill that separates trustworthy results from accidental ones: comparing models and tuning hyperparameters without fooling yourself. Cross-validation and pipelines keep every number honest.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Run k-fold cross-validation correctly</li><li>Tune hyperparameters with grid/random search</li><li>Prevent leakage with pipelines</li><li>Use nested CV or a held-out test for honest scores</li></ul></div>
@@ -375,7 +376,7 @@ using past results to decide which combination to try next.</p>
 the best regularization strength $C$. Crucially, the scaler lives <em>inside</em> a pipeline, so it's refit on each
 fold's training portion only — no leakage (Lesson 2.5) across folds.</p>
 
-<pre><code>from sklearn.datasets import load_breast_cancer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import load_breast_cancer
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -386,9 +387,7 @@ pipe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=5000))
 
 scores = cross_val_score(pipe, X, y, cv=5)
 print("CV scores:", scores.round(3))
-print(f"mean {scores.mean():.3f}  std {scores.std():.3f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>CV scores: [0.982 0.982 0.974 0.974 0.991]
-mean 0.981  std 0.007</code></div>
+print(f"mean {scores.mean():.3f}  std {scores.std():.3f}")</textarea>
 
 <p>Five folds give five scores from 0.974 to 0.991 — averaging to <strong>0.981</strong> with a small spread
 (<strong>std 0.007</strong>). That spread is the gift of cross-validation: a single split might have reported any one
@@ -568,5 +567,6 @@ interviewers ask, with model answers that show the reasoning.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

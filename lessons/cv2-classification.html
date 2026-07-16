@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 40 min</span>
 <span class="pill">Lesson 14.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv02_classification.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv02_classification.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Image classification is the base capability all of vision builds on. Understanding convolution, why architectures like ResNet work, and transfer learning is what lets you actually train a working image model — usually without starting from scratch.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Compute a 2-D convolution by hand and explain weight sharing</li><li>Explain the CNN feature hierarchy (edges to textures to parts to objects)</li><li>Say why ResNet skip connections let networks go very deep</li><li>Use transfer learning: fine-tune a pretrained backbone on a small dataset</li></ul></div>
@@ -303,7 +304,7 @@ discovers which patterns matter.</p>
 filter responds to <em>changes</em> in intensity, so it lights up at the square's edges and stays flat (zero) in the uniform
 interior:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 img = np.array([[0,0,0,0,0],
                 [0,9,9,9,0],
                 [0,9,9,9,0],
@@ -315,11 +316,8 @@ out = np.zeros((H-k+1, W-k+1))
 for i in range(H-k+1):
     for j in range(W-k+1):
         out[i,j] = (img[i:i+k, j:j+k] * kernel).sum()          # multiply + sum
-print("feature map:\n", out.astype(int))</code></pre>
-<div class="out"><span class="lbl">Output</span>feature map:
- [[45 27 45]
- [27  0 27]
- [45 27 45]]</div>
+print("feature map:
+", out.astype(int))</textarea>
 
 <p>The filter slides over the 5×5 image and produces a 3×3 feature map. Look at the pattern: the <strong>center is 0</strong>
 — there the filter sits entirely inside the uniform block of 9s, and the edge detector (which sums to zero over any constant
@@ -573,5 +571,6 @@ classification.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

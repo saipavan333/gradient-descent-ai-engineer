@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 8.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag02_tools.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag02_tools.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Tools are how an agent acts — search, code, APIs, databases. Function calling lets the model emit a structured request the system runs, turning a text generator into something that can actually do things.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain tool use / function calling</li><li>Describe a tool schema (name, parameters)</li><li>Trace the call → execute → observe cycle</li><li>Know what makes a tool well-designed</li></ul></div>
@@ -300,7 +301,7 @@ the call before executing.</p>
 <p>Let's run the full round trip: the model decides to call a tool, your code executes it, and the result becomes the
 answer. (We hard-code the model's decision here; a real LLM would emit this JSON, having read the tool's schema.)</p>
 
-<pre><code>def get_weather(city):                 # the real tool — YOUR code
+<textarea class="gdrun-code" spellcheck="false">def get_weather(city):                 # the real tool — YOUR code
     db = {"Paris": "18C cloudy", "Tokyo": "25C sunny"}
     return db.get(city, "unknown")
 
@@ -314,10 +315,7 @@ call = llm_decide(question)                              # 1) model decides
 result = tools[call["tool"]](**call["arguments"])        # 2) YOUR code executes
 print("model emitted tool call:", call)
 print("tool result:", result)
-print("final answer: It is", result, "in Tokyo.")       # 3) model answers from result</code></pre>
-<div class="out"><span class="lbl">Output</span>model emitted tool call: {'tool': 'get_weather', 'arguments': {'city': 'Tokyo'}}
-tool result: 25C sunny
-final answer: It is 25C sunny in Tokyo.</div>
+print("final answer: It is", result, "in Tokyo.")       # 3) model answers from result</textarea>
 
 <p>Trace the three steps. The model <strong>decided</strong> to call <code>get_weather</code> with
 <code>{"city": "Tokyo"}</code> — a structured request, not a guess at the weather. Your code <strong>looked up the tool
@@ -500,5 +498,6 @@ model's reasoning with its tool calls, grounding each step in real results.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

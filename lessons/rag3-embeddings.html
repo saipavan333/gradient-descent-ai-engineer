@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 7.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag03_embeddings.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag03_embeddings.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Retrieval finds relevant chunks by meaning, not words. Embeddings turn text into vectors where semantic neighbors are close, so cosine similarity retrieves the right chunks even with zero shared words.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain retrieval as nearest-neighbor search</li><li>Use cosine similarity to rank chunks</li><li>Know why embeddings beat keyword search</li><li>Use one embedding model for docs and queries</li></ul></div>
@@ -304,7 +305,7 @@ to the query. (We use TF-IDF vectors here so it runs without a heavy neural mode
 cosine-ranking mechanism is <em>identical</em> to neural retrieval; a real embedding model would additionally capture
 synonyms, as the diagram shows.)</p>
 
-<pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 docs = [
@@ -319,10 +320,7 @@ vec = TfidfVectorizer().fit(docs + [query])   # one shared vectorizer (same mode
 sims = cosine_similarity(vec.transform([query]), vec.transform(docs))[0]
 
 for r in sims.argsort()[::-1][:3]:            # top 3 by similarity
-    print(f"sim {sims[r]:.3f}: {docs[r]}")</code></pre>
-<div class="out"><span class="lbl">Output</span>sim 0.203: You can get a refund within 30 days of purchase.
-sim 0.117: A return requires the original receipt and packaging.
-sim 0.000: Reset your password via the Forgot Password link.</code></div>
+    print(f"sim {sims[r]:.3f}: {docs[r]}")</textarea>
 
 <p>The query about refunds and returns retrieved exactly the two relevant documents — the refund policy (0.203, highest)
 and the return policy (0.117) — while the unrelated password and office documents scored 0. The mechanism is precisely
@@ -505,5 +503,6 @@ specialized indexes make this near-instant.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

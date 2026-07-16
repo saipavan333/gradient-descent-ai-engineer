@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 90 min</span>
 <span class="pill">Lesson 13.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cap1_imageclf.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cap1_imageclf.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Build a custom image classifier with transfer learning: reuse a pretrained backbone (frozen) and train only a small new head on your labels — strong accuracy from little data. The default approach for real image tasks.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain transfer learning</li><li>Freeze a backbone, train a head</li><li>Plan the full image-classifier project</li><li>Reason about fine-tuning vs freezing</li></ul></div>
@@ -271,7 +272,7 @@ train from scratch.</p>
 produced features for each example (fixed), and we train <em>only</em> a small linear head (via gradient descent) on our
 labels. (In the real project the backbone is a pretrained CNN and the head a few layers, but the principle is identical.)</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 X = rng.standard_normal((200, 4))                 # features from a FROZEN backbone
 true_w = np.array([1.5, -2.0, 0.5, 1.0])
@@ -282,8 +283,7 @@ for _ in range(3000):
     p = 1 / (1 + np.exp(-(X @ w)))                 # logistic head
     w -= 0.5 * (X.T @ (p - y) / len(y))            # gradient descent on the head only
 acc = ((X @ w > 0).astype(int) == y).mean()
-print(f"trained head on frozen features -> accuracy: {acc:.2f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>trained head on frozen features -> accuracy: 0.99</div>
+print(f"trained head on frozen features -> accuracy: {acc:.2f}")</textarea>
 
 <p>Training <em>only</em> the small head on the frozen backbone's features reaches <strong>0.99 accuracy</strong> — the head
 learned to map the pretrained features to our classes, without touching the expensive-to-learn features themselves. That's
@@ -497,5 +497,6 @@ fraction of its parameters.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

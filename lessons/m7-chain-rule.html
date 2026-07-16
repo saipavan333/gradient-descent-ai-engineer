@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 1.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/07_chain_rule.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/07_chain_rule.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A neural network is functions inside functions. To train it you need the derivative of the whole stack, and the chain rule gets it by multiplying simple local slopes — the literal engine of backpropagation.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Apply the chain rule to a composed function f(g(x))</li><li>Extend it to multi-step chains as 'multiply the local slopes'</li><li>Trace derivatives through a computational graph</li><li>See why this makes training deep networks tractable</li></ul></div>
@@ -402,7 +403,14 @@ millions of nodes and you have the training of a modern neural network.</p>
 </ul>
 </div>
 
-<h2><span class="sec-tag">Quiz</span> Check yourself</h2>
+<h2><span class="sec-tag" style="background:#0f766e;color:#fff">Run it</span> Try the code yourself</h2><p style="color:#64748b;font-size:14.5px">Real Python, running in your browser — the first run loads Python (~15s), then it is instant. Change a number and run it again.</p><textarea class="gdrun-code" spellcheck="false">import numpy as np
+# compose:  y = sin(u),  u = x^2.   dy/dx = cos(u) * 2x   (chain rule)
+x = 1.5
+u = x**2
+chain   = np.cos(u) * (2*x)               # multiply the local slopes
+numeric = (np.sin((x+1e-6)**2) - np.sin((x-1e-6)**2)) / (2e-6)
+print(&quot;chain rule dy/dx =&quot;, round(float(chain), 5))
+print(&quot;numeric   dy/dx =&quot;, round(float(numeric), 5), &quot; (they match)&quot;)</textarea><h2><span class="sec-tag">Quiz</span> Check yourself</h2>
 <div class="quiz">
 <div class="hd"><span class="ic">✓</span> Four questions — pick one answer each <span class="score">Score: 0 / 4</span></div>
 
@@ -547,5 +555,6 @@ gradients to tune a model's parameters and make it learn.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

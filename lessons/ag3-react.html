@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 8.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ag03_react.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ag03_react.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>ReAct interleaves Reasoning and Acting: the agent writes a Thought, takes an Action, reads an Observation, and loops. Thinking before acting makes tool use deliberate and the trace debuggable — chain-of-thought extended into a loop.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the Thought → Action → Observation loop</li><li>Say why reasoning improves tool choice</li><li>Connect ReAct to chain-of-thought</li><li>Use the reason-trace to debug an agent</li></ul></div>
@@ -276,7 +277,7 @@ assumptions. This grounding-in-feedback is what makes ReAct reliable enough to b
 calculation — with an explicit ReAct trace. The model generates the Thoughts and Actions; your code runs the Actions and
 supplies the Observations.</p>
 
-<pre><code>def search(q):                          # a tool (your code)
+<textarea class="gdrun-code" spellcheck="false">def search(q):                          # a tool (your code)
     return {"France population": "68 million", "Germany population": "84 million"}[q]
 
 # the model interleaves Thought / Action; your code executes Actions -> Observation
@@ -289,15 +290,7 @@ print("Action: search('Germany population')")
 print("Observation:", search("Germany population"))
 
 print("Thought: 68 + 84 = 152 million. I have enough to answer.")
-print("Answer: Together they have about 152 million people.")</code></pre>
-<div class="out"><span class="lbl">Output</span>Thought: I need France's population.
-Action: search('France population')
-Observation: 68 million
-Thought: Now I need Germany's population.
-Action: search('Germany population')
-Observation: 84 million
-Thought: 68 + 84 = 152 million. I have enough to answer.
-Answer: Together they have about 152 million people.</div>
+print("Answer: Together they have about 152 million people.")</textarea>
 
 <p>Watch the interleaving. Each <strong>Thought</strong> reasons about what's needed and decides the next
 <strong>Action</strong>; each <strong>Observation</strong> (the tool's real result) feeds the next Thought. The model
@@ -484,5 +477,6 @@ reflect on and correct their own work.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

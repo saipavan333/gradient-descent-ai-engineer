@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 9.2</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops02_tracking.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops02_tracking.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Training is dozens of experiments; without logging, the best model is lost. Experiment tracking records every run's params, metrics, and artifacts — and reproducibility pins data, code, environment, and the seed so you can rebuild the winner.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Log params, metrics, and artifacts per run</li><li>Compare runs to find the best</li><li>List the five reproducibility determinants</li><li>Explain the random seed</li></ul></div>
@@ -297,7 +298,7 @@ the parameters and often the code version and data reference alongside each run.
 <p>Here's the essence of experiment tracking in a few lines: a <code>log_run</code> function records each run's
 parameters and metrics, and afterward we find the best run by its metric — the comparison that tracking makes trivial.</p>
 
-<pre><code>runs = []
+<textarea class="gdrun-code" spellcheck="false">runs = []
 def log_run(name, params, metrics):
     runs.append({"name": name, "params": params, "metrics": metrics})
 
@@ -307,9 +308,7 @@ log_run("run3", {"lr": 0.01, "layers": 8}, {"val_acc": 0.83})
 
 best = max(runs, key=lambda r: r["metrics"]["val_acc"])
 print("logged", len(runs), "runs")
-print("best:", best["name"], best["params"], "->", best["metrics"]["val_acc"])</code></pre>
-<div class="out"><span class="lbl">Output</span>logged 3 runs
-best: run2 {'lr': 0.01, 'layers': 4} -> 0.86</div>
+print("best:", best["name"], best["params"], "->", best["metrics"]["val_acc"])</textarea>
 
 <p>Each call to <code>log_run</code> stores one experiment's settings and results — exactly what a real tracker like MLflow
 does, just persisted to a server and a UI instead of a list. Once the runs are logged, finding the winner is a one-line
@@ -501,5 +500,6 @@ features are computed reliably and served identically to training and production
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 1.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/06_derivatives.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/06_derivatives.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A model learns by answering one question millions of times: if I nudge this number a little, does my error go up or down? The derivative is that answer, and the gradient is it for every knob at once.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Define the derivative as a rate of change / tangent slope</li><li>Read it as 'output change per unit input change'</li><li>Assemble partial derivatives into the gradient vector</li><li>Explain why the gradient points in the direction of steepest increase</li></ul></div>
@@ -379,7 +380,7 @@ You are one lesson of plumbing (the chain rule) away from it.</p>
 gradient is $\nabla f = (2x, 2y)$ (apply the power rule to each variable separately). Let's confirm that by hand,
 then numerically, then with PyTorch's automatic differentiation — and watch a downhill step lower the value.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 def f(x, y):
     return x**2 + y**2
@@ -396,10 +397,7 @@ print("numerical gradient:", round(dfdx, 3), round(dfdy, 3))   # 2.0 4.0
 g = np.array([2.0, 4.0]); p = np.array([1.0, 2.0])
 lr = 0.1
 p_new = p - lr * g                             # step opposite the gradient
-print("f before:", f(*p), " f after:", round(f(*p_new), 3))    # 5.0 -> 3.2</code></pre>
-
-<div class="out"><span class="lbl">Output</span>numerical gradient: 2.0 4.0
-f before: 5.0  f after: 3.2</div>
+print("f before:", f(*p), " f after:", round(f(*p_new), 3))    # 5.0 -> 3.2</textarea>
 
 <p>The "nudge it and measure" estimate $(2.0, 4.0)$ matches the formula $(2x, 2y) = (2, 4)$ exactly, and stepping
 opposite that gradient dropped $f$ from $5.0$ to $3.2$ — downhill, as promised. Now the magic that makes deep
@@ -583,5 +581,6 @@ deep, and the literal engine of backpropagation.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

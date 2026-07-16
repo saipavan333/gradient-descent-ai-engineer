@@ -11,6 +11,9 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +217,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 3.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cm03_logreg.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cm03_logreg.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Most real ML questions are yes/no, not how-much. Logistic regression bends the line into a probability, giving calibrated confidence and the threshold dial that powers every classifier.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Map a linear score to a probability with the sigmoid</li><li>Read the linear decision boundary</li><li>Train with cross-entropy and know why not MSE</li><li>Extend to many classes with softmax</li></ul></div>
@@ -252,6 +255,7 @@ $\sigma$:</p>
   <text x="320.0" y="322.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">predict class 1 when σ(z) &gt; 0.5  (i.e. when z &gt; 0)</text>
 </svg>
 <figcaption><b>The sigmoid.</b> It takes the model's raw score z (any real number) and bends it into a probability between 0 and 1. A score of 0 maps to exactly 0.5; large positive scores approach 1, large negative scores approach 0.</figcaption></figure>
+<div class="gdw" data-widget="sigmoid"></div>
 
 <p>So <span class="term">logistic regression</span> is just: compute the linear score $z = \mathbf{w}\cdot\mathbf{x} +
 b$ exactly as before, then pass it through the sigmoid to get $\hat{y} = \sigma(z)$, the predicted probability that the
@@ -360,7 +364,7 @@ classification neural network you'll build in Track 4.</p>
 best when features are on a common scale — Lesson 2.5), fit the model on the training half, and score the untouched
 test half. Note the discipline: the scaler is fit on <em>train only</em>, then applied to test.</p>
 
-<pre><code>from sklearn.datasets import load_breast_cancer
+<textarea class="gdrun-code" spellcheck="false">from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -374,8 +378,7 @@ X_train_s = scaler.transform(X_train)
 X_test_s  = scaler.transform(X_test)              # apply same numbers to test
 
 clf = LogisticRegression(max_iter=5000).fit(X_train_s, y_train)
-print("test accuracy:", round(clf.score(X_test_s, y_test), 3))</code></pre>
-<div class="out"><span class="lbl">Output</span>test accuracy: 0.982</div>
+print("test accuracy:", round(clf.score(X_test_s, y_test), 3))</textarea>
 
 <p>98.2% of the held-out tumors classified correctly with the simplest possible model. Now the part that makes
 logistic regression special — it doesn't just say "class 1," it tells you <em>how sure</em> it is. Let's look at its
@@ -547,5 +550,8 @@ the metric that matches the real-world cost.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

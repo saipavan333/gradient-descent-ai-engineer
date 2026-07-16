@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 4.9</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl09_transfer.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl09_transfer.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Most projects cannot train from scratch. Transfer learning reuses a pretrained model's features, reaching strong accuracy with little data — the principle behind every foundation model.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain transfer learning, backbones, and heads</li><li>Choose feature extraction vs fine-tuning</li><li>Freeze layers with requires_grad=False</li><li>Know when transfer helps vs hurts</li></ul></div>
@@ -290,7 +291,7 @@ produces large early gradients that would otherwise wreck the backbone.</p>
 (Here the "extractor" is a fixed random nonlinear map; in real transfer learning it would be a pretrained network with
 far richer features — but the point is identical: the head learns on frozen features.)</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(0)
 n, d, k = 300, 5, 32
 W_features = rng.normal(0, 1, (d, k))         # the FROZEN feature extractor (never updated)
@@ -307,9 +308,7 @@ print("train MSE (head on frozen features):", round(float(((F @ head - y_train)*
 
 X_test = rng.normal(0, 1, (80, d))
 y_test = features(X_test) @ true_head + rng.normal(0, 0.1, (80, 1))
-print("test  MSE:", round(float(((features(X_test) @ head - y_test)**2).mean()), 4))</code></pre>
-<div class="out"><span class="lbl">Output</span>train MSE (head on frozen features): 0.0089
-test  MSE: 0.0091</code></div>
+print("test  MSE:", round(float(((features(X_test) @ head - y_test)**2).mean()), 4))</textarea>
 
 <p>We never touched the feature extractor — only the small head was trained — yet the model fits well and
 <em>generalizes</em> (test MSE 0.0091 ≈ train MSE 0.0089, both near the 0.1²=0.01 noise floor). That's the whole promise
@@ -493,5 +492,6 @@ interviewers ask, with model answers that show the reasoning.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

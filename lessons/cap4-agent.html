@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 120 min</span>
 <span class="pill">Lesson 13.5</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cap4_agent.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cap4_agent.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Build a tool-using agent — an LLM that reasons, calls tools, and loops to accomplish multi-step tasks, wrapped in guardrails. Demonstrates both the power of agents and the defense-in-depth discipline they require.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Build the think-act-observe loop with tools</li><li>Add permission and budget guardrails</li><li>Reason about long-horizon reliability</li><li>Apply least privilege</li></ul></div>
@@ -271,7 +272,7 @@ or is manipulated, it can't cause serious harm — the defense-in-depth principl
 <p>Here's the skeleton: an agent works through a plan of tool calls, but every action passes guardrails first — a permission
 allowlist and a budget. Watch how a disallowed action is blocked while permitted ones run:</p>
 
-<pre><code>def calculator(expr): return eval(expr)        # a tool
+<textarea class="gdrun-code" spellcheck="false">def calculator(expr): return eval(expr)        # a tool
 tools = {"calculator": calculator}
 ALLOWED = {"calculator"}                        # guardrail: permission allowlist
 budget, used = 2, 0
@@ -289,11 +290,7 @@ def agent(goal):
         print(f"  Thought: use {tool}  ->  Action: {tool}({arg})  ->  Observation: {tools[tool](arg)}")
     return "done"
 
-agent("compute some values, safely")</code></pre>
-<div class="out"><span class="lbl">Output</span>goal: compute some values, safely
-  Thought: use calculator  ->  Action: calculator(12*8)  ->  Observation: 96
-  BLOCKED: 'delete_files' not permitted
-  Thought: use calculator  ->  Action: calculator(100-58)  ->  Observation: 42</div>
+agent("compute some values, safely")</textarea>
 
 <p>The agent works through its plan, and each action passes the guardrails before executing. The two
 <code>calculator</code> calls are on the allowlist and within budget, so they run — you see the Think→Act→Observe trace
@@ -513,5 +510,6 @@ that makes it operable.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

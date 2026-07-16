@@ -1,0 +1,13 @@
+/* Gradient Descent — in-browser runnable Python cells (Pyodide). Namespaced .gdrun */
+.gdrun-box{margin:18px 0;border:1px solid #1f2937;border-radius:14px;overflow:hidden;background:#0f172a}
+.gdrun-bar{display:flex;align-items:center;gap:10px;background:#111827;padding:9px 12px;border-bottom:1px solid #1f2937}
+.gdrun-lbl{font-size:12.5px;font-weight:700;color:#5eead4;letter-spacing:.02em}
+.gdrun-status{font-size:12px;color:#fbbf24;font-family:ui-monospace,monospace}
+.gdrun-btn{margin-left:auto;font:inherit;font-size:13px;font-weight:700;border:none;background:#0d9488;color:#fff;padding:6px 16px;border-radius:8px;cursor:pointer}
+.gdrun-btn:hover{background:#0f766e}
+.gdrun-btn:disabled{opacity:.6;cursor:wait}
+.gdrun-code{box-sizing:border-box;width:100%;background:#0f172a;color:#e2e8f0;border:none;font-family:ui-monospace,'Cascadia Code',Consolas,monospace;font-size:13px;line-height:1.55;padding:14px;display:block;overflow:hidden;resize:none}
+.gdrun-code:focus{outline:none;box-shadow:inset 0 0 0 2px #0d9488}
+.gdrun-outlbl{font:800 11px system-ui,-apple-system,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:#5eead4;padding:9px 14px 3px;background:#0b1220;border-top:1px solid #1f2937}
+.gdrun-out{font-family:ui-monospace,monospace;font-size:13px;white-space:pre-wrap;padding:2px 14px 12px;background:#0b1220;color:#7c8aa0;min-height:22px}
+.gdrun-out.ok{color:#86efac}.gdrun-out.err{color:#fca5a5}

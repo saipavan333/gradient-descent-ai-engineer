@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 10.1</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/sd01_framework.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/sd01_framework.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>System design interviews test judgment, not a memorized answer. A five-step framework — clarify requirements, high-level design, data & model, scale, trade-offs — plus back-of-the-envelope estimation lets you drive any AI system design prompt.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Apply the five-step design framework</li><li>Clarify requirements before designing</li><li>Estimate scale (QPS, storage) back-of-envelope</li><li>Reason about trade-offs out loud</li></ul></div>
@@ -331,15 +332,13 @@ often <span class="term">QPS</span> (queries per second): the request rate the s
 <p>Suppose you're designing a feed for an app with 10 million daily active users, each making about 20 requests a day.
 A back-of-the-envelope QPS estimate tells you the scale you're architecting for:</p>
 
-<pre><code>DAU = 10_000_000
+<textarea class="gdrun-code" spellcheck="false">DAU = 10_000_000
 req_per_user = 20
 sec_per_day = 86_400
 avg_qps  = DAU * req_per_user / sec_per_day
 peak_qps = avg_qps * 3          # peak is ~3x average (busy hours)
 print(f"avg QPS : {avg_qps:,.0f}")
-print(f"peak QPS: {peak_qps:,.0f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>avg QPS : 2,315
-peak QPS: 6,944</div>
+print(f"peak QPS: {peak_qps:,.0f}")</textarea>
 
 <p>Ten million users × 20 requests is 200 million requests a day; divided by the 86,400 seconds in a day, that's about
 <strong>2,300 requests per second on average</strong>. But average isn't what you design for — traffic spikes during busy
@@ -539,5 +538,6 @@ into concrete numbers that drive the architecture.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

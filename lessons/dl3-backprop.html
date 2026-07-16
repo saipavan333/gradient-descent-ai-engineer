@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 30 min</span>
 <span class="pill">Lesson 4.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl03_backprop.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl03_backprop.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Backpropagation computes how to adjust every weight — the chain rule, systematized, and the engine that makes learning possible. Understand it and autograd stops being magic.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain backprop as forward values then backward gradients</li><li>Apply the chain rule along a computational graph</li><li>Verify a gradient numerically</li><li>Use loss.backward() and autograd</li></ul></div>
@@ -319,7 +320,7 @@ same as one forward pass, instead of one pass <em>per weight</em>.</p>
 We'll compute the gradient $\partial L/\partial w$ by the chain rule, then verify it against a brute-force numerical
 derivative — the gold-standard sanity check.</p>
 
-<pre><code>x, w, v, t = 2.0, 0.5, 1.5, 3.0
+<textarea class="gdrun-code" spellcheck="false">x, w, v, t = 2.0, 0.5, 1.5, 3.0
 # forward pass
 z  = w * x            # 1.0
 a  = max(0.0, z)      # ReLU -> 1.0
@@ -339,9 +340,7 @@ eps = 1e-6
 def Lf(w): 
     z = w*x; a = max(0.0, z); return (a*v - t)**2
 numerical = (Lf(w+eps) - Lf(w-eps)) / (2*eps)
-print("numerical dL/dw:", round(numerical, 5))</code></pre>
-<div class="out"><span class="lbl">Output</span>loss: 2.25  analytic dL/dw: -9.0
-numerical dL/dw: -9.0</div>
+print("numerical dL/dw:", round(numerical, 5))</textarea>
 
 <p>The chain rule gives $\partial L/\partial w = (-3.0)(1.5)(1.0)(2.0) = -9.0$, and the numerical derivative — literally
 "change $w$ a hair and measure the loss change" — agrees exactly. The negative sign tells gradient descent to
@@ -520,5 +519,6 @@ update into the loop that actually trains a network. Next: <strong>4.4 The train
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

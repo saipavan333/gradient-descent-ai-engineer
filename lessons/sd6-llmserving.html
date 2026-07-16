@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 28 min</span>
 <span class="pill">Lesson 10.6</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/sd06_llmserving.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/sd06_llmserving.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>LLMs are huge and generate one token at a time, so serving them is a specialized discipline: queue → batch → GPU workers with KV cache. Capacity is tokens/sec = QPS × tokens/response; batching keeps GPUs full.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain why LLM serving is hard</li><li>Describe queue, batching, KV cache</li><li>Size a GPU fleet in tokens/sec</li><li>Reason about build vs buy</li></ul></div>
@@ -308,14 +309,12 @@ autoscales with load. Every piece exists to squeeze maximum throughput from scar
 <p>LLM capacity planning works in <em>tokens per second</em>, because generation is token-by-token. Given a target request
 rate, the tokens each response needs, and one GPU's generation throughput, you can estimate the fleet:</p>
 
-<pre><code>import math
+<textarea class="gdrun-code" spellcheck="false">import math
 qps, tokens_per_response, gpu_tokens_per_sec = 100, 500, 2500
 demand = qps * tokens_per_response          # total tokens/sec the platform must generate
 gpus = math.ceil(demand / gpu_tokens_per_sec)
 print(f"tokens/sec demand: {demand:,}")
-print(f"GPUs needed      : {gpus}")</code></pre>
-<div class="out"><span class="lbl">Output</span>tokens/sec demand: 50,000
-GPUs needed      : 20</div>
+print(f"GPUs needed      : {gpus}")</textarea>
 
 <p>At 100 requests per second, each generating a 500-token answer, the platform must produce <strong>50,000 tokens every
 second</strong>. If one GPU (with batching) generates ~2,500 tokens per second, you need <strong>20 GPUs</strong> to keep
@@ -533,5 +532,6 @@ large AI system fast and affordable.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

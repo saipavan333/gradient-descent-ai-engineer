@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 11.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev04_judge.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev04_judge.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Generative outputs have no single correct answer, so human evaluation is the gold standard but doesn't scale. LLM-as-judge grades outputs against a rubric at scale — but must be validated against human labels, since the judge is itself biased.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain LLM-as-judge</li><li>Validate a judge via human agreement</li><li>Know judge biases (position, verbosity)</li><li>Recognize the circularity risk</li></ul></div>
@@ -273,15 +274,13 @@ before you trust it at scale. An unvalidated judge can confidently produce syste
 <p>Before trusting an LLM judge, you measure its <strong>agreement</strong> with human ratings on a labeled sample. Here,
 humans and the judge each rated five responses on a 1–5 scale:</p>
 
-<pre><code>human = [5, 4, 2, 5, 3]          # human ratings (1-5)
+<textarea class="gdrun-code" spellcheck="false">human = [5, 4, 2, 5, 3]          # human ratings (1-5)
 judge = [5, 4, 3, 5, 3]          # LLM-judge ratings
 exact  = sum(h == j for h, j in zip(human, judge))
 within1 = sum(abs(h - j) <= 1 for h, j in zip(human, judge))
 n = len(human)
 print(f"exact agreement   : {exact}/{n} = {exact/n:.0%}")
-print(f"within-1 agreement: {within1}/{n} = {within1/n:.0%}")</code></pre>
-<div class="out"><span class="lbl">Output</span>exact agreement   : 4/5 = 80%
-within-1 agreement: 5/5 = 100%</div>
+print(f"within-1 agreement: {within1}/{n} = {within1/n:.0%}")</textarea>
 
 <p>The judge exactly matched the human on 4 of 5 responses (<strong>80% exact agreement</strong>), and on the fifth it was
 off by only one point (rating 3 vs the human's 2), so <strong>within-1 agreement is 100%</strong>. This is the validation
@@ -505,5 +504,6 @@ what to do about it.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

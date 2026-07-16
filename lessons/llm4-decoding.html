@@ -11,6 +11,8 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +216,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 6.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm04_decoding.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm04_decoding.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The model gives a distribution; decoding picks the token — the dial between dull and creative. Temperature, top-k, and top-p are among the most practical levers you have when using any LLM.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Contrast greedy, beam, and sampling</li><li>Explain temperature, top-k, and top-p</li><li>Match decoding settings to the task</li><li>Diagnose repetitive or incoherent output</li></ul></div>
@@ -259,6 +261,7 @@ generic text, because always choosing the safest word produces bland output and 
   <text x="300.0" y="308.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.6" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">— better for translation, but generic text often prefers sampling (next)</text>
 </svg>
 <figcaption><b>Greedy vs beam search.</b> Greedy commits to the top token at every step — one path, locally optimal but often globally dull. Beam search keeps the few highest-probability partial sequences and extends them, finding better overall sequences. Beam helps for tasks with a "correct" answer (translation); open-ended text usually prefers sampling.</figcaption></figure>
+<div class="gdw" data-widget="softmax-temp"></div>
 
 <p><span class="term">Beam search</span> improves on greedy by keeping the $k$ best <em>partial</em> sequences (the
 "beams") at each step rather than committing to one, so it can find a higher-probability overall sequence. It's
@@ -329,7 +332,7 @@ unlikely (often nonsensical) tokens.</li>
 <p>Let's apply each strategy to the same set of next-token scores (logits) for six candidate tokens, and watch how the
 resulting probabilities change.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 def softmax(z, T=1.0):
     z = z / T; e = np.exp(z - z.max()); return e / e.sum()
 
@@ -347,13 +350,7 @@ print("top-k = 3:", (m / m.sum()).round(3))
 # top-p = 0.9: keep smallest set with cumulative prob >= 0.9
 order = p.argsort()[::-1]; cum = np.cumsum(p[order]); keep = order[:np.searchsorted(cum, 0.9) + 1]
 m2 = np.zeros_like(p); m2[keep] = p[keep]
-print("top-p = 0.9:", (m2 / m2.sum()).round(3))</code></pre>
-<div class="out"><span class="lbl">Output</span>greedy pick:    token 0
-T = 1.0: [0.601 0.221 0.081 0.049 0.037 0.011]
-T = 0.5 (sharper): [0.859 0.116 0.016 0.006 0.003 0.   ]
-T = 1.5 (flatter): [0.457 0.234 0.12  0.086 0.071 0.032]
-top-k = 3: [0.665 0.245 0.09  0.    0.    0.   ]
-top-p = 0.9: [0.665 0.245 0.09  0.    0.    0.   ]</code></div>
+print("top-p = 0.9:", (m2 / m2.sum()).round(3))</textarea>
 
 <p>Watch each knob. <strong>Greedy</strong> just takes token 0. At <strong>T = 1.0</strong> the top token has 60%
 probability; <strong>T = 0.5</strong> sharpens it to 86% (more deterministic, more repetitive); <strong>T = 1.5</strong>
@@ -533,5 +530,7 @@ patterns — zero/few-shot, chain-of-thought, structure — that reliably get be
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

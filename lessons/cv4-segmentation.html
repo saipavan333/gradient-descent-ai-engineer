@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 40 min</span>
 <span class="pill">Lesson 14.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv04_segmentation.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv04_segmentation.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>When you need exact shapes — the precise extent of a tumor or the drivable road — a box is too coarse. Segmentation labels every pixel, and the encoder-decoder (U-Net) design that makes it possible reappears in diffusion models later.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Distinguish semantic vs instance segmentation</li><li>Explain the encoder-decoder (U-Net) and why skip connections matter</li><li>Evaluate a mask and say why per-class IoU/Dice beats raw pixel accuracy</li><li>Pick classify vs detect vs segment for a given task</li></ul></div>
@@ -312,13 +313,11 @@ globally and localizes precisely.</p>
 <p>Since segmentation predicts a class per pixel, you can evaluate it pixel-by-pixel. Here a tiny predicted mask is compared
 to the true mask (each cell is a pixel's class), computing what fraction of pixels the model got right:</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 true = np.array([[0,0,1],[0,1,1],[2,2,1]])      # each cell = the class of that pixel
 pred = np.array([[0,0,1],[0,1,1],[2,2,2]])      # the model's per-pixel prediction
 print("per-pixel accuracy:", round((true == pred).mean(), 3))
-print("pixels correct:", int((true == pred).sum()), "/", true.size)</code></pre>
-<div class="out"><span class="lbl">Output</span>per-pixel accuracy: 0.889
-pixels correct: 8 / 9</div>
+print("pixels correct:", int((true == pred).sum()), "/", true.size)</textarea>
 
 <p>The masks are 3×3 grids where each number is a pixel's predicted class (0 = say background, 1 = object, 2 = something
 else). Comparing cell by cell, the model matches the truth on <strong>8 of 9 pixels</strong> — it got everything right
@@ -537,5 +536,6 @@ around them, are the bread and butter of applied computer vision.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

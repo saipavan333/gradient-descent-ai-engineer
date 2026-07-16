@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 23 min</span>
 <span class="pill">Lesson 11.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ev07_governance.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ev07_governance.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>A system can have a great model yet fail on privacy, security, or governance. Responsible AI protects PII (minimization, redaction), defends against attacks, and establishes accountability — policies, audit, and clear responsibility.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Protect PII and minimize data</li><li>Explain memorization/leakage risk</li><li>Describe security and governance</li><li>Explain why accountability is essential</li></ul></div>
@@ -267,14 +268,13 @@ and how the organization enforces its standards.</p>
 <p>A concrete privacy control: detect and redact personal information before storing it or sending it to a model. Here a
 simple redactor replaces emails and Social Security numbers with placeholders:</p>
 
-<pre><code>import re
+<textarea class="gdrun-code" spellcheck="false">import re
 def redact(text):
     text = re.sub(r'[\w.]+@[\w.]+\.\w+', '[EMAIL]', text)          # emails
     text = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', text)         # US SSNs
     return text
 
-print(redact("Email alex@example.com or reference SSN 123-45-6789 on file."))</code></pre>
-<div class="out"><span class="lbl">Output</span>Email [EMAIL] or reference SSN [SSN] on file.</div>
+print(redact("Email alex@example.com or reference SSN 123-45-6789 on file."))</textarea>
 
 <p>The email and SSN are replaced with <code>[EMAIL]</code> and <code>[SSN]</code>, so the personal details never reach the
 model, the logs, or storage in raw form — a basic implementation of <strong>data minimization</strong> and PII protection.
@@ -502,5 +502,6 @@ into the questions you'll be asked and the mindset that makes your answers stand
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

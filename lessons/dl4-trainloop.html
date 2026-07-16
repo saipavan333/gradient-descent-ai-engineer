@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 27 min</span>
 <span class="pill">Lesson 4.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/dl04_trainloop.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/dl04_trainloop.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>The training loop — zero_grad, forward, loss, backward, step — is the heartbeat of every trained model, plus the optimizers (SGD, momentum, Adam) that make it converge.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Write the canonical training loop</li><li>Explain SGD, momentum, and Adam</li><li>Train a network to learn XOR from scratch</li><li>Diagnose learning-rate problems</li></ul></div>
@@ -320,7 +321,7 @@ early, fine steps late — to settle precisely into the minimum.</p>
 We'll train a tiny network — 2 inputs → 8 hidden (tanh) → 1 output (sigmoid) — with a hand-written training loop:
 forward, MSE loss, manual backprop, SGD step. Watch it go from random to correct.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 rng = np.random.default_rng(1)
 X = np.array([[0,0],[0,1],[1,0],[1,1]], float)
 Y = np.array([[0],  [1],  [1],  [0]],  float)        # XOR targets
@@ -342,9 +343,7 @@ for epoch in range(4000):
     W1 -= lr*dW1; b1 -= lr*db1; W2 -= lr*dW2; b2 -= lr*db2
 
 print("start MSE:", round(start,4), " final MSE:", round(np.mean((P-Y)**2),5))
-print("predictions:", P.round(2).ravel(), " targets:", Y.ravel())</code></pre>
-<div class="out"><span class="lbl">Output</span>start MSE: 0.2645  final MSE: 0.00046
-predictions: [0.02 0.98 0.98 0.03]  targets: [0. 1. 1. 0.]</div>
+print("predictions:", P.round(2).ravel(), " targets:", Y.ravel())</textarea>
 
 <p>From a random start (MSE 0.26, predictions near 0.5 — coin flips) the network drove its error to almost zero and
 learned XOR exactly: $[0.02, 0.98, 0.98, 0.03] \approx [0, 1, 1, 0]$. Nothing here is magic — it's the loop running
@@ -527,5 +526,6 @@ techniques that keep deep networks generalizing instead of overfitting.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

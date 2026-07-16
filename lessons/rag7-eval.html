@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 7.7</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/rag07_eval.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/rag07_eval.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>RAG can fail at retrieval or generation — and you cannot fix what you cannot measure. Recall@k, MRR, and the faithfulness triad let you evaluate each stage and improve the system with eval-driven development.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Evaluate retrieval and generation separately</li><li>Compute recall@k, precision@k, and MRR</li><li>Explain the RAG triad (faithfulness, relevance)</li><li>Build an eval set and use LLM-as-judge</li></ul></div>
@@ -309,7 +310,7 @@ poorly-retrieved (bad context).</p>
 <p>Given a ranked retrieval result and the known-relevant chunks for a test query, let's compute the three core metrics
 directly from their definitions.</p>
 
-<pre><code>retrieved = ["d3", "d7", "d1", "d9", "d2"]   # the system's ranked results (top-5)
+<textarea class="gdrun-code" spellcheck="false">retrieved = ["d3", "d7", "d1", "d9", "d2"]   # the system's ranked results (top-5)
 relevant  = {"d1", "d7"}                      # ground-truth: chunks that truly answer the query
 k = 3
 topk = retrieved[:k]                          # ['d3', 'd7', 'd1']
@@ -319,8 +320,7 @@ precision = len([d for d in topk if d in relevant]) / k               # relevant
 first = next((i + 1 for i, d in enumerate(retrieved) if d in relevant), 0)  # rank of 1st relevant
 mrr   = 1 / first if first else 0.0
 
-print(f"Recall@{k}: {recall:.2f}   Precision@{k}: {precision:.2f}   MRR: {mrr:.2f}")</code></pre>
-<div class="out"><span class="lbl">Output</span>Recall@3: 1.00   Precision@3: 0.67   MRR: 0.50</div>
+print(f"Recall@{k}: {recall:.2f}   Precision@{k}: {precision:.2f}   MRR: {mrr:.2f}")</textarea>
 
 <p>Read each number. <strong>Recall@3 = 1.00</strong>: both relevant chunks (d1 and d7) are in the top 3, so we found
 <em>all</em> the relevant content — excellent, since generation now has everything it needs. <strong>Precision@3 =
@@ -506,5 +506,6 @@ RAG system, pick a chunking strategy, design an evaluation — with model answer
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

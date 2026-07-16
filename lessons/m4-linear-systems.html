@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 24 min</span>
 <span class="pill">Lesson 1.4</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/04_linear_systems.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/04_linear_systems.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Every linear model and least-squares fit is secretly asking: given outputs, which inputs produce them — can we solve a system of linear equations? Knowing when a solution exists, is unique, or is impossible is how you reason about whether a model can even fit your data.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Read Ax = b as intersecting lines and say when it has one, none, or many solutions</li><li>Define span and linear independence and picture them</li><li>Find the rank of a matrix and explain why it is the true dimensionality</li><li>Explain the inverse and why a singular matrix has none</li></ul></div>
@@ -426,7 +427,7 @@ trick (Track 3) earns its keep.</p>
 muffins, $y$ = lattes. That's a linear system:</p>
 $$ \underbrace{x + y = 5}_{\text{count of items}}, \qquad \underbrace{2x + 4y = 14}_{\text{total dollars}}. $$
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 
 A = np.array([[1, 1],      # item count:   1·x + 1·y
               [2, 4]])      # dollars:      2·x + 4·y
@@ -435,10 +436,7 @@ b = np.array([5, 14])
 x = np.linalg.solve(A, b)               # ask NumPy to solve A x = b
 print("muffins, lattes:", x)            # [3. 2.]
 print("determinant:", np.linalg.det(A)) # 2.0  (nonzero -> invertible, unique solution)
-print("rank:", np.linalg.matrix_rank(A))# 2    (full rank for a 2x2)</code></pre>
-<div class="out"><span class="lbl">Output</span>muffins, lattes: [3. 2.]
-determinant: 2.0000000000000004
-rank: 2</div>
+print("rank:", np.linalg.matrix_rank(A))# 2    (full rank for a 2x2)</textarea>
 
 <p>Three muffins, two lattes — the unique crossing point from the diagram. The nonzero determinant and full rank
 both confirm a single solution exists, <em>before</em> we even look at the answer. Now watch what happens when the
@@ -614,5 +612,6 @@ few directions that actually carry information.</p>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

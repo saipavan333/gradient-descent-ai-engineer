@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 26 min</span>
 <span class="pill">Lesson 6.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/llm03_alignment.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/llm03_alignment.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>SFT teaches format; alignment teaches values. RLHF and DPO shape a model to be helpful, honest, and harmless by learning from human preference comparisons — the step that turns a capable model into a trustworthy assistant.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain the alignment pipeline (SFT→RM→RLHF)</li><li>Describe RLHF and the reward model</li><li>Explain DPO as a simpler alternative</li><li>Recognize reward hacking</li></ul></div>
@@ -313,15 +314,14 @@ to write perfect answers.</p>
 probability a human prefers response A over B is the sigmoid (Lesson 3.3) of the difference in their reward scores. The
 reward model is trained so this matches actual human choices.</p>
 
-<pre><code>import numpy as np
+<textarea class="gdrun-code" spellcheck="false">import numpy as np
 sigmoid = lambda x: 1 / (1 + np.exp(-x))
 
 reward_A = 2.5    # the reward model's score for response A (a thorough, helpful answer)
 reward_B = 1.0    # ... and for response B (a curt, less helpful answer)
 
 p_prefer_A = sigmoid(reward_A - reward_B)
-print("P(human prefers A):", round(p_prefer_A, 3))</code></pre>
-<div class="out"><span class="lbl">Output</span>P(human prefers A):  0.818</div>
+print("P(human prefers A):", round(p_prefer_A, 3))</textarea>
 
 <p>A reward gap of 1.5 translates to an 81.8% probability that a human prefers A — and crucially, this is the
 <em>reverse</em> of how training works: we <em>observe</em> that humans preferred A 82% of the time and train the reward
@@ -501,5 +501,6 @@ to coherence. Next, in <strong>6.4 Decoding strategies</strong>, we explore gree
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

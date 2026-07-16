@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 25 min</span>
 <span class="pill">Lesson 9.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/ops03_pipelines.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/ops03_pipelines.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Models eat features, not raw data, and the pipeline that computes them is fragile and critical. Train/serve skew — features computed differently at train vs serve time — silently wrecks accuracy; a feature store computes them once for both.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain feature pipelines</li><li>Define train/serve skew and its danger</li><li>Fix skew with one shared definition</li><li>Describe a feature store (offline/online)</li></ul></div>
@@ -286,7 +287,7 @@ model gets the identical value whether it's learning from history or scoring a l
 <code>features</code> function is applied at training time and serving time; because it's literally the same code, the
 features are guaranteed identical.</p>
 
-<pre><code>import math
+<textarea class="gdrun-code" spellcheck="false">import math
 def features(row):                       # ONE definition, used for train AND serve
     return {"amount_log": round(math.log1p(row["amount"]), 3),
             "is_weekend": row["day"] in ("Sat", "Sun")}
@@ -295,10 +296,7 @@ train_row = {"amount": 100, "day": "Sat"}
 serve_row = {"amount": 100, "day": "Sat"}
 print("train-time:", features(train_row))
 print("serve-time:", features(serve_row))
-print("identical :", features(train_row) == features(serve_row))</code></pre>
-<div class="out"><span class="lbl">Output</span>train-time: {'amount_log': 4.615, 'is_weekend': True}
-serve-time: {'amount_log': 4.615, 'is_weekend': True}
-identical : True</div>
+print("identical :", features(train_row) == features(serve_row))</textarea>
 
 <p>Because both training and serving call the <em>same</em> <code>features</code> function, the same raw input produces
 byte-for-byte identical features — <code>amount_log = 4.615</code>, <code>is_weekend = True</code> — and the final check
@@ -497,5 +495,6 @@ are versioned, staged, and promoted to production (with instant rollback when on
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
+<link rel="stylesheet" href="../assets/gd-run.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -214,7 +215,7 @@
 <div class="lesson-meta">
 <span class="pill">⏱ 45 min</span>
 <span class="pill">Lesson 14.3</span>
-<a class="pill" style="text-decoration:none;color:var(--indigo)" href="../notebooks/cv03_detection.ipynb">⬇ Runnable notebook</a>
+<a class="pill" style="text-decoration:none;color:var(--indigo)" href="https://colab.research.google.com/github/saipavan333/gradient-descent-ai-engineer/blob/main/notebooks/cv03_detection.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
 </div>
 <div class="why-box"><span class="lbl">Why this exists</span>Real applications rarely just label a whole image — they need to find and count objects. Detection adds localization (a box per object) on top of classification, and IoU/mAP are how you measure whether it works.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain detection as localization (box) plus classification (label) per object</li><li>Compute IoU and use the 0.5 threshold to judge a detection correct</li><li>Contrast one-stage vs two-stage detectors and the role of anchors</li><li>Describe what mAP measures and why detection needs it</li></ul></div>
@@ -281,7 +282,7 @@ keep.</p>
 <p>IoU is simple arithmetic on box coordinates. Here we compute it for a predicted box against a ground-truth box (each as
 x1, y1, x2, y2 — top-left and bottom-right corners):</p>
 
-<pre><code>def iou(a, b):                                  # boxes as (x1, y1, x2, y2)
+<textarea class="gdrun-code" spellcheck="false">def iou(a, b):                                  # boxes as (x1, y1, x2, y2)
     ix1, iy1 = max(a[0], b[0]), max(a[1], b[1])
     ix2, iy2 = min(a[2], b[2]), min(a[3], b[3])
     inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)              # overlap area
@@ -290,8 +291,7 @@ x1, y1, x2, y2 — top-left and bottom-right corners):</p>
 
 gt, pred = (0, 0, 10, 10), (1, 1, 11, 11)
 val = iou(gt, pred)
-print(f"IoU = {val:.3f}  ->", "correct (>= 0.5)" if val >= 0.5 else "miss (< 0.5)")</code></pre>
-<div class="out"><span class="lbl">Output</span>IoU = 0.681  -> correct (>= 0.5)</div>
+print(f"IoU = {val:.3f}  ->", "correct (>= 0.5)" if val >= 0.5 else "miss (< 0.5)")</textarea>
 
 <p>The ground-truth box is a 10×10 square at the origin; the prediction is the same size but shifted by 1 pixel in each
 direction. Their <strong>overlap</strong> is the 9×9 region where they coincide (area 81), and their <strong>union</strong>
@@ -502,5 +502,6 @@ the next step: when a box isn't precise enough and you need the exact shape of a
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
+<script defer src="../assets/gd-run.js"></script>
 </body>
 </html>
