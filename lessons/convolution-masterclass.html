@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Convolution, from scratch — Gradient Descent masterclass</title>
+<style>
+:root{
+  --indigo:#4f46e5; --indigo2:#6366f1; --emer:#059669; --emer2:#10b981;
+  --amber:#d97706; --rose:#e11d48; --sky:#0284c7; --violet:#7c3aed;
+  --ink:#0f172a; --body:#1e293b; --muted:#64748b; --line:#e2e8f0;
+  --bg:#f8fafc; --card:#ffffff; --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.05);
+  --mono:'SF Mono',ui-monospace,'Cascadia Code',Consolas,monospace;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 120px}
+a{color:var(--indigo)}
+h1,h2,h3{color:var(--ink);line-height:1.25}
+h1{font-size:34px;margin:.2em 0 .1em;letter-spacing:-.02em}
+h2{font-size:25px;margin:2.2em 0 .5em;letter-spacing:-.01em}
+h3{font-size:19px;margin:1.4em 0 .3em}
+p{margin:.7em 0}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:12px;overflow:auto;font-family:var(--mono);font-size:14px;line-height:1.55}
+pre code{background:none;color:inherit;padding:0}
+.term{font-weight:650;color:var(--indigo);border-bottom:2px dotted #c7d2fe;cursor:help}
+em{color:var(--body)}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.sec-tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;background:var(--indigo);padding:3px 9px;border-radius:999px;vertical-align:middle;margin-right:8px}
+.tag-intu{background:var(--emer)} .tag-formal{background:var(--violet)} .tag-play{background:var(--amber)}
+.tag-worked{background:var(--sky)} .tag-build{background:#334155} .tag-miss{background:var(--rose)}
+.tag-key{background:var(--indigo)} .tag-quiz{background:var(--emer)} .tag-prac{background:var(--sky)}
+.tag-front{background:var(--violet)} .tag-recap{background:var(--amber)} .tag-test{background:var(--ink)}
+.hero{padding:44px 0 8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);
+  border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.promise b{color:var(--indigo)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:22px;margin:18px 0}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px}
+.note .ic{background:var(--sky)} .warn .ic{background:var(--rose)} .tip .ic{background:var(--emer)}
+.gloss{font-size:14.5px;color:var(--muted)}
+.keypoints{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}
+.keypoints .ti{font-weight:800;color:var(--indigo);margin-bottom:6px}
+.keypoints li{margin:.35em 0}
+.small{font-size:14.5px;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--line);margin:2.4em 0}
+
+/* progress + toolbar */
+#bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--indigo),var(--emer));width:0;z-index:60;transition:width .2s}
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.85);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:8px 20px;margin:0 -20px 0}
+.toolbar .grow{flex:1}
+.btn{font-family:var(--sans);font-size:14px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--body);
+  padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--indigo);color:var(--indigo)}
+.btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.btn.primary:hover{background:#4338ca;color:#fff}
+.btn.on{background:var(--emer);color:#fff;border-color:var(--emer)}
+.pct{font-size:13px;color:var(--muted);font-weight:600;min-width:74px;text-align:right}
+
+/* the playground */
+.play{background:#0f172a;border-radius:18px;padding:20px;margin:20px 0;color:#e2e8f0}
+.play h3{color:#fff;margin-top:0}
+.play .lead{color:#94a3b8;font-size:14.5px;margin:.2em 0 14px}
+.pg{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start}
+@media(max-width:720px){.pg{grid-template-columns:1fr}}
+.panel-h{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin:0 0 8px}
+.grid{display:grid;gap:2px;background:#1e293b;padding:2px;border-radius:8px;width:max-content}
+.cell{width:34px;height:34px;display:grid;place-items:center;font-size:11px;font-weight:600;border-radius:3px;user-select:none;cursor:pointer;color:#0f172a}
+.imgwrap .cell:hover{outline:2px solid var(--amber);outline-offset:-2px}
+.cell.win{outline:3px solid var(--amber);outline-offset:-2px;z-index:2}
+.cell.out{width:38px;height:38px;font-size:11px}
+.cell.outsel{outline:3px solid var(--emer2);outline-offset:-2px}
+.mid{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:26px}
+.arrow{color:#64748b;font-size:13px;text-align:center}
+.kern{display:grid;grid-template-columns:repeat(3,44px);gap:4px;margin-bottom:8px}
+.kern input{width:44px;height:34px;text-align:center;border:1px solid #334155;background:#1e293b;color:#e2e8f0;
+  border-radius:6px;font-family:var(--mono);font-size:13px}
+.kern input:focus{outline:2px solid var(--indigo2);border-color:var(--indigo2)}
+.controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.controls .btn{background:#1e293b;color:#e2e8f0;border-color:#334155;font-size:13px;padding:6px 10px}
+.controls .btn:hover{border-color:var(--indigo2);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 0}
+.chip{font-size:12px;padding:4px 9px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover,.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.calc{background:#111827;border:1px solid #1f2937;border-radius:10px;padding:12px;margin-top:14px;font-family:var(--mono);font-size:13px;color:#cbd5e1;min-height:48px}
+.calc b{color:#fff}
+.calc .plus{color:#64748b}
+.eq{color:var(--emer2);font-weight:700}
+.legend{display:flex;gap:14px;align-items:center;font-size:12px;color:#94a3b8;margin-top:10px;flex-wrap:wrap}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+
+/* quiz */
+.quiz .q{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0;background:#fff}
+.quiz .stem{font-weight:600;margin:0 0 10px}
+.quiz .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:9px;
+  padding:9px 12px;margin:6px 0;cursor:pointer;font-size:15.5px;font-family:var(--sans);color:var(--body);transition:.12s}
+.quiz .opt:hover{border-color:var(--indigo)}
+.quiz .opt.correct{background:#ecfdf5;border-color:var(--emer);color:#065f46}
+.quiz .opt.wrong{background:#fef2f2;border-color:var(--rose);color:#991b1b}
+.quiz .why{font-size:14px;margin:8px 2px 0;padding-left:12px;border-left:3px solid var(--line);color:var(--muted);display:none}
+.quiz .why.show{display:block}
+
+/* practice */
+details{border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin:12px 0;background:#fff}
+details summary{cursor:pointer;font-weight:650;padding:12px 0;color:var(--ink)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.lvl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;color:#fff;margin-right:8px}
+.lvl.w{background:var(--emer)} .lvl.t{background:var(--sky)} .lvl.s{background:var(--rose)}
+.sol{font-size:15.5px}
+
+/* code run */
+.runbox{margin:14px 0}
+.runbox textarea{width:100%;min-height:230px;background:#0f172a;color:#e2e8f0;border:1px solid #334155;border-radius:12px 12px 0 0;
+  font-family:var(--mono);font-size:13px;padding:14px;line-height:1.5;resize:vertical;border-bottom:none}
+.runbar{display:flex;gap:8px;align-items:center;background:#111827;border:1px solid #334155;border-top:none;border-radius:0 0 12px 12px;padding:8px 12px}
+.console{background:#0b1220;color:#86efac;font-family:var(--mono);font-size:13px;white-space:pre-wrap;padding:12px 14px;border-radius:10px;margin-top:10px;min-height:26px;border:1px solid #1f2937}
+.tagref{font-size:12.5px;color:var(--muted);font-style:italic}
+
+/* flashcards */
+.deck{background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #dbe2ff;border-radius:16px;padding:20px;margin:18px 0;text-align:center}
+.fcard{background:#fff;border:1px solid var(--line);border-radius:14px;min-height:120px;display:grid;place-items:center;
+  padding:22px;font-size:18px;cursor:pointer;box-shadow:var(--shadow);transition:.15s}
+.fcard:hover{border-color:var(--indigo)}
+.fcard .side{max-width:600px}
+.fmeta{font-size:13px;color:var(--muted);margin:10px 0}
+.frow{display:flex;gap:8px;justify-content:center;margin-top:10px}
+
+.testbox{background:linear-gradient(180deg,#0f172a,#1e293b);color:#e2e8f0;border-radius:16px;padding:24px;margin:20px 0}
+.testbox h3{color:#fff;margin-top:0}
+.testbox .chk{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:15.5px}
+.testbox .chk b{color:#a5b4fc}
+.cert{display:none;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border-radius:16px;padding:24px;text-align:center;margin:20px 0}
+.cert.show{display:block;animation:pop .4s}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.narr-on{background:#fef9c3!important;transition:background .2s;border-radius:4px}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div class="wrap">
+
+<div class="toolbar">
+  <a class="eyebrow" href="../index.html" style="text-decoration:none">← Gradient<span class="eyebrow">Gradient&nbsp;Descent</span>nbsp;Descent</a>
+  <span class="grow"></span>
+  <button class="btn" id="ttsBtn" title="Read the lesson aloud">▶ Read aloud</button>
+  <button class="btn" id="resetProg" title="Reset your progress on this page">Reset</button>
+  <span class="pct" id="pct">0% read</span>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">Computer Vision · Interactive masterclass</div>
+  <h1>Convolution, built from scratch</h1>
+  <p class="small">The single operation at the heart of how computers see. No libraries hiding the idea — you'll build it, watch it move, and be able to teach it.</p>
+</header>
+
+<!-- 1. HOOK + PROMISE -->
+<section data-sec>
+<p data-narr>Hold a stencil with a small shape cut out of it over a photo. Slide it slowly across the picture. At every stop, you peek through the hole and ask one question: "how much does the patch underneath look like my shape?" Write that number down. When you've slid over the whole photo, the grid of numbers you wrote is a brand-new image that lights up wherever your shape appeared. That sliding-and-scoring is <b>convolution</b> — and stack a few of these and you get a system that can recognize a cat, read a licence plate, or spot a tumour.</p>
+
+<div class="promise" data-narr>
+<b>By the end you'll be able to</b> take any small image and any small filter, compute the result by hand, build the whole operation from scratch in code, explain <em>why</em> a filter detects the pattern it does, and know exactly why this one trick powers modern computer vision.
+</div>
+</section>
+
+<!-- 2. INTUITION -->
+<section data-sec>
+<h2><span class="sec-tag tag-intu">1 · Intuition</span> A tiny pattern-detector you slide everywhere</h2>
+
+<p data-narr>Forget formulas for a moment. A digital image is just a grid of numbers — each number is how bright one dot (one <span class="term" title="picture element — one dot of an image">pixel</span>) is. Big number = bright, small number = dark. That's all a computer ever sees: a spreadsheet of brightnesses.</p>
+
+<p data-narr>Now take a much smaller grid of numbers — say 3 boxes by 3 boxes. We call this little grid a <span class="term" title="a small grid of numbers you slide over the image to detect a pattern">filter</span> (also called a <span class="term" title="another word for filter">kernel</span> — same thing). Think of it as a tiny stencil that is tuned to one specific pattern: maybe "a vertical edge", or "a bright spot".</p>
+
+<p data-narr>Here is the whole move. Lay the little filter on the top-left corner of the image. Multiply each filter number by the image number sitting under it, and add all those products into a single total. That total is your <em>score</em>: how strongly this patch matches the filter's pattern. Write the score in a new grid. Slide the filter one step to the right and do it again. Keep going — left to right, top to bottom — until you've covered the image. The new grid of scores is called the <span class="term" title="the output image of scores produced by sliding a filter">feature map</span>: it glows brightly exactly where the filter's pattern was found, and stays dark where it wasn't.</p>
+
+<div class="callout tip"><div class="ic">✦</div><div data-narr><b>The one-sentence picture:</b> a filter is a small pattern; convolution slides it over the whole image and, at each spot, scores how much the image looks like that pattern. Same filter, every position — so it finds the pattern <em>wherever</em> it appears.</div></div>
+</section>
+
+<!-- 3. FORMAL IDEA -->
+<section data-sec>
+<h2><span class="sec-tag tag-formal">2 · The formal idea</span> Multiply, add, slide — written precisely</h2>
+
+<p data-narr>Let's name things carefully, gluing plain words to every symbol so nothing is mysterious.</p>
+
+<p>Call the image <code>I</code> (a grid of numbers) and the filter <code>K</code> (a smaller grid, here 3×3 — "3 rows by 3 columns"). We produce an output grid <code>O</code>, the feature map. The value of the output at row <code>i</code>, column <code>j</code> is:</p>
+
+<div class="card" style="text-align:center;font-family:var(--mono);font-size:15px;background:#f8fafc">
+O[i,j] &nbsp;=&nbsp; Σ<sub>a</sub> Σ<sub>b</sub> &nbsp; I[i+a, j+b] &nbsp;×&nbsp; K[a,b]
+</div>
+
+<p class="gloss">Reading it in English, symbol by symbol: <code>O[i,j]</code> is one number in the output (the score at that spot). The big <b>Σ</b> (the Greek letter sigma) just means <em>"add up"</em>. We have two of them because we add over both the rows and the columns of the little filter. The letters <code>a</code> and <code>b</code> step through the filter's own positions — for a 3×3 filter, <code>a</code> and <code>b</code> each run 0, 1, 2. So <code>I[i+a, j+b]</code> is the image pixel underneath filter-cell <code>(a,b)</code> when the filter's corner sits at <code>(i,j)</code>, and <code>K[a,b]</code> is that filter cell's number. Multiply each pair, add the nine results — that single sum is <code>O[i,j]</code>.</p>
+
+<p data-narr>That is the entire definition. Nine multiplications and an addition, repeated at every position. Two small honesty notes, so nothing surprises you later.</p>
+
+<div class="callout note"><div class="ic">i</div><div>
+<p style="margin:.2em 0" data-narr><b>Note 1 — the output is a bit smaller.</b> A 3×3 filter needs a full 3×3 patch under it. Near the edge of the image there isn't enough room, so the filter's corner can only visit positions that keep it fully on the image. For an <code>N×N</code> image and a 3×3 filter, the feature map is <code>(N−2)×(N−2)</code>. (You can pad the image with a border of zeros to keep the size — more on that in Common mistakes.)</p>
+<p style="margin:.4em 0 .2em" class="gloss"><b>Note 2 — a naming quirk.</b> What we just defined (slide, multiply, add, <em>no flipping</em>) is technically called <span class="term" title="convolution without flipping the filter — what deep learning calls convolution">cross-correlation</span>. True mathematical convolution first flips the filter. Deep learning skips the flip and still calls it "convolution" — because the filter is <em>learned</em>, a flip would just learn the flipped filter, so it makes no difference. Everyone in the field says "convolution" for the no-flip version, and so will we.</p>
+</div></div>
+</section>
+
+<!-- 4. INTERACTIVE -->
+<section data-sec>
+<h2><span class="sec-tag tag-play">3 · Play with it</span> The convolution playground</h2>
+<p data-narr>This is the part words can't do. <b>Paint</b> on the image (click or drag). <b>Change</b> the filter, or pick a preset. Then press <b>Step</b> to walk the filter across the image one position at a time and watch the score being computed, or <b>Play</b> to animate the whole sweep. The feature map on the right fills in live: red means a strong positive score, blue means strongly negative, white means near zero.</p>
+
+<div class="play">
+  <h3>▦ Convolution playground</h3>
+  <p class="lead">Image presets: <span class="chips" id="imgChips" style="display:inline-flex"></span></p>
+
+  <div class="pg">
+    <div class="imgwrap">
+      <div class="panel-h">Image <span style="color:#64748b;text-transform:none;font-weight:500">— click / drag to paint</span></div>
+      <div class="grid" id="imgGrid"></div>
+      <div class="controls">
+        <button class="btn" id="clearImg">Clear</button>
+        <button class="btn" id="invImg">Invert</button>
+      </div>
+    </div>
+
+    <div class="mid">
+      <div class="panel-h" style="text-align:center">Filter (K)</div>
+      <div class="kern" id="kernGrid"></div>
+      <div class="chips" id="kernChips" style="justify-content:center;max-width:180px"></div>
+      <div class="arrow">↓ slides over image ↓</div>
+      <div class="controls" style="justify-content:center">
+        <button class="btn" id="stepBtn">Step ▸</button>
+        <button class="btn primary" id="playBtn">Play ▶</button>
+        <button class="btn" id="resetBtn">⟲</button>
+      </div>
+    </div>
+
+    <div class="outwrap">
+      <div class="panel-h">Feature map (O)</div>
+      <div class="grid" id="outGrid"></div>
+      <div class="legend">
+        <span><span class="sw" style="background:#2563eb"></span>negative</span>
+        <span><span class="sw" style="background:#fff;border:1px solid #475569"></span>~0</span>
+        <span><span class="sw" style="background:#dc2626"></span>positive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="calc" id="calc">Press <b>Step ▸</b> to place the filter on the first patch and see the multiply-and-add.</div>
+</div>
+
+<p class="small" data-narr>Try this: choose the <b>Vertical bar</b> image and the <b>Vertical edge</b> filter — the feature map lights up (positive, red) on the bar's left edge and goes negative (blue) on its right edge, because the filter measures "bright-on-the-right minus bright-on-the-left". Now switch the filter to <b>Horizontal edge</b> while keeping the vertical bar: the whole feature map goes to zero. That is the deepest idea in one experiment — <em>a filter only responds to the pattern it is shaped for.</em></p>
+</section>
+
+<!-- 5. WORKED EXAMPLE -->
+<section data-sec>
+<h2><span class="sec-tag tag-worked">4 · Worked example</span> Every number, by hand</h2>
+<p data-narr>Let's carry one case all the way through, nothing skipped. Our image is a 5×5 grid: a solid 3×3 block of brightness 9 sitting in a border of 0s. Our filter is a classic edge detector.</p>
+
+<div class="pg" style="grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+<div>
+<p class="small" style="margin-top:0"><b>Image I</b> (5×5)</p>
+<pre style="font-size:13px">0 0 0 0 0
+0 9 9 9 0
+0 9 9 9 0
+0 9 9 9 0
+0 0 0 0 0</pre>
+</div>
+<div>
+<p class="small" style="margin-top:0"><b>Filter K</b> (3×3, "Laplacian" edge)</p>
+<pre style="font-size:13px">-1 -1 -1
+-1  8 -1
+-1 -1 -1</pre>
+</div>
+</div>
+
+<p data-narr>This filter means: "take 8 times the centre pixel, then subtract all 8 neighbours." If a pixel looks just like its neighbours (a flat region), the result is 0. If it's different from its surroundings (an edge or corner), the result is large. Let's compute the very first output, <code>O[0,0]</code>, where the filter's corner sits at the top-left.</p>
+
+<p>The 3×3 patch under the filter is the top-left corner of the image:</p>
+<pre style="font-size:13px">patch      K           products
+0 0 0     -1 -1 -1      0  0  0
+0 9 9  ×  -1  8 -1  =   0 72 -9
+0 9 9     -1 -1 -1      0 -9 -9</pre>
+<p data-narr>Add the nine products: 0 + 0 + 0 + 0 + 72 + (−9) + 0 + (−9) + (−9) = <b>45</b>. So <code>O[0,0] = 45</code>. That top-left spot is a corner of the block — very different from its mostly-empty surroundings — so it scores high, exactly as an edge detector should.</p>
+
+<p data-narr>Slide the filter across all 9 valid positions (a 5×5 image with a 3×3 filter gives a 3×3 feature map) and you get:</p>
+<pre style="font-size:13px">feature map O (3×3)
+45 27 45
+27  0 27
+45 27 45</pre>
+<p data-narr>Look at what it found. The four <b>45</b>s are the four corners of the block — the sharpest features. The <b>27</b>s are the flat edges — still a change, but less sharp than a corner. The <b>0</b> in the dead centre is the one pixel whose neighbours are all identical to it (all 9s), so there's nothing to detect. The filter has drawn the outline of the block. That is edge detection, and you just did it with nothing but multiply and add. <span class="tagref">(You'll re-run these exact numbers in code in the next section.)</span></p>
+</section>
+
+<!-- 6. FROM SCRATCH -->
+<section data-sec>
+<h2><span class="sec-tag tag-build">5 · Build it from scratch</span> Run it yourself</h2>
+<p data-narr>Here is the whole operation in real, runnable JavaScript — no libraries, just loops. Press <b>Run</b> and it computes the worked example live in your browser. Then change a number and run it again.</p>
+
+<div class="runbox">
+<textarea id="code" spellcheck="false">// Convolution (cross-correlation) from scratch — no libraries.
+function conv2d(I, K) {
+  const H = I.length, W = I[0].length;      // image size
+  const kh = K.length, kw = K[0].length;    // filter size
+  const outH = H - kh + 1, outW = W - kw + 1;
+  const O = [];
+  for (let i = 0; i < outH; i++) {          // each output row
+    const row = [];
+    for (let j = 0; j < outW; j++) {        // each output column
+      let sum = 0;
+      for (let a = 0; a < kh; a++)          // slide over filter rows
+        for (let b = 0; b < kw; b++)        // slide over filter cols
+          sum += I[i + a][j + b] * K[a][b]; // multiply & accumulate
+      row.push(sum);
+    }
+    O.push(row);
+  }
+  return O;
+}
+
+const I = [[0,0,0,0,0],
+           [0,9,9,9,0],
+           [0,9,9,9,0],
+           [0,9,9,9,0],
+           [0,0,0,0,0]];
+const K = [[-1,-1,-1],
+           [-1, 8,-1],
+           [-1,-1,-1]];
+
+const O = conv2d(I, K);
+O.forEach(r => console.log(r.join('\t')));</textarea>
+<div class="runbar">
+  <button class="btn primary" id="runBtn">Run ▶</button>
+  <button class="btn" id="clrConsole">Clear</button>
+  <span class="small" style="color:#94a3b8">Self-contained · runs offline in your browser</span>
+</div>
+</div>
+<div class="console" id="console">▸ output appears here</div>
+
+<p class="small" data-narr>The same idea in Python is just as short (run it in Google Colab or Jupyter — it needs no special setup beyond NumPy):</p>
+<pre style="font-size:13px"><code>import numpy as np
+
+def conv2d(I, K):
+    H, W = I.shape; kh, kw = K.shape
+    O = np.zeros((H-kh+1, W-kw+1))
+    for i in range(O.shape[0]):
+        for j in range(O.shape[1]):
+            O[i, j] = (I[i:i+kh, j:j+kw] * K).sum()   # patch * filter, summed
+    return O
+
+I = np.array([[0,0,0,0,0],[0,9,9,9,0],[0,9,9,9,0],[0,9,9,9,0],[0,0,0,0,0]])
+K = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])
+print(conv2d(I, K).astype(int))
+# [[45 27 45]
+#  [27  0 27]
+#  [45 27 45]]</code></pre>
+<p class="tagref">The Python block is a reference to read and run in Colab — it isn't wired to a "Run" button here because this page runs JavaScript, not Python. The JavaScript version above is the one you can run and edit in place.</p>
+</section>
+
+<!-- 7. COMMON MISTAKES -->
+<section data-sec>
+<h2><span class="sec-tag tag-miss">6 · Common mistakes</span> Traps people actually hit</h2>
+
+<div class="card">
+<h3>❌ Forgetting the output shrinks (and blaming a bug)</h3>
+<p style="margin:.3em 0">People expect the feature map to be the same size as the image and panic when it's smaller. <b>Why it happens:</b> a 3×3 filter can't centre on the outermost pixels — there's no room. <b>Fix:</b> either accept the <code>(N−2)×(N−2)</code> output, or add a one-pixel border of zeros around the image (<span class="term" title="adding a border of zeros around the image so the output keeps the same size">padding</span>) so every pixel can be a centre. Padding of 1 with a 3×3 filter keeps the size identical.</p>
+</div>
+<div class="card">
+<h3>❌ Thinking a filter detects "everything"</h3>
+<p style="margin:.3em 0">A single filter finds <em>one</em> pattern. A vertical-edge filter is blind to horizontal edges (you saw it go to zero in the playground). <b>Why it matters:</b> real networks use <em>many</em> filters per layer — dozens or hundreds — each hunting a different pattern, and stack layers so later filters combine earlier patterns into bigger ones (edges → corners → eyes → faces).</p>
+</div>
+<div class="card">
+<h3>❌ Mixing up the filter and the image in the multiply</h3>
+<p style="margin:.3em 0">The filter cell <code>K[a,b]</code> multiplies the image pixel <em>underneath it</em>, <code>I[i+a, j+b]</code> — not some fixed image cell. <b>Why it happens:</b> the indices look similar. Keep the picture in mind: the little grid is <em>sitting on top of</em> the big grid, and you multiply each overlapping pair.</p>
+</div>
+<div class="card">
+<h3>❌ Expecting "convolution" to flip the filter</h3>
+<p style="margin:.3em 0">If you read a maths textbook, true convolution flips the filter first; what we do (and what every deep-learning library does under the name "convolution") does not. <b>Why it's fine:</b> the filters are <em>learned from data</em>, so the network would simply learn the un-flipped version. The distinction only matters if you're matching a signal-processing formula by hand.</p>
+</div>
+</section>
+
+<!-- 8. KEY RESULTS -->
+<section data-sec>
+<h2><span class="sec-tag tag-key">7 · Key results</span> The few things worth memorizing</h2>
+<div class="keypoints">
+<div class="ti">★ Lock these in</div>
+<ul>
+<li><b>Convolution = slide a small filter over the image; at each spot, multiply overlapping numbers and add them into one score.</b> The grid of scores is the feature map.</li>
+<li>A filter is a <b>pattern detector</b>: the feature map lights up where its pattern appears and is near zero elsewhere. One filter → one pattern.</li>
+<li>The same filter is used at <b>every position</b> (this reuse is called <span class="term" title="using the same filter weights everywhere, so a pattern is found anywhere in the image">weight sharing</span>) — so a pattern is detected <em>wherever</em> it occurs, and the network needs far fewer numbers to learn.</li>
+<li>An <code>N×N</code> image with a 3×3 filter gives an <code>(N−2)×(N−2)</code> feature map — unless you <b>pad</b> with zeros to keep the size.</li>
+<li>Convolutional networks stack many filters and many layers: <b>edges → textures → parts → objects</b>.</li>
+</ul>
+</div>
+</section>
+
+<!-- 9. QUIZ -->
+<section data-sec>
+<h2><span class="sec-tag tag-quiz">8 · Quiz</span> Check yourself</h2>
+<p class="small">Pick an answer — each one explains itself.</p>
+<div class="quiz" id="quiz"></div>
+</section>
+
+<!-- 10. PRACTICE -->
+<section data-sec>
+<h2><span class="sec-tag tag-prac">9 · Graded practice</span> Warm-up → transfer → stretch</h2>
+
+<details>
+<summary><span class="lvl w">Warm-up</span> Compute one output value by hand</summary>
+<div class="sol">
+<p>Image patch under the filter, and the filter:</p>
+<pre style="font-size:13px">patch        K
+2 2 2       0 0 0
+0 0 0   ×   0 1 0
+0 0 0       0 0 0</pre>
+<p><b>Solution.</b> This filter is the <em>identity</em>: only the centre cell is 1, everything else 0. So the output equals the centre pixel of the patch. The centre of the patch is the middle value, <code>0</code>. Multiply: only <code>0 × 1 = 0</code> survives; all other products are <code>×0 = 0</code>. <b>Output = 0.</b> Teaching point: a filter that is all zeros except a 1 in the middle copies the image unchanged — a useful sanity check when you build convolution.</p>
+</div>
+</details>
+
+<details>
+<summary><span class="lvl t">Transfer</span> Predict a feature map without computing every cell</summary>
+<div class="sol">
+<p>You run a <b>vertical-edge</b> filter <code>[[-1,0,1],[-1,0,1],[-1,0,1]]</code> over an image that is black (0) on the left half and bright (9) on the right half, with the change happening in one column. Describe the feature map without grinding every number.</p>
+<p><b>Solution.</b> The filter computes "sum of the right column minus sum of the left column" of each patch. Where a patch sits entirely in the black region, both columns are 0 → score 0. Same in the all-bright region → 0. Only where the patch <em>straddles the boundary</em> — dark pixels on its left, bright on its right — does right-minus-left become large and positive. So the feature map is <b>zero everywhere except a bright vertical stripe exactly at the light/dark boundary.</b> The filter has located the edge. Reasoning skill: you can predict a feature map by asking "where does the filter's pattern actually occur?" instead of computing all cells.</p>
+</div>
+</details>
+
+<details>
+<summary><span class="lvl s">Stretch</span> Why weight sharing is a superpower (parameter count)</summary>
+<div class="sol">
+<p>Suppose you connected every pixel of a 100×100 image to every pixel of a 100×100 output with its own weight (a "fully connected" layer). How many weights is that? Compare with a single 3×3 convolutional filter that produces a feature map. What does the comparison tell you?</p>
+<p><b>Solution.</b> Fully connected: each of the <code>100×100 = 10,000</code> outputs needs one weight per input pixel, and there are <code>10,000</code> input pixels, so <code>10,000 × 10,000 = 100,000,000</code> weights — a hundred million numbers to learn, for one layer. A single 3×3 convolutional filter has just <b>9 weights</b> (plus one bias), reused at every position. Even with, say, 64 different filters in the layer, that's <code>64 × (9+1) = 640</code> numbers. <b>The convolutional layer uses roughly 150,000× fewer parameters</b> and yet can detect its patterns anywhere in the image. Two lessons fall out: (1) weight sharing makes vision networks trainable at all — a hundred million weights per layer would need astronomical data and compute; (2) it builds in the correct assumption that a pattern is worth detecting <em>wherever</em> it appears (this built-in assumption is called <span class="term" title="an assumption baked into the model architecture before it sees data">inductive bias</span>). This is exactly why convolution, not brute-force connection, powered the first decade of deep vision.</p>
+</div>
+</details>
+</section>
+
+<!-- 11. FRONTIER -->
+<section data-sec>
+<h2><span class="sec-tag tag-front">10 · Frontier note</span> Where this lives in the real world</h2>
+<p data-narr>The operation you just built is, essentially unchanged, the core of every <span class="term" title="Convolutional Neural Network — a network built from stacked convolution layers">Convolutional Neural Network (CNN)</span> that ran computer vision from roughly 2012 onward: the systems that read handwritten cheques, sort photos, guide self-driving cars, and screen medical scans. Real networks differ from our toy only in scale and trimmings: filters operate on colour (three numbers per pixel), each layer holds many filters, and the learned scores pass through simple on/off functions and downsampling steps. But the beating heart is exactly your slide-multiply-add.</p>
+<p data-narr>Two frontier threads worth knowing. First, in real CNNs the filter numbers are <em>not</em> hand-picked like our edge detector — they are <b>learned</b>: the network starts with random filters and gradient descent tunes them until they become whatever detectors best solve the task. Second, since around 2020 a newer design, the <span class="term" title="Vision Transformer — a model that treats image patches as a sequence and uses attention instead of convolution">Vision Transformer</span>, competes with and sometimes beats CNNs by treating image patches like words in a sentence. But convolution is far from retired — it remains dominant when data is limited, powers the denoisers inside image generators like Stable Diffusion, and is increasingly blended <em>into</em> transformers. Understanding convolution is still the price of admission to computer vision.</p>
+</section>
+
+<!-- 12 + 13 -->
+<section data-sec>
+<h2><span class="sec-tag tag-recap">11 · Recap</span> Say it to a friend</h2>
+<div class="promise" data-narr style="font-size:17px">
+"Convolution slides a tiny grid of numbers — a filter — over an image, and at every spot multiplies the overlapping numbers and adds them into a single score. High score means the filter's pattern is there. The grid of scores is a new image that highlights that pattern, and stacking many such filters is how a computer learns to see."
+</div>
+
+<div class="testbox">
+<h3>✓ The test</h3>
+<p style="color:#cbd5e1;margin-top:0" data-narr>You've reached the bar for this lesson if you can honestly say yes to all three. Tick them off:</p>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Derive it:</b> given any small image and filter, compute the feature map by hand, and explain why the output is <code>(N−2)</code> wide.</span></label>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Build it:</b> write the four nested loops (or the NumPy version) from memory and get the right numbers.</span></label>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Explain it:</b> tell a friend why one filter detects only one pattern, and why using the same filter everywhere (weight sharing) is such a big deal.</span></label>
+<div class="cert" id="cert">🎓 <b>Lesson mastered.</b> You can derive, build, and explain convolution. That's the real heart of computer vision — the rest of a CNN is stacking, scaling, and learning the filters.</div>
+</div>
+</section>
+
+<!-- FLASHCARDS -->
+<section data-sec>
+<h2><span class="sec-tag tag-key">Retention</span> Spaced-repetition flashcards</h2>
+<p class="small" data-narr>Click the card to flip it. Rate yourself honestly — cards you find hard come back sooner. Your progress is saved on this device only.</p>
+<div class="deck">
+  <div class="fcard" id="fcard"><div class="side" id="fside">Loading…</div></div>
+  <div class="fmeta" id="fmeta"></div>
+  <div class="frow" id="frow" style="display:none">
+    <button class="btn" id="againBtn">Again ↻</button>
+    <button class="btn on" id="goodBtn">Got it ✓</button>
+  </div>
+  <div class="frow"><button class="btn" id="flipBtn">Flip card</button></div>
+</div>
+</section>
+
+<div class="footer">
+<p><b>Gradient Descent</b> · Convolution masterclass · built to be learned alone, offline, and for free. Everything you did here — painting, running code, flashcards, progress — stays on your device.</p>
+</div>
+
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   0. Small helpers
+   ============================================================ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
+const LSKEY = "gd_conv_masterclass_v1";
+const store = {
+  get(){ try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return {}} },
+  set(o){ try{localStorage.setItem(LSKEY, JSON.stringify(o))}catch(e){} }
+};
+
+/* ============================================================
+   1. THE PLAYGROUND
+   ============================================================ */
+const N = 8;                              // image is 8x8
+let img = Array.from({length:N},()=>Array(N).fill(0));
+let K = [[-1,0,1],[-1,0,1],[-1,0,1]];     // start: vertical edge
+let step = -1;                            // animation position
+let timer = null;
+
+const outN = N - 2;                       // valid conv output size
+
+// ----- image presets -----
+const IMG_PRESETS = {
+  "Vertical bar": g => { for(let r=0;r<N;r++){ g[r][3]=9; g[r][4]=9; } },
+  "Diagonal":     g => { for(let r=0;r<N;r++){ g[r][r]=9; if(r+1<N)g[r][r+1]=9;} },
+  "Dot":          g => { g[3][3]=9; g[3][4]=9; g[4][3]=9; g[4][4]=9; },
+  "Ring":         g => { for(let r=1;r<N-1;r++){ g[r][1]=9; g[r][N-2]=9; g[1][r]=9; g[N-2][r]=9; } },
+  "Corner block": g => { for(let r=2;r<6;r++)for(let c=2;c<6;c++)g[r][c]=9; },
+};
+// ----- kernel presets -----
+const K_PRESETS = {
+  "Vertical edge":   [[-1,0,1],[-1,0,1],[-1,0,1]],
+  "Horizontal edge": [[-1,-1,-1],[0,0,0],[1,1,1]],
+  "Sobel-x":         [[-1,0,1],[-2,0,2],[-1,0,1]],
+  "Blur":            [[1/9,1/9,1/9],[1/9,1/9,1/9],[1/9,1/9,1/9]],
+  "Sharpen":         [[0,-1,0],[-1,5,-1],[0,-1,0]],
+  "Edges":           [[-1,-1,-1],[-1,8,-1],[-1,-1,-1]],
+  "Identity":        [[0,0,0],[0,1,0],[0,0,0]],
+};
+
+// pure conv (used by widget AND unit tests) — cross-correlation, valid
+function conv2d(I, Kr){
+  const H=I.length, W=I[0].length, kh=Kr.length, kw=Kr[0].length;
+  const O=[];
+  for(let i=0;i<=H-kh;i++){ const row=[];
+    for(let j=0;j<=W-kw;j++){ let s=0;
+      for(let a=0;a<kh;a++) for(let b=0;b<kw;b++) s+=I[i+a][j+b]*Kr[a][b];
+      row.push(s);
+    } O.push(row);
+  } return O;
+}
+
+// diverging colormap: blue(neg) - white(0) - red(pos)
+function heat(v, maxAbs){
+  if(maxAbs<=1e-9) return "rgb(255,255,255)";
+  const t = clamp(v/maxAbs,-1,1);
+  let r,g,b;
+  if(t>=0){ r=255-35*t;  g=255-217*t; b=255-217*t; }   // white -> red
+  else    { const a=-t; r=255-218*a; g=255-156*a; b=255-20*a; } // white -> blue
+  return `rgb(${Math.round(r)},${Math.round(g)},${Math.round(b)})`;
+}
+const gray = v => { const g=Math.round(255*clamp(v/9,0,1)); return `rgb(${g},${g},${g})`; };
+
+// ----- build the DOM grids -----
+const imgGrid=$("#imgGrid"), outGrid=$("#outGrid"), kernGrid=$("#kernGrid"), calc=$("#calc");
+
+function buildImgGrid(){
+  imgGrid.style.gridTemplateColumns=`repeat(${N},34px)`;
+  imgGrid.innerHTML="";
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const d=document.createElement("div");
+    d.className="cell"; d.dataset.r=r; d.dataset.c=c;
+    imgGrid.appendChild(d);
+  }
+}
+function buildOutGrid(){
+  outGrid.style.gridTemplateColumns=`repeat(${outN},38px)`;
+  outGrid.innerHTML="";
+  for(let r=0;r<outN;r++)for(let c=0;c<outN;c++){
+    const d=document.createElement("div");
+    d.className="cell out"; d.dataset.r=r; d.dataset.c=c;
+    outGrid.appendChild(d);
+  }
+}
+function buildKernGrid(){
+  kernGrid.innerHTML="";
+  for(let a=0;a<3;a++)for(let b=0;b<3;b++){
+    const inp=document.createElement("input");
+    inp.type="number"; inp.step="1"; inp.value=round2(K[a][b]);
+    inp.dataset.a=a; inp.dataset.b=b;
+    inp.addEventListener("input",()=>{ const v=parseFloat(inp.value); K[a][b]=isNaN(v)?0:v; render(); });
+    kernGrid.appendChild(inp);
+  }
+}
+const round2 = x => Math.abs(x-Math.round(x))<1e-9?Math.round(x):Math.round(x*100)/100;
+
+// ----- render everything from state -----
+function render(){
+  // image cells
+  $$(".imgwrap .cell",imgGrid.parentElement).forEach(d=>{
+    const r=+d.dataset.r,c=+d.dataset.c,v=img[r][c];
+    d.style.background=gray(v);
+    d.textContent = v? v : "";
+    d.style.color = v>4?"#0f172a":"#475569";
+  });
+  // feature map
+  const O=conv2d(img,K);
+  let maxAbs=0; O.forEach(row=>row.forEach(v=>maxAbs=Math.max(maxAbs,Math.abs(v))));
+  $$(".cell.out",outGrid).forEach(d=>{
+    const r=+d.dataset.r,c=+d.dataset.c,v=O[r][c];
+    d.style.background=heat(v,maxAbs);
+    d.textContent=round2(v);
+    d.style.color=Math.abs(v)>0.6*maxAbs?"#fff":"#0f172a";
+    d.classList.remove("outsel");
+  });
+  // highlight current step
+  clearWin();
+  if(step>=0){
+    const oi=Math.floor(step/outN), oj=step%outN;
+    for(let a=0;a<3;a++)for(let b=0;b<3;b++){
+      const cell=imgGrid.querySelector(`.cell[data-r="${oi+a}"][data-c="${oj+b}"]`);
+      if(cell) cell.classList.add("win");
+    }
+    const oc=outGrid.querySelector(`.cell.out[data-r="${oi}"][data-c="${oj}"]`);
+    if(oc) oc.classList.add("outsel");
+    showCalc(oi,oj);
+  }
+  return O;
+}
+function clearWin(){ $$(".cell.win",imgGrid).forEach(c=>c.classList.remove("win")); }
+
+function showCalc(oi,oj){
+  let terms=[], sum=0;
+  for(let a=0;a<3;a++)for(let b=0;b<3;b++){
+    const iv=img[oi+a][oj+b], kv=K[a][b], p=iv*kv;
+    sum+=p;
+    if(kv!==0 && iv!==0) terms.push(`${iv}×${round2(kv)}`);
+  }
+  const shown = terms.length? terms.join(' <span class="plus">+</span> ') : "0";
+  calc.innerHTML = `Position <b>O[${oi},${oj}]</b> &nbsp;=&nbsp; ${shown} &nbsp;=&nbsp; <span class="eq">${round2(sum)}</span>`;
+}
+
+// ----- painting -----
+let painting=false, paintVal=9;
+imgGrid.addEventListener("mousedown",e=>{
+  const cell=e.target.closest(".cell"); if(!cell)return;
+  const r=+cell.dataset.r,c=+cell.dataset.c;
+  paintVal = img[r][c]>0?0:9;         // toggle behaviour
+  img[r][c]=paintVal; painting=true; render(); e.preventDefault();
+});
+imgGrid.addEventListener("mouseover",e=>{
+  if(!painting)return;
+  const cell=e.target.closest(".cell"); if(!cell)return;
+  img[+cell.dataset.r][+cell.dataset.c]=paintVal; render();
+});
+window.addEventListener("mouseup",()=>painting=false);
+// touch support
+imgGrid.addEventListener("touchstart",e=>{
+  const t=e.touches[0], el=document.elementFromPoint(t.clientX,t.clientY);
+  const cell=el&&el.closest(".cell"); if(!cell)return;
+  const r=+cell.dataset.r,c=+cell.dataset.c; paintVal=img[r][c]>0?0:9;
+  img[r][c]=paintVal; painting=true; render(); e.preventDefault();
+},{passive:false});
+imgGrid.addEventListener("touchmove",e=>{
+  if(!painting)return;
+  const t=e.touches[0], el=document.elementFromPoint(t.clientX,t.clientY);
+  const cell=el&&el.closest(".cell"); if(!cell)return;
+  img[+cell.dataset.r][+cell.dataset.c]=paintVal; render(); e.preventDefault();
+},{passive:false});
+imgGrid.addEventListener("touchend",()=>painting=false);
+
+// ----- controls -----
+function stepOnce(){ step=(step+1)%(outN*outN); render(); }
+$("#stepBtn").onclick=()=>{ stopPlay(); stepOnce(); };
+$("#playBtn").onclick=()=>{ timer?stopPlay():startPlay(); };
+$("#resetBtn").onclick=()=>{ stopPlay(); step=-1; render(); calc.innerHTML='Press <b>Step ▸</b> to place the filter and see the multiply-and-add.'; };
+function startPlay(){ $("#playBtn").textContent="Pause ⏸"; $("#playBtn").classList.remove("primary");
+  timer=setInterval(stepOnce,650); }
+function stopPlay(){ if(timer){clearInterval(timer);timer=null;} $("#playBtn").textContent="Play ▶"; $("#playBtn").classList.add("primary"); }
+$("#clearImg").onclick=()=>{ img=Array.from({length:N},()=>Array(N).fill(0)); step=-1; render(); };
+$("#invImg").onclick=()=>{ for(let r=0;r<N;r++)for(let c=0;c<N;c++)img[r][c]=9-img[r][c]; render(); };
+
+// ----- preset chips -----
+const imgChips=$("#imgChips"), kernChips=$("#kernChips");
+Object.keys(IMG_PRESETS).forEach(name=>{
+  const c=document.createElement("span"); c.className="chip"; c.textContent=name;
+  c.onclick=()=>{ img=Array.from({length:N},()=>Array(N).fill(0)); IMG_PRESETS[name](img); step=-1;
+    $$(".chip",imgChips).forEach(x=>x.classList.remove("sel")); c.classList.add("sel"); render(); };
+  imgChips.appendChild(c);
+});
+Object.keys(K_PRESETS).forEach(name=>{
+  const c=document.createElement("span"); c.className="chip"; c.textContent=name;
+  c.onclick=()=>{ K=K_PRESETS[name].map(r=>r.slice()); buildKernGrid();
+    $$(".chip",kernChips).forEach(x=>x.classList.remove("sel")); c.classList.add("sel"); render(); };
+  kernChips.appendChild(c);
+});
+
+// init playground
+buildImgGrid(); buildOutGrid(); buildKernGrid();
+IMG_PRESETS["Vertical bar"](img);
+$$(".chip",imgChips).find(c=>c.textContent==="Vertical bar")?.classList.add("sel");
+$$(".chip",kernChips).find(c=>c.textContent==="Vertical edge")?.classList.add("sel");
+render();
+
+/* ============================================================
+   2. RUNNABLE CODE (self-contained JS only)
+   ============================================================ */
+const cons=$("#console");
+$("#runBtn").onclick=()=>{
+  const src=$("#code").value;
+  const logs=[];
+  const fakeConsole={ log:(...a)=>logs.push(a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" ")) };
+  try{
+    new Function("console", src)(fakeConsole);
+    cons.textContent = logs.length? logs.join("\n") : "(ran with no output)";
+    cons.style.color="#86efac";
+  }catch(err){
+    cons.textContent="⚠ "+err.message; cons.style.color="#fca5a5";
+  }
+};
+$("#clrConsole").onclick=()=>{ cons.textContent="▸ output appears here"; cons.style.color="#86efac"; };
+
+/* ============================================================
+   3. QUIZ
+   ============================================================ */
+const QUIZ=[
+ {q:"What does a single output value in a feature map represent?",
+  opts:[
+   {t:"The brightness of one image pixel, copied over",w:"Only the identity filter copies a pixel; in general the output mixes a whole patch."},
+   {t:"A score of how much the patch under the filter matches the filter's pattern",c:1},
+   {t:"The average of the whole image",w:"That would need a filter covering the entire image; a 3×3 filter only sees a 3×3 patch."},
+   {t:"The largest pixel in the image",w:"Convolution multiplies and adds a local patch; it doesn't take a maximum (that's pooling)."}
+  ]},
+ {q:"A 10×10 image is convolved with a 3×3 filter, no padding. What size is the feature map?",
+  opts:[
+   {t:"10×10",w:"Same-size output needs zero-padding of 1; without padding the filter can't centre on the border."},
+   {t:"8×8",c:1},
+   {t:"7×7",w:"That would be for a 4×4 filter (10−4+1=7). For 3×3 it's 10−3+1=8."},
+   {t:"3×3",w:"3×3 is the filter size, not the output size."}
+  ]},
+ {q:"You run a vertical-edge filter over an image containing only horizontal stripes. The feature map is roughly all zeros. Why?",
+  opts:[
+   {t:"The filter is broken",w:"Nothing is broken — a zero response is the correct, meaningful answer here."},
+   {t:"Horizontal stripes have no left-right brightness change, so a vertical-edge detector finds nothing",c:1},
+   {t:"Convolution can't handle stripes",w:"It handles them fine; it just reports 'no vertical edges', which is true."},
+   {t:"The image is too small",w:"Size isn't the issue; the filter simply isn't tuned to horizontal patterns."}
+  ]},
+ {q:"Why is using the same filter at every position (weight sharing) so valuable?",
+  opts:[
+   {t:"It makes the image larger",w:"It doesn't change the image size; if anything the output is a bit smaller."},
+   {t:"It detects a pattern anywhere it appears, using very few learned numbers",c:1},
+   {t:"It removes the need for any training",w:"The filters are still learned; sharing just means far fewer weights to learn."},
+   {t:"It guarantees 100% accuracy",w:"No method guarantees that; weight sharing is about efficiency and translation-invariance, not perfection."}
+  ]},
+ {q:"In a real CNN, where do the filter numbers come from?",
+  opts:[
+   {t:"A human hand-designs each one, like our edge detector",w:"Hand-designed filters were the old way; modern CNNs learn them."},
+   {t:"They're learned from data by gradient descent, starting from random values",c:1},
+   {t:"They're always the identity filter",w:"That would just copy the image and learn nothing."},
+   {t:"They're random and never change",w:"They start random but are then tuned by training — that's the whole point."}
+  ]},
+];
+const quizEl=$("#quiz");
+QUIZ.forEach((item,qi)=>{
+  const box=document.createElement("div"); box.className="q";
+  box.innerHTML=`<p class="stem">Q${qi+1}. ${item.q}</p>`;
+  item.opts.forEach((o,oi)=>{
+    const b=document.createElement("button"); b.className="opt"; b.textContent=o.t;
+    const why=document.createElement("div"); why.className="why";
+    b.onclick=()=>{
+      if(box.dataset.done) return;
+      if(o.c){ b.classList.add("correct"); why.textContent="✓ Correct. "+(o.exp||"That's the one."); }
+      else{ b.classList.add("wrong"); why.textContent="✗ "+o.w;
+        // reveal the correct one
+        [...box.querySelectorAll(".opt")].forEach((bb,bi)=>{ if(item.opts[bi].c) bb.classList.add("correct"); });
+      }
+      why.classList.add("show"); box.dataset.done="1";
+      markProgress();
+    };
+    box.appendChild(b); box.appendChild(why);
+  });
+  quizEl.appendChild(box);
+});
+
+/* ============================================================
+   4. FLASHCARDS (Leitner spaced repetition, on-device)
+   ============================================================ */
+const CARDS=[
+ {q:"In one sentence, what is convolution?",a:"Sliding a small filter over an image and, at each spot, multiplying overlapping numbers and adding them into a single score."},
+ {q:"What is a feature map?",a:"The grid of scores produced by sliding a filter over the image; it lights up where the filter's pattern appears."},
+ {q:"Image is N×N, filter is 3×3, no padding. Output size?",a:"(N−2)×(N−2) — the filter can't centre on the outer border."},
+ {q:"What is 'padding' and what does it do?",a:"Adding a border of zeros around the image so the filter can centre on every pixel, keeping the output the same size."},
+ {q:"Why does one filter detect only one pattern?",a:"Its numbers are shaped for a specific pattern; a patch that doesn't match sums to near zero. Different patterns need different filters."},
+ {q:"What is weight sharing and why does it matter?",a:"Using the same filter everywhere. It detects a pattern anywhere in the image and needs far fewer learned numbers than full connection."},
+ {q:"In a real CNN, where do filter values come from?",a:"They are learned from data by gradient descent, starting from random values — not hand-designed."},
+ {q:"Is deep-learning 'convolution' the same as textbook convolution?",a:"Almost — DL skips the filter flip (it's really cross-correlation). Since filters are learned, the flip doesn't matter."},
+];
+let deck, fi=0, flipped=false;
+function initDeck(){
+  const s=store.get();
+  deck = (s.deck && s.deck.length===CARDS.length) ? s.deck : CARDS.map((_,i)=>({i,box:1}));
+  nextCard();
+}
+function saveDeck(){ const s=store.get(); s.deck=deck; store.set(s); }
+function pickCard(){
+  // lowest box first (hardest), then by order
+  let best=deck[0];
+  for(const c of deck) if(c.box<best.box) best=c;
+  return best;
+}
+let current=null;
+function nextCard(){
+  current=pickCard(); flipped=false;
+  $("#fside").textContent=CARDS[current.i].q;
+  $("#fmeta").textContent=`Card in box ${current.box} of 3 · click to flip`;
+  $("#frow").style.display="none";
+}
+function flip(){
+  flipped=!flipped;
+  $("#fside").textContent = flipped?CARDS[current.i].a:CARDS[current.i].q;
+  $("#frow").style.display = flipped?"flex":"none";
+}
+$("#fcard").onclick=flip;
+$("#flipBtn").onclick=flip;
+$("#againBtn").onclick=()=>{ current.box=1; saveDeck(); nextCard(); };
+$("#goodBtn").onclick=()=>{ current.box=clamp(current.box+1,1,3); saveDeck(); nextCard(); };
+initDeck();
+
+/* ============================================================
+   5. NARRATION (Web Speech API) with highlight
+   ============================================================ */
+const narrNodes=$$("[data-narr]");
+let uidx=0, speaking=false;
+const synth=window.speechSynthesis;
+function pickVoice(){
+  if(!synth) return null;
+  const vs=synth.getVoices();
+  const pref=["Google US English","Samantha","Microsoft Aria Online (Natural)","Microsoft Jenny","Daniel"];
+  for(const p of pref){ const v=vs.find(v=>v.name.includes(p)); if(v) return v; }
+  return vs.find(v=>/en[-_]/i.test(v.lang))||vs[0]||null;
+}
+function speakFrom(i){
+  if(!synth) return;
+  if(i>=narrNodes.length){ stopNarr(); return; }
+  uidx=i;
+  narrNodes.forEach(n=>n.classList.remove("narr-on"));
+  const node=narrNodes[i]; node.classList.add("narr-on");
+  node.scrollIntoView({behavior:"smooth",block:"center"});
+  const u=new SpeechSynthesisUtterance(node.textContent.replace(/\s+/g," ").trim());
+  const v=pickVoice(); if(v)u.voice=v; u.rate=1.0; u.pitch=1.0;
+  u.onend=()=>{ if(speaking) speakFrom(i+1); };
+  synth.speak(u);
+}
+function startNarr(){ if(!synth){alert("Your browser doesn't support read-aloud.");return;}
+  speaking=true; $("#ttsBtn").textContent="⏹ Stop"; $("#ttsBtn").classList.add("on"); speakFrom(0); }
+function stopNarr(){ speaking=false; if(synth)synth.cancel();
+  narrNodes.forEach(n=>n.classList.remove("narr-on"));
+  $("#ttsBtn").textContent="▶ Read aloud"; $("#ttsBtn").classList.remove("on"); }
+$("#ttsBtn").onclick=()=>{ speaking?stopNarr():startNarr(); };
+if(synth) synth.onvoiceschanged=()=>{}; // trigger voice load in some browsers
+
+/* ============================================================
+   6. PROGRESS TRACKING (scroll + quiz + test) on-device
+   ============================================================ */
+const sections=$$("[data-sec]");
+const seen=new Set();
+function markProgress(){
+  const s=store.get();
+  const total=sections.length+1;                 // +1 for finishing the test
+  let done=seen.size;
+  const testDone = $$(".testchk").every(c=>c.checked);
+  if(testDone) done++;
+  const pct=Math.round(100*clamp(done/total,0,1));
+  $("#pct").textContent=pct+"% read";
+  $("#bar").style.width=pct+"%";
+  s.pct=pct; store.set(s);
+  $("#cert").classList.toggle("show", testDone);
+}
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ seen.add(sections.indexOf(e.target)); }});
+  markProgress();
+},{threshold:.35});
+sections.forEach(s=>io.observe(s));
+$$(".testchk").forEach(c=>c.addEventListener("change",markProgress));
+$("#resetProg").onclick=()=>{ localStorage.removeItem(LSKEY); seen.clear();
+  $$(".testchk").forEach(c=>c.checked=false); $("#cert").classList.remove("show");
+  deck=CARDS.map((_,i)=>({i,box:1})); nextCard(); markProgress(); };
+
+// restore any saved pct hint (visual only; seen-set rebuilds on scroll)
+(function restore(){ const s=store.get(); if(s.pct){ $("#pct").textContent=s.pct+"% read"; $("#bar").style.width=s.pct+"%"; } })();
+markProgress();
+</script>
+</body>
+</html>
