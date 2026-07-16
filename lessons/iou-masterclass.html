@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IoU &amp; object detection, from scratch — Gradient Descent masterclass</title>
+<style>
+:root{
+  --indigo:#4f46e5; --indigo2:#6366f1; --emer:#059669; --emer2:#10b981;
+  --amber:#d97706; --rose:#e11d48; --sky:#0284c7; --violet:#7c3aed;
+  --ink:#0f172a; --body:#1e293b; --muted:#64748b; --line:#e2e8f0;
+  --bg:#f8fafc; --card:#ffffff; --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.05);
+  --mono:'SF Mono',ui-monospace,'Cascadia Code',Consolas,monospace;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 120px}
+a{color:var(--indigo)}
+h1,h2,h3{color:var(--ink);line-height:1.25}
+h1{font-size:34px;margin:.2em 0 .1em;letter-spacing:-.02em}
+h2{font-size:25px;margin:2.2em 0 .5em;letter-spacing:-.01em}
+h3{font-size:19px;margin:1.4em 0 .3em}
+p{margin:.7em 0}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:12px;overflow:auto;font-family:var(--mono);font-size:14px;line-height:1.55}
+pre code{background:none;color:inherit;padding:0}
+.term{font-weight:650;color:var(--indigo);border-bottom:2px dotted #c7d2fe;cursor:help}
+em{color:var(--body)}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.sec-tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;background:var(--indigo);padding:3px 9px;border-radius:999px;vertical-align:middle;margin-right:8px}
+.tag-intu{background:var(--emer)} .tag-formal{background:var(--violet)} .tag-play{background:var(--amber)}
+.tag-worked{background:var(--sky)} .tag-build{background:#334155} .tag-miss{background:var(--rose)}
+.tag-key{background:var(--indigo)} .tag-quiz{background:var(--emer)} .tag-prac{background:var(--sky)}
+.tag-front{background:var(--violet)} .tag-recap{background:var(--amber)} .tag-test{background:var(--ink)}
+.hero{padding:44px 0 8px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);
+  border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.promise b{color:var(--indigo)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:22px;margin:18px 0}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px}
+.note .ic{background:var(--sky)} .warn .ic{background:var(--rose)} .tip .ic{background:var(--emer)}
+.gloss{font-size:14.5px;color:var(--muted)}
+.keypoints{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}
+.keypoints .ti{font-weight:800;color:var(--indigo);margin-bottom:6px}
+.keypoints li{margin:.35em 0}
+.small{font-size:14.5px;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--line);margin:2.4em 0}
+#bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--indigo),var(--emer));width:0;z-index:60;transition:width .2s}
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.85);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:8px 20px;margin:0 -20px 0}
+.toolbar .grow{flex:1}
+.btn{font-family:var(--sans);font-size:14px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--body);
+  padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--indigo);color:var(--indigo)}
+.btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.btn.primary:hover{background:#4338ca;color:#fff}
+.btn.on{background:var(--emer);color:#fff;border-color:var(--emer)}
+.pct{font-size:13px;color:var(--muted);font-weight:600;min-width:74px;text-align:right}
+/* IoU playground */
+.play{background:#0f172a;border-radius:18px;padding:20px;margin:20px 0;color:#e2e8f0}
+.play h3{color:#fff;margin-top:0}
+.play .lead{color:#94a3b8;font-size:14.5px;margin:.2em 0 14px}
+.pg{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+@media(max-width:720px){.pg{grid-template-columns:1fr}}
+.stage{position:relative;width:380px;height:300px;background:
+  linear-gradient(#1e293b 1px,transparent 1px) 0 0/38px 30px,
+  linear-gradient(90deg,#1e293b 1px,transparent 1px) 0 0/38px 30px,#0b1220;
+  border:1px solid #1f2937;border-radius:10px;touch-action:none;user-select:none;overflow:hidden}
+.box{position:absolute;border-width:3px;border-style:solid;border-radius:3px;box-sizing:border-box}
+.gtbox{border-color:#10b981;background:rgba(16,185,129,.10)}
+.predbox{border-color:#6366f1;background:rgba(99,102,241,.12);cursor:grab}
+.predbox.drag{cursor:grabbing}
+.olap{position:absolute;background:rgba(245,158,11,.45);border:1px dashed #f59e0b;pointer-events:none}
+.blabel{position:absolute;top:-19px;left:-1px;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;white-space:nowrap}
+.handle{position:absolute;right:-7px;bottom:-7px;width:14px;height:14px;background:#6366f1;border:2px solid #fff;border-radius:50%;cursor:nwse-resize}
+.readout{font-family:var(--mono);font-size:13px;color:#cbd5e1}
+.readout .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1f2937}
+.readout b{color:#fff}
+.verdict{margin-top:12px;padding:10px 12px;border-radius:9px;font-family:var(--sans);font-weight:700;text-align:center}
+.verdict.ok{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid #10b981}
+.verdict.no{background:rgba(225,29,72,.14);color:#fca5a5;border:1px solid #e11d48}
+.slider{display:flex;align-items:center;gap:10px;margin:8px 0}
+.slider label{font-size:12px;color:#94a3b8;width:54px}
+.slider input[type=range]{flex:1}
+.slider .val{font-family:var(--mono);font-size:12px;color:#e2e8f0;width:38px;text-align:right}
+.controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.controls .btn{background:#1e293b;color:#e2e8f0;border-color:#334155;font-size:13px;padding:6px 10px}
+.controls .btn:hover{border-color:var(--indigo2);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0}
+.chip{font-size:12px;padding:4px 9px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover,.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.quiz .q{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0;background:#fff}
+.quiz .stem{font-weight:600;margin:0 0 10px}
+.quiz .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:9px;
+  padding:9px 12px;margin:6px 0;cursor:pointer;font-size:15.5px;font-family:var(--sans);color:var(--body);transition:.12s}
+.quiz .opt:hover{border-color:var(--indigo)}
+.quiz .opt.correct{background:#ecfdf5;border-color:var(--emer);color:#065f46}
+.quiz .opt.wrong{background:#fef2f2;border-color:var(--rose);color:#991b1b}
+.quiz .why{font-size:14px;margin:8px 2px 0;padding-left:12px;border-left:3px solid var(--line);color:var(--muted);display:none}
+.quiz .why.show{display:block}
+details{border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin:12px 0;background:#fff}
+details summary{cursor:pointer;font-weight:650;padding:12px 0;color:var(--ink)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.lvl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;color:#fff;margin-right:8px}
+.lvl.w{background:var(--emer)} .lvl.t{background:var(--sky)} .lvl.s{background:var(--rose)}
+.sol{font-size:15.5px}
+.runbox textarea{width:100%;min-height:210px;background:#0f172a;color:#e2e8f0;border:1px solid #334155;border-radius:12px 12px 0 0;
+  font-family:var(--mono);font-size:13px;padding:14px;line-height:1.5;resize:vertical;border-bottom:none}
+.runbar{display:flex;gap:8px;align-items:center;background:#111827;border:1px solid #334155;border-top:none;border-radius:0 0 12px 12px;padding:8px 12px}
+.console{background:#0b1220;color:#86efac;font-family:var(--mono);font-size:13px;white-space:pre-wrap;padding:12px 14px;border-radius:10px;margin-top:10px;min-height:26px;border:1px solid #1f2937}
+.tagref{font-size:12.5px;color:var(--muted);font-style:italic}
+.deck{background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #dbe2ff;border-radius:16px;padding:20px;margin:18px 0;text-align:center}
+.fcard{background:#fff;border:1px solid var(--line);border-radius:14px;min-height:110px;display:grid;place-items:center;padding:22px;font-size:18px;cursor:pointer;box-shadow:var(--shadow)}
+.fcard:hover{border-color:var(--indigo)}
+.fmeta{font-size:13px;color:var(--muted);margin:10px 0}
+.frow{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.testbox{background:linear-gradient(180deg,#0f172a,#1e293b);color:#e2e8f0;border-radius:16px;padding:24px;margin:20px 0}
+.testbox h3{color:#fff;margin-top:0}
+.testbox .chk{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:15.5px}
+.testbox .chk b{color:#a5b4fc}
+.cert{display:none;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border-radius:16px;padding:22px;text-align:center;margin:18px 0}
+.cert.show{display:block}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.narr-on{background:#fef9c3!important;border-radius:4px}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div class="wrap">
+
+<div class="toolbar">
+  <a class="eyebrow" href="../index.html" style="text-decoration:none">← Gradient&nbsp;Descent</a>
+  <span class="grow"></span>
+  <button class="btn" id="ttsBtn">▶ Read aloud</button>
+  <button class="btn" id="resetProg">Reset</button>
+  <span class="pct" id="pct">0% read</span>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">Computer Vision · Interactive masterclass</div>
+  <h1>IoU &amp; object detection, from scratch</h1>
+  <p class="small">How a computer grades "did I find the object?" — the one number behind every detection benchmark. You'll drag it, compute it, and build it.</p>
+</header>
+
+<!-- 1 HOOK -->
+<section data-sec>
+<p data-narr>A self-driving car's vision system draws a box and says "pedestrian, here." The true pedestrian is in a slightly different box. Question: was the car <em>right</em>? Not yes-or-no — <em>how</em> right? We need a single number that says how well two rectangles agree. Slide one sticky note partly over another: the score is how much they share, divided by how much they cover together. That number is <b>IoU</b>, and it is the referee for every object detector on Earth.</p>
+<div class="promise" data-narr><b>By the end you'll be able to</b> compute the overlap score of any two boxes by hand, build IoU from scratch in code, explain the 0.5 "hit" threshold and why it changes by task, and see how detectors turn this one number into a full accuracy benchmark.</div>
+</section>
+
+<!-- 2 INTUITION -->
+<section data-sec>
+<h2><span class="sec-tag tag-intu">1 · Intuition</span> Shared area over combined area</h2>
+<p data-narr><span class="term" title="finding objects in an image and drawing a box around each">Object detection</span> means: for every object in a picture, draw a <span class="term" title="a rectangle around an object, given by its corners">bounding box</span> and name it. To grade a predicted box, we compare it to the <span class="term" title="the correct box, labelled by a human">ground-truth box</span> — the human-drawn correct answer.</p>
+<p data-narr>Two rectangles can relate in messy ways: one bigger, shifted, tilted apart. We want a score that is <b>1 when they match perfectly</b> and <b>0 when they don't touch at all</b>, smoothly in between. The trick is beautifully simple: measure the area they <em>share</em>, and divide by the total area they <em>cover together</em>. Lots of shared area relative to the total ⇒ score near 1. Little shared area ⇒ score near 0. That ratio is <span class="term" title="Intersection over Union: shared area divided by combined area">Intersection over Union (IoU)</span> — "how much of the combined footprint is agreement."</p>
+<div class="callout tip"><div class="ic">✦</div><div data-narr><b>The picture:</b> two overlapping boxes. The dark middle sliver they share is the <em>intersection</em>. Everything either box covers is the <em>union</em>. IoU = middle ÷ everything. That's the whole idea.</div></div>
+</section>
+
+<!-- 3 FORMAL -->
+<section data-sec>
+<h2><span class="sec-tag tag-formal">2 · The formal idea</span> The overlap ratio, exactly</h2>
+<p data-narr>Write each box by its corners: a top-left <code>(x1, y1)</code> and a bottom-right <code>(x2, y2)</code>, where <code>x</code> grows rightward and <code>y</code> grows downward (image convention). The <b>area</b> of a box is width × height = <code>(x2−x1) × (y2−y1)</code>.</p>
+<div class="card" style="text-align:center;font-family:var(--mono);font-size:15px;background:#f8fafc">
+IoU &nbsp;=&nbsp; area(intersection) &nbsp;/&nbsp; area(union)
+</div>
+<p class="gloss">The <span class="term" title="the overlapping rectangle common to both boxes">intersection</span> is itself a rectangle — the region inside <em>both</em> boxes. Its left edge is the rightmost of the two left edges, <code>max(x1ᴬ, x1ᴮ)</code>; its top edge is the lowest of the two top edges, <code>max(y1ᴬ, y1ᴮ)</code>; its right edge is <code>min(x2ᴬ, x2ᴮ)</code>; its bottom is <code>min(y2ᴬ, y2ᴮ)</code>. If those give a negative width or height, the boxes don't overlap and the intersection area is <b>0</b> (this clamp matters — see Common mistakes). The <span class="term" title="the total area covered by either box, counting the shared part once">union</span> is "everything either box covers." You get it by adding both areas and subtracting the shared part once (so it isn't double-counted): <code>area(union) = areaᴬ + areaᴮ − area(intersection)</code>.</p>
+<div class="callout note"><div class="ic">i</div><div data-narr><b>The 0.5 rule.</b> IoU is a number from 0 to 1; we still need a line for "close enough to count as a correct detection." The standard line is <b>IoU ≥ 0.5</b> — predictions at or above 0.5 count as a hit, below as a miss. It's a convention, not a law: strict benchmarks use 0.75, and modern ones average over many thresholds (more in the frontier note).</div></div>
+</section>
+
+<!-- 4 INTERACTIVE -->
+<section data-sec>
+<h2><span class="sec-tag tag-play">3 · Play with it</span> The IoU playground</h2>
+<p data-narr><b>Drag</b> the blue predicted box around the green ground-truth box. <b>Resize</b> it with the corner handle or the width/height sliders. The amber region is the intersection; the readout shows the exact intersection, union, and IoU updating live, with a hit/miss verdict at the 0.5 line. Try to get exactly 0.5 — it's harder than it looks.</p>
+
+<div class="play">
+  <h3>▦ IoU playground</h3>
+  <p class="lead">Green = ground truth (fixed). Blue = your prediction (drag it, resize it).</p>
+  <div class="pg">
+    <div>
+      <div class="stage" id="stage">
+        <div class="box gtbox" id="gt"><span class="blabel" style="background:#10b981">ground truth</span></div>
+        <div class="olap" id="olap"></div>
+        <div class="box predbox" id="pred"><span class="blabel" style="background:#6366f1">prediction</span><span class="handle" id="handle"></span></div>
+      </div>
+      <div class="chips" id="presets"></div>
+    </div>
+    <div>
+      <div class="readout">
+        <div class="row"><span>area(intersection)</span><b id="rInter">0</b></div>
+        <div class="row"><span>area(prediction)</span><b id="rPred">0</b></div>
+        <div class="row"><span>area(ground truth)</span><b id="rGt">0</b></div>
+        <div class="row"><span>area(union)</span><b id="rUnion">0</b></div>
+        <div class="row" style="border:none"><span>IoU = inter / union</span><b id="rIoU" style="font-size:16px">0.00</b></div>
+      </div>
+      <div class="verdict no" id="verdict">drag the box…</div>
+      <div class="slider"><label>width</label><input type="range" id="sw" min="40" max="300" step="2" value="160"><span class="val" id="vw">160</span></div>
+      <div class="slider"><label>height</label><input type="range" id="sh" min="30" max="240" step="2" value="120"><span class="val" id="vh">120</span></div>
+      <div class="controls"><button class="btn" id="perfectBtn">Snap to perfect (IoU 1)</button></div>
+    </div>
+  </div>
+</div>
+<p class="small" data-narr>Notice three things as you play. Perfectly aligned boxes give IoU = 1. Slide the prediction halfway off and IoU drops fast — overlap shrinks <em>and</em> union grows, hitting the ratio from both sides. And a tiny box sitting entirely inside the big one never scores high, because the union stays as large as the big box while the intersection is only the tiny box — size mismatch is penalised too.</p>
+</section>
+
+<!-- 5 WORKED -->
+<section data-sec>
+<h2><span class="sec-tag tag-worked">4 · Worked example</span> Every number, by hand</h2>
+<p data-narr>Ground truth <code>G = (80, 60, 240, 180)</code> and prediction <code>P = (100, 80, 260, 200)</code> — same size, shifted down-right by 20 pixels. Let's grade it.</p>
+<pre style="font-size:13px">areas:   G = (240-80)(180-60) = 160 × 120 = 19200
+         P = (260-100)(200-80) = 160 × 120 = 19200
+
+intersection corners:
+  left   = max(80, 100) = 100      right  = min(240, 260) = 240
+  top    = max(60,  80) =  80      bottom = min(180, 200) = 180
+  width  = 240 - 100 = 140         height = 180 - 80 = 100
+  area(intersection) = 140 × 100 = 14000
+
+union = 19200 + 19200 - 14000 = 24400
+
+IoU = 14000 / 24400 = 0.574</pre>
+<p data-narr>So IoU ≈ <b>0.574</b>. Because 0.574 ≥ 0.5, this counts as a <b>correct detection</b> — the box is a bit off but close enough. Read the union step carefully: we add both areas (19200 + 19200 = 38400) but that counts the shared 14000 <em>twice</em>, so we subtract it once to get 24400. Forgetting that subtraction is the single most common IoU bug. Everything here is just <code>max</code>, <code>min</code>, multiply, and one divide — you can grade a detector with arithmetic a child could do.</p>
+</section>
+
+<!-- 6 BUILD -->
+<section data-sec>
+<h2><span class="sec-tag tag-build">5 · Build it from scratch</span> Run it yourself</h2>
+<p data-narr>The whole thing in runnable JavaScript. Press <b>Run</b> — it grades the worked example and prints 0.574. Change the boxes and run again.</p>
+<div class="runbox">
+<textarea id="code" spellcheck="false">// IoU from scratch. Boxes are [x1, y1, x2, y2].
+function iou(a, b) {
+  const ix1 = Math.max(a[0], b[0]);      // intersection left
+  const iy1 = Math.max(a[1], b[1]);      // intersection top
+  const ix2 = Math.min(a[2], b[2]);      // intersection right
+  const iy2 = Math.min(a[3], b[3]);      // intersection bottom
+  const iw = Math.max(0, ix2 - ix1);     // clamp: no negative width
+  const ih = Math.max(0, iy2 - iy1);     // clamp: no negative height
+  const inter = iw * ih;
+  const areaA = (a[2]-a[0]) * (a[3]-a[1]);
+  const areaB = (b[2]-b[0]) * (b[3]-b[1]);
+  const union = areaA + areaB - inter;   // subtract shared part once
+  return inter / union;
+}
+
+const G = [80, 60, 240, 180];
+const P = [100, 80, 260, 200];
+console.log("IoU =", iou(G, P).toFixed(3));
+console.log(iou(G, P) >= 0.5 ? "correct (>= 0.5)" : "miss (< 0.5)");</textarea>
+<div class="runbar">
+  <button class="btn primary" id="runBtn">Run ▶</button>
+  <button class="btn" id="clrConsole">Clear</button>
+  <span class="small" style="color:#94a3b8">Self-contained · runs offline</span>
+</div>
+</div>
+<div class="console" id="console">▸ output appears here</div>
+<p class="small" data-narr>The Python is a line-for-line twin (run it in Colab):</p>
+<pre style="font-size:13px"><code>def iou(a, b):                       # boxes: (x1, y1, x2, y2)
+    ix1, iy1 = max(a[0], b[0]), max(a[1], b[1])
+    ix2, iy2 = min(a[2], b[2]), min(a[3], b[3])
+    iw, ih = max(0, ix2 - ix1), max(0, iy2 - iy1)
+    inter = iw * ih
+    union = (a[2]-a[0])*(a[3]-a[1]) + (b[2]-b[0])*(b[3]-b[1]) - inter
+    return inter / union
+
+print(round(iou((80,60,240,180), (100,80,260,200)), 3))   # 0.574</code></pre>
+<p class="tagref">The Python is a read-and-run reference for Colab; the JavaScript above is the one wired to Run here.</p>
+</section>
+
+<!-- 7 MISTAKES -->
+<section data-sec>
+<h2><span class="sec-tag tag-miss">6 · Common mistakes</span> Traps people actually hit</h2>
+<div class="card"><h3>❌ Not clamping negative overlap to zero</h3><p style="margin:.3em 0">When boxes don't overlap, <code>ix2 − ix1</code> comes out <em>negative</em>. Multiply two negatives (width and height) and you get a bogus <em>positive</em> "intersection." <b>Fix:</b> clamp each side with <code>max(0, …)</code> before multiplying, so non-overlapping boxes correctly give intersection 0.</p></div>
+<div class="card"><h3>❌ Forgetting to subtract the intersection from the union</h3><p style="margin:.3em 0">Union is <em>not</em> areaA + areaB — that double-counts the shared region. <b>Fix:</b> <code>union = areaA + areaB − intersection</code>. This one silently makes every IoU too small.</p></div>
+<div class="card"><h3>❌ Treating IoU ≥ 0.5 as sacred</h3><p style="margin:.3em 0">0.5 is a convention. Fine-grained tasks (medical, robotics) demand 0.75 or higher; the standard COCO benchmark averages over IoU thresholds 0.50–0.95. <b>Fix:</b> pick the threshold your application actually needs, and report which one you used.</p></div>
+<div class="card"><h3>❌ Mixing up box formats</h3><p style="margin:.3em 0">Some libraries use <code>(x, y, width, height)</code>, others <code>(x1, y1, x2, y2)</code>, others centre-based <code>(cx, cy, w, h)</code>. Feeding one format into a function expecting another gives nonsense IoUs. <b>Fix:</b> convert to one convention first and be explicit about which.</p></div>
+</section>
+
+<!-- 8 KEY -->
+<section data-sec>
+<h2><span class="sec-tag tag-key">7 · Key results</span> Worth memorizing</h2>
+<div class="keypoints"><div class="ti">★ Lock these in</div>
+<ul>
+<li><b>IoU = area(intersection) / area(union)</b> — shared area over combined area; 1 = perfect, 0 = no overlap.</li>
+<li>Intersection corners: <code>max</code> of the left/top edges, <code>min</code> of the right/bottom edges; <b>clamp width and height to ≥ 0</b>.</li>
+<li>Union = areaA + areaB − intersection (<b>subtract the overlap once</b>).</li>
+<li>A detection usually counts as correct at <b>IoU ≥ 0.5</b> — a convention; stricter tasks use higher thresholds.</li>
+<li>IoU penalises both <b>position</b> error and <b>size</b> mismatch, which is why it's the universal detection metric.</li>
+</ul></div>
+</section>
+
+<!-- 9 QUIZ -->
+<section data-sec>
+<h2><span class="sec-tag tag-quiz">8 · Quiz</span> Check yourself</h2>
+<div class="quiz" id="quiz"></div>
+</section>
+
+<!-- 10 PRACTICE -->
+<section data-sec>
+<h2><span class="sec-tag tag-prac">9 · Graded practice</span> Warm-up → transfer → stretch</h2>
+<details><summary><span class="lvl w">Warm-up</span> Two identical boxes</summary><div class="sol">
+<p>What is the IoU of a box with an exact copy of itself?</p>
+<p><b>Solution.</b> The intersection is the whole box; the union is also the whole box. So IoU = area / area = <b>1.0</b>. This is the sanity check every IoU implementation must pass — if <code>iou(b, b)</code> isn't 1, you have a bug (usually a format or clamp error).</p>
+</div></details>
+<details><summary><span class="lvl t">Transfer</span> A box half the size, centred inside</summary><div class="sol">
+<p>Ground truth is 100×100. The prediction is 50×50, sitting exactly in the centre of it. What's the IoU — and what does it teach?</p>
+<p><b>Solution.</b> Intersection = the small box = 50×50 = 2500. Union = 100×100 + 50×50 − 2500 = 10000 + 2500 − 2500 = 10000 (the big box entirely contains the small one, so the union is just the big box). IoU = 2500 / 10000 = <b>0.25</b>. Even though the small box is <em>perfectly positioned</em> (dead centre, fully inside), IoU is only 0.25 — a miss at the 0.5 line. The lesson: <b>IoU punishes size mismatch, not just position</b>. A detector that finds the right spot but the wrong scale still fails, which is exactly what you want for "did you box the object correctly?"</p>
+</div></details>
+<details><summary><span class="lvl s">Stretch</span> From IoU to a real detector: NMS &amp; mAP</summary><div class="sol">
+<p>A detector often outputs several overlapping boxes for the same object, each with a confidence score. How is IoU used to (a) clean that up, and (b) turn detections into a single accuracy number?</p>
+<p><b>Solution.</b> <b>(a) Non-Maximum Suppression (NMS).</b> Sort the predicted boxes by confidence, keep the highest, then <em>delete</em> any lower-confidence box whose IoU with a kept box exceeds a threshold (say 0.5) — they're duplicates of the same object. Repeat down the list. IoU is the "are these the same object?" test that removes duplicates, leaving one box per object. <b>(b) mean Average Precision (mAP).</b> To score the whole detector: match each prediction to a ground-truth box using IoU (a match needs IoU ≥ threshold); matched = true positive, unmatched prediction = false positive, missed ground truth = false negative. Sweep the confidence cutoff to trace a precision–recall curve, take the area under it (Average Precision) for each object class, and average across classes → mAP. Modern benchmarks (COCO) go further and average AP over IoU thresholds from 0.50 to 0.95, rewarding tight boxes. The takeaway: <b>IoU is the atom</b>; NMS and mAP are built entirely on top of "how much do these two boxes overlap?" Master IoU and the rest of detection evaluation is assembly.</p>
+</div></details>
+</section>
+
+<!-- 11 FRONTIER -->
+<section data-sec>
+<h2><span class="sec-tag tag-front">10 · Frontier note</span> Where this lives in the real world</h2>
+<p data-narr>Every object-detection leaderboard — the COCO benchmark, autonomous-driving datasets, medical-imaging challenges — ranks models by mAP, and mAP is IoU all the way down. IoU also trains detectors: variants like <span class="term" title="IoU-based loss functions that also account for how boxes are separated">GIoU, DIoU, and CIoU</span> are used directly as loss functions, because plain IoU gives no gradient when boxes don't overlap, and these fixes add a signal that pulls a stray box toward the target.</p>
+<p data-narr>The frontier is moving past hand-tuned box cleanup: transformer detectors like <span class="term" title="DEtection TRansformer — predicts a set of boxes directly, no NMS">DETR</span> predict a <em>set</em> of boxes directly and match them to ground truth with a global assignment, sidestepping NMS entirely — but they still evaluate with IoU-based mAP. And the same overlap idea generalises from boxes to pixel <span class="term" title="per-pixel region labels">masks</span> (mask IoU) for segmentation, and to 3-D boxes for lidar. Two rectangles' shared area over their combined area turns out to be one of the most reused ideas in all of computer vision.</p>
+</section>
+
+<!-- 12 + 13 -->
+<section data-sec>
+<h2><span class="sec-tag tag-recap">11 · Recap</span> Say it to a friend</h2>
+<div class="promise" data-narr style="font-size:17px">"To grade a predicted box against the true box, take the area they share and divide by the area they cover together. That's IoU — 1 means perfect, 0 means no overlap, and above 0.5 usually counts as a hit. Every object-detection score is built on it."</div>
+<div class="testbox"><h3>✓ The test</h3>
+<p style="color:#cbd5e1;margin-top:0" data-narr>Tick these off honestly:</p>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Derive it:</b> given two boxes' corners, compute intersection, union, and IoU by hand — and get 0 for non-overlapping boxes.</span></label>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Build it:</b> write <code>iou()</code> from memory, with the two clamps and the union subtraction.</span></label>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Explain it:</b> tell a friend why a perfectly-centred but too-small box still fails, and how NMS and mAP use IoU.</span></label>
+<div class="cert" id="cert">🎓 <b>Lesson mastered.</b> You own the metric behind every object detector. Next time you read "45.2 mAP," you know exactly what was measured.</div>
+</div>
+</section>
+
+<!-- FLASHCARDS -->
+<section data-sec>
+<h2><span class="sec-tag tag-key">Retention</span> Spaced-repetition flashcards</h2>
+<p class="small" data-narr>Click to flip; rate honestly. Saved on this device only.</p>
+<div class="deck">
+  <div class="fcard" id="fcard"><div class="side" id="fside">Loading…</div></div>
+  <div class="fmeta" id="fmeta"></div>
+  <div class="frow" id="frow" style="display:none"><button class="btn" id="againBtn">Again ↻</button><button class="btn on" id="goodBtn">Got it ✓</button></div>
+  <div class="frow"><button class="btn" id="flipBtn">Flip card</button></div>
+</div>
+</section>
+
+<div class="footer"><p><b>Gradient Descent</b> · IoU masterclass · learn it alone, offline, free. Everything stays on your device.</p></div>
+</div>
+
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const LSKEY="gd_iou_masterclass_v1";
+const store={get(){try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return{}}},set(o){try{localStorage.setItem(LSKEY,JSON.stringify(o))}catch(e){}}};
+
+/* ---------- IoU playground ---------- */
+const GT={x:80,y:60,w:160,h:120};
+let P={x:100,y:80,w:160,h:120};
+const stage=$("#stage"),gtEl=$("#gt"),predEl=$("#pred"),olapEl=$("#olap");
+function iouCalc(a,b){
+  const ix1=Math.max(a.x,b.x), iy1=Math.max(a.y,b.y);
+  const ix2=Math.min(a.x+a.w,b.x+b.w), iy2=Math.min(a.y+a.h,b.y+b.h);
+  const iw=Math.max(0,ix2-ix1), ih=Math.max(0,iy2-iy1);
+  const inter=iw*ih, areaA=a.w*a.h, areaB=b.w*b.h, union=areaA+areaB-inter;
+  return {ix1,iy1,iw,ih,inter,areaA,areaB,union,iou:union>0?inter/union:0};
+}
+function place(el,b){el.style.left=b.x+"px";el.style.top=b.y+"px";el.style.width=b.w+"px";el.style.height=b.h+"px";}
+function render(){
+  P.x=clamp(P.x,0,stage.clientWidth-P.w); P.y=clamp(P.y,0,stage.clientHeight-P.h);
+  place(gtEl,GT); place(predEl,P);
+  const r=iouCalc(GT,P);
+  if(r.iw>0&&r.ih>0){olapEl.style.display="block";place(olapEl,{x:r.ix1,y:r.iy1,w:r.iw,h:r.ih});}
+  else olapEl.style.display="none";
+  $("#rInter").textContent=r.inter.toLocaleString();
+  $("#rPred").textContent=r.areaB.toLocaleString();
+  $("#rGt").textContent=r.areaA.toLocaleString();
+  $("#rUnion").textContent=r.union.toLocaleString();
+  $("#rIoU").textContent=r.iou.toFixed(2);
+  const v=$("#verdict");
+  if(r.iou>=0.5){v.className="verdict ok";v.textContent="IoU "+r.iou.toFixed(2)+" ≥ 0.5 → correct detection ✓";}
+  else{v.className="verdict no";v.textContent="IoU "+r.iou.toFixed(2)+" < 0.5 → miss ✗";}
+}
+/* drag to move */
+let drag=null;
+predEl.addEventListener("pointerdown",e=>{
+  if(e.target===$("#handle"))return;
+  drag={mx:e.clientX,my:e.clientY,x:P.x,y:P.y};predEl.classList.add("drag");
+  predEl.setPointerCapture(e.pointerId);e.preventDefault();
+});
+predEl.addEventListener("pointermove",e=>{
+  if(!drag)return;
+  P.x=drag.x+(e.clientX-drag.mx); P.y=drag.y+(e.clientY-drag.my); render();
+});
+predEl.addEventListener("pointerup",e=>{drag=null;predEl.classList.remove("drag");});
+/* resize handle */
+let rez=null;
+$("#handle").addEventListener("pointerdown",e=>{
+  rez={mx:e.clientX,my:e.clientY,w:P.w,h:P.h};$("#handle").setPointerCapture(e.pointerId);e.stopPropagation();e.preventDefault();
+});
+$("#handle").addEventListener("pointermove",e=>{
+  if(!rez)return;
+  P.w=clamp(rez.w+(e.clientX-rez.mx),40,300); P.h=clamp(rez.h+(e.clientY-rez.my),30,240);
+  $("#sw").value=Math.round(P.w);$("#vw").textContent=Math.round(P.w);
+  $("#sh").value=Math.round(P.h);$("#vh").textContent=Math.round(P.h);
+  render();
+});
+$("#handle").addEventListener("pointerup",e=>{rez=null;});
+/* sliders */
+$("#sw").addEventListener("input",e=>{P.w=+e.target.value;$("#vw").textContent=P.w;render();});
+$("#sh").addEventListener("input",e=>{P.h=+e.target.value;$("#vh").textContent=P.h;render();});
+$("#perfectBtn").onclick=()=>{P={x:GT.x,y:GT.y,w:GT.w,h:GT.h};$("#sw").value=GT.w;$("#vw").textContent=GT.w;$("#sh").value=GT.h;$("#vh").textContent=GT.h;render();};
+/* presets */
+const PRE={"Shifted (0.57)":{x:100,y:80,w:160,h:120},"Half off (0.33)":{x:160,y:60,w:160,h:120},"Too small (0.25)":{x:120,y:90,w:80,h:60},"No overlap (0)":{x:270,y:170,w:100,h:100}};
+const pc=$("#presets");
+Object.keys(PRE).forEach(n=>{const c=document.createElement("span");c.className="chip";c.textContent=n;
+  c.onclick=()=>{P={...PRE[n]};$("#sw").value=P.w;$("#vw").textContent=P.w;$("#sh").value=P.h;$("#vh").textContent=P.h;render();};pc.appendChild(c);});
+render();
+
+/* ---------- runnable JS ---------- */
+const cons=$("#console");
+$("#runBtn").onclick=()=>{const src=$("#code").value;const logs=[];
+  const fc={log:(...a)=>logs.push(a.map(x=>typeof x==="object"?JSON.stringify(x):String(x)).join(" "))};
+  try{new Function("console",src)(fc);cons.textContent=logs.length?logs.join("\n"):"(ran, no output)";cons.style.color="#86efac";}
+  catch(err){cons.textContent="⚠ "+err.message;cons.style.color="#fca5a5";}};
+$("#clrConsole").onclick=()=>{cons.textContent="▸ output appears here";cons.style.color="#86efac";};
+
+/* ---------- quiz ---------- */
+const QUIZ=[
+ {q:"What does IoU measure?",opts:[
+  {t:"How confident the detector is",w:"That's the confidence score, a separate output — IoU is about geometric overlap."},
+  {t:"Shared area divided by combined area of two boxes",c:1},
+  {t:"The distance between box centres",w:"Centre distance ignores size; IoU uses areas and captures both position and scale."},
+  {t:"The number of objects found",w:"That's a count; IoU grades one box against another."}]},
+ {q:"Two boxes don't overlap at all. If you forget to clamp width/height to ≥ 0, what can happen?",opts:[
+  {t:"Nothing, it's always fine",w:"It's specifically not fine for non-overlapping boxes."},
+  {t:"You can get a bogus positive intersection from two negative sides multiplied",c:1},
+  {t:"The union becomes negative",w:"The bug is in the intersection (negative × negative = positive), not the union."},
+  {t:"IoU becomes exactly 1",w:"It becomes wrongly positive, not 1 — the clamp prevents the false overlap."}]},
+ {q:"A prediction is perfectly centred inside the ground truth but only 1/4 of its area. Roughly what IoU?",opts:[
+  {t:"1.0 — it's centred",w:"Centred isn't enough; size mismatch lowers IoU."},
+  {t:"0.5 — it's a hit",w:"Close, but the union is the full big box, so it's lower than 0.5."},
+  {t:"0.25 — union is the big box, intersection is the small one",c:1},
+  {t:"0.0 — it's a miss with no overlap",w:"There is overlap (it's inside), so IoU is positive."}]},
+ {q:"Why subtract the intersection when computing the union?",opts:[
+  {t:"To make IoU smaller on purpose",w:"It's not arbitrary — it corrects double counting."},
+  {t:"Because adding both areas counts the shared region twice",c:1},
+  {t:"To handle non-overlapping boxes",w:"Non-overlap is handled by the clamp; the subtraction fixes double-counting."},
+  {t:"You shouldn't — union is areaA + areaB",w:"That double-counts the overlap and makes every IoU too small."}]},
+ {q:"How does a detector use IoU to remove duplicate boxes for the same object?",opts:[
+  {t:"It averages all the boxes",w:"Averaging blurs boxes; NMS keeps the best and drops overlapping duplicates."},
+  {t:"Non-Maximum Suppression: keep the top-confidence box, drop others with high IoU to it",c:1},
+  {t:"It keeps every box",w:"That leaves duplicates; NMS exists precisely to prune them."},
+  {t:"It uses the confidence score only",w:"Confidence ranks them; IoU is what identifies duplicates to suppress."}]},
+];
+const quizEl=$("#quiz");
+QUIZ.forEach((it,qi)=>{const box=document.createElement("div");box.className="q";
+  box.innerHTML=`<p class="stem">Q${qi+1}. ${it.q}</p>`;
+  it.opts.forEach(o=>{const b=document.createElement("button");b.className="opt";b.textContent=o.t;
+    const why=document.createElement("div");why.className="why";
+    b.onclick=()=>{if(box.dataset.done)return;
+      if(o.c){b.classList.add("correct");why.textContent="✓ Correct.";}
+      else{b.classList.add("wrong");why.textContent="✗ "+o.w;[...box.querySelectorAll(".opt")].forEach((bb,bi)=>{if(it.opts[bi].c)bb.classList.add("correct");});}
+      why.classList.add("show");box.dataset.done="1";markProgress();};
+    box.appendChild(b);box.appendChild(why);});
+  quizEl.appendChild(box);});
+
+/* ---------- flashcards ---------- */
+const CARDS=[
+ {q:"Define IoU in one line.",a:"Area of the intersection of two boxes divided by the area of their union."},
+ {q:"How do you find the intersection rectangle's corners?",a:"Left/top = max of the two left/top edges; right/bottom = min of the two right/bottom edges. Clamp width & height to ≥ 0."},
+ {q:"Formula for the union area?",a:"areaA + areaB − intersection (subtract the shared part once)."},
+ {q:"What IoU threshold usually counts as a correct detection?",a:"0.5 by convention; stricter tasks use 0.75, and COCO averages 0.50–0.95."},
+ {q:"Why does a centred but too-small box score low?",a:"The union stays as big as the large box while the intersection is only the small box, so the ratio is small — IoU punishes size mismatch."},
+ {q:"What is NMS and how does IoU drive it?",a:"Non-Maximum Suppression: keep the highest-confidence box, delete lower ones whose IoU with it exceeds a threshold — removing duplicate detections."},
+ {q:"What is mAP, in one line?",a:"Mean Average Precision: match predictions to truth via IoU, trace precision–recall by confidence, take area under it per class, average across classes."},
+];
+let deck,current=null,flipped=false;
+function initDeck(){const s=store.get();deck=(s.deck&&s.deck.length===CARDS.length)?s.deck:CARDS.map((_,i)=>({i,box:1}));nextCard();}
+function saveDeck(){const s=store.get();s.deck=deck;store.set(s);}
+function pick(){let best=deck[0];for(const c of deck)if(c.box<best.box)best=c;return best;}
+function nextCard(){current=pick();flipped=false;$("#fside").textContent=CARDS[current.i].q;$("#fmeta").textContent=`Box ${current.box} of 3 · click to flip`;$("#frow").style.display="none";}
+function flip(){flipped=!flipped;$("#fside").textContent=flipped?CARDS[current.i].a:CARDS[current.i].q;$("#frow").style.display=flipped?"flex":"none";}
+$("#fcard").onclick=flip;$("#flipBtn").onclick=flip;
+$("#againBtn").onclick=()=>{current.box=1;saveDeck();nextCard();};
+$("#goodBtn").onclick=()=>{current.box=clamp(current.box+1,1,3);saveDeck();nextCard();};
+initDeck();
+
+/* ---------- narration ---------- */
+const narrNodes=$$("[data-narr]");let speaking=false;const synth=window.speechSynthesis;
+function pickVoice(){if(!synth)return null;const vs=synth.getVoices();const pref=["Google US English","Samantha","Microsoft Aria Online (Natural)","Daniel"];for(const p of pref){const v=vs.find(v=>v.name.includes(p));if(v)return v;}return vs.find(v=>/en[-_]/i.test(v.lang))||vs[0]||null;}
+function speakFrom(i){if(!synth)return;if(i>=narrNodes.length){stopNarr();return;}
+  narrNodes.forEach(n=>n.classList.remove("narr-on"));const node=narrNodes[i];node.classList.add("narr-on");node.scrollIntoView({behavior:"smooth",block:"center"});
+  const u=new SpeechSynthesisUtterance(node.textContent.replace(/\s+/g," ").trim());const v=pickVoice();if(v)u.voice=v;
+  u.onend=()=>{if(speaking)speakFrom(i+1);};synth.speak(u);}
+function startNarr(){if(!synth){alert("Read-aloud isn't supported in this browser.");return;}speaking=true;$("#ttsBtn").textContent="⏹ Stop";$("#ttsBtn").classList.add("on");speakFrom(0);}
+function stopNarr(){speaking=false;if(synth)synth.cancel();narrNodes.forEach(n=>n.classList.remove("narr-on"));$("#ttsBtn").textContent="▶ Read aloud";$("#ttsBtn").classList.remove("on");}
+$("#ttsBtn").onclick=()=>{speaking?stopNarr():startNarr();};
+if(synth)synth.onvoiceschanged=()=>{};
+
+/* ---------- progress ---------- */
+const sections=$$("[data-sec]");const seen=new Set();
+function markProgress(){const total=sections.length+1;let done=seen.size;
+  const testDone=$$(".testchk").every(c=>c.checked);if(testDone)done++;
+  const pct=Math.round(100*clamp(done/total,0,1));$("#pct").textContent=pct+"% read";$("#bar").style.width=pct+"%";
+  const s=store.get();s.pct=pct;store.set(s);$("#cert").classList.toggle("show",testDone);}
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)seen.add(sections.indexOf(e.target));});markProgress();},{threshold:.35});
+sections.forEach(s=>io.observe(s));
+$$(".testchk").forEach(c=>c.addEventListener("change",markProgress));
+$("#resetProg").onclick=()=>{localStorage.removeItem(LSKEY);seen.clear();$$(".testchk").forEach(c=>c.checked=false);$("#cert").classList.remove("show");deck=CARDS.map((_,i)=>({i,box:1}));nextCard();markProgress();};
+(function(){const s=store.get();if(s.pct){$("#pct").textContent=s.pct+"% read";$("#bar").style.width=s.pct+"%";}})();
+markProgress();
+</script>
+</body>
+</html>

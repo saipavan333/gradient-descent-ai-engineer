@@ -10,6 +10,7 @@
 <script defer src="../assets/katex/katex.min.js"></script>
 <script defer src="../assets/katex/contrib/auto-render.min.js"></script>
 <script defer src="../assets/app.js"></script>
+<link rel="stylesheet" href="../assets/gd-enhance.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -218,7 +219,7 @@
 <div class="why-box"><span class="lbl">Why this exists</span>Real applications rarely just label a whole image — they need to find and count objects. Detection adds localization (a box per object) on top of classification, and IoU/mAP are how you measure whether it works.</div>
 <div class="objectives"><div class="lbl">By the end, you can</div><ul><li>Explain detection as localization (box) plus classification (label) per object</li><li>Compute IoU and use the 0.5 threshold to judge a detection correct</li><li>Contrast one-stage vs two-stage detectors and the role of anchors</li><li>Describe what mAP measures and why detection needs it</li></ul></div>
 </header>
-<article class="content"><h2><span class="sec-tag">Concept</span> Not just what, but where — and how many</h2>
+<article class="content"><div style="margin:16px 0;padding:14px 18px;border:1px solid #c7d2fe;border-left:4px solid #4f46e5;border-radius:12px;background:#eef2ff;font-size:15.5px"><strong style="color:#4f46e5">&#9656; Interactive lab &mdash;</strong> drag boxes and watch <a href="iou-masterclass.html" style="color:#4f46e5;font-weight:600">IoU compute live</a> &mdash; intersection, union, and the 0.5 hit threshold &mdash; then build it from scratch. Full masterclass with narration, quiz, and flashcards.</div><h2><span class="sec-tag">Concept</span> Not just what, but where — and how many</h2>
 
 <p>Classification answers "what is in this image?" with a single label. But real scenes have <em>multiple</em> objects, and
 often you need to know <em>where</em> each one is. <span class="term">Object detection</span> does both: for every object in
@@ -500,5 +501,6 @@ the next step: when a box isn't precise enough and you need the exact shape of a
 </div>
 </div>
 <button class="totop" aria-label="Back to top">↑</button>
+<script defer src="../assets/gd-enhance.js"></script>
 </body>
 </html>

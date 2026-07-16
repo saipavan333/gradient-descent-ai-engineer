@@ -1,0 +1,29 @@
+/* Gradient Descent — experience layer (narration, progress, flashcards). Namespaced gde-. */
+#gde-bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:9000;
+  background:linear-gradient(90deg,#4f46e5,#10b981);transition:width .15s ease}
+.gde-dock{position:fixed;left:16px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px}
+.gde-btn{display:flex;align-items:center;gap:8px;height:42px;padding:0 14px;border-radius:999px;border:1px solid #e2e8f0;
+  background:#fff;color:#1e293b;font:600 13.5px/1 system-ui,sans-serif;cursor:pointer;
+  box-shadow:0 4px 14px rgba(15,23,42,.12);transition:.15s;white-space:nowrap}
+.gde-btn:hover{border-color:#4f46e5;color:#4f46e5;transform:translateY(-1px)}
+.gde-btn.on{background:#4f46e5;color:#fff;border-color:#4f46e5}
+.gde-btn .gde-ic{font-size:15px;line-height:1}
+.gde-chip{font-size:12px;color:#64748b;font-weight:600;padding-left:2px}
+.gde-reading{background:#fef9c3 !important;box-shadow:0 0 0 4px #fef9c3;border-radius:4px;transition:background .2s}
+@media (prefers-color-scheme: dark){
+  .gde-btn{background:#1e293b;color:#e2e8f0;border-color:#334155}
+  .gde-reading{background:#3f3f1f !important;box-shadow:0 0 0 4px #3f3f1f}
+}
+/* flashcard modal */
+.gde-modal{position:fixed;inset:0;z-index:9500;background:rgba(15,23,42,.55);display:none;
+  align-items:center;justify-content:center;padding:20px}
+.gde-modal.show{display:flex}
+.gde-deck{background:#fff;border-radius:18px;max-width:520px;width:100%;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.gde-deck h3{margin:0 0 4px;font:700 17px system-ui;color:#0f172a}
+.gde-deck .sub{font-size:13px;color:#64748b;margin:0 0 14px}
+.gde-card{border:1px solid #e2e8f0;border-radius:14px;min-height:150px;display:grid;place-items:center;
+  padding:24px;text-align:center;font-size:17px;line-height:1.5;color:#0f172a;cursor:pointer;background:#f8fafc}
+.gde-card .q{font-weight:700;color:#4f46e5}
+.gde-row{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.gde-row .gde-btn{box-shadow:none;height:38px}
+.gde-x{position:absolute;top:0;right:0}
