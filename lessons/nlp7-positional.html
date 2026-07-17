@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -263,6 +264,7 @@ the token order, attention computes the same relationships — just reordered. S
   <text x="360.0" y="310.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">a unique vector is added to each position (fixed sinusoids or learned), so the model knows what came where</text>
 </svg>
 <figcaption><b>Adding position.</b> Each token's embedding (what the word is) gets a position-dependent vector added to it (where the word is). The sum is an order-aware representation, so attention can now distinguish "cat sat" from "sat cat."</figcaption></figure>
+<div class="gdw" data-widget="positional"></div>
 
 <p>The idea is simple: create a unique vector for each position and <strong>add</strong> it to the token's embedding
 before the first block. Now the input to the model encodes both "what" (the word) and "where" (its position), so the
@@ -473,5 +475,6 @@ GPT, and translation models arrange the same pieces differently.</p>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

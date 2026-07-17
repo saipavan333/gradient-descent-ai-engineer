@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -262,6 +263,7 @@ mapping each token to an integer <span class="term">ID</span> via a lookup table
   <text x="360.0" y="250.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">the model never sees letters — only these integer IDs, which index into an embedding table next</text>
 </svg>
 <figcaption><b>The tokenization pipeline.</b> Raw text is split into tokens, and each token is looked up in the vocabulary to get an integer ID. The sequence of IDs is what actually enters the model.</figcaption></figure>
+<div class="gdw" data-widget="tokenizer"></div>
 
 <p>So "the cat sat" might become tokens <code>["the", "cat", "sat"]</code> and then IDs <code>[1014, 2543, 3079]</code>.
 Decoding reverses the process — IDs back to tokens back to text — which is how a model's numeric output becomes
@@ -511,5 +513,6 @@ and direction actually capture meaning.</p>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -254,6 +255,7 @@ step — using the gradients to update the weights:</p>
   <text x="280.0" y="420.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">zero_grad → forward → loss → backward → step: the heartbeat of every trained net</text>
 </svg>
 <figcaption><b>The training loop.</b> Forward to predict, compute the loss, backward to get gradients, then the optimizer step nudges every weight downhill. Repeat for each batch, for many passes over the data — this cycle is the whole of training.</figcaption></figure>
+<div class="gdw" data-widget="loss-curve"></div>
 
 <p>One pass over the entire dataset is an <span class="term">epoch</span>; you usually train for many. Within an epoch
 you process the data in <span class="term">mini-batches</span> (Lesson 1.8) — a few dozen examples at a time — so each
@@ -527,5 +529,6 @@ techniques that keep deep networks generalizing instead of overfitting.</p>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

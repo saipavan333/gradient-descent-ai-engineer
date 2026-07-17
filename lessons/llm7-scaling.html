@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -246,6 +247,7 @@ fixed reduction in loss. These <span class="term">scaling laws</span> mean you c
   <text x="330.0" y="344.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.8" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">performance improves smoothly and predictably with scale — you can forecast a bigger model's loss</text>
 </svg>
 <figcaption><b>A scaling law.</b> Loss decreases as a power law in compute, data, and parameters — a straight line on a log-log plot. The smoothness is the point: performance improves predictably with scale, so you can extrapolate from small experiments to forecast large models.</figcaption></figure>
+<div class="gdw" data-widget="scaling-laws"></div>
 
 <p>This predictability is <em>why</em> the field invested so heavily in scale: the curves promised that a bigger model
 trained on more data would reliably be better, and they were right across many orders of magnitude. The laws also guide
@@ -481,5 +483,6 @@ we learn how adding and then removing noise creates pictures from scratch.</p>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

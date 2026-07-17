@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -254,6 +255,7 @@ they point the same way regardless of length.</p>
   <text x="330.0" y="344.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="10.6" font-weight="400" fill="#64748b" text-anchor="middle" opacity="1.0" dominant-baseline="middle">embed the query and the chunks; return the chunks whose vectors are closest (cosine) — A and B here</text>
 </svg>
 <figcaption><b>Retrieval as nearest-neighbor search.</b> Chunks and the query are all embedded into the same vector space. The chunks whose vectors are closest to the query's (by cosine similarity) are the most semantically relevant — here, docs A and B — and get retrieved.</figcaption></figure>
+<div class="gdw" data-widget="cosine-search"></div>
 
 <p>This is the heart of RAG, and it's why embeddings matter so much: the model can only answer from chunks the retriever
 finds, and the retriever finds them by vector closeness. A query and a chunk that <em>mean</em> the same thing will have
@@ -504,5 +506,6 @@ specialized indexes make this near-instant.</p>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

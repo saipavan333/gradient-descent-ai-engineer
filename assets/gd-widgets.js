@@ -294,6 +294,478 @@ reg["attention"]=function(host){
 };
 
 
+
+/* ================= matrix-transform ================= */
+reg["matrix-transform"]=function(host){
+  var s=shell(host,"▶ Interactive · a matrix bends space",
+    "A 2×2 matrix is a rule for transforming space. Slide its four numbers and watch the grid rotate, stretch, and shear. The orange and green arrows show where the basis vectors (1,0) and (0,1) land. The determinant is the area-scale factor.",620,380);
+  var ctx=s.ctx,W=620,H=380,S=42,ox=W/2,oy=H/2,a=1,b=0,c=0,d=1,slN=[];
+  function T(x,y){return [ox+(a*x+b*y)*S, oy-(c*x+d*y)*S];}
+  function ln(p,q){ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);ctx.stroke();}
+  function arr(p,col){ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(p[0],p[1]);ctx.stroke();var g=Math.atan2(p[1]-oy,p[0]-ox);if(Math.hypot(p[0]-ox,p[1]-oy)<3)return;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]-12*Math.cos(g-.4),p[1]-12*Math.sin(g-.4));ctx.lineTo(p[0]-12*Math.cos(g+.4),p[1]-12*Math.sin(g+.4));ctx.closePath();ctx.fill();}
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.strokeStyle="#dbe2ff";ctx.lineWidth=1;
+    for(var i=-6;i<=6;i++){ln(T(i,-6),T(i,6));ln(T(-6,i),T(6,i));}
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.4;ln(T(-7,0),T(7,0));ln(T(0,-7),T(0,7));
+    arr(T(1,0),"#d97706");arr(T(0,1),"#059669");
+    s.read.textContent="A = [ ["+a.toFixed(1)+", "+b.toFixed(1)+"],  ["+c.toFixed(1)+", "+d.toFixed(1)+"] ]    determinant = "+(a*d-b*c).toFixed(2)+"  (area scale; negative = flipped)";
+  }
+  slN.push(slider(s.body,"a  ↦ x of e₁",-2,2,0.1,1,function(v){a=v;draw();}));
+  slN.push(slider(s.body,"b  ↦ x of e₂",-2,2,0.1,0,function(v){b=v;draw();}));
+  slN.push(slider(s.body,"c  ↦ y of e₁",-2,2,0.1,0,function(v){c=v;draw();}));
+  slN.push(slider(s.body,"d  ↦ y of e₂",-2,2,0.1,1,function(v){d=v;draw();}));
+  var row=el("div","gdw-row");s.body.appendChild(row);
+  function preset(t,A){var x=el("button","gdw-btn",t);x.onclick=function(){a=A[0];b=A[1];c=A[2];d=A[3];slN[0].set(a);slN[1].set(b);slN[2].set(c);slN[3].set(d);draw();};row.appendChild(x);}
+  preset("Identity",[1,0,0,1]);preset("Rotate 45°",[0.7,-0.7,0.7,0.7]);preset("Scale 2×",[2,0,0,2]);preset("Shear",[1,1,0,1]);preset("Flip x",[-1,0,0,1]);
+  draw();
+};
+
+/* ================= dot-product ================= */
+reg["dot-product"]=function(host){
+  var s=shell(host,"▶ Interactive · the dot product measures alignment",
+    "Drag the two arrows. The dot product a·b is big and positive when they point the same way, zero when perpendicular, negative when opposed. The dashed line is the projection of a onto b — the shadow a casts on b.",620,380);
+  var ctx=s.ctx,W=620,H=380,S=34,ox=W/2,oy=H/2,a=[3,2],b=[2,-2],drag=0;
+  function P(v){return [ox+v[0]*S,oy-v[1]*S];}
+  function arr(v,col,w){ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=w;var p=P(v);ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(p[0],p[1]);ctx.stroke();var g=Math.atan2(p[1]-oy,p[0]-ox);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]-12*Math.cos(g-.4),p[1]-12*Math.sin(g-.4));ctx.lineTo(p[0]-12*Math.cos(g+.4),p[1]-12*Math.sin(g+.4));ctx.closePath();ctx.fill();}
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.strokeStyle="#eef1f6";ctx.lineWidth=1;
+    for(var gx=ox%S;gx<W;gx+=S){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
+    for(var gy=oy%S;gy<H;gy+=S){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.stroke();ctx.beginPath();ctx.moveTo(ox,0);ctx.lineTo(ox,H);ctx.stroke();
+    var dot=a[0]*b[0]+a[1]*b[1], bb=b[0]*b[0]+b[1]*b[1];
+    var t=dot/(bb||1), proj=[t*b[0],t*b[1]];
+    ctx.strokeStyle="#94a3b8";ctx.setLineDash([4,4]);ctx.lineWidth=1.4;var pa=P(a),pp=P(proj);ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pp[0],pp[1]);ctx.stroke();ctx.setLineDash([]);
+    arr(proj,"#f59e0b",3);arr(b,"#059669",3);arr(a,"#2563eb",3.2);
+    var la=Math.hypot(a[0],a[1]),lb=Math.hypot(b[0],b[1]),cos=dot/((la*lb)||1);
+    s.read.textContent="a·b = "+a[0]+"×"+b[0]+" + "+a[1]+"×"+b[1]+" = "+dot.toFixed(1)+"    cos(angle) = "+cos.toFixed(3)+"    angle ≈ "+(Math.acos(Math.max(-1,Math.min(1,cos)))*180/Math.PI).toFixed(0)+"°";
+  }
+  function set(e){var r=s.cv.getBoundingClientRect();var mx=(e.clientX-r.left)*W/r.width,my=(e.clientY-r.top)*H/r.height;var v=[Math.round((mx-ox)/S*2)/2,Math.round((oy-my)/S*2)/2];(drag===1?a:b)[0]=v[0];(drag===1?a:b)[1]=v[1];draw();}
+  s.cv.style.cursor="crosshair";
+  s.cv.addEventListener("pointerdown",function(e){var r=s.cv.getBoundingClientRect();var mx=(e.clientX-r.left)*W/r.width,my=(e.clientY-r.top)*H/r.height;var da=Math.hypot(mx-P(a)[0],my-P(a)[1]),db=Math.hypot(mx-P(b)[0],my-P(b)[1]);drag=da<db?1:2;set(e);e.preventDefault();});
+  s.cv.addEventListener("pointermove",function(e){if(drag){set(e);e.preventDefault();}});
+  window.addEventListener("pointerup",function(){drag=0;});
+  draw();
+};
+
+/* ================= eigenvectors ================= */
+reg["eigenvectors"]=function(host){
+  var s=shell(host,"▶ Interactive · eigenvectors don't turn",
+    "The matrix A stretches and rotates most vectors. But a few special directions — the eigenvectors — only get scaled, never rotated: A·v stays parallel to v. Drag the blue input; when its yellow output lines up with it, you've found an eigenvector (dashed lines).",620,380);
+  var ctx=s.ctx,W=620,H=380,S=54,ox=W/2,oy=H/2;
+  var A=[[2,1],[1,2]], ang=0.6;
+  function ev(){var a=A[0][0],b=A[0][1],c=A[1][0],d=A[1][1];var tr=a+d,det=a*d-b*c,disc=Math.sqrt(Math.max(0,tr*tr-4*det));var l1=(tr+disc)/2,l2=(tr-disc)/2;function vec(l){var v=Math.abs(b)>1e-6?[b,l-a]:[l-d,c];var n=Math.hypot(v[0],v[1])||1;return [v[0]/n,v[1]/n];}return [[l1,vec(l1)],[l2,vec(l2)]];}
+  function P(v){return [ox+v[0]*S,oy-v[1]*S];}
+  function arr(v,col,w){ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=w;var p=P(v);ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(p[0],p[1]);ctx.stroke();var g=Math.atan2(p[1]-oy,p[0]-ox);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]-11*Math.cos(g-.4),p[1]-11*Math.sin(g-.4));ctx.lineTo(p[0]-11*Math.cos(g+.4),p[1]-11*Math.sin(g+.4));ctx.closePath();ctx.fill();}
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.stroke();ctx.beginPath();ctx.moveTo(ox,0);ctx.lineTo(ox,H);ctx.stroke();
+    var es=ev();
+    ctx.setLineDash([5,5]);ctx.lineWidth=1.4;
+    es.forEach(function(e){ctx.strokeStyle="#e5e7eb";var v=e[1];ctx.beginPath();ctx.moveTo(ox-v[0]*S*3.5,oy+v[1]*S*3.5);ctx.lineTo(ox+v[0]*S*3.5,oy-v[1]*S*3.5);ctx.stroke();});
+    ctx.setLineDash([]);
+    var v=[Math.cos(ang),Math.sin(ang)];var Av=[A[0][0]*v[0]+A[0][1]*v[1], A[1][0]*v[0]+A[1][1]*v[1]];
+    arr(Av,"#f59e0b",3);arr(v,"#2563eb",3.2);
+    var cross=Math.abs(v[0]*Av[1]-v[1]*Av[0]); var aligned=cross<0.06;
+    if(aligned){ctx.fillStyle="#059669";ctx.font="700 14px system-ui";ctx.textAlign="center";ctx.fillText("★ eigenvector! output is parallel to input",W/2,28);}
+    s.read.textContent="eigenvalues: "+es[0][0].toFixed(2)+" and "+es[1][0].toFixed(2)+"    "+(aligned?"ALIGNED — A·v = λv (only scaled, not rotated)":"drag the blue arrow until the yellow output lines up");
+  }
+  s.cv.style.cursor="grab";
+  function set(e){var r=s.cv.getBoundingClientRect();var mx=(e.clientX-r.left)*W/r.width,my=(e.clientY-r.top)*H/r.height;ang=Math.atan2(oy-my,mx-ox);draw();}
+  var dg=false;
+  s.cv.addEventListener("pointerdown",function(e){dg=true;set(e);e.preventDefault();});
+  s.cv.addEventListener("pointermove",function(e){if(dg){set(e);e.preventDefault();}});
+  window.addEventListener("pointerup",function(){dg=false;});
+  draw();
+};
+
+/* ================= kmeans ================= */
+reg["kmeans"]=function(host){
+  var s=shell(host,"▶ Interactive · k-means finds clusters",
+    "K-means groups points into k clusters. Press Step: each point joins its nearest centroid (the big ✕), then each centroid moves to the middle of its points. Repeat until nothing moves. Press New points to reshuffle.",620,360);
+  var ctx=s.ctx,W=620,H=360,K=3,cols=["#4f46e5","#059669","#d97706"];
+  var pts=[],cent=[];
+  function seed(){pts=[];for(var g=0;g<3;g++){var cx=80+Math.random()*460,cy=60+Math.random()*230;for(var i=0;i<22;i++)pts.push({x:cx+(Math.random()-0.5)*120,y:cy+(Math.random()-0.5)*110,c:-1});}cent=[];for(var k=0;k<K;k++)cent.push({x:80+Math.random()*460,y:60+Math.random()*250});}
+  function assign(){pts.forEach(function(p){var best=0,bd=1e9;for(var k=0;k<K;k++){var d=(p.x-cent[k].x)*(p.x-cent[k].x)+(p.y-cent[k].y)*(p.y-cent[k].y);if(d<bd){bd=d;best=k;}}p.c=best;});}
+  function move(){for(var k=0;k<K;k++){var sx=0,sy=0,n=0;pts.forEach(function(p){if(p.c===k){sx+=p.x;sy+=p.y;n++;}});if(n){cent[k].x=sx/n;cent[k].y=sy/n;}}}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){ctx.fillStyle=p.c<0?"#94a3b8":cols[p.c];ctx.beginPath();ctx.arc(p.x,p.y,4,0,7);ctx.fill();});
+    for(var k=0;k<K;k++){ctx.strokeStyle=cols[k];ctx.lineWidth=3.5;var cx=cent[k].x,cy=cent[k].y;ctx.beginPath();ctx.moveTo(cx-8,cy-8);ctx.lineTo(cx+8,cy+8);ctx.moveTo(cx+8,cy-8);ctx.lineTo(cx-8,cy+8);ctx.stroke();}
+    s.read.textContent="k = 3 clusters · "+pts.length+" points. Step = assign points to nearest centroid, then recenter. It converges in a few steps.";
+  }
+  btn(s.body,"Step ▸",function(){assign();move();draw();});
+  btn(s.body,"Assign only",function(){assign();draw();});
+  btn(s.body,"New points",function(){seed();draw();},"");
+  seed();draw();
+};
+
+/* ================= confusion / threshold ================= */
+reg["confusion"]=function(host){
+  var s=shell(host,"▶ Interactive · the precision–recall trade-off",
+    "Each dot is a case with a model score (left = low, right = high) and a true label (red = actually positive). Slide the decision threshold: everything right of it is predicted positive. Watch precision and recall trade off — you can't max both.",620,340);
+  var ctx=s.ctx,W=620,H=340,th=0.5;
+  var data=[];(function(){var seed=7;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+    for(var i=0;i<60;i++){var pos=i<26;var sc=pos?0.45+rnd()*0.55:rnd()*0.6;data.push({s:Math.min(0.99,sc),pos:pos,y:40+rnd()*180});}})();
+  function draw(){
+    ctx.clearRect(0,0,W,H);var x0=30,x1=W-30,base=240;
+    ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(x0,base+14);ctx.lineTo(x1,base+14);ctx.stroke();
+    var tx=x0+th*(x1-x0);
+    ctx.strokeStyle="#4f46e5";ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(tx,20);ctx.lineTo(tx,base+14);ctx.stroke();ctx.setLineDash([]);
+    var TP=0,FP=0,FN=0,TN=0;
+    data.forEach(function(d){var x=x0+d.s*(x1-x0);var pred=d.s>=th;ctx.fillStyle=d.pos?"#e11d48":"#38bdf8";ctx.globalAlpha=pred?1:0.35;ctx.beginPath();ctx.arc(x,d.y,5,0,7);ctx.fill();ctx.globalAlpha=1;if(d.pos&&pred)TP++;else if(!d.pos&&pred)FP++;else if(d.pos&&!pred)FN++;else TN++;});
+    var prec=TP+FP?TP/(TP+FP):0, rec=TP+FN?TP/(TP+FN):0;
+    ctx.fillStyle="#64748b";ctx.font="12px system-ui";ctx.textAlign="left";ctx.fillText("← predicted NEGATIVE",x0,base+34);ctx.textAlign="right";ctx.fillText("predicted POSITIVE →",x1,base+34);
+    s.read.textContent="threshold = "+th.toFixed(2)+"   TP="+TP+" FP="+FP+" FN="+FN+"\nprecision = "+prec.toFixed(2)+" (of predicted-positive, how many right)   recall = "+rec.toFixed(2)+" (of actual-positive, how many caught)";
+  }
+  slider(s.body,"threshold",0.02,0.98,0.02,0.5,function(v){th=v;draw();});
+  draw();
+};
+
+/* ================= loss-curve / training ================= */
+reg["loss-curve"]=function(host){
+  var s=shell(host,"▶ Interactive · watch a model train",
+    "This runs gradient descent on a loss and plots the loss after each step — the curve you stare at while training. A good learning rate drops it smoothly to near zero; too high and it spikes or diverges; too low and it barely moves.",620,320);
+  var ctx=s.ctx,W=620,H=320,lr=0.1;
+  var P=Plot(ctx,W,H,0,40,0,20,34);
+  function run(){var x=4.2,hist=[];for(var i=0;i<40;i++){hist.push(x*x);x=x-lr*2*x;if(!isFinite(x)||Math.abs(x)>1e6){x=0;}}return hist;}
+  function draw(){
+    var h=run();P.axes();
+    ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.6;ctx.beginPath();
+    for(var i=0;i<h.length;i++){var y=Math.min(h[i],19.5);var cx=P.X(i),cy=P.Y(y);if(i===0)ctx.moveTo(cx,cy);else ctx.lineTo(cx,cy);}ctx.stroke();
+    for(var i=0;i<h.length;i+=4)P.dot(i,Math.min(h[i],19.5),"#6366f1",3);
+    var last=h[h.length-1];
+    var verdict=lr>=1.0?"diverging — loss blowing up (rate too high)":(lr<0.03?"crawling — barely moving (rate too low)":"healthy — loss falling to ~0");
+    s.read.textContent="learning rate = "+lr.toFixed(2)+"    final loss ≈ "+(isFinite(last)?last.toFixed(3):"∞")+"\n"+verdict+"   (x-axis = training steps, y-axis = loss)";
+  }
+  slider(s.body,"learning rate",0.01,1.05,0.01,0.1,function(v){lr=v;draw();});
+  draw();
+};
+
+
+
+/* ================= normal-sampler ================= */
+reg["normal-sampler"]=function(host){
+  var s=shell(host,"▶ Interactive · randomness has shape",
+    "Draw random samples from a normal (bell-curve) distribution and watch the histogram fill in. A few samples look ragged; thousands settle into the smooth bell. The sample mean and std home in on the true values — that's statistics at work.",620,320);
+  var ctx=s.ctx,W=620,H=320,mu=0,sig=1,samples=[];
+  function gauss(){var u=Math.random(),v=Math.random();return mu+sig*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+  function draw(){
+    ctx.clearRect(0,0,W,H);var lo=mu-4*sig,hi=mu+4*sig,bins=40,cnt=new Array(bins).fill(0);
+    samples.forEach(function(x){var bi=Math.floor((x-lo)/(hi-lo)*bins);if(bi>=0&&bi<bins)cnt[bi]++;});
+    var mx=Math.max(1,Math.max.apply(null,cnt)),base=H-46,x0=24,bw=(W-48)/bins;
+    for(var i=0;i<bins;i++){var h=cnt[i]/mx*(H-90);ctx.fillStyle="#a5b4fc";ctx.fillRect(x0+i*bw,base-h,bw-1,h);}
+    // true curve
+    ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.4;ctx.beginPath();
+    for(var p=0;p<=200;p++){var x=lo+(hi-lo)*p/200;var y=Math.exp(-(x-mu)*(x-mu)/(2*sig*sig));var cx=x0+(x-lo)/(hi-lo)*(W-48),cy=base-y*(H-90);if(p===0)ctx.moveTo(cx,cy);else ctx.lineTo(cx,cy);}ctx.stroke();
+    var n=samples.length,m=n?samples.reduce(function(a,b){return a+b;},0)/n:0;
+    var sd=n?Math.sqrt(samples.reduce(function(a,b){return a+(b-m)*(b-m);},0)/n):0;
+    s.read.textContent=n+" samples   sample mean = "+m.toFixed(3)+" (true "+mu+")   sample std = "+sd.toFixed(3)+" (true "+sig+")";
+  }
+  btn(s.body,"Sample 50",function(){for(var i=0;i<50;i++)samples.push(gauss());draw();},"primary");
+  btn(s.body,"Sample 1000",function(){for(var i=0;i<1000;i++)samples.push(gauss());draw();});
+  btn(s.body,"Reset",function(){samples=[];draw();});
+  draw();
+};
+
+/* ================= regularization ================= */
+reg["regularization"]=function(host){
+  var s=shell(host,"▶ Interactive · L1 vs L2 regularization",
+    "Regularization shrinks a model's coefficients to fight overfitting. Slide the strength λ. L2 (ridge) shrinks every coefficient smoothly toward zero. L1 (lasso) pushes small ones to exactly zero — giving a simpler, sparse model. Watch which bars vanish.",620,340);
+  var ctx=s.ctx,W=620,H=340,lam=0;
+  var base=[1.8,-1.25,0.9,-0.35,0.15,2.1,-0.6,0.28];
+  function draw(){
+    ctx.clearRect(0,0,W,H);var n=base.length,bw=54,gap=14,x0=40;
+    function bars(cy,label,fn,col){
+      ctx.fillStyle="#64748b";ctx.font="700 12px system-ui";ctx.textAlign="left";ctx.fillText(label,x0,cy-52);
+      ctx.strokeStyle="#e2e8f0";ctx.beginPath();ctx.moveTo(x0-6,cy);ctx.lineTo(x0+n*(bw+gap),cy);ctx.stroke();
+      var zeros=0;
+      for(var i=0;i<n;i++){var v=fn(base[i]);if(Math.abs(v)<0.001)zeros++;var h=v*30,x=x0+i*(bw+gap);ctx.fillStyle=col;ctx.fillRect(x,cy-Math.max(h,0),bw,Math.abs(h));ctx.fillStyle="#94a3b8";ctx.font="10px ui-monospace";ctx.textAlign="center";ctx.fillText(v.toFixed(2),x+bw/2,v>=0?cy-Math.abs(h)-4:cy+Math.abs(h)+11);}
+      return zeros;
+    }
+    var l2z=bars(110,"L2 (ridge): shrink all",function(c){return c/(1+lam);},"#4f46e5");
+    var l1z=bars(280,"L1 (lasso): sparsify",function(c){var t=Math.sign(c)*Math.max(0,Math.abs(c)-lam);return t;},"#059669");
+    s.read.textContent="λ = "+lam.toFixed(2)+"    L1 has "+l1z+" of "+base.length+" coefficients driven to exactly 0 (sparse); L2 keeps all, just smaller.";
+  }
+  slider(s.body,"strength λ",0,2,0.05,0,function(v){lam=v;draw();});
+  draw();
+};
+
+/* ================= decision-boundary (SVM margin) ================= */
+reg["svm-margin"]=function(host){
+  var s=shell(host,"▶ Interactive · the widest street wins",
+    "A linear classifier separates two classes with a line. But which line? An SVM picks the one with the widest 'street' (margin) between the classes. Tilt and shift the line; watch the margin and any misclassified points.",620,340);
+  var ctx=s.ctx,W=620,H=340,ang=0.2,off=0;
+  var A=[],B=[];(function(){var seed=3;function r(){seed=(seed*9301+49297)%233280;return seed/233280;}for(var i=0;i<14;i++){A.push([120+r()*140,90+r()*150]);B.push([360+r()*150,90+r()*150]);}})();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var nx=Math.cos(ang),ny=Math.sin(ang),cx=W/2+off*nx,cy=H/2+off*ny;
+    // line direction perpendicular to normal (nx,ny)
+    var dx=-ny,dy=nx;
+    function lineAt(t){return [cx+dx*t, cy+dy*t];}
+    ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.4;var p1=lineAt(-500),p2=lineAt(500);ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke();
+    // margin lines (dashed) at ±40
+    ctx.setLineDash([6,5]);ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.4;
+    [40,-40].forEach(function(m){var a=[cx+nx*m+dx*-500,cy+ny*m+dy*-500],b=[cx+nx*m+dx*500,cy+ny*m+dy*500];ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();});
+    ctx.setLineDash([]);
+    var err=0;
+    function side(p){return (p[0]-cx)*nx+(p[1]-cy)*ny;}
+    A.forEach(function(p){ctx.fillStyle="#2563eb";ctx.beginPath();ctx.arc(p[0],p[1],5,0,7);ctx.fill();if(side(p)>0)err++;});
+    B.forEach(function(p){ctx.fillStyle="#e11d48";ctx.beginPath();ctx.arc(p[0],p[1],5,0,7);ctx.fill();if(side(p)<0)err++;});
+    s.read.textContent="misclassified points: "+err+"    (dashed lines = the margin; SVM maximizes its width while keeping classes apart)";
+  }
+  slider(s.body,"tilt",-1.4,1.4,0.05,0.2,function(v){ang=v;draw();});
+  slider(s.body,"shift",-140,140,4,0,function(v){off=v;draw();});
+  draw();
+};
+
+/* ================= tokenizer ================= */
+reg["tokenizer"]=function(host){
+  var s=shell(host,"▶ Interactive · text becomes tokens",
+    "A model can't read letters — it reads tokens (word pieces). Type anything and watch it split into tokens. Notice how common words are one token, but rare or long words break into pieces. Token count is what you pay for with an LLM.",620,200);
+  s.cv.style.display="none";
+  var wrap=el("div");wrap.style.cssText="margin:2px 0 10px";
+  var ta=el("textarea");ta.value="Tokenization splits unbelievable sentences into subword pieces.";
+  ta.style.cssText="width:100%;min-height:56px;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;font:15px system-ui;resize:vertical";
+  wrap.appendChild(ta);s.body.appendChild(wrap);
+  var out=el("div");out.style.cssText="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0";s.body.appendChild(out);
+  var SUF=["ing","tion","able","ness","ly","ed","s","er","ment","ize","ation"];
+  var cols=["#eef2ff","#ecfdf5","#fef3c7","#fce7f3","#e0f2fe"];
+  function tok(w){var parts=[];var x=w;while(x.length>0){var cut=null;for(var i=0;i<SUF.length;i++){var suf=SUF[i];if(x.length>suf.length+2&&x.slice(-suf.length)===suf){cut=suf;break;}}if(cut){parts.unshift(cut);x=x.slice(0,-cut.length);}else{if(x.length>6){parts.unshift(x.slice(-4));x=x.slice(0,-4);}else{parts.unshift(x);x="";}}}return parts;}
+  function render(){
+    out.innerHTML="";var words=ta.value.split(/(\s+|[.,!?;:])/).filter(function(w){return w.length;});var n=0,ci=0;
+    words.forEach(function(w){if(/^\s+$/.test(w)){return;}var ps=/^[.,!?;:]$/.test(w)?[w]:tok(w);ps.forEach(function(p){var c=el("span");c.textContent=p;c.style.cssText="font:13px ui-monospace,monospace;background:"+cols[ci%cols.length]+";border:1px solid #e2e8f0;border-radius:6px;padding:3px 7px;color:#334155";out.appendChild(c);ci++;n++;});});
+    s.read.textContent=n+" tokens from "+ta.value.trim().split(/\s+/).length+" words. (This is a simplified demo; real tokenizers like BPE learn their pieces from data.)";
+  }
+  ta.addEventListener("input",render);render();
+};
+
+/* ================= positional encoding ================= */
+reg["positional"]=function(host){
+  var s=shell(host,"▶ Interactive · positions as waves",
+    "Attention is order-blind, so transformers add a positional encoding to each token: a set of sine/cosine waves of different frequencies. Each row is a position, each column a dimension — together they give every position a unique fingerprint. Slide to see more.",620,320);
+  var ctx=s.ctx,W=620,H=320,dims=32;
+  function draw(){
+    ctx.clearRect(0,0,W,H);var rows=20,x0=70,y0=20,cw=(W-x0-14)/dims,ch=(H-y0-40)/rows;
+    for(var pos=0;pos<rows;pos++)for(var d=0;d<dims;d++){
+      var v=(d%2===0)?Math.sin(pos/Math.pow(10000,d/dims)):Math.cos(pos/Math.pow(10000,(d-1)/dims));
+      var t=(v+1)/2;var r=Math.round(79+t*(220-79)),g=Math.round(70+ (1-t)*(150)),b=Math.round(229-t*180);
+      ctx.fillStyle="rgb("+r+","+Math.round(70+t*120)+","+Math.round(229-t*160)+")";
+      ctx.fillRect(x0+d*cw,y0+pos*ch,cw-0.5,ch-0.5);
+    }
+    ctx.fillStyle="#64748b";ctx.font="11px system-ui";ctx.textAlign="right";
+    for(var pos=0;pos<rows;pos+=4)ctx.fillText("pos "+pos,x0-6,y0+pos*ch+ch);
+    ctx.textAlign="center";ctx.fillText("dimension →",x0+(W-x0)/2,H-8);
+    s.read.textContent="Each position (row) gets a unique pattern of "+dims+" wave values. Low dimensions = fast waves (fine position), high = slow waves (coarse). The model reads position from this fingerprint.";
+  }
+  draw();
+};
+
+/* ================= cosine-search (RAG retrieval) ================= */
+reg["cosine-search"]=function(host){
+  var s=shell(host,"▶ Interactive · retrieval finds the nearest meaning",
+    "RAG turns your query and every document into vectors, then retrieves the ones pointing the same way (highest cosine similarity). Drag the query arrow; the documents light up by how well they match. This is search by meaning, not keywords.",620,360);
+  var ctx=s.ctx,W=620,H=360,S=120,ox=W/2,oy=H/2,ang=0.5;
+  var docs=[{a:0.4,t:"refund policy"},{a:1.2,t:"shipping times"},{a:2.3,t:"login help"},{a:-0.6,t:"return an item"},{a:-1.5,t:"track my order"}];
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.strokeStyle="#eef1f6";
+    ctx.beginPath();ctx.arc(ox,oy,S,0,7);ctx.stroke();
+    ctx.strokeStyle="#cbd5e1";ctx.beginPath();ctx.moveTo(0,oy);ctx.lineTo(W,oy);ctx.stroke();ctx.beginPath();ctx.moveTo(ox,0);ctx.lineTo(ox,H);ctx.stroke();
+    var q=[Math.cos(ang),Math.sin(ang)];
+    var sims=docs.map(function(d){var v=[Math.cos(d.a),Math.sin(d.a)];return q[0]*v[0]+q[1]*v[1];});
+    var best=sims.indexOf(Math.max.apply(null,sims));
+    docs.forEach(function(d,i){var v=[Math.cos(d.a),Math.sin(d.a)];var col=i===best?"#059669":"#94a3b8";ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=i===best?3:1.8;ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+v[0]*S,oy-v[1]*S);ctx.stroke();ctx.font=(i===best?"700 ":"400 ")+"12px system-ui";ctx.textAlign="left";ctx.fillText(d.t+" ("+sims[i].toFixed(2)+")",ox+v[0]*S+6,oy-v[1]*S);});
+    ctx.strokeStyle="#4f46e5";ctx.fillStyle="#4f46e5";ctx.lineWidth=3.4;ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+q[0]*S,oy-q[1]*S);ctx.stroke();
+    ctx.font="700 13px system-ui";ctx.fillText("query",ox+q[0]*S+6,oy-q[1]*S-4);
+    s.read.textContent="best match: \""+docs[best].t+"\"  (cosine "+sims[best].toFixed(2)+")   — drag the blue query; the nearest-meaning document is retrieved.";
+  }
+  s.cv.style.cursor="grab";var dg=false;
+  function set(e){var r=s.cv.getBoundingClientRect();ang=Math.atan2(oy-(e.clientY-r.top)*H/r.height,(e.clientX-r.left)*W/r.width-ox);draw();}
+  s.cv.addEventListener("pointerdown",function(e){dg=true;set(e);e.preventDefault();});
+  s.cv.addEventListener("pointermove",function(e){if(dg){set(e);e.preventDefault();}});
+  window.addEventListener("pointerup",function(){dg=false;});
+  draw();
+};
+
+/* ================= scaling-laws ================= */
+reg["scaling-laws"]=function(host){
+  var s=shell(host,"▶ Interactive · bigger, and predictably better",
+    "Scaling laws say a model's loss falls as a smooth power of its compute — a straight line on a log-log plot. That predictability is why labs pour compute in: 10× the compute buys a reliable drop in loss. Slide the compute budget.",620,320);
+  var ctx=s.ctx,W=620,H=320,logC=3;
+  var P=Plot(ctx,W,H,1,9,0.5,3.5,38);
+  function loss(lc){return 3.4*Math.pow(Math.pow(10,lc),-0.05);}
+  function draw(){
+    P.axes();
+    P.curve(function(x){return loss(x);},"#4f46e5",2.8);
+    P.dot(logC,loss(logC),"#dc2626",7);
+    ctx.fillStyle="#64748b";ctx.font="11px system-ui";ctx.textAlign="center";
+    ctx.fillText("compute  (10^x FLOPs)  →",W/2,H-8);
+    var cur=loss(logC),ten=loss(logC+1);
+    s.read.textContent="compute = 10^"+logC.toFixed(1)+" FLOPs    loss ≈ "+cur.toFixed(3)+"\n10× more compute → loss "+ten.toFixed(3)+" (a "+((1-ten/cur)*100).toFixed(1)+"% drop) — smooth and predictable.";
+  }
+  slider(s.body,"log₁₀ compute",1.5,8.5,0.1,3,function(v){logC=v;draw();});
+  draw();
+};
+
+
+/* ================= backprop (computation graph) ================= */
+reg["backprop"]=function(host){
+  var s=shell(host,"▶ Interactive · watch gradients flow backward",
+    "The chain rule made visible on f = (x + y) · z. Black numbers are the forward pass flowing right; red numbers are the gradients ∂f/∂· flowing left. Move any slider: ∂f/∂x and ∂f/∂y always equal z, while ∂f/∂z equals x+y — a multiply gate routes each input's gradient through the OTHER input's value.",640,320);
+  var ctx=s.ctx,W=640,H=320,x=2,y=-3,z=4;
+  function rr(a,b,w,h,r){ctx.beginPath();ctx.moveTo(a+r,b);ctx.arcTo(a+w,b,a+w,b+h,r);ctx.arcTo(a+w,b+h,a,b+h,r);ctx.arcTo(a,b+h,a,b,r);ctx.arcTo(a,b,a+w,b,r);ctx.closePath();}
+  function box(cx,cy,name,val,grad,fill){
+    var w=110,h=48;
+    ctx.fillStyle=fill;ctx.strokeStyle="#94a3b8";ctx.lineWidth=1.4;rr(cx-w/2,cy-h/2,w,h,11);ctx.fill();ctx.stroke();
+    ctx.textAlign="center";
+    ctx.fillStyle="#334155";ctx.font="600 12.5px system-ui";ctx.fillText(name,cx,cy-8);
+    ctx.fillStyle="#0f172a";ctx.font="700 16px system-ui";ctx.fillText(val,cx,cy+13);
+    ctx.fillStyle="#dc2626";ctx.font="600 12px system-ui";ctx.fillText("grad "+grad,cx,cy+h/2+15);
+  }
+  function edge(x1,y1,x2,y2){ctx.strokeStyle="#cbd5e1";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    ctx.fillStyle="#cbd5e1";var a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-9*Math.cos(a-.4),y2-9*Math.sin(a-.4));ctx.lineTo(x2-9*Math.cos(a+.4),y2-9*Math.sin(a+.4));ctx.closePath();ctx.fill();}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var q=x+y,f=q*z, gf=1,gz=q,gq=z,gx=z,gy=z;
+    var xN=[92,58],yN=[92,150],zN=[92,258],addN=[330,104],mulN=[530,175];
+    edge(xN[0]+55,xN[1],addN[0]-55,addN[1]);
+    edge(yN[0]+55,yN[1],addN[0]-55,addN[1]);
+    edge(addN[0]+55,addN[1],mulN[0]-55,mulN[1]);
+    edge(zN[0]+55,zN[1],mulN[0]-55,mulN[1]);
+    box(xN[0],xN[1],"x",""+x,""+gx,"#eff6ff");
+    box(yN[0],yN[1],"y",""+y,""+gy,"#eff6ff");
+    box(zN[0],zN[1],"z",""+z,""+gz,"#eff6ff");
+    box(addN[0],addN[1],"q = x + y",""+q,""+gq,"#ecfdf5");
+    box(mulN[0],mulN[1],"f = q · z",""+f,""+gf,"#fef3c7");
+    s.read.textContent="forward:   q = x+y = "+q+"      f = q·z = "+f+
+      "\nbackward:  ∂f/∂z = q = "+q+"      ∂f/∂q = z = "+z+"      ∂f/∂x = ∂f/∂y = "+gx;
+  }
+  slider(s.body,"x",-6,6,1,x,function(v){x=v;draw();});
+  slider(s.body,"y",-6,6,1,y,function(v){y=v;draw();});
+  slider(s.body,"z",-6,6,1,z,function(v){z=v;draw();});
+  draw();
+};
+
+/* ================= decision-tree ================= */
+reg["decision-tree"]=function(host){
+  var s=shell(host,"▶ Interactive · grow a decision tree, watch it overfit",
+    "120 points, two classes, with a circular true boundary. A tree can only cut straight horizontal/vertical lines, so it approximates the circle with a staircase. Drag the depth slider: deeper trees fit the training points better (accuracy climbs toward 100%) — including the noise. That last mile is overfitting.",560,400);
+  var ctx=s.ctx,W=560,H=400,pad=28,maxDepth=2;
+  var seed=7; function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+  var pts=[];for(var i=0;i<120;i++){var px=rnd(),py=rnd();var dd=(px-0.5)*(px-0.5)+(py-0.5)*(py-0.5);var lab=dd<0.10?1:0;if(rnd()<0.06)lab=1-lab;pts.push({x:px,y:py,c:lab});}
+  function X(x){return pad+x*(W-2*pad);} function Y(y){return H-pad-y*(H-2*pad);}
+  function gini(a){var n=a.length;if(!n)return 0;var c=0;for(var i=0;i<n;i++)c+=a[i].c;var p=c/n;return 1-p*p-(1-p)*(1-p);}
+  function maj(a){var c=0;for(var i=0;i<a.length;i++)c+=a[i].c;return c*2>=a.length?1:0;}
+  function build(a,depth){
+    var g=gini(a);
+    if(depth>=maxDepth||a.length<4||g===0)return {leaf:maj(a)};
+    var best=null;
+    for(var ax=0;ax<2;ax++){
+      var key=ax===0?"x":"y";
+      var vals=a.map(function(p){return p[key];}).sort(function(u,v){return u-v;});
+      for(var i=0;i<vals.length-1;i++){
+        if(vals[i]===vals[i+1])continue;
+        var t=(vals[i]+vals[i+1])/2,L=[],R=[];
+        for(var j=0;j<a.length;j++){(a[j][key]<t?L:R).push(a[j]);}
+        if(!L.length||!R.length)continue;
+        var wg=(L.length*gini(L)+R.length*gini(R))/a.length;
+        if(!best||wg<best.wg)best={wg:wg,ax:ax,key:key,t:t,L:L,R:R};
+      }
+    }
+    if(!best||best.wg>=g)return {leaf:maj(a)};
+    return {ax:best.ax,key:best.key,t:best.t,L:build(best.L,depth+1),R:build(best.R,depth+1)};
+  }
+  function classify(node,p){while(node.leaf===undefined){node=(p[node.key]<node.t?node.L:node.R);}return node.leaf;}
+  function draw(){
+    var tree=build(pts,0);
+    ctx.clearRect(0,0,W,H);
+    var step=7;
+    for(var gx=pad;gx<W-pad;gx+=step)for(var gy=pad;gy<H-pad;gy+=step){
+      var px=(gx-pad)/(W-2*pad), py=(H-pad-gy)/(H-2*pad);
+      var cls=classify(tree,{x:px,y:py});
+      ctx.fillStyle=cls?"rgba(37,99,235,0.13)":"rgba(220,38,38,0.10)";
+      ctx.fillRect(gx,gy,step,step);
+    }
+    (function lines(node,x0,x1,y0,y1){
+      if(node.leaf!==undefined)return;
+      ctx.strokeStyle="#334155";ctx.lineWidth=1.3;
+      if(node.ax===0){var xx=X(node.t);ctx.beginPath();ctx.moveTo(xx,Y(y1));ctx.lineTo(xx,Y(y0));ctx.stroke();lines(node.L,x0,node.t,y0,y1);lines(node.R,node.t,x1,y0,y1);}
+      else{var yy=Y(node.t);ctx.beginPath();ctx.moveTo(X(x0),yy);ctx.lineTo(X(x1),yy);ctx.stroke();lines(node.L,x0,x1,y0,node.t);lines(node.R,x0,x1,node.t,y1);}
+    })(tree,0,1,0,1);
+    for(var k=0;k<pts.length;k++){var p=pts[k];ctx.fillStyle=p.c?"#2563eb":"#dc2626";ctx.strokeStyle="#fff";ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(X(p.x),Y(p.y),4.5,0,7);ctx.fill();ctx.stroke();}
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.2;ctx.strokeRect(pad,pad,W-2*pad,H-2*pad);
+    var correct=0;for(var m=0;m<pts.length;m++)if(classify(tree,pts[m])===pts[m].c)correct++;
+    var leaves=0;(function cnt(n){if(n.leaf!==undefined)leaves++;else{cnt(n.L);cnt(n.R);}})(tree);
+    s.read.textContent="depth "+maxDepth+"   ·   "+leaves+" leaf regions   ·   training accuracy "+(correct/pts.length*100).toFixed(1)+"%\n"+(maxDepth>=5?"Very deep: the staircase now traces individual noisy points — classic overfitting.":"Increase depth to fit the circle more tightly.");
+  }
+  slider(s.body,"max depth",1,6,1,maxDepth,function(v){maxDepth=v;draw();});
+  draw();
+};
+
+/* ================= embeddings (analogy) ================= */
+reg["embeddings"]=function(host){
+  var s=shell(host,"▶ Interactive · word vectors & analogies",
+    "Words become points; directions carry meaning. Here the relation arrow is the same everywhere, so vector arithmetic works: king − man + woman lands on queen. Click an analogy to see the two parallel arrows and the nearest word.",600,400);
+  var ctx=s.ctx,W=600,H=400,pad=42;
+  var words={man:[2,1],woman:[2,3],king:[6.2,1],queen:[6.2,3],prince:[5,0],princess:[5,2],uncle:[3.6,1],aunt:[3.6,3],boy:[1.2,0],girl:[1.2,2]};
+  var female={woman:1,queen:1,princess:1,aunt:1,girl:1};
+  var xlo=0,xhi=7.6,ylo=-1,yhi=4;
+  function X(x){return pad+(x-xlo)/(xhi-xlo)*(W-2*pad);} function Y(y){return H-pad-(y-ylo)/(yhi-ylo)*(H-2*pad);}
+  var presets=[["king","man","woman"],["queen","woman","man"],["uncle","man","woman"],["prince","boy","girl"]];
+  var cur=0;
+  function nearest(v,exclude){var best=null;for(var w in words){if(exclude.indexOf(w)>=0)continue;var dx=words[w][0]-v[0],dy=words[w][1]-v[1],d=dx*dx+dy*dy;if(!best||d<best.d)best={w:w,d:d};}return best;}
+  function arrow(x1,y1,x2,y2,c,w){ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();var a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-10*Math.cos(a-.4),y2-10*Math.sin(a-.4));ctx.lineTo(x2-10*Math.cos(a+.4),y2-10*Math.sin(a+.4));ctx.closePath();ctx.fill();}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#eef1f6";ctx.lineWidth=1;
+    for(var gx=Math.ceil(xlo);gx<=xhi;gx++){ctx.beginPath();ctx.moveTo(X(gx),pad);ctx.lineTo(X(gx),H-pad);ctx.stroke();}
+    for(var gy=Math.ceil(ylo);gy<=yhi;gy++){ctx.beginPath();ctx.moveTo(pad,Y(gy));ctx.lineTo(W-pad,Y(gy));ctx.stroke();}
+    var A=presets[cur][0],B=presets[cur][1],C=presets[cur][2];
+    var res=[words[A][0]-words[B][0]+words[C][0], words[A][1]-words[B][1]+words[C][1]];
+    var near=nearest(res,[A,B,C]);
+    arrow(X(words[B][0]),Y(words[B][1]),X(words[A][0]),Y(words[A][1]),"#cbd5e1",2);
+    arrow(X(words[C][0]),Y(words[C][1]),X(res[0]),Y(res[1]),"#6366f1",2.6);
+    for(var w in words){var isF=female[w];ctx.fillStyle=isF?"#db2777":"#2563eb";ctx.beginPath();ctx.arc(X(words[w][0]),Y(words[w][1]),5,0,7);ctx.fill();
+      ctx.fillStyle="#0f172a";ctx.font=((w===A||w===B||w===C)?"700 ":"600 ")+"13px system-ui";ctx.textAlign="left";ctx.fillText(w,X(words[w][0])+9,Y(words[w][1])+4);}
+    ctx.strokeStyle="#6366f1";ctx.lineWidth=2;ctx.beginPath();ctx.arc(X(res[0]),Y(res[1]),9,0,7);ctx.stroke();
+    s.read.textContent=A+" − "+B+" + "+C+"   =   nearest word  →  "+near.w.toUpperCase()+"\nThe grey arrow (the relation) and the blue arrow are parallel and equal length — that's why the arithmetic works.";
+  }
+  presets.forEach(function(p,i){btn(s.body,p[0]+" − "+p[1]+" + "+p[2],function(b){cur=i;[].forEach.call(s.body.querySelectorAll(".gdw-btn"),function(x){x.classList.remove("on");});b.classList.add("on");draw();});});
+  s.body.querySelector(".gdw-btn").classList.add("on");
+  draw();
+};
+
+/* ================= diffusion (forward noising) ================= */
+reg["diffusion"]=function(host){
+  var s=shell(host,"▶ Interactive · forward diffusion: signal → noise",
+    "Diffusion training destroys an image with Gaussian noise, then learns to undo it step by step. Drag t from 0 (clean) to 1 (pure noise): x_t = √ā·x₀ + √(1−ā)·ε on a cosine schedule. The model's whole job is to look at any noisy x_t and predict the ε that was added, so it can subtract it.",560,300);
+  var ctx=s.ctx,W=560,H=300,N=28,t=0.3;
+  var x0=[],noise=[];
+  var g=99; function rnd(){g=(g*1103515245+12345)&0x7fffffff;return g/0x7fffffff;}
+  function gauss(){var u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.283185*v);}
+  for(var r=0;r<N;r++){x0[r]=[];noise[r]=[];for(var c=0;c<N;c++){
+    var cx=(c-13.5)/13.5, cy=(r-13.5)/13.5, d=Math.sqrt(cx*cx+cy*cy);
+    var val=0.05;
+    if(d<0.92&&d>0.72)val=0.9;
+    else if(d<=0.72)val=0.20;
+    if((Math.abs(cx+0.32)<0.12&&Math.abs(cy+0.28)<0.15)||(Math.abs(cx-0.32)<0.12&&Math.abs(cy+0.28)<0.15))val=0.97;
+    if(cy>0.12&&cy<0.5&&d<0.62&&d>0.40)val=0.97;
+    x0[r][c]=val; noise[r][c]=gauss();
+  }}
+  var px=Math.floor((H-56)/N), side=px*N, ox=(W-side)/2, oy=16;
+  function draw(){
+    var abar=Math.pow(Math.cos(t*Math.PI/2),2), sa=Math.sqrt(abar), sn=Math.sqrt(1-abar);
+    ctx.clearRect(0,0,W,H);
+    for(var r=0;r<N;r++)for(var c=0;c<N;c++){
+      var v=clamp(sa*x0[r][c]+sn*(0.5+0.28*noise[r][c]),0,1), g8=Math.round(255*(1-v));
+      ctx.fillStyle="rgb("+g8+","+g8+","+g8+")";
+      ctx.fillRect(ox+c*px,oy+r*px,px,px);
+    }
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.2;ctx.strokeRect(ox,oy,side,side);
+    s.read.textContent="t = "+t.toFixed(2)+"     √ā = "+sa.toFixed(2)+" (signal)     √(1−ā) = "+sn.toFixed(2)+" (noise)     →     "+Math.round(abar*100)+"% signal / "+Math.round((1-abar)*100)+"% noise";
+  }
+  slider(s.body,"noise level  t",0,1,0.02,t,function(v){t=v;draw();});
+  draw();
+};
+
 /* ---- boot: render every placeholder ---- */
 function boot(){
   [].forEach.call(document.querySelectorAll(".gdw[data-widget]"),function(host){

@@ -61,6 +61,8 @@ function boot(){
   panel.appendChild(headed("Your progress"));
   var prog=elc("div","gde-prog",'<div class="lab"><span>Lessons completed</span><b class="gde-n">0</b></div><div class="gde-track"><i class="gde-fill"></i></div>');
   panel.appendChild(prog);
+  var revLink=elc("a","gde-item gde-revlink",'<span class="ic">◱</span><span>Review &amp; progress hub</span><span class="sub">→</span>');
+  revLink.href="review.html"; revLink.title="Spaced-repetition review across every lesson"; panel.appendChild(revLink);
   var hide=elc("button","gde-hide","Hide these tools"); panel.appendChild(hide);
 
   function headed(t){return elc("div","gde-h",t);}

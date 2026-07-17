@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -261,6 +262,7 @@ for its eigenvectors — they keep their direction and only change length.</p>
   <text x="256.0" y="195.0" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="11.5" font-weight="400" fill="#9f1239" text-anchor="start" opacity="1.0" dominant-baseline="middle">Aw (direction changed)</text>
 </svg>
 <figcaption><b>An eigenvector keeps its direction.</b> The matrix rotates the generic vector $w$, but the eigenvector $v$ stays on its own line — only its length changes (here, ×2, so $\lambda = 2$).</figcaption></figure>
+<div class="gdw" data-widget="eigenvectors"></div>
 
 <p>Why care about a niche geometric fact? Because eigenvectors are how you find the <strong>hidden axes of your
 data</strong> — and that powers the single most useful data-compression technique in classical ML.</p>
@@ -652,5 +654,6 @@ that tells a model which way to adjust to do better — the first real step towa
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>

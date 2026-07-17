@@ -10,6 +10,8 @@
 .gde-h{font:800 10.5px system-ui;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;margin:4px 6px 6px}
 .gde-item{display:flex;align-items:center;gap:11px;width:100%;border:none;background:none;text-align:left;font:600 14px system-ui;color:#1e293b;padding:10px;border-radius:11px;cursor:pointer;transition:background .12s}
 .gde-item:hover{background:#f4f5fb;color:#4f46e5}
+a.gde-item{text-decoration:none}
+a.gde-revlink{color:#4f46e5}a.gde-revlink .ic{color:#4f46e5}
 .gde-item .ic{width:20px;text-align:center;font-size:15px;flex:0 0 20px}
 .gde-item.on{color:#059669}
 .gde-item .sub{margin-left:auto;font:600 12px system-ui;color:#94a3b8}

@@ -12,6 +12,7 @@
 <script defer src="../assets/app.js"></script>
 <link rel="stylesheet" href="../assets/gd-enhance.css">
 <link rel="stylesheet" href="../assets/gd-run.css">
+<link rel="stylesheet" href="../assets/gd-widgets.css">
 </head>
 <body>
 <div class="scrim"></div>
@@ -371,6 +372,8 @@ noise (Lesson 1.10), then a little more, over many steps, until nothing remains 
 predict a slightly <em>less</em> noisy version — to undo one step of noising. Chain the learned reverse steps and you
 can start from pure random noise and gradually denoise it into a brand-new, coherent image that never existed.</p>
 
+<div class="gdw" data-widget="diffusion"></div>
+
 <h2><span class="sec-tag">Concept</span> The training objective: predict the noise</h2>
 
 <p>How do you train the reverse step? With a clever, simple objective: take a clean image, add a <em>known</em> amount
@@ -610,5 +613,6 @@ build a single map of where each one fits.</p>
 <button class="totop" aria-label="Back to top">↑</button>
 <script defer src="../assets/gd-enhance.js"></script>
 <script defer src="../assets/gd-run.js"></script>
+<script defer src="../assets/gd-widgets.js"></script>
 </body>
 </html>
