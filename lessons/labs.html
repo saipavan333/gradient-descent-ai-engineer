@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive Labs · Gradient Descent</title>
+<style>
+:root{--indigo:#4f46e5;--ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e6e8f2;--bg:#f6f7fb;--card:#fff;--sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+h1{font-size:30px;letter-spacing:-.02em;color:var(--ink);margin:18px 0 2px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 20px;max-width:640px}
+.h2{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo);margin:34px 0 14px}
+.labs{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.lab-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 18px 18px;overflow:hidden;transition:.15s;display:block}
+.lab-card:hover{border-color:var(--indigo);transform:translateY(-2px);box-shadow:0 10px 30px rgba(15,23,42,.08)}
+.lc-top{margin:0 -18px 12px;height:60px;background:var(--c);display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.lc-badge{font:700 11px system-ui;color:#fff;opacity:.9}
+.lc-play{color:#fff;font-size:20px}
+.lab-card h3{font-size:16px;color:var(--ink);margin:0 0 4px}
+.lab-card p{font-size:13.5px;color:var(--muted);margin:0 0 10px;line-height:1.45}
+.lc-go{font-size:13px;font-weight:700;color:var(--indigo)}
+.trk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.trk-h{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.trk-n{color:#fff;font:700 12px system-ui;border-radius:6px;padding:1px 8px}
+ul.wg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+@media(max-width:640px){ul.wg{grid-template-columns:1fr}}
+ul.wg li a{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:9px;color:var(--body)}
+ul.wg li a:hover{background:#f4f5fb}
+.wg-dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+.wg-l{font-weight:600;font-size:13.5px}
+.wg-in{color:#94a3b8;font-size:11.5px;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45%}
+.note{font-size:13.5px;color:var(--muted);background:#eef2ff;border:1px solid #dbe2ff;border-radius:12px;padding:14px 16px;margin-top:8px}
+</style></head><body>
+<div class="wrap">
+<div class="top"><span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span><span class="brand"><b>Gradient Descent</b><span>Interactive labs</span></span><span class="sp"></span><a href="../index.html">← All lessons</a></div>
+<h1>Interactive labs</h1>
+<p class="sub">Learning by doing. Full-screen labs where you drive the algorithm, plus 32 inline interactives woven into the lessons — every one runs in your browser, no install.</p>
+<div class="h2">Flagship labs</div>
+<div class="labs">
+<a class="lab-card" href="nn-playground.html"><div class="lc-top" style="--c:#7c3aed"><span class="lc-badge">Track 4</span><span class="lc-play">▶</span></div><h3>Neural Network Playground</h3><p>train a real net, watch the boundary form</p><span class="lc-go">Open lab →</span></a>
+<a class="lab-card" href="convolution-masterclass.html"><div class="lc-top" style="--c:#db2777"><span class="lc-badge">Track 5</span><span class="lc-play">▶</span></div><h3>Convolution, from scratch</h3><p>slide a kernel, build a feature map by hand</p><span class="lc-go">Open lab →</span></a>
+<a class="lab-card" href="iou-masterclass.html"><div class="lc-top" style="--c:#db2777"><span class="lc-badge">Track 5</span><span class="lc-play">▶</span></div><h3>Intersection over Union</h3><p>drag two boxes, see how detection is scored</p><span class="lc-go">Open lab →</span></a>
+<a class="lab-card" href="gradient-descent-masterclass.html"><div class="lc-top" style="--c:#4f46e5"><span class="lc-badge">Track 1</span><span class="lc-play">▶</span></div><h3>Gradient Descent</h3><p>roll downhill and watch a model learn</p><span class="lc-go">Open lab →</span></a>
+</div>
+<div class="h2">Inline interactives, by track</div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#4f46e5">1</span>Math Foundations</div><ul class="wg"><li><a href="m1-vectors.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">Drag a vector, read its numbers</span><span class="wg-in">Vectors: the language of data</span></a></li>
+<li><a href="m10-statistics.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">The bell curve emerging</span><span class="wg-in">Statistics for ML: expectation, variance, MLE & the normal</span></a></li>
+<li><a href="m2-matrices.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">Watch a matrix transform space</span><span class="wg-in">Matrices & matrix multiplication</span></a></li>
+<li><a href="m3-dot-product.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">Dot product & projection</span><span class="wg-in">Dot products, similarity & projection</span></a></li>
+<li><a href="m5-eigen-pca.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">Find the eigenvectors</span><span class="wg-in">Eigenvectors, eigenvalues & a first look at PCA</span></a></li>
+<li><a href="m8-gradient-descent.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">Roll downhill with gradient descent</span><span class="wg-in">Gradient descent: how models actually learn</span></a></li>
+<li><a href="m9-probability.html"><span class="wg-dot" style="background:#4f46e5"></span><span class="wg-l">Bayes' base-rate grid</span><span class="wg-in">Probability essentials: uncertainty, distributions, Bayes</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#059669">3</span>Classical ML</div><ul class="wg"><li><a href="cm10-clustering.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">k-means clustering</span><span class="wg-in">Clustering & unsupervised learning</span></a></li>
+<li><a href="cm11-dimred.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">PCA directions & projection</span><span class="wg-in">Dimensionality reduction (PCA, t-SNE, UMAP)</span></a></li>
+<li><a href="cm2-linreg.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">Least-squares line fit</span><span class="wg-in">Linear regression from scratch</span></a></li>
+<li><a href="cm3-logreg.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">The sigmoid curve</span><span class="wg-in">Logistic regression & classification</span></a></li>
+<li><a href="cm4-metrics.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">Confusion matrix & threshold</span><span class="wg-in">Loss functions & evaluation metrics</span></a></li>
+<li><a href="cm5-biasvar.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">Bias–variance & overfitting</span><span class="wg-in">Bias–variance tradeoff & overfitting</span></a></li>
+<li><a href="cm6-regularization.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">L1 vs L2 regularization</span><span class="wg-in">Regularization (L1 / L2)</span></a></li>
+<li><a href="cm7-trees.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">Grow a decision tree</span><span class="wg-in">Decision trees</span></a></li>
+<li><a href="cm8-ensembles.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">Gradient boosting from stumps</span><span class="wg-in">Ensembles: Random Forests & Gradient Boosting</span></a></li>
+<li><a href="cm9-svm.html"><span class="wg-dot" style="background:#059669"></span><span class="wg-l">The SVM margin</span><span class="wg-in">Support Vector Machines</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#7c3aed">4</span>Deep Learning</div><ul class="wg"><li><a href="dl1-neuron.html"><span class="wg-dot" style="background:#7c3aed"></span><span class="wg-l">Inside a single neuron</span><span class="wg-in">From a neuron to a network</span></a></li>
+<li><a href="dl2-forward.html"><span class="wg-dot" style="background:#7c3aed"></span><span class="wg-l">Activation functions</span><span class="wg-in">Forward pass & activation functions</span></a></li>
+<li><a href="dl3-backprop.html"><span class="wg-dot" style="background:#7c3aed"></span><span class="wg-l">Gradients flow backward</span><span class="wg-in">Backpropagation, step by step</span></a></li>
+<li><a href="dl4-trainloop.html"><span class="wg-dot" style="background:#7c3aed"></span><span class="wg-l">Training loss curve</span><span class="wg-in">The training loop, loss & optimizers</span></a></li>
+<li><a href="dl8-dynamics.html"><span class="wg-dot" style="background:#7c3aed"></span><span class="wg-l">SGD vs Momentum vs Adam</span><span class="wg-in">Training dynamics & debugging</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#db2777">5</span>Computer Vision</div><ul class="wg"><li><a href="cv6-diffusion.html"><span class="wg-dot" style="background:#db2777"></span><span class="wg-l">Forward diffusion noising</span><span class="wg-in">Image generation with diffusion</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#d97706">6</span>NLP & Transformers</div><ul class="wg"><li><a href="nlp1-tokenization.html"><span class="wg-dot" style="background:#d97706"></span><span class="wg-l">Tokenize text live</span><span class="wg-in">Text to numbers: tokenization</span></a></li>
+<li><a href="nlp2-embeddings.html"><span class="wg-dot" style="background:#d97706"></span><span class="wg-l">Word-vector analogies</span><span class="wg-in">Word embeddings</span></a></li>
+<li><a href="nlp5-selfattention.html"><span class="wg-dot" style="background:#d97706"></span><span class="wg-l">Attention weights</span><span class="wg-in">Self-attention & multi-head attention</span></a></li>
+<li><a href="nlp7-positional.html"><span class="wg-dot" style="background:#d97706"></span><span class="wg-l">Positional-encoding heatmap</span><span class="wg-in">Positional encoding</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#dc2626">7</span>LLMs & GenAI</div><ul class="wg"><li><a href="llm4-decoding.html"><span class="wg-dot" style="background:#dc2626"></span><span class="wg-l">Softmax temperature</span><span class="wg-in">Decoding strategies</span></a></li>
+<li><a href="llm7-scaling.html"><span class="wg-dot" style="background:#dc2626"></span><span class="wg-l">Scaling laws</span><span class="wg-in">Scaling laws & emergent behavior</span></a></li>
+<li><a href="llm8-diffusion.html"><span class="wg-dot" style="background:#dc2626"></span><span class="wg-l">Forward diffusion noising</span><span class="wg-in">Diffusion models & image generation</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#0284c7">8</span>RAG & Vector Search</div><ul class="wg"><li><a href="rag3-embeddings.html"><span class="wg-dot" style="background:#0284c7"></span><span class="wg-l">Cosine-similarity retrieval</span><span class="wg-in">Embeddings for retrieval</span></a></li>
+</ul></div>
+<div class="trk"><div class="trk-h"><span class="trk-n" style="background:#e11d48">12</span>Evals & Safety</div><ul class="wg"><li><a href="ev2-offline.html"><span class="wg-dot" style="background:#e11d48"></span><span class="wg-l">ROC curve & threshold</span><span class="wg-in">Offline evaluation & datasets</span></a></li>
+</ul></div>
+
+<div class="note"><b>Every track is hands-on.</b> Beyond these, 102 lessons include a runnable Python cell you can edit and execute in-browser, and each lesson has read-aloud, flashcards and progress tracking. Tracks without a visual widget (Python, Agents, MLOps, System Design, Interview, Capstones) are practised through their runnable code and worked scenarios.</div>
+</div></body></html>

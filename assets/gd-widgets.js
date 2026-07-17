@@ -766,6 +766,142 @@ reg["diffusion"]=function(host){
   draw();
 };
 
+/* ================= pca ================= */
+reg["pca"]=function(host){
+  var s=shell(host,"▶ Interactive · PCA finds the directions of greatest variance",
+    "A correlated 2-D cloud. PCA computes the covariance matrix and its eigenvectors: PC1 (orange) is the direction of most spread, PC2 (green) is perpendicular. Toggle projection to squash the cloud onto PC1 — 2-D reduced to 1-D while keeping most of the variance.",600,420);
+  var ctx=s.ctx,W=600,H=420,proj=false;
+  var seed=5; function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+  function gauss(){var u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v);}
+  var pts=[];for(var i=0;i<140;i++){var a=gauss()*2.4,b=gauss()*0.8;pts.push([a*0.87-b*0.5, a*0.5+b*0.87]);}
+  var cx=0,cy=0;for(i=0;i<pts.length;i++){cx+=pts[i][0];cy+=pts[i][1];}cx/=pts.length;cy/=pts.length;
+  var sxx=0,syy=0,sxy=0;for(i=0;i<pts.length;i++){var dx=pts[i][0]-cx,dy=pts[i][1]-cy;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy;}
+  sxx/=pts.length;syy/=pts.length;sxy/=pts.length;
+  var tr=sxx+syy,disc=Math.sqrt(Math.max(0,tr*tr/4-(sxx*syy-sxy*sxy))),l1=tr/2+disc,l2=tr/2-disc;
+  function evec(l){var vx=sxy,vy=l-sxx;if(Math.abs(sxy)<1e-9){vx=1;vy=0;}var n=Math.hypot(vx,vy)||1;return [vx/n,vy/n];}
+  var e1=evec(l1),e2=evec(l2),scale=26,ox=W/2,oy=H/2;
+  function px(x,y){return [ox+(x-cx)*scale, oy-(y-cy)*scale];}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#eef1f6";ctx.lineWidth=1;for(var g=-9;g<=9;g++){ctx.beginPath();ctx.moveTo(ox+g*scale,0);ctx.lineTo(ox+g*scale,H);ctx.stroke();ctx.beginPath();ctx.moveTo(0,oy+g*scale);ctx.lineTo(W,oy+g*scale);ctx.stroke();}
+    for(var i=0;i<pts.length;i++){var P=px(pts[i][0],pts[i][1]);
+      if(proj){var x=pts[i][0]-cx,y=pts[i][1]-cy,t=x*e1[0]+y*e1[1],Q=px(cx+t*e1[0],cy+t*e1[1]);
+        ctx.strokeStyle="#e2e8f0";ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(P[0],P[1]);ctx.lineTo(Q[0],Q[1]);ctx.stroke();
+        ctx.fillStyle="#bfdbfe";ctx.beginPath();ctx.arc(P[0],P[1],2.4,0,7);ctx.fill();
+        ctx.fillStyle="#d97706";ctx.beginPath();ctx.arc(Q[0],Q[1],3,0,7);ctx.fill();
+      } else {ctx.fillStyle="#2563eb";ctx.beginPath();ctx.arc(P[0],P[1],3,0,7);ctx.fill();}}
+    function axis(e,l,col,lab){var L=Math.sqrt(l)*2.2,A=px(cx-e[0]*L,cy-e[1]*L),B=px(cx+e[0]*L,cy+e[1]*L);
+      ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();
+      ctx.fillStyle=col;ctx.font="700 13px system-ui";ctx.fillText(lab,B[0]+5,B[1]);}
+    axis(e2,l2,"#059669","PC2");axis(e1,l1,"#d97706","PC1");
+    var pct=l1/(l1+l2)*100;
+    s.read.textContent="PC1 explains "+pct.toFixed(1)+"% of the variance, PC2 the remaining "+(100-pct).toFixed(1)+"%.\n"+(proj?"Projected onto PC1: each point is now ONE number along the orange line — 2-D reduced to 1-D, keeping "+pct.toFixed(0)+"% of the spread.":"Toggle projection to collapse the cloud onto PC1.");
+  }
+  btn(s.body,"Project onto PC1",function(b){proj=!proj;b.classList.toggle("on",proj);draw();});
+  draw();
+};
+
+/* ================= optimizer-race ================= */
+reg["optimizer-race"]=function(host){
+  var s=shell(host,"▶ Interactive · SGD vs Momentum vs Adam",
+    "An ill-conditioned bowl — steep one way, shallow the other — the classic case where plain SGD zig-zags. Press Run: three optimizers descend from the same start. Momentum builds speed along the shallow axis; Adam adapts its step per direction and usually arrives first. Push the learning rate up and watch who diverges.",600,380);
+  var ctx=s.ctx,W=600,H=380,lr=0.06,timer=null;
+  function gx(x){return 0.16*x;} function gy(y){return 2*y;}
+  var start=[-9,3.0],opt;
+  function reset(){opt={sgd:{p:start.slice()},mom:{p:start.slice(),v:[0,0]},adam:{p:start.slice(),m:[0,0],v:[0,0],t:0}};}
+  reset();
+  var ox=W/2,oy=H/2,sx=27,sy=48;
+  function P(x,y){return [ox+x*sx, oy-y*sy];}
+  function step(){
+    var o=opt.sgd;o.p[0]-=lr*gx(o.p[0]);o.p[1]-=lr*gy(o.p[1]);
+    o=opt.mom;o.v[0]=0.9*o.v[0]-lr*gx(o.p[0]);o.v[1]=0.9*o.v[1]-lr*gy(o.p[1]);o.p[0]+=o.v[0];o.p[1]+=o.v[1];
+    o=opt.adam;o.t++;var b1=0.9,b2=0.999,g=[gx(o.p[0]),gy(o.p[1])];
+    for(var k=0;k<2;k++){o.m[k]=b1*o.m[k]+(1-b1)*g[k];o.v[k]=b2*o.v[k]+(1-b2)*g[k]*g[k];var mh=o.m[k]/(1-Math.pow(b1,o.t)),vh=o.v[k]/(1-Math.pow(b2,o.t));o.p[k]-=lr*4*mh/(Math.sqrt(vh)+1e-8);}
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var r=1;r<=6;r++){ctx.strokeStyle="#e2e8f0";ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(ox,oy,r*sx*1.1,r*sy*0.5,0,0,7);ctx.stroke();}
+    ctx.fillStyle="#94a3b8";ctx.beginPath();ctx.arc(ox,oy,4,0,7);ctx.fill();
+    function dot(o,col){var q=P(o.p[0],o.p[1]);ctx.fillStyle=col;ctx.beginPath();ctx.arc(q[0],q[1],6,0,7);ctx.fill();}
+    dot(opt.sgd,"#e11d48");dot(opt.mom,"#d97706");dot(opt.adam,"#059669");
+    ctx.font="700 12px system-ui";ctx.fillStyle="#e11d48";ctx.fillText("● SGD",14,20);ctx.fillStyle="#d97706";ctx.fillText("● Momentum",70,20);ctx.fillStyle="#059669";ctx.fillText("● Adam",172,20);
+    function d(o){return Math.hypot(o.p[0],o.p[1]);}
+    s.read.textContent="distance to minimum — SGD "+d(opt.sgd).toFixed(2)+"    Momentum "+d(opt.mom).toFixed(2)+"    Adam "+d(opt.adam).toFixed(2)+"\nSGD crawls (and zig-zags) along the shallow axis; momentum accelerates; Adam adapts per-direction.";
+  }
+  btn(s.body,"Step",function(){step();draw();});
+  btn(s.body,"Run",function(b){if(timer){clearInterval(timer);timer=null;b.textContent="Run";b.classList.remove("on");return;}b.textContent="Stop";b.classList.add("on");timer=setInterval(function(){step();draw();},90);});
+  btn(s.body,"Reset",function(){reset();draw();});
+  slider(s.body,"learning rate",0.01,0.2,0.005,lr,function(v){lr=v;});
+  draw();
+};
+
+/* ================= roc-curve ================= */
+reg["roc-curve"]=function(host){
+  var s=shell(host,"▶ Interactive · the ROC curve and the threshold",
+    "Two overlapping score distributions — positives (blue) tend to score higher than negatives (red), but they overlap. Slide the decision threshold: every threshold gives one (FPR, TPR) point, and sweeping all of them traces the ROC curve. The area under it (AUC) captures ranking quality in a single, threshold-independent number.",600,400);
+  var ctx=s.ctx,W=600,H=400,thr=0.5;
+  var seed=9;function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+  function gauss(){var u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v);}
+  var pos=[],neg=[];for(var i=0;i<200;i++){pos.push(clamp(0.62+gauss()*0.16,0,1));neg.push(clamp(0.38+gauss()*0.16,0,1));}
+  function rates(t){var tp=0,fp=0;for(var i=0;i<pos.length;i++)if(pos[i]>=t)tp++;for(i=0;i<neg.length;i++)if(neg[i]>=t)fp++;return [fp/neg.length,tp/pos.length];}
+  var curve=[];for(var t=1.001;t>=-0.001;t-=0.01)curve.push(rates(t));
+  var auc=0;for(i=1;i<curve.length;i++)auc+=(curve[i][0]-curve[i-1][0])*(curve[i][1]+curve[i-1][1])/2;
+  var pad=44,gw=W-2*pad,gh=H-2*pad,box=gw*0.5;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.2;ctx.strokeRect(pad,pad,box,gh);
+    ctx.strokeStyle="#e2e8f0";ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(pad,pad+gh);ctx.lineTo(pad+box,pad);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.4;ctx.beginPath();
+    for(i=0;i<curve.length;i++){var X=pad+curve[i][0]*box, Y=pad+gh-curve[i][1]*gh;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);}ctx.stroke();
+    var rr=rates(thr),cxp=pad+rr[0]*box,cyp=pad+gh-rr[1]*gh;
+    ctx.fillStyle="#e11d48";ctx.beginPath();ctx.arc(cxp,cyp,6,0,7);ctx.fill();
+    ctx.fillStyle="#64748b";ctx.font="12px system-ui";ctx.fillText("FPR →",pad+box*0.4,H-14);ctx.save();ctx.translate(16,pad+gh/2+16);ctx.rotate(-1.5708);ctx.fillText("TPR →",0,0);ctx.restore();
+    ctx.fillStyle="#0f172a";ctx.font="700 13px system-ui";ctx.fillText("AUC = "+auc.toFixed(3),pad+8,pad+18);
+    var dx=pad+box+34,dw=W-pad-dx,dh=gh*0.46,dy=pad+16;
+    function hist(arr,col){var b=new Array(20).fill(0);for(var i=0;i<arr.length;i++)b[Math.min(19,Math.floor(arr[i]*20))]++;var mx=Math.max.apply(null,b)||1;ctx.fillStyle=col;for(i=0;i<20;i++){var h=b[i]/mx*dh;ctx.fillRect(dx+i/20*dw,dy+dh-h,dw/20-1,h);}}
+    ctx.globalAlpha=0.55;hist(neg,"#ef4444");hist(pos,"#3b82f6");ctx.globalAlpha=1;
+    var tx=dx+thr*dw;ctx.strokeStyle="#0f172a";ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(tx,dy-4);ctx.lineTo(tx,dy+dh+4);ctx.stroke();
+    ctx.fillStyle="#64748b";ctx.font="11px system-ui";ctx.fillText("scores →",dx,dy+dh+16);ctx.fillStyle="#3b82f6";ctx.fillText("● pos",dx,dy+dh+32);ctx.fillStyle="#ef4444";ctx.fillText("● neg",dx+42,dy+dh+32);
+    s.read.textContent="threshold "+thr.toFixed(2)+"   →   FPR "+rr[0].toFixed(2)+"    TPR (recall) "+rr[1].toFixed(2)+"\nLower the threshold: catch more positives (TPR↑) but more false alarms (FPR↑). AUC = "+auc.toFixed(3)+" doesn't depend on the threshold.";
+  }
+  slider(s.body,"threshold",0,1,0.02,thr,function(v){thr=v;draw();});
+  draw();
+};
+
+/* ================= gradient-boosting ================= */
+reg["gradient-boosting"]=function(host){
+  var s=shell(host,"▶ Interactive · gradient boosting builds up from stumps",
+    "Boosting adds simple models in sequence, each fixing the last one's mistakes. Here every new learner is a depth-1 'stump'. Drag the rounds slider: 0 rounds is a flat line; each round fits a stump to the current residuals and adds a fraction of it, so the staircase creeps toward the true curve. Too many rounds and it starts tracing the noise.",600,400);
+  var ctx=s.ctx,W=600,H=400,rounds=0,LR=0.3;
+  var seed=4;function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+  var xs=[],ys=[];for(var i=0;i<40;i++){var x=i/39;xs.push(x);ys.push(Math.sin(x*6.2)*0.6+(rnd()-0.5)*0.25);}
+  function fitStump(res){var best=null;
+    for(var t=1;t<xs.length;t++){var thr=(xs[t-1]+xs[t])/2,ls=0,ln=0,rs=0,rn=0;
+      for(var i=0;i<xs.length;i++){if(xs[i]<thr){ls+=res[i];ln++;}else{rs+=res[i];rn++;}}
+      if(!ln||!rn)continue;var lm=ls/ln,rm=rs/rn,sse=0;
+      for(i=0;i<xs.length;i++){var p=xs[i]<thr?lm:rm;sse+=(res[i]-p)*(res[i]-p);}
+      if(!best||sse<best.sse)best={sse:sse,thr:thr,lm:lm,rm:rm};}
+    return best;}
+  function predict(R){var pred=new Array(xs.length).fill(0);
+    for(var r=0;r<R;r++){var res=ys.map(function(y,i){return y-pred[i];}),st=fitStump(res);if(!st)break;
+      for(var i=0;i<xs.length;i++)pred[i]+=LR*(xs[i]<st.thr?st.lm:st.rm);}
+    return pred;}
+  var pad=40,gw=W-2*pad,gh=H-2*pad;
+  function X(x){return pad+x*gw;} function Y(y){return pad+gh/2-y*gh*0.42;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#e2e8f0";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad,Y(0));ctx.lineTo(W-pad,Y(0));ctx.stroke();
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.6;ctx.beginPath();for(var t=0;t<=100;t++){var x=t/100,y=Math.sin(x*6.2)*0.6;t?ctx.lineTo(X(x),Y(y)):ctx.moveTo(X(x),Y(y));}ctx.stroke();
+    for(var i=0;i<xs.length;i++){ctx.fillStyle="#94a3b8";ctx.beginPath();ctx.arc(X(xs[i]),Y(ys[i]),3,0,7);ctx.fill();}
+    var pr=predict(rounds);
+    ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.6;ctx.beginPath();for(i=0;i<xs.length;i++){var qx=X(xs[i]),qy=Y(pr[i]);i?ctx.lineTo(qx,qy):ctx.moveTo(qx,qy);}ctx.stroke();
+    var mse=0;for(i=0;i<xs.length;i++)mse+=(ys[i]-pr[i])*(ys[i]-pr[i]);mse/=xs.length;
+    s.read.textContent="rounds: "+rounds+"   ·   training MSE "+mse.toFixed(4)+"\n"+(rounds===0?"0 rounds → flat prediction.":rounds<12?"each stump nudges the staircase toward the data.":"many rounds → it now traces individual noisy points (overfitting).");
+  }
+  slider(s.body,"boosting rounds",0,40,1,rounds,function(v){rounds=v;draw();});
+  draw();
+};
+
 /* ---- boot: render every placeholder ---- */
 function boot(){
   [].forEach.call(document.querySelectorAll(".gdw[data-widget]"),function(host){

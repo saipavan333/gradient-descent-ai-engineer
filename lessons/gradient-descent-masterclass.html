@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gradient Descent — the complete masterclass · Gradient Descent</title>
+<script defer src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+<style>
+:root{
+  --indigo:#4f46e5; --indigo2:#6366f1; --emer:#059669; --emer2:#10b981; --amber:#d97706;
+  --rose:#e11d48; --sky:#0284c7; --violet:#7c3aed; --ink:#0f172a; --body:#1e293b;
+  --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc; --card:#fff;
+  --shadow:0 1px 3px rgba(15,23,42,.06),0 10px 30px rgba(15,23,42,.05);
+  --mono:'SF Mono',ui-monospace,'Cascadia Code',Consolas,monospace;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.68;font-size:17px}
+.wrap{max-width:840px;margin:0 auto;padding:0 20px 140px}
+a{color:var(--indigo)}
+h1,h2,h3{color:var(--ink);line-height:1.22}
+h1{font-size:36px;margin:.2em 0 .1em;letter-spacing:-.022em}
+h2{font-size:26px;margin:2.4em 0 .5em;letter-spacing:-.012em}
+h3{font-size:19px;margin:1.4em 0 .3em}
+p{margin:.7em 0}
+code{font-family:var(--mono);font-size:.9em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:12px;overflow:auto;font-family:var(--mono);font-size:13.5px;line-height:1.55}
+pre code{background:none;color:inherit;padding:0}
+.term{font-weight:650;color:var(--indigo);border-bottom:2px dotted #c7d2fe;cursor:help}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.sec-tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--indigo);padding:3px 9px;border-radius:999px;vertical-align:middle;margin-right:8px}
+.t-intu{background:var(--emer)} .t-formal{background:var(--violet)} .t-play{background:var(--amber)}
+.t-worked{background:var(--sky)} .t-run{background:#0f766e} .t-miss{background:var(--rose)}
+.t-key{background:var(--indigo)} .t-quiz{background:var(--emer)} .t-prac{background:var(--sky)}
+.t-front{background:var(--violet)} .t-recap{background:var(--amber)}
+.hero{padding:44px 0 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.promise b{color:var(--indigo)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:22px;margin:18px 0}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px}
+.note .ic{background:var(--sky)} .warn .ic{background:var(--rose)} .tip .ic{background:var(--emer)}
+.gloss{font-size:14.5px;color:var(--muted)}
+.keypoints{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}
+.keypoints .ti{font-weight:800;color:var(--indigo);margin-bottom:6px}
+.small{font-size:14.5px;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--line);margin:2.4em 0}
+#bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--indigo),var(--emer));width:0;z-index:60;transition:width .15s}
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:8px 20px;margin:0 -20px 0}
+.grow{flex:1}
+.btn{font-family:var(--sans);font-size:14px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--body);padding:7px 13px;border-radius:9px;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--indigo);color:var(--indigo)}
+.btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.btn.primary:hover{background:#4338ca}
+.btn.on{background:var(--emer);color:#fff;border-color:var(--emer)}
+.pct{font-size:13px;color:var(--muted);font-weight:600;min-width:70px;text-align:right}
+/* widget */
+.gdw{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:22px 0;box-shadow:var(--shadow)}
+.gdw-title{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo);margin-bottom:4px}
+.gdw-hint{color:var(--muted);font-size:14px;margin:0 0 12px;line-height:1.55}
+.gdw canvas{max-width:100%;display:block;border-radius:10px;background:#f8fafc;border:1px solid #eef2ff;touch-action:none}
+.gdw-read{font-family:var(--mono);font-size:13px;color:#334155;background:#f8fafc;border:1px solid #eef2ff;border-radius:8px;padding:10px 12px;margin-top:12px;white-space:pre-wrap;line-height:1.5}
+.gdw-sl{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13px;color:var(--muted)}
+.gdw-sl label{min-width:88px}
+.gdw-sl input[type=range]{flex:1;accent-color:var(--indigo)}
+.gdw-sl .v{font-family:var(--mono);color:var(--ink);min-width:44px;text-align:right}
+.gdw-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+/* runnable python */
+.runpy{margin:18px 0;border:1px solid #1f2937;border-radius:14px;overflow:hidden;background:#0f172a}
+.runpy-bar{display:flex;align-items:center;gap:10px;background:#111827;padding:9px 12px;border-bottom:1px solid #1f2937}
+.runpy-lbl{font-size:12.5px;font-weight:700;color:#5eead4;letter-spacing:.02em}
+.runbtn{margin-left:auto;font:inherit;font-size:13px;font-weight:700;border:none;background:#0d9488;color:#fff;padding:6px 15px;border-radius:8px;cursor:pointer}
+.runbtn:hover{background:#0f766e}
+.runbtn:disabled{opacity:.6;cursor:wait}
+.runpy-status{font-size:12px;color:#fbbf24;font-family:var(--mono)}
+.pycode{width:100%;background:#0f172a;color:#e2e8f0;border:none;font-family:var(--mono);font-size:13px;line-height:1.55;padding:14px;resize:vertical;min-height:130px;display:block}
+.pycode:focus{outline:none}
+.pyout{font-family:var(--mono);font-size:13px;white-space:pre-wrap;padding:12px 14px;background:#0b1220;color:#94a3b8;border-top:1px solid #1f2937;min-height:24px}
+.pyout.ok{color:#86efac} .pyout.err{color:#fca5a5}
+/* quiz */
+.quiz .q{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0;background:#fff}
+.quiz .stem{font-weight:600;margin:0 0 10px}
+.quiz .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 12px;margin:6px 0;cursor:pointer;font-size:15.5px;font-family:var(--sans);color:var(--body)}
+.quiz .opt:hover{border-color:var(--indigo)}
+.quiz .opt.correct{background:#ecfdf5;border-color:var(--emer);color:#065f46}
+.quiz .opt.wrong{background:#fef2f2;border-color:var(--rose);color:#991b1b}
+.quiz .why{font-size:14px;margin:8px 2px 0;padding-left:12px;border-left:3px solid var(--line);color:var(--muted);display:none}
+.quiz .why.show{display:block}
+details{border:1px solid var(--line);border-radius:12px;padding:2px 16px;margin:12px 0;background:#fff}
+details summary{cursor:pointer;font-weight:650;padding:12px 0;color:var(--ink)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+.lvl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;color:#fff;margin-right:8px}
+.lvl.w{background:var(--emer)} .lvl.t{background:var(--sky)} .lvl.s{background:var(--rose)}
+.deck{background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #dbe2ff;border-radius:16px;padding:20px;margin:18px 0;text-align:center}
+.fcard{background:#fff;border:1px solid var(--line);border-radius:14px;min-height:120px;display:grid;place-items:center;padding:22px;font-size:18px;cursor:pointer;box-shadow:var(--shadow)}
+.fmeta{font-size:13px;color:var(--muted);margin:10px 0}
+.frow{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.testbox{background:linear-gradient(180deg,#0f172a,#1e293b);color:#e2e8f0;border-radius:16px;padding:24px;margin:20px 0}
+.testbox h3{color:#fff;margin-top:0}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:15.5px}
+.chk b{color:#a5b4fc}
+.cert{display:none;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border-radius:16px;padding:22px;text-align:center;margin:18px 0}
+.cert.show{display:block}
+.narr-on{background:#fef9c3!important;border-radius:4px}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div class="wrap">
+
+<div class="toolbar">
+  <a class="eyebrow" href="../index.html" style="text-decoration:none">← Gradient&nbsp;Descent</a>
+  <span class="grow"></span>
+  <button class="btn" id="ttsBtn">▶ Read aloud</button>
+  <button class="btn" id="resetProg">Reset</button>
+  <span class="pct" id="pct">0%</span>
+</div>
+
+<header class="hero">
+  <div class="eyebrow">Track 1 · Math Foundations · the complete masterclass</div>
+  <h1>Gradient descent: how models actually learn</h1>
+  <p class="small">One idea powers nearly all of machine learning: to improve, feel which way is downhill and take a small step. You'll picture it, compute it by hand, run real Python on it, and build it from scratch — until you could teach it.</p>
+</header>
+
+<!-- 1 HOOK -->
+<section data-sec>
+<p data-narr>Imagine you're standing on a foggy hillside at night, and you want to reach the bottom of the valley. You can't see anything. But you <em>can</em> feel the ground under your feet — which way it slopes. So you do the only sensible thing: feel the downhill direction, take one small step that way, and repeat. Step by step, you descend, even blind. That is the <b>entire</b> idea behind how a neural network learns to recognise a face, translate a sentence, or drive a car. The "hill" is how wrong the model is, and the model keeps stepping downhill until it's as right as it can be. This one move is called <b>gradient descent</b> — and this course is named after it for a reason.</p>
+<div class="promise" data-narr><b>By the end you'll be able to</b> explain gradient descent with a picture, work through the steps by hand with real numbers, run and tweak it in real Python right here in the page, build it from scratch to fit an actual line to data, and know exactly why the learning rate makes or breaks it.</div>
+</section>
+
+<!-- 2 INTUITION -->
+<section data-sec>
+<h2><span class="sec-tag t-intu">1 · Intuition</span> Feel the slope, step downhill</h2>
+<p data-narr>Every model has knobs — numbers it can adjust — called <span class="term" title="the adjustable numbers inside a model that it tunes during learning">parameters</span>. And it has a score for how badly it's doing, called the <span class="term" title="a single number measuring how wrong the model's predictions are; lower is better">loss</span> (think "how much it's losing by"). Turning the knobs changes the loss. If you plot the loss against a knob, you get a landscape of hills and valleys. Learning means finding the knob settings at the <em>bottom</em> of a valley, where the loss is smallest.</p>
+<p data-narr>Here's the trick. At any point on that landscape you can measure the <b>slope</b> — how steeply the loss goes up or down as you nudge the knob. The slope points uphill (toward more loss). So to reduce loss, step in the <em>opposite</em> direction — downhill. Take a small step, measure the slope again, step again. Repeat until the ground is flat (slope ≈ 0), which means you've reached the bottom. That's gradient descent: <b>repeatedly step opposite the slope.</b></p>
+<div class="callout tip"><div class="ic">✦</div><div data-narr><b>The one-sentence picture:</b> loss is a hill, the slope tells you which way is up, so step the other way — a little at a time — until the ground is flat.</div></div>
+</section>
+
+<!-- 3 FORMAL -->
+<section data-sec>
+<h2><span class="sec-tag t-formal">2 · The formal idea</span> The update rule, symbol by symbol</h2>
+<p data-narr>Let's name things in plain words. Call the knob <code>x</code> and the loss <code>f(x)</code> — a function that takes the knob setting and returns how bad it is. The slope of <code>f</code> at <code>x</code> is its <span class="term" title="the slope of a function — how fast its output changes as you nudge the input; also called the derivative">gradient</span>, written <code>f′(x)</code> (read "f-prime of x"; the little mark means "the slope of"). A positive slope means loss rises as <code>x</code> grows; negative means it falls.</p>
+<p>The whole algorithm is one line, repeated:</p>
+<div class="card" style="text-align:center;font-family:var(--mono);font-size:16px;background:#f8fafc">
+x &nbsp;←&nbsp; x &nbsp;−&nbsp; η · f′(x)
+</div>
+<p class="gloss">Reading it as a sentence: "the new <code>x</code> is the old <code>x</code>, minus a small fraction of the slope." The arrow <code>←</code> means "becomes" (update the knob to this new value). The Greek letter <code>η</code> (pronounced "eta") is the <span class="term" title="how big a step to take each update; too big overshoots, too small crawls">learning rate</span> — a small positive number (like 0.1) that sets how big each step is. And the crucial part is the <b>minus sign</b>: <code>f′(x)</code> points uphill, so subtracting it moves us <em>downhill</em>. If the slope is steep, the step is big; as we near the bottom the slope shrinks toward zero, so the steps automatically get gentler and we settle in. Multiply the slope by <code>η</code>, subtract, repeat — that is gradient descent, complete.</p>
+<div class="callout note"><div class="ic">i</div><div data-narr><b>Why "gradient," not "slope"?</b> With one knob the slope is a single number. Real models have millions of knobs, and then the slope becomes a list of numbers — one slope per knob — called the gradient. But the rule is identical: subtract a small multiple of the gradient from every knob at once. Master the one-knob case here and the million-knob case is the same sentence.</div></div>
+</section>
+
+<!-- 4 INTERACTIVE -->
+<section data-sec>
+<h2><span class="sec-tag t-play">3 · Play with it</span> Roll down the bowl</h2>
+<p data-narr>This is where it clicks. The bowl below is the loss <code>f(x) = x²</code> — a simple valley with its bottom at <code>x = 0</code>. The red dot is your current knob; the orange line is the slope there; the green dot shows where one step lands you. Press <b>Step</b> to take a single step, or <b>Run</b> to watch it roll to the bottom. Then drag the <b>learning rate</b>: too small and it crawls; nudge it past 1 and watch it overshoot and fly apart.</p>
+<div class="gdw" id="gdw">
+  <div class="gdw-title">▶ Interactive · gradient descent on f(x) = x²</div>
+  <div class="gdw-hint">Red = where you are now. Orange = the slope f′(x) = 2x. Green = where one step lands. Slide the learning rate and feel the trade-off between crawling and diverging.</div>
+  <canvas id="gcv" width="620" height="340"></canvas>
+  <div id="gbody"></div>
+  <div class="gdw-read" id="gread"></div>
+</div>
+<p class="small" data-narr>Notice three things. Near the top the slope is steep, so the steps are big; near the bottom the slope is gentle, so the steps shrink and it eases in — the algorithm self-adjusts. A tiny learning rate is safe but painfully slow. And there's a ceiling: past a certain learning rate each step overshoots the bottom by <em>more</em> than it started, so it climbs the far wall higher and higher and diverges. That single knob, the learning rate, is the most important dial in all of deep learning.</p>
+</section>
+
+<!-- 5 WORKED -->
+<section data-sec>
+<h2><span class="sec-tag t-worked">4 · Worked example</span> Three steps, every number by hand</h2>
+<p data-narr>Let's do it with a pen. Loss <code>f(x) = x²</code>, so the slope is <code>f′(x) = 2x</code> (the derivative of x-squared). Start at <code>x = 4.2</code> with learning rate <code>η = 0.1</code>. Apply <code>x ← x − 0.1·(2x)</code> three times.</p>
+<pre>start:  x = 4.2
+
+step 1: slope = 2·4.2 = 8.4
+        x = 4.2 − 0.1·8.4 = 4.2 − 0.84 = 3.36     f(x) = 11.29
+
+step 2: slope = 2·3.36 = 6.72
+        x = 3.36 − 0.1·6.72 = 3.36 − 0.672 = 2.688  f(x) = 7.23
+
+step 3: slope = 2·2.688 = 5.376
+        x = 2.688 − 0.1·5.376 = 2.688 − 0.538 = 2.150  f(x) = 4.62</pre>
+<p data-narr>Watch the loss fall: 17.64 → 11.29 → 7.23 → 4.62. We're sliding down the bowl toward 0. And notice the steps shrink (0.84, then 0.672, then 0.538) even though η never changed — because the slope itself shrinks as we approach the flat bottom. That automatic gentling is why gradient descent lands softly instead of rattling around. Everything here is one multiplication and one subtraction, repeated. Next, let's run this exact thing in real Python — no pen needed.</p>
+</section>
+
+<!-- 6 RUN #1 -->
+<section data-sec>
+<h2><span class="sec-tag t-run">5 · Run it yourself</span> Gradient descent, live in your browser</h2>
+<p data-narr>This is real Python — it runs right here, no install, no server. Press <b>Run</b> (the first run loads Python, ~15 seconds; after that it's instant). It reproduces the worked example above. Then change the starting <code>x</code> or the learning rate <code>lr</code> and run again — try <code>lr = 0.9</code> and watch it bounce, or <code>lr = 1.1</code> and watch it explode.</p>
+<div class="runpy">
+  <div class="runpy-bar"><span class="runpy-lbl">🐍 Python · runs in your browser</span><span class="runpy-status"></span><button class="runbtn">▶ Run</button></div>
+  <textarea class="pycode" spellcheck="false">def f(x):    return x**2      # the loss: a simple bowl
+def grad(x): return 2*x        # its slope (the derivative)
+
+x  = 4.2                       # start somewhere on the hill
+lr = 0.1                       # learning rate: how big a step
+
+for step in range(6):
+    g = grad(x)
+    x = x - lr * g             # THE update: step downhill
+    print(f"step {step+1}:  x = {x:.4f}   f(x) = {f(x):.4f}   slope = {g:.3f}")</textarea>
+  <div class="pyout">▸ click Run — output appears here</div>
+</div>
+<p class="small" data-narr>The numbers match your hand-work exactly (4.2 → 3.36 → 2.688 → …), because the code <em>is</em> the update rule. That's the point of building from scratch: no library is hiding the idea — you can see every step is just <code>x = x − lr·slope</code>.</p>
+</section>
+
+<!-- 7 RUN #2 -->
+<section data-sec>
+<h2><span class="sec-tag t-run">6 · Run it yourself</span> Now fit a real line to data</h2>
+<p data-narr>A toy bowl is one thing; let's do the real job of machine learning — <b>learn from data</b>. Here are seven points (say, hours studied vs. exam score). We want the straight line <code>y = m·x + b</code> that fits them best. We don't solve it with a formula — we <em>learn</em> the slope <code>m</code> and intercept <code>b</code> by gradient descent, nudging both downhill on the error. Press Run and watch the line get discovered from a flat start.</p>
+<div class="runpy">
+  <div class="runpy-bar"><span class="runpy-lbl">🐍 Python + NumPy · runs in your browser</span><span class="runpy-status"></span><button class="runbtn">▶ Run</button></div>
+  <textarea class="pycode" spellcheck="false">import numpy as np
+# data: x = hours studied, y = exam score (out of 10)
+X = np.array([1,2,3,4,5,6,7], dtype=float)
+y = np.array([2.1,2.0,3.4,3.3,4.8,5.0,6.3])
+
+m, b = 0.0, 0.0                # start with a flat line y = 0
+lr = 0.01
+for epoch in range(3000):      # 3000 tiny downhill steps
+    yhat = m*X + b             # current predictions
+    err  = yhat - y            # how wrong we are
+    # gradients of the mean-squared error w.r.t. m and b:
+    m -= lr * 2*(err*X).mean()
+    b -= lr * 2*err.mean()
+
+print(f"learned line:  y = {m:.3f} x + {b:.3f}")
+print(f"final error :  MSE = {(err**2).mean():.4f}")
+print("prediction for 8 hours studied:", round(float(m*8+b), 2))</textarea>
+  <div class="pyout">▸ click Run — output appears here</div>
+</div>
+<p class="small" data-narr>It lands on <code>y ≈ 0.714·x + 0.986</code> — the exact best-fit line, discovered purely by stepping downhill on the error, 3000 tiny steps. That's not a toy: swap in a million data points and a million parameters and this <em>same loop</em> is how modern models are trained. You just wrote the engine of machine learning in eight lines.</p>
+</section>
+
+<!-- 8 MISTAKES -->
+<section data-sec>
+<h2><span class="sec-tag t-miss">7 · Common mistakes</span> The traps that actually bite</h2>
+<div class="card"><h3>❌ Learning rate too big → it explodes</h3><p style="margin:.3em 0">If <code>η</code> is too large, each step overshoots the bottom by more than it started, so the loss grows every step and shoots to infinity (you'll see <code>nan</code> — "not a number"). <b>Fix:</b> lower the learning rate (try 10× smaller). If the loss is <em>rising</em>, the rate is almost always too high — you saw this in the widget past η ≈ 1.</p></div>
+<div class="card"><h3>❌ Learning rate too small → it crawls</h3><p style="margin:.3em 0">Too tiny and it takes forever, or stalls before reaching the bottom in the time you allow. <b>Fix:</b> increase it until progress is quick but still stable. Good rates are usually found by trying a few (0.001, 0.01, 0.1) and watching the loss curve.</p></div>
+<div class="card"><h3>❌ Forgetting the minus sign → it climbs</h3><p style="margin:.3em 0">Write <code>x = x + η·f′(x)</code> and you do <em>gradient ascent</em> — you climb the hill, maximising the loss. <b>Fix:</b> to <em>minimise</em>, always subtract the gradient. (Sometimes you <em>do</em> want to ascend — that's literally the sister site, Gradient Ascent.)</p></div>
+<div class="card"><h3>❌ Expecting the global bottom every time</h3><p style="margin:.3em 0">Simple bowls have one bottom. Complex loss landscapes have many dips (<span class="term" title="a valley that is low but not the lowest — a bottom you can get stuck in">local minima</span>) and flat spots, so plain gradient descent can settle in a merely-good valley, not the best one. <b>Fix in practice:</b> randomness (stochastic gradient descent), momentum, and good starting points — the frontier note has more.</p></div>
+</section>
+
+<!-- 9 KEY -->
+<section data-sec>
+<h2><span class="sec-tag t-key">8 · Key points</span> Worth memorising</h2>
+<div class="keypoints"><div class="ti">★ Lock these in</div>
+<ul>
+<li><b>Gradient descent = repeatedly step opposite the slope</b> to reduce the loss: <code>x ← x − η·f′(x)</code>.</li>
+<li>The <b>gradient</b> (slope) points uphill; the <b>minus sign</b> makes you go downhill. Flat ground (slope ≈ 0) means you've arrived.</li>
+<li>The <b>learning rate η</b> is the make-or-break dial: too big diverges, too small crawls.</li>
+<li>Steps <b>shrink automatically</b> near the bottom because the slope shrinks — so it lands softly.</li>
+<li>The <b>same loop</b> scales from one knob to millions: it's how essentially every neural network is trained.</li>
+</ul>
+</div>
+</section>
+
+<!-- 10 QUIZ -->
+<section data-sec>
+<h2><span class="sec-tag t-quiz">9 · Quiz</span> Check yourself</h2>
+<div class="quiz" id="quiz"></div>
+</section>
+
+<!-- 11 PRACTICE -->
+<section data-sec>
+<h2><span class="sec-tag t-prac">10 · Graded practice</span> Warm-up → transfer → stretch</h2>
+<details><summary><span class="lvl w">Warm-up</span> One step by hand</summary><div class="sol">
+<p>Loss <code>f(x)=x²</code>, so <code>f′(x)=2x</code>. You're at <code>x = 5</code> with <code>η = 0.2</code>. Where do you land after one step?</p>
+<p><b>Solution.</b> Slope = 2·5 = 10. Update: <code>x = 5 − 0.2·10 = 5 − 2 = 3</code>. You moved from 5 to 3, toward the bottom at 0 — good. Note the step size was 2; with a smaller η it'd be gentler, with η = 0.5 it'd be <code>5 − 0.5·10 = 0</code> (landing exactly at the bottom in one step — lucky for this simple bowl), and with η = 1.0 it'd be <code>5 − 10 = −5</code> (overshooting to the same height on the other side — the edge of divergence).</p>
+</div></details>
+<details><summary><span class="lvl t">Transfer</span> Diagnose a training curve</summary><div class="sol">
+<p>You train a model and print the loss each step. Case A: 8.0, 7.1, 6.5, 6.0, 5.7 … slowly dropping. Case B: 8.0, 40, 900, nan. Case C: 8.0, 7.99, 7.985, 7.982 … barely moving. What's happening, and what do you change?</p>
+<p><b>Solution.</b> <b>Case A</b> is healthy — loss falling steadily; leave it (maybe nudge the rate up to finish faster). <b>Case B</b> is <em>diverging</em>: the loss blows up to <code>nan</code>, the signature of a learning rate that's too high — each step overshoots and climbs. Lower η by 10× and rerun. <b>Case C</b> is <em>crawling</em>: loss drops but agonisingly slowly, the signature of a rate that's too low. Raise η. The skill is reading the loss curve like a dashboard: falling nicely = good; exploding = rate too high; barely moving = rate too low. This single diagnostic will serve you for the rest of your ML career.</p>
+</div></details>
+<details><summary><span class="lvl s">Stretch</span> Why the same loop trains a billion-parameter model</summary><div class="sol">
+<p>You just fit 2 parameters (m, b) by gradient descent. A large language model has billions. Conceptually, what changes and what stays exactly the same?</p>
+<p><b>Solution.</b> <b>What stays the same:</b> the update rule, verbatim. Every parameter <code>θ</code> is nudged by <code>θ ← θ − η·(gradient of the loss w.r.t. θ)</code>, all at once, over and over. The loss (how wrong the model is) and the "step opposite the slope" logic are identical. <b>What changes</b> is only scale and machinery: (1) the gradient is now a list of a billion slopes, computed efficiently by <span class="term" title="an algorithm that computes all the gradients in one backward sweep using the chain rule">backpropagation</span> (a later lesson); (2) you can't afford to use all the data for every step, so you use a small random <span class="term" title="a small random subset of the data used to estimate the gradient each step">batch</span> — that's <b>stochastic</b> gradient descent (SGD); (3) smarter variants (momentum, Adam) adapt the step per-parameter to go faster and dodge bad spots. But strip all that away and the beating heart is the one line you mastered here: subtract a small multiple of the slope. That's why this lesson is the foundation the entire course — and the whole field — stands on.</p>
+</div></details>
+</section>
+
+<!-- 12 FRONTIER + RECAP + TEST -->
+<section data-sec>
+<h2><span class="sec-tag t-front">11 · Frontier note</span> Where this goes next</h2>
+<p data-narr>Real training rarely uses plain gradient descent. Because computing the slope over millions of examples every step is too slow, models use <b>stochastic gradient descent (SGD)</b>: estimate the slope from a small random batch each step — noisier, but far faster, and the noise even helps escape bad valleys. On top of that sit <b>momentum</b> (keep some velocity from past steps, like a ball that builds speed rolling downhill) and adaptive optimisers like <b>Adam</b> (give each parameter its own learning rate). And the gradients themselves, for deep networks, are computed by <b>backpropagation</b> — the chain rule applied at scale, which is the very next thing worth learning. But every one of these is a refinement of the sentence you now own: step opposite the slope.</p>
+
+<h2><span class="sec-tag t-recap">12 · Recap</span> Say it to a friend</h2>
+<div class="promise" data-narr style="font-size:17px">"To make a model less wrong, treat its error as a hill, measure the slope, and take a small step downhill — then repeat. That step is <code>new = old − learning_rate × slope</code>. Do it millions of times over a million knobs and you've trained a neural network."</div>
+
+<div class="testbox"><h3>✓ The test</h3>
+<p style="color:#cbd5e1;margin-top:0" data-narr>You've hit the bar if you can honestly tick all three:</p>
+<label class="chk"><input type="checkbox" class="tk"> <span><b>Derive it:</b> given a loss and a start point, compute two steps by hand and explain why the steps shrink near the bottom.</span></label>
+<label class="chk"><input type="checkbox" class="tk"> <span><b>Build it:</b> write the update loop from memory and use it to fit a line to data.</span></label>
+<label class="chk"><input type="checkbox" class="tk"> <span><b>Explain it:</b> tell a friend what the learning rate does, and what a rising loss curve means.</span></label>
+<div class="cert" id="cert">🎓 <b>Mastered.</b> You own the single most important algorithm in machine learning. Every model in this course is trained by the loop you just built.</div>
+</div>
+</section>
+
+<!-- FLASHCARDS -->
+<section data-sec>
+<h2><span class="sec-tag t-key">Retention</span> Spaced-repetition flashcards</h2>
+<p class="small" data-narr>Click to flip; rate yourself honestly. Cards you find hard come back sooner. Saved on this device only.</p>
+<div class="deck">
+  <div class="fcard" id="fcard"><div id="fside">Loading…</div></div>
+  <div class="fmeta" id="fmeta"></div>
+  <div class="frow" id="frow" style="display:none"><button class="btn" id="again">Again ↻</button><button class="btn on" id="good">Got it ✓</button></div>
+  <div class="frow"><button class="btn" id="flip">Flip card</button></div>
+</div>
+</section>
+
+<div class="footer"><p><b>Gradient Descent</b> · Gradient descent masterclass · learn it, run it, build it, keep it — offline and free. Everything you do here stays on your device.</p></div>
+</div>
+
+<script>
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s);};
+var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s));};
+var clamp=function(x,a,b){return x<a?a:(x>b?b:x);};
+var LS="gd_gradientdescent_masterclass_v1";
+var store={get:function(){try{return JSON.parse(localStorage.getItem(LS))||{};}catch(e){return {};}},set:function(o){try{localStorage.setItem(LS,JSON.stringify(o));}catch(e){}}};
+
+/* ---------- gradient-descent widget ---------- */
+(function(){
+  var cv=$("#gcv"),ctx=cv.getContext("2d"),W=620,H=340,x=4.2,lr=0.1,timer=null;
+  var xlo=-5,xhi=5,ylo=-1,yhi=25,pad=34;
+  function X(t){return pad+(t-xlo)/(xhi-xlo)*(W-2*pad);}
+  function Y(t){return H-pad-(t-ylo)/(yhi-ylo)*(H-2*pad);}
+  function f(t){return t*t;} function g(t){return 2*t;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.strokeStyle="#e2e8f0";ctx.lineWidth=1;
+    for(var gx=-5;gx<=5;gx++){ctx.beginPath();ctx.moveTo(X(gx),pad);ctx.lineTo(X(gx),H-pad);ctx.stroke();}
+    ctx.strokeStyle="#cbd5e1";ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(pad,Y(0));ctx.lineTo(W-pad,Y(0));ctx.stroke();
+    ctx.beginPath();ctx.moveTo(X(0),pad);ctx.lineTo(X(0),H-pad);ctx.stroke();
+    ctx.strokeStyle="#6366f1";ctx.lineWidth=2.6;ctx.beginPath();
+    for(var i=0;i<=200;i++){var t=xlo+(xhi-xlo)*i/200,y=f(t);if(y>yhi+3)continue;var cx=X(t),cy=Y(y);if(i===0||X(xlo+(xhi-xlo)*(i-1)/200)<pad)ctx.moveTo(cx,cy);else ctx.lineTo(cx,cy);}ctx.stroke();
+    var gr=g(x),nx=x-lr*gr;
+    ctx.strokeStyle="#f59e0b";ctx.lineWidth=1.7;ctx.beginPath();
+    ctx.moveTo(X(x-1.2),Y(f(x)-gr*1.2));ctx.lineTo(X(x+1.2),Y(f(x)+gr*1.2));ctx.stroke();
+    ctx.fillStyle="#10b981";ctx.beginPath();ctx.arc(X(nx),Y(f(nx)),5,0,7);ctx.fill();
+    ctx.fillStyle="#dc2626";ctx.beginPath();ctx.arc(X(x),Y(f(x)),7,0,7);ctx.fill();
+    ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(X(x),Y(f(x)),2.6,0,7);ctx.fill();
+    $("#gread").textContent="x = "+x.toFixed(3)+"    f(x) = "+f(x).toFixed(3)+"    slope f'(x) = 2x = "+gr.toFixed(3)
+      +"\nstep:  x ← "+x.toFixed(3)+" − "+lr+"·"+gr.toFixed(3)+" = "+nx.toFixed(3)+"   (green dot)";
+  }
+  function step(){x=x-lr*g(x);if(!isFinite(x)||Math.abs(x)>1e7)x=4.2;draw();}
+  var body=$("#gbody");
+  var sl=document.createElement("div");sl.className="gdw-sl";
+  sl.innerHTML='<label>learning rate</label><input type="range" min="0.01" max="1.15" step="0.01" value="0.1"><span class="v">0.1</span>';
+  body.appendChild(sl);
+  sl.querySelector("input").addEventListener("input",function(e){lr=+e.target.value;sl.querySelector(".v").textContent=lr.toFixed(2);draw();});
+  var row=document.createElement("div");row.className="gdw-row";body.appendChild(row);
+  function mk(t,cb,cls){var b=document.createElement("button");b.className="btn"+(cls?" "+cls:"");b.textContent=t;b.onclick=function(){cb(b);};row.appendChild(b);return b;}
+  mk("Step ▸",function(){stop();step();});
+  var rb=mk("Run ▶",function(b){if(timer){stop();}else{b.textContent="Pause";timer=setInterval(step,320);}},"primary");
+  mk("Reset",function(){stop();x=4.2;draw();});
+  function stop(){if(timer){clearInterval(timer);timer=null;rb.textContent="Run ▶";}}
+  draw();
+})();
+
+/* ---------- Pyodide runnable cells ---------- */
+var _py=null;
+function ensurePy(status){
+  if(!_py){
+    status.textContent="⏳ loading Python… (first run, ~15s)";
+    _py=(typeof loadPyodide==="function"?loadPyodide():Promise.reject(new Error("Pyodide not loaded")))
+      .then(function(p){status.textContent="⏳ loading NumPy…";return p.loadPackage("numpy").then(function(){return p;});})
+      .catch(function(e){status.textContent="⚠ couldn't load Python (needs internet on first run)";_py=null;throw e;});
+  }
+  return _py;
+}
+$$(".runpy").forEach(function(box){
+  var ta=$(".pycode",box),out=$(".pyout",box),status=$(".runpy-status",box),btn=$(".runbtn",box);
+  btn.onclick=function(){
+    btn.disabled=true;
+    ensurePy(status).then(function(py){
+      status.textContent="";
+      py.runPython("import sys,io\n_o=io.StringIO()\nsys.stdout=_o\nsys.stderr=_o");
+      try{ py.runPython(ta.value); }
+      catch(err){ out.textContent=String(err.message||err); out.className="pyout err"; btn.disabled=false; return; }
+      var o=py.runPython("_o.getvalue()");
+      out.textContent=o&&o.length?o:"(ran with no output)"; out.className="pyout ok"; btn.disabled=false;
+    }).catch(function(){ out.textContent="Python runtime unavailable offline on first load. Connect once and retry."; out.className="pyout err"; btn.disabled=false; });
+  };
+});
+
+/* ---------- quiz ---------- */
+var QUIZ=[
+ {q:"In the update x ← x − η·f′(x), what is the role of the minus sign?",o:[
+  {t:"It has no real effect",w:"It's essential — it flips the uphill gradient into a downhill step."},
+  {t:"It makes us step downhill (opposite the uphill gradient), so loss decreases",c:1},
+  {t:"It makes the steps bigger",w:"Step size is set by η and the slope's magnitude, not the sign."},
+  {t:"It converts the slope to a probability",w:"No probability here — it just reverses direction."}]},
+ {q:"Your loss goes 8 → 40 → 900 → nan. What's the most likely cause?",o:[
+  {t:"Learning rate too high — steps overshoot and it diverges",c:1},
+  {t:"Learning rate too low",w:"Too low makes it crawl, not explode."},
+  {t:"The data is too small",w:"Blow-up to nan is the classic too-high-rate signature, not a data-size issue."},
+  {t:"You reached the global minimum",w:"At a minimum the loss is small and flat, not exploding."}]},
+ {q:"Why do the steps get smaller as you approach the bottom, even with a fixed learning rate?",o:[
+  {t:"The learning rate secretly decreases",w:"η is fixed here; something else shrinks."},
+  {t:"Because the slope f′(x) shrinks toward zero near the flat bottom, and step size ∝ slope",c:1},
+  {t:"Because the loss increases",w:"The loss decreases as you near the bottom."},
+  {t:"It's random",w:"It's deterministic — driven by the shrinking slope."}]},
+ {q:"How does training a billion-parameter model differ from the 2-parameter line fit you ran?",o:[
+  {t:"A completely different algorithm is used",w:"The core update rule is identical."},
+  {t:"Mainly scale + machinery (backprop for gradients, mini-batches, smarter optimisers) — the update rule is the same",c:1},
+  {t:"No gradients are involved",w:"Gradients are still the heart of it."},
+  {t:"The minus sign becomes a plus",w:"You still subtract the gradient to minimise loss."}]},
+ {q:"What does the learning rate η control?",o:[
+  {t:"How wrong the model is",w:"That's the loss, a separate quantity."},
+  {t:"The size of each downhill step",c:1},
+  {t:"The number of parameters",w:"η doesn't change how many knobs there are."},
+  {t:"The direction of the step",w:"Direction comes from the gradient's sign; η only sets the size."}]}
+];
+var quizEl=$("#quiz");
+QUIZ.forEach(function(it,qi){
+  var box=document.createElement("div");box.className="q";
+  box.innerHTML='<p class="stem">Q'+(qi+1)+'. '+it.q+'</p>';
+  it.o.forEach(function(o){
+    var b=document.createElement("button");b.className="opt";b.textContent=o.t;
+    var why=document.createElement("div");why.className="why";
+    b.onclick=function(){ if(box.dataset.done)return;
+      if(o.c){b.classList.add("correct");why.textContent="✓ Correct.";}
+      else{b.classList.add("wrong");why.textContent="✗ "+o.w;
+        [].forEach.call(box.querySelectorAll(".opt"),function(bb,bi){if(it.o[bi].c)bb.classList.add("correct");});}
+      why.classList.add("show");box.dataset.done="1";progress();
+    };
+    box.appendChild(b);box.appendChild(why);
+  });
+  quizEl.appendChild(box);
+});
+
+/* ---------- flashcards ---------- */
+var CARDS=[
+ {q:"State the gradient descent update rule in words.",a:"new value = old value − learning rate × slope. In symbols: x ← x − η·f′(x)."},
+ {q:"Why subtract the gradient instead of adding it?",a:"The gradient points uphill (toward higher loss). Subtracting it steps downhill, reducing the loss."},
+ {q:"What does the learning rate η do?",a:"Sets the size of each step. Too big → overshoot and diverge; too small → crawl."},
+ {q:"How do you know gradient descent has converged?",a:"The slope is ≈ 0 (flat ground) and the loss stops decreasing — you're at the bottom of a valley."},
+ {q:"Why do steps shrink near the minimum with a fixed η?",a:"Step size is proportional to the slope, and the slope shrinks toward zero near the flat bottom."},
+ {q:"A loss curve that rises to nan means what?",a:"The learning rate is too high — steps overshoot and diverge. Lower it (often 10×)."},
+ {q:"What is stochastic gradient descent (SGD)?",a:"Gradient descent that estimates the slope from a small random batch of data each step — faster, noisier, and the noise helps escape bad valleys."},
+ {q:"What stays the same when scaling from 2 parameters to a billion?",a:"The update rule: every parameter ← itself − η × its gradient. Only the machinery (backprop, batches, optimisers) scales up."}
+];
+var deck,cur,flipped;
+function initDeck(){var s=store.get();deck=(s.deck&&s.deck.length===CARDS.length)?s.deck:CARDS.map(function(_,i){return {i:i,box:1};});next();}
+function saveDeck(){var s=store.get();s.deck=deck;store.set(s);}
+function pick(){var b=deck[0];deck.forEach(function(c){if(c.box<b.box)b=c;});return b;}
+function next(){cur=pick();flipped=false;$("#fside").textContent=CARDS[cur.i].q;$("#fmeta").textContent="Box "+cur.box+" of 3 · click to flip";$("#frow").style.display="none";}
+function flip(){flipped=!flipped;$("#fside").textContent=flipped?CARDS[cur.i].a:CARDS[cur.i].q;$("#frow").style.display=flipped?"flex":"none";}
+$("#fcard").onclick=flip;$("#flip").onclick=flip;
+$("#again").onclick=function(){cur.box=1;saveDeck();next();};
+$("#good").onclick=function(){cur.box=clamp(cur.box+1,1,3);saveDeck();next();};
+initDeck();
+
+/* ---------- narration ---------- */
+var narr=$$("[data-narr]"),speaking=false,synth=window.speechSynthesis;
+function voice(){if(!synth)return null;var vs=synth.getVoices();var pref=["Google US English","Samantha","Microsoft Aria Online (Natural)","Daniel"];for(var i=0;i<pref.length;i++){var v=vs.filter(function(x){return x.name.indexOf(pref[i])>=0;})[0];if(v)return v;}return vs.filter(function(x){return /en[-_]/i.test(x.lang);})[0]||vs[0]||null;}
+function speak(i){if(i>=narr.length){stopN();return;}narr.forEach(function(n){n.classList.remove("narr-on");});var nd=narr[i];nd.classList.add("narr-on");nd.scrollIntoView({behavior:"smooth",block:"center"});var u=new SpeechSynthesisUtterance((nd.textContent||"").replace(/\s+/g," ").trim());var v=voice();if(v)u.voice=v;u.onend=function(){if(speaking)speak(i+1);};synth.speak(u);}
+function startN(){if(!synth){alert("Read-aloud isn't supported in this browser.");return;}speaking=true;$("#ttsBtn").textContent="⏹ Stop";$("#ttsBtn").classList.add("on");speak(0);}
+function stopN(){speaking=false;if(synth)synth.cancel();narr.forEach(function(n){n.classList.remove("narr-on");});$("#ttsBtn").textContent="▶ Read aloud";$("#ttsBtn").classList.remove("on");}
+$("#ttsBtn").onclick=function(){speaking?stopN():startN();};
+if(synth)synth.onvoiceschanged=function(){};
+
+/* ---------- progress ---------- */
+var secs=$$("[data-sec]"),seen={};
+function progress(){var total=secs.length+1,done=0;for(var k in seen)done++;if($$(".tk").every(function(c){return c.checked;}))done++;
+  var pct=Math.round(100*clamp(done/total,0,1));$("#pct").textContent=pct+"%";$("#bar").style.width=pct+"%";
+  var s=store.get();s.pct=pct;store.set(s);$("#cert").classList.toggle("show",$$(".tk").every(function(c){return c.checked;}));}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)seen[secs.indexOf(e.target)]=1;});progress();},{threshold:.3});
+secs.forEach(function(s){io.observe(s);});
+$$(".tk").forEach(function(c){c.addEventListener("change",progress);});
+$("#resetProg").onclick=function(){localStorage.removeItem(LS);seen={};$$(".tk").forEach(function(c){c.checked=false;});$("#cert").classList.remove("show");deck=CARDS.map(function(_,i){return {i:i,box:1};});next();progress();};
+(function(){var s=store.get();if(s.pct){$("#pct").textContent=s.pct+"%";$("#bar").style.width=s.pct+"%";}})();
+progress();
+</script>
+</body>
+</html>

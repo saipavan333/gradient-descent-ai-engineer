@@ -113,6 +113,8 @@ function boot(){
   }
 
   paintProg(); onScroll();
+  /* lazy-load global search on every page (home + lessons) */
+  if(!window.__gdsLoaded){var _s=document.createElement("script");_s.src=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/")+"search.js";_s.defer=true;document.head.appendChild(_s);}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
 })();

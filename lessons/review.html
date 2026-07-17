@@ -117,7 +117,7 @@ var SRKEY="gd_review_sr_v1", STREAKKEY="gd_streak_v1";
 function getSR(){try{return JSON.parse(localStorage.getItem(SRKEY))||{}}catch(e){return{}}}
 function setSR(o){try{localStorage.setItem(SRKEY,JSON.stringify(o))}catch(e){}}
 function progress(){try{return JSON.parse(localStorage.getItem("gd_enhance_v2"))||{}}catch(e){return{}}}
-var TRACKS=[["1","Math Foundations"],["2","Python for ML"],["3","Classical ML"],["4","Deep Learning"],["5","NLP & Transformers"],["6","LLMs & GenAI"],["7","RAG & Vector Search"],["8","AI Agents"],["9","MLOps & Serving"],["10","AI System Design"],["11","Evals & Safety"],["12","Interview Bank"],["13","Capstones"],["14","Computer Vision"]];
+var TRACKS=[["1","Math Foundations"],["2","Python for ML"],["3","Classical ML"],["4","Deep Learning"],["5","Computer Vision"],["6","NLP & Transformers"],["7","LLMs & GenAI"],["8","RAG & Vector Search"],["9","AI Agents"],["10","MLOps & Serving"],["11","AI System Design"],["12","Evals & Safety"],["13","Interview Bank"],["14","Capstones"]];
 var INTERVAL=[0,1,3,7,16,40]; // days by box (1..5) -> next due
 
 /* ---------- dashboard ---------- */

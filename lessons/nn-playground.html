@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Neural Network Playground — Gradient Descent lab</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--emer2:#10b981;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;
+ --shadow:0 1px 3px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.05);--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:23px;letter-spacing:-.01em;color:var(--ink);margin:1.8em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}
+.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:20px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 300px;gap:18px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+canvas{display:block;border-radius:12px;background:#0b1120}
+.panel-h{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin:0 0 8px}
+.stat{display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px solid #1e293b}
+.stat b{color:#fff;font-family:var(--mono)}
+.ctrl{margin:12px 0}
+.ctrl label{display:block;font-size:12.5px;color:#cbd5e1;margin-bottom:5px;display:flex;justify-content:space-between}
+.ctrl label b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:5px 10px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover{border-color:var(--indigo2)}.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.btns{display:flex;gap:8px;margin-top:14px}
+.btn{flex:1;font:inherit;font-size:14px;font-weight:700;border:1px solid #334155;background:#1e293b;color:#e2e8f0;padding:10px;border-radius:10px;cursor:pointer}
+.btn.go{background:var(--emer);border-color:var(--emer);color:#fff}.btn.go:hover{background:#047857}
+.btn:hover{border-color:var(--indigo2)}
+.legend{display:flex;gap:14px;font-size:12px;color:#94a3b8;margin-top:10px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}
+.key b{color:var(--indigo)}
+.key li{margin:.35em 0}
+.small{font-size:14.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="dl1-neuron.html">← Deep Learning</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · Deep Learning</div>
+<h1>Neural Network Playground</h1>
+<p class="small">Train a real neural network in your browser — no libraries, every weight updated by backpropagation right here — and watch it bend a straight line into whatever shape the data needs.</p>
+
+<div class="promise">The single most important idea in deep learning, made visible: <b>a network learns a boundary by nudging weights downhill</b>. Pick a dataset, choose how many hidden neurons to give it, press Train, and watch the decision boundary form. Then set hidden neurons to <b>1</b> and watch it fail — that's <em>why</em> we stack neurons.</p>
+
+<div class="play">
+  <h3>▶ Live network trainer</h3>
+  <p class="lead">2 inputs → a hidden layer you control → 1 output. Full-batch gradient descent on binary cross-entropy.</p>
+  <div class="grid">
+    <div>
+      <canvas id="board" width="440" height="440"></canvas>
+      <div class="legend"><span><span class="sw" style="background:#3b82f6"></span>class A (output→1)</span><span><span class="sw" style="background:#ef4444"></span>class B (output→0)</span><span><span class="sw" style="background:#334155"></span>the boundary the net learned</span></div>
+    </div>
+    <div>
+      <div class="panel-h">Dataset</div>
+      <div class="chips" id="dsChips"></div>
+      <div class="ctrl" style="margin-top:16px">
+        <label>Hidden neurons <b id="hLab">6</b></label>
+        <input type="range" id="hSl" min="1" max="12" step="1" value="6">
+      </div>
+      <div class="ctrl">
+        <label>Learning rate <b id="lrLab">0.50</b></label>
+        <input type="range" id="lrSl" min="0.05" max="1.5" step="0.05" value="0.5">
+      </div>
+      <div class="panel-h" style="margin-top:16px">Training</div>
+      <div class="stat"><span>epoch</span><b id="epoch">0</b></div>
+      <div class="stat"><span>loss (cross-entropy)</span><b id="loss">—</b></div>
+      <div class="stat"><span>accuracy</span><b id="acc">—</b></div>
+      <canvas id="losscv" width="300" height="70" style="margin-top:10px;background:#0b1120"></canvas>
+      <div class="btns">
+        <button class="btn go" id="train">▶ Train</button>
+        <button class="btn" id="reset">↻ Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>What am I looking at?</b> The background colour is the network's prediction at every point — blue where it says "class A", red where it says "class B". The line between them is the <em>decision boundary</em>. At the start it's random. Each training step, backprop measures how each weight contributed to the error and nudges it; the boundary bends to fit. With too few neurons the boundary stays too simple to fit the data.</div></div>
+
+<h2>Try these three things</h2>
+<p><b>1. Watch depth matter.</b> Put the dataset on <b>Circle</b> and set hidden neurons to <b>1</b>. Train. It gets stuck around 75% — one neuron can only draw a straight line, and no straight line separates an inner disk from an outer ring. Now raise it to <b>6</b> and retrain: the boundary curves into a loop and accuracy jumps to ~100%. That leap is the whole reason we use hidden layers.</p>
+<p><b>2. Break it with the learning rate.</b> On <b>Spiral</b>, push the learning rate to the maximum. Watch the loss curve thrash instead of settling — too big a step overshoots the minimum every time. Drop it low and it crawls but converges. This is the same trade-off you met in gradient descent.</p>
+<p><b>3. Find the minimum capacity.</b> On <b>XOR</b>, start at 1 neuron (fails), then 2, then 3. Find the fewest neurons that reach 100%. That's a hands-on feel for <em>model capacity</em>: just enough to fit the pattern, no more.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">The five things this lab proves</div>
+<ul>
+<li><b>A neuron is a line; a layer is a shape.</b> Stacking neurons lets a network draw curved, non-linear boundaries.</li>
+<li><b>Backprop is just the chain rule at scale</b> — it assigns blame to every weight, and gradient descent nudges each one downhill.</li>
+<li><b>Capacity must match the problem</b> — too few neurons underfit (can't bend enough); the boundary literally can't reach the data.</li>
+<li><b>The learning rate is the master dial</b> — too high and training diverges, too low and it crawls.</li>
+<li><b>Training is iterative</b> — the boundary is random at first and improves one small step at a time, which is exactly what the loss curve shows.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">This lab is part of <a href="../index.html">Gradient Descent</a> · continue with <a href="dl3-backprop.html">Backpropagation, step by step →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(s){return document.getElementById(s);};
+function randn(){var u=Math.random()||1e-9,v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v);}
+/* ---------- datasets (domain [-1,1]^2) ---------- */
+function genCircle(n){var d=[];for(var i=0;i<n;i++){var a=Math.random()*6.2832,r=Math.random();var rr=r<0.5?r*0.85:0.6+r*0.75;d.push([[rr*Math.cos(a),rr*Math.sin(a)], rr<0.55?1:0]);}return d;}
+function genXor(n){var d=[];for(var i=0;i<n;i++){var x=Math.random()*1.8-0.9,y=Math.random()*1.8-0.9;d.push([[x,y],((x>0)!==(y>0))?1:0]);}return d;}
+function genSpiral(n){var d=[];for(var c=0;c<2;c++){for(var i=0;i<n/2;i++){var r=i/(n/2)*0.95,t=c*Math.PI+r*5.5+randn()*0.12;d.push([[r*Math.cos(t),r*Math.sin(t)],c]);}}return d;}
+var GENS={Circle:genCircle,XOR:genXor,Spiral:genSpiral};
+var dsName="Circle", data=genCircle(300);
+/* ---------- network ---------- */
+function tanh(z){return Math.tanh(z);} function sig(z){return 1/(1+Math.exp(-z));}
+var net, H=6, lr=0.5, epoch=0, timer=null, lossHist=[];
+function makeNet(h){var W1=[],b1=[],W2=[];for(var i=0;i<h;i++){W1.push([randn(),randn()]);b1.push(0);W2.push(randn());}return {H:h,W1:W1,b1:b1,W2:W2,b2:0};}
+function fwd(x){var ha=[];for(var i=0;i<net.H;i++)ha.push(tanh(net.W1[i][0]*x[0]+net.W1[i][1]*x[1]+net.b1[i]));var oz=net.b2;for(i=0;i<net.H;i++)oz+=net.W2[i]*ha[i];return {ha:ha,o:sig(oz)};}
+function trainStep(){
+  var h=net.H,gW1=[],gb1=[],gW2=[],gb2=0,loss=0;
+  for(var i=0;i<h;i++){gW1.push([0,0]);gb1.push(0);gW2.push(0);}
+  for(i=0;i<data.length;i++){var x=data[i][0],y=data[i][1],f=fwd(x);var o=Math.min(1-1e-7,Math.max(1e-7,f.o));
+    loss+=-(y*Math.log(o)+(1-y)*Math.log(1-o));var doz=f.o-y;gb2+=doz;
+    for(var k=0;k<h;k++){gW2[k]+=doz*f.ha[k];var dh=doz*net.W2[k]*(1-f.ha[k]*f.ha[k]);gW1[k][0]+=dh*x[0];gW1[k][1]+=dh*x[1];gb1[k]+=dh;}}
+  var N=data.length;net.b2-=lr*gb2/N;
+  for(i=0;i<h;i++){net.W2[i]-=lr*gW2[i]/N;net.W1[i][0]-=lr*gW1[i][0]/N;net.W1[i][1]-=lr*gW1[i][1]/N;net.b1[i]-=lr*gb1[i]/N;}
+  epoch++; return loss/N;
+}
+function accuracy(){var c=0;for(var i=0;i<data.length;i++)if((fwd(data[i][0]).o>0.5?1:0)===data[i][1])c++;return c/data.length;}
+/* ---------- rendering ---------- */
+var bd=$("board"),bx=bd.getContext("2d"),BW=440;
+function toPx(x){return (x+1)/2*BW;} function toXy(px){return px/BW*2-1;}
+function draw(){
+  // boundary heatmap
+  var step=8, img=bx;
+  for(var gx=0;gx<BW;gx+=step)for(var gy=0;gy<BW;gy+=step){
+    var o=fwd([toXy(gx),toXy(BW-gy)]).o;
+    var t=Math.max(0,Math.min(1,o));
+    var r=Math.round(239+(59-239)*t), g=Math.round(68+(130-68)*t), b=Math.round(68+(246-68)*t);
+    bx.fillStyle="rgba("+r+","+g+","+b+",0.85)";bx.fillRect(gx,gy,step,step);
+  }
+  // points
+  for(var i=0;i<data.length;i++){var p=data[i][0];bx.fillStyle=data[i][1]?"#1d4ed8":"#b91c1c";bx.strokeStyle="#fff";bx.lineWidth=1.2;
+    bx.beginPath();bx.arc(toPx(p[0]),BW-toPx(p[1]),4,0,7);bx.fill();bx.stroke();}
+  $("epoch").textContent=epoch;
+  $("loss").textContent=lossHist.length?lossHist[lossHist.length-1].toFixed(4):"—";
+  $("acc").textContent=(accuracy()*100).toFixed(1)+"%";
+  // loss curve
+  var lc=$("losscv"),lx=lc.getContext("2d");lx.clearRect(0,0,300,70);
+  if(lossHist.length>1){var mx=Math.max.apply(null,lossHist)||1;lx.strokeStyle="#10b981";lx.lineWidth=1.8;lx.beginPath();
+    for(i=0;i<lossHist.length;i++){var X=i/(lossHist.length-1)*300,Y=70-lossHist[i]/mx*66-2;i?lx.lineTo(X,Y):lx.moveTo(X,Y);}lx.stroke();}
+}
+function reset(){net=makeNet(H);epoch=0;lossHist=[];draw();}
+function loop(){var l;for(var k=0;k<3;k++)l=trainStep();lossHist.push(l);if(lossHist.length>300)lossHist.shift();draw();}
+/* ---------- controls ---------- */
+var chips=$("dsChips");Object.keys(GENS).forEach(function(name){var c=document.createElement("span");c.className="chip"+(name===dsName?" sel":"");c.textContent=name;c.onclick=function(){dsName=name;data=GENS[name](300);[].forEach.call(chips.children,function(x){x.classList.remove("sel");});c.classList.add("sel");stop();reset();};chips.appendChild(c);});
+$("hSl").oninput=function(){H=+this.value;$("hLab").textContent=H;stop();reset();};
+$("lrSl").oninput=function(){lr=+this.value;$("lrLab").textContent=lr.toFixed(2);};
+function stop(){if(timer){clearInterval(timer);timer=null;$("train").textContent="▶ Train";$("train").classList.add("go");}}
+$("train").onclick=function(){if(timer){stop();return;}this.textContent="⏸ Pause";this.classList.remove("go");timer=setInterval(loop,60);};
+$("reset").onclick=function(){stop();reset();};
+reset();
+</script>
+</body>
+</html>
