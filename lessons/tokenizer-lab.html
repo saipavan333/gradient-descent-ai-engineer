@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tokenizer Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 16px}
+label.cl{display:block;font-size:12.5px;color:#cbd5e1;margin:16px 0 6px;display:flex;justify-content:space-between}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+textarea{width:100%;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:10px;padding:12px;font-family:var(--mono);font-size:14px;resize:vertical;min-height:64px}
+textarea:focus{outline:2px solid var(--indigo2);border-color:var(--indigo2)}
+.toks{display:flex;flex-wrap:wrap;gap:4px;margin:14px 0;padding:14px;background:#0b1120;border-radius:12px;min-height:54px}
+.tok{font-family:var(--mono);font-size:14px;padding:4px 7px;border-radius:6px;color:#0f172a;font-weight:600}
+.stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:6px}
+.stat b{font-family:var(--mono);color:#fff;font-size:19px;display:block}
+.stat span{font-size:12px;color:#94a3b8}
+.merges{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;max-height:96px;overflow:auto}
+.merge{font-family:var(--mono);font-size:12px;background:#1e293b;border:1px solid #334155;border-radius:6px;padding:2px 7px;color:#cbd5e1}
+.merge b{color:#a5b4fc}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}
+.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="nlp1-tokenization.html">← Tokenization</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · NLP &amp; LLMs</div>
+<h1>Tokenizer Lab</h1>
+<p class="small">Before a language model sees a single word, a tokenizer chops your text into pieces. Here's a <b>real Byte-Pair Encoding tokenizer</b> — it learns its vocabulary from a corpus in front of you, then splits whatever you type. No libraries, every merge computed live.</p>
+
+<div class="promise">Type your name, a rare word, an emoji-free sentence — and watch how the model would actually read it. Then drag the <b>vocabulary size</b> down to zero and see text dissolve into single characters. That trade-off — few big tokens vs many small ones — is one every LLM makes.</div>
+
+<div class="play">
+  <h3>▶ Byte-Pair Encoding, live</h3>
+  <p class="lead">The tokenizer first <em>learns</em> merges from a training corpus (most-frequent adjacent pair, over and over), then applies them to your text. <code>_</code> marks a word boundary.</p>
+
+  <label class="cl">Vocabulary size — merges learned <b id="mLab">80</b></label>
+  <input type="range" id="mSl" min="0" max="150" step="1" value="80">
+
+  <label class="cl" style="margin-top:16px">Your text — type anything</label>
+  <textarea id="inp">Tokenization turns transformers into powerful predictors.</textarea>
+
+  <div class="toks" id="toks"></div>
+  <div class="stats">
+    <div class="stat"><b id="nchars">0</b><span>characters</span></div>
+    <div class="stat"><b id="ntoks">0</b><span>tokens</span></div>
+    <div class="stat"><b id="ratio">0</b><span>chars / token</span></div>
+    <div class="stat"><b id="vocab">0</b><span>vocabulary size</span></div>
+  </div>
+
+  <label class="cl" style="margin-top:18px">Merges the tokenizer learned <span style="color:#94a3b8;font-weight:400">(in order — earliest are most frequent)</span></label>
+  <div class="merges" id="mergeList"></div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Why not just split on spaces?</b> A word-level vocabulary would need millions of entries and still choke on a word it never saw. Character-level never has that problem but makes sequences painfully long. BPE is the middle path: common words stay whole (<code>the_</code>), rare ones break into reusable subwords (<code>token</code> + <code>ization</code>), and <em>nothing</em> is ever unknown.</div></div>
+
+<h2>Three things to try</h2>
+<p><b>1. Watch a word assemble.</b> Set vocabulary to 0 — every character is its own token. Now drag it up slowly. Frequent pairs like <code>t</code>+<code>h</code> merge first, then <code>th</code>+<code>e</code>, until whole common words become single tokens. That's literally how the vocabulary is built.</p>
+<p><b>2. Feed it a rare word.</b> Type something the corpus never saw — your surname, "antidisestablishmentarianism", a UUID. It still tokenizes, just into more pieces. That "graceful degradation" is why models never hit an unknown token.</p>
+<p><b>3. Feel the cost.</b> The <em>chars/token</em> number is why tokenization matters for your bill: models charge per token, so a tokenizer that packs more characters into each token is literally cheaper to run. Non-English text and code usually get more tokens per character — a real fairness and cost issue.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Tokenization is learned, not fixed</b> — BPE greedily merges the most frequent adjacent pair, again and again, to build its vocabulary.</li>
+<li><b>Subwords are the sweet spot</b> — common words stay whole, rare words split into reusable pieces, and there are no unknown tokens.</li>
+<li><b>Vocabulary size is a dial</b> — more merges → fewer, longer tokens (shorter sequences, bigger embedding table); fewer merges → the opposite.</li>
+<li><b>Tokens are the unit of everything</b> — context length, latency and cost are all counted in tokens, not words or characters.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · next: <a href="nlp2-embeddings.html">Word embeddings →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var CORPUS="the model learns to predict the next token from the tokens before it. a tokenizer splits raw text into tokens, and the tokens are the units a language model actually reads. training the model means learning the patterns in millions of tokens. the transformer reads a sequence of tokens and predicts the next token. tokenization matters because tokens drive context length, latency and cost. common words become single tokens while rare words are split into smaller subword tokens that the model can still understand. the more tokens, the more the model must process, so packing more characters into each token is cheaper. learning good tokens is the first step of language modeling.";
+var COLORS=["#93c5fd","#a7f3d0","#fcd34d","#fca5a5","#c4b5fd","#f9a8d4","#67e8f9","#bef264","#fdba74","#d8b4fe"];
+function trainBPE(text,n){
+  var words=text.toLowerCase().replace(/[^a-z ]/g," ").split(/\s+/).filter(Boolean).map(function(w){return w.split("").concat(["_"]);});
+  var merges=[];
+  for(var m=0;m<n;m++){
+    var pairs={};
+    words.forEach(function(w){for(var i=0;i<w.length-1;i++){var p=w[i]+""+w[i+1];pairs[p]=(pairs[p]||0)+1;}});
+    var best=null,bc=1;
+    for(var p in pairs){if(pairs[p]>bc){bc=pairs[p];best=p;}}
+    if(!best)break;
+    var ab=best.split(""),a=ab[0],b=ab[1];
+    merges.push([a,b]);
+    words=words.map(function(w){var nw=[];for(var i=0;i<w.length;i++){if(i<w.length-1&&w[i]===a&&w[i+1]===b){nw.push(a+b);i++;}else nw.push(w[i]);}return nw;});
+  }
+  return merges;
+}
+function tokenizeWord(word,merges){
+  var t=word.split("").concat(["_"]);
+  merges.forEach(function(m){var a=m[0],b=m[1],nw=[];for(var i=0;i<t.length;i++){if(i<t.length-1&&t[i]===a&&t[i+1]===b){nw.push(a+b);i++;}else nw.push(t[i]);}t=nw;});
+  return t;
+}
+function baseVocab(text){var s={};text.toLowerCase().replace(/[^a-z]/g,"").split("").forEach(function(c){s[c]=1;});return Object.keys(s).length+1;}
+var nMerges=80, merges=[], base=baseVocab(CORPUS);
+function render(){
+  merges=trainBPE(CORPUS,nMerges);
+  var text=$("inp").value.toLowerCase().replace(/[^a-z ]/g," ").split(/\s+/).filter(Boolean);
+  var allToks=[];
+  text.forEach(function(w){allToks=allToks.concat(tokenizeWord(w,merges));});
+  var html="";
+  allToks.forEach(function(t,i){html+='<span class="tok" style="background:'+COLORS[i%COLORS.length]+'">'+t.replace(/_/g,"·")+'</span>';});
+  $("toks").innerHTML=html||'<span style="color:#64748b">type something above…</span>';
+  var chars=$("inp").value.replace(/\s/g,"").length;
+  $("nchars").textContent=chars;
+  $("ntoks").textContent=allToks.length;
+  $("ratio").textContent=allToks.length?(chars/allToks.length).toFixed(2):"0";
+  $("vocab").textContent=base+merges.length;
+  $("mergeList").innerHTML=merges.map(function(m){return '<span class="merge">'+m[0].replace(/_/g,"·")+'+'+m[1].replace(/_/g,"·")+'→<b>'+(m[0]+m[1]).replace(/_/g,"·")+'</b></span>';}).join("")||'<span style="color:#64748b;font-size:12px">no merges yet — every character is its own token</span>';
+}
+$("mSl").oninput=function(){nMerges=+this.value;$("mLab").textContent=nMerges;render();};
+$("inp").addEventListener("input",render);
+render();
+</script>
+</body>
+</html>

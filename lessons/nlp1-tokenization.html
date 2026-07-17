@@ -251,6 +251,7 @@ mapping each token to an integer <span class="term">ID</span> via a lookup table
 </svg>
 <figcaption><b>The tokenization pipeline.</b> Raw text is split into tokens, and each token is looked up in the vocabulary to get an integer ID. The sequence of IDs is what actually enters the model.</figcaption></figure>
 <div class="gdw" data-widget="tokenizer"></div>
+<div class="callout tip"><div class="ic">▶</div><div class="bd"><div class="ti">Take it to the lab</div><p style="margin:.2em 0 0">Open the <a href="tokenizer-lab.html">Tokenizer Lab</a> — a real byte-pair-encoding tokenizer that learns its vocabulary live and splits any text you type, so you can see exactly how a model reads your words.</p></div></div>
 
 <p>So "the cat sat" might become tokens <code>["the", "cat", "sat"]</code> and then IDs <code>[1014, 2543, 3079]</code>.
 Decoding reverses the process — IDs back to tokens back to text — which is how a model's numeric output becomes

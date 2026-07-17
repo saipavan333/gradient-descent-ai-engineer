@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Serving &amp; Scaling Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--emer2:#10b981;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+canvas{display:block;border-radius:12px;background:#0b1120;width:100%}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.chip{font-size:12.5px;padding:6px 11px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover{border-color:var(--indigo2)}.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px;margin-top:14px}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+label.cl{font-size:12.5px;color:#cbd5e1;display:flex;justify-content:space-between;margin-bottom:5px}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.statbar{display:flex;flex-wrap:wrap;gap:20px;margin-top:14px}
+.st b{font-family:var(--mono);font-size:19px;display:block}
+.st span{font-size:11.5px;color:#94a3b8}
+.btns{display:flex;gap:8px;margin-top:14px}
+.btn{font:inherit;font-size:14px;font-weight:700;border:1px solid #334155;background:#1e293b;color:#e2e8f0;padding:9px 16px;border-radius:10px;cursor:pointer}
+.btn.go{background:var(--emer);border-color:var(--emer);color:#fff}
+.tog{display:flex;align-items:center;gap:8px;font-size:13px;color:#cbd5e1;cursor:pointer;user-select:none}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="sd7-cost.html">← System Design</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · AI System Design &amp; MLOps</div>
+<h1>Serving &amp; Scaling Lab</h1>
+<p class="small">A live simulation of a model behind an API. Traffic arrives, a queue forms, replicas process requests — and you keep p99 latency under control without burning money. This is the capacity-planning intuition senior interviews probe for.</p>
+
+<div class="promise">Pick a traffic pattern and press play. Watch the queue and the tail latency respond in real time. Then turn on <b>autoscaling</b> and watch replicas breathe with the load — trading a little cost for a lot of stability. The whole tension of production ML lives in this one picture.</div>
+
+<div class="play">
+  <h3>▶ Live serving simulation</h3>
+  <p class="lead">Requests → queue → replicas → done. Green replicas are busy, grey are idle. The chart tracks queue depth and replica count over time.</p>
+  <canvas id="sim" width="820" height="220"></canvas>
+  <canvas id="chart" width="820" height="150" style="margin-top:10px"></canvas>
+
+  <div class="chips" id="scen"></div>
+
+  <div class="row">
+    <div><label class="cl">Base traffic <b id="qLab">120</b> QPS</label><input type="range" id="qSl" min="20" max="600" step="10" value="120"></div>
+    <div><label class="cl">Per-replica capacity <b id="cLab">40</b> req/s</label><input type="range" id="cSl" min="10" max="120" step="5" value="40"></div>
+    <div><label class="cl">Target p99 <b id="tLab">200</b> ms</label><input type="range" id="tSl" min="50" max="800" step="25" value="200"></div>
+    <div><label class="cl">Cost per replica <b id="pLab">$0.60</b>/hr</label><input type="range" id="pSl" min="0.1" max="3" step="0.1" value="0.6"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn go" id="play">▶ Play</button>
+    <button class="btn" id="reset">↻ Reset</button>
+    <label class="tog"><input type="checkbox" id="auto" checked> Autoscaling</label>
+  </div>
+
+  <div class="statbar">
+    <div class="st"><b id="mReplicas" style="color:#10b981">1</b><span>replicas</span></div>
+    <div class="st"><b id="mQueue" style="color:#fbbf24">0</b><span>in queue</span></div>
+    <div class="st"><b id="mP99" style="color:#f87171">0 ms</b><span>p99 latency</span></div>
+    <div class="st"><b id="mUtil" style="color:#a5b4fc">0%</b><span>utilization</span></div>
+    <div class="st"><b id="mCost" style="color:#fff">$0</b><span>cost / hr</span></div>
+    <div class="st"><b id="mDrop" style="color:#fff">0%</b><span>over-SLA time</span></div>
+  </div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Where does p99 come from?</b> When replicas can't keep up, requests wait in the queue — and waiting <em>is</em> latency. As utilization climbs past ~80%, the queue (and the tail) grows non-linearly: this is queueing theory, and it's why you never run a service at 100%. Autoscaling adds replicas when the tail crosses your target, then removes them when traffic falls.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Turn autoscaling off on a spiky pattern.</b> Fix the replica count too low and watch a traffic spike send the queue — and p99 — through the roof. Requests aren't lost, but users wait seconds. This is an outage in all but name.</p>
+<p><b>2. Turn autoscaling on.</b> Same spike, but now replicas scale up to absorb it and scale back down after. Watch the cost line rise during the spike and settle after — you pay for peak, not average.</p>
+<p><b>3. Over-provision.</b> Crank replicas/capacity way up with autoscaling off. p99 is beautiful and flat… and utilization sits at 15% while you pay for idle machines. The job is the <em>balance</em>: enough headroom for the tail, not so much that you're lighting money on fire.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Latency is mostly queueing</b> — past ~80% utilization the tail explodes non-linearly, so you provision for the peak, not the average.</li>
+<li><b>Autoscaling trades cost for stability</b> — it follows the load so you don't pay for peak capacity 24/7, at the price of some lag and complexity.</li>
+<li><b>Throughput ≠ latency</b> — you can have huge throughput and terrible p99 at the same time; they're different problems.</li>
+<li><b>Every knob is a trade-off</b> — bigger replicas, more replicas, batching, caching each buy latency or cost, never both for free.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="ops6-scaling.html">Scaling &amp; autoscaling →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var qps=120, cap=40, target=200, price=0.6, autoOn=true;
+var scenarios={
+  "Steady":function(t){return 1;},
+  "Chatbot (spiky)":function(t){return 1 + (Math.sin(t*0.5)>0.7?1.8:0) + 0.15*Math.sin(t*3);},
+  "Viral ramp":function(t){return 0.4 + Math.min(2.2, t*0.05);},
+  "Search (bursty)":function(t){return 1 + 0.9*Math.max(0,Math.sin(t*0.8));}
+};
+var scen="Chatbot (spiky)";
+var S, timer=null;
+function reset(){S={t:0, queue:0, replicas:2, cost:0, over:0, frames:0, waitHist:[], hist:[]};draw();paint();}
+function serviceRate(){return S.replicas*cap;}
+function tick(){
+  var dt=0.12;
+  var lambda=qps*scenarios[scen](S.t);
+  S.queue+=lambda*dt;
+  var served=Math.min(S.queue, serviceRate()*dt);
+  S.queue-=served;
+  // wait time (seconds) ≈ queue / capacity ; p99 ≈ wait + service time, inflated near saturation
+  var util=lambda/serviceRate();
+  var wait=S.queue/Math.max(1,serviceRate());
+  var p99=(wait + 1/cap)*1000*(util>0.85?1+ (util-0.85)*4:1);
+  S.cost=S.replicas*price;
+  S.frames++; if(p99>target)S.over++;
+  if(autoOn){
+    if(p99>target && S.replicas<40 && S.t-(S._lastUp||-9)>0.6){S.replicas++;S._lastUp=S.t;}
+    else if(p99<target*0.35 && S.replicas>1 && S.t-(S._lastDn||-9)>1.4){S.replicas--;S._lastDn=S.t;}
+  }
+  S.hist.push({q:S.queue, r:S.replicas}); if(S.hist.length>200)S.hist.shift();
+  S.t+=dt;
+  S._p99=p99; S._util=Math.min(1.2,util);
+  draw(); paint();
+}
+var sc=$("sim"),sx=sc.getContext("2d"),SW=820,SH=220;
+function draw(){
+  sx.clearRect(0,0,SW,SH);
+  // incoming stream
+  sx.fillStyle="#64748b";sx.font="12px system-ui";sx.fillText("incoming",20,20);
+  var lambda=qps*scenarios[scen](S.t);
+  sx.fillText(lambda.toFixed(0)+" QPS",20,SH/2+4);
+  // queue as stacked dots
+  sx.fillStyle="#94a3b8";sx.fillText("queue",170,20);
+  var qn=Math.min(120,Math.round(S.queue));
+  for(var i=0;i<qn;i++){var col=i%12,rw=Math.floor(i/12);sx.fillStyle="#fbbf24";sx.beginPath();sx.arc(170+col*9,50+rw*9,3.2,0,7);sx.fill();}
+  if(S.queue>120){sx.fillStyle="#f87171";sx.font="700 12px system-ui";sx.fillText("+"+Math.round(S.queue-120)+" more",170,SH-14);}
+  // replicas
+  sx.fillStyle="#94a3b8";sx.font="12px system-ui";sx.fillText("replicas ("+S.replicas+")",520,20);
+  var busyFrac=Math.min(1,(qps*scenarios[scen](S.t))/Math.max(1,serviceRate()));
+  for(i=0;i<S.replicas;i++){var col2=i%6,rw2=Math.floor(i/6);var busy=(i/S.replicas)<busyFrac;
+    sx.fillStyle=busy?"#10b981":"#334155";sx.strokeStyle=busy?"#10b981":"#475569";sx.lineWidth=1.5;
+    var bx=520+col2*46,by=36+rw2*30;sx.fillRect(bx,by,40,22);sx.strokeRect(bx,by,40,22);}
+  // arrows
+  sx.strokeStyle="#334155";sx.lineWidth=2;sx.beginPath();sx.moveTo(90,SH/2);sx.lineTo(160,SH/2);sx.stroke();
+  sx.beginPath();sx.moveTo(290,SH/2);sx.lineTo(510,SH/2);sx.stroke();
+}
+var ch=$("chart"),cx=ch.getContext("2d"),CW=820,CH=150;
+function paint(){
+  // chart: queue depth (amber) + replicas (green) over time
+  cx.clearRect(0,0,CW,CH);
+  cx.strokeStyle="#1e293b";cx.lineWidth=1;for(var g=0;g<=4;g++){var y=10+g*(CH-30)/4;cx.beginPath();cx.moveTo(40,y);cx.lineTo(CW-10,y);cx.stroke();}
+  var h=S.hist,maxQ=Math.max(30,Math.max.apply(null,h.map(function(x){return x.q;})||[30]));
+  function X(i){return 40+i/199*(CW-50);}
+  cx.strokeStyle="#fbbf24";cx.lineWidth=2;cx.beginPath();
+  h.forEach(function(p,i){var y=CH-20-p.q/maxQ*(CH-30);i?cx.lineTo(X(i),y):cx.moveTo(X(i),y);});cx.stroke();
+  cx.strokeStyle="#10b981";cx.lineWidth=2;cx.beginPath();
+  h.forEach(function(p,i){var y=CH-20-p.r/40*(CH-30);i?cx.lineTo(X(i),y):cx.moveTo(X(i),y);});cx.stroke();
+  cx.fillStyle="#fbbf24";cx.font="11px system-ui";cx.fillText("queue depth",48,16);
+  cx.fillStyle="#10b981";cx.fillText("replicas",140,16);
+  // stats
+  $("mReplicas").textContent=S.replicas;
+  $("mQueue").textContent=Math.round(S.queue);
+  $("mP99").textContent=(S._p99||0).toFixed(0)+" ms";
+  $("mP99").style.color=(S._p99||0)>target?"#f87171":"#10b981";
+  $("mUtil").textContent=Math.round((S._util||0)*100)+"%";
+  $("mCost").textContent="$"+(S.replicas*price).toFixed(2);
+  $("mDrop").textContent=(S.frames?Math.round(S.over/S.frames*100):0)+"%";
+}
+// controls
+var chips=$("scen");Object.keys(scenarios).forEach(function(n){var c=document.createElement("span");c.className="chip"+(n===scen?" sel":"");c.textContent=n;c.onclick=function(){scen=n;[].forEach.call(chips.children,function(x){x.classList.remove("sel");});c.classList.add("sel");};chips.appendChild(c);});
+$("qSl").oninput=function(){qps=+this.value;$("qLab").textContent=qps;};
+$("cSl").oninput=function(){cap=+this.value;$("cLab").textContent=cap;};
+$("tSl").oninput=function(){target=+this.value;$("tLab").textContent=target;};
+$("pSl").oninput=function(){price=+this.value;$("pLab").textContent="$"+price.toFixed(2);};
+$("auto").onchange=function(){autoOn=this.checked;};
+$("play").onclick=function(){if(timer){clearInterval(timer);timer=null;this.textContent="▶ Play";this.classList.add("go");return;}this.textContent="⏸ Pause";this.classList.remove("go");timer=setInterval(tick,120);};
+$("reset").onclick=function(){if(timer){clearInterval(timer);timer=null;$("play").textContent="▶ Play";$("play").classList.add("go");}reset();};
+reset();
+</script>
+</body>
+</html>
