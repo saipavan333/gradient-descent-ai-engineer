@@ -902,6 +902,177 @@ reg["gradient-boosting"]=function(host){
   draw();
 };
 
+/* ================= broadcasting (NumPy) ================= */
+reg["broadcasting"]=function(host){
+  var s=shell(host,"▶ Interactive · how NumPy broadcasting lines up shapes",
+    "NumPy pairs dimensions from the RIGHT. Two dims are compatible if they're equal, or one of them is 1 (which gets stretched to match). Pick a case and see how the shapes align — and when they simply can't.",620,300);
+  var ctx=s.ctx,W=620,H=300;
+  var cases=[{a:[3,1],b:[1,4]},{a:[4,3],b:[1,3]},{a:[2,3],b:[3]},{a:[3],b:[4]}];
+  var cur=0;
+  function align(a,b){var la=a.slice(),lb=b.slice(),n=Math.max(la.length,lb.length);while(la.length<n)la.unshift(1);while(lb.length<n)lb.unshift(1);var out=[],ok=true;for(var i=0;i<n;i++){var x=la[i],y=lb[i];if(x===y)out.push(x);else if(x===1||y===1)out.push(Math.max(x,y));else{ok=false;out.push(0);}}return {ok:ok,out:out,la:la,lb:lb};}
+  function grid(cx,cy,shape,col){var r=shape.length===2?shape[0]:1,c=shape.length===2?shape[1]:shape[0],cell=20,gw=c*cell,gh=r*cell,x=cx-gw/2,y=cy-gh/2;
+    for(var i=0;i<r;i++)for(var j=0;j<c;j++){ctx.fillStyle=col;ctx.strokeStyle="#fff";ctx.lineWidth=1.5;ctx.fillRect(x+j*cell,y+i*cell,cell,cell);ctx.strokeRect(x+j*cell,y+i*cell,cell,cell);}
+    ctx.fillStyle="#475569";ctx.font="600 12px ui-monospace,monospace";ctx.textAlign="center";ctx.fillText("("+shape.join(",")+(shape.length===1?",":"")+")",cx,y+gh+16);}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var c=cases[cur],r=align(c.a,c.b);
+    ctx.fillStyle="#0f172a";ctx.font="700 20px system-ui";ctx.textAlign="center";
+    grid(110,120,c.a,"#3b82f6");ctx.fillText("+",250,127);
+    grid(320,120,c.b,"#8b5cf6");ctx.fillText("=",440,127);
+    if(r.ok)grid(530,120,r.out,"#10b981");
+    else{ctx.fillStyle="#e11d48";ctx.font="700 42px system-ui";ctx.fillText("✗",530,132);ctx.font="600 12px system-ui";ctx.fillText("incompatible",530,162);}
+    s.read.textContent=r.ok?("aligned from the right:  "+r.la.join("×")+"  vs  "+r.lb.join("×")+"   →   ("+r.out.join(", ")+")\nsize-1 dimensions stretch to match — no data is copied, NumPy just reuses it."):("aligned from the right:  "+r.la.join("×")+"  vs  "+r.lb.join("×")+"\nA dimension pair is neither equal nor 1 → NumPy raises a ValueError. This is the #1 shape bug.");
+  }
+  cases.forEach(function(c,i){btn(s.body,"("+c.a.join(",")+(c.a.length===1?",":"")+") + ("+c.b.join(",")+(c.b.length===1?",":"")+")",function(b){cur=i;[].forEach.call(s.body.querySelectorAll(".gdw-btn"),function(x){x.classList.remove("on");});b.classList.add("on");draw();});});
+  s.body.querySelector(".gdw-btn").classList.add("on");draw();
+};
+
+/* ================= react-loop (agents) ================= */
+reg["react-loop"]=function(host){
+  var s=shell(host,"▶ Interactive · step through an agent's ReAct loop",
+    "An agent doesn't answer in one shot — it loops Thought → Action (call a tool) → Observation until it can answer. Press Step and watch the trace build. Same idea behind every tool-using agent.",600,400);
+  var ctx=s.ctx,W=600,H=400;
+  var steps=[{k:"Thought",t:"I need France's population and its number of regions, then divide."},
+    {k:"Action",t:"search(\"population of France\")"},{k:"Observation",t:"≈ 68 million"},
+    {k:"Thought",t:"Now I need the number of administrative regions."},
+    {k:"Action",t:"search(\"number of regions in France\")"},{k:"Observation",t:"18 regions"},
+    {k:"Thought",t:"Divide population by number of regions."},
+    {k:"Action",t:"calculator(68000000 / 18)"},{k:"Observation",t:"≈ 3,777,778"},
+    {k:"Answer",t:"About 3.8 million people per region."}];
+  var i=0,COL={Thought:"#6366f1",Action:"#d97706",Observation:"#059669",Answer:"#0f172a"};
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var nodes=[["Thought",130,54],["Action",300,54],["Observation",470,54]],curK=steps[Math.min(i,steps.length-1)].k;
+    for(var n=0;n<3;n++){var nn=nodes[n],on=(curK===nn[0]);ctx.fillStyle=on?COL[nn[0]]:"#eef1f6";ctx.strokeStyle=COL[nn[0]];ctx.lineWidth=2;
+      ctx.beginPath();(ctx.roundRect?ctx.roundRect(nn[1]-58,nn[2]-17,116,34,9):ctx.rect(nn[1]-58,nn[2]-17,116,34));ctx.fill();ctx.stroke();
+      ctx.fillStyle=on?"#fff":"#64748b";ctx.font="700 12px system-ui";ctx.textAlign="center";ctx.fillText(nn[0],nn[1],nn[2]+4);}
+    ctx.strokeStyle="#cbd5e1";ctx.fillStyle="#cbd5e1";ctx.lineWidth=2;
+    function arr(x1,x2){ctx.beginPath();ctx.moveTo(x1,54);ctx.lineTo(x2,54);ctx.stroke();ctx.beginPath();ctx.moveTo(x2,54);ctx.lineTo(x2-8,50);ctx.lineTo(x2-8,58);ctx.fill();}
+    arr(188,242);arr(358,412);
+    ctx.beginPath();ctx.moveTo(470,71);ctx.bezierCurveTo(470,120,130,120,130,71);ctx.stroke();ctx.beginPath();ctx.moveTo(130,71);ctx.lineTo(126,80);ctx.lineTo(134,80);ctx.fill();
+    ctx.fillStyle="#94a3b8";ctx.font="11px system-ui";ctx.fillText("repeat until it can answer",300,112);
+    var y=160;ctx.textAlign="left";
+    for(var s2=0;s2<=Math.min(i,steps.length-1);s2++){var st=steps[s2];ctx.fillStyle=COL[st.k];ctx.font="700 12px system-ui";ctx.fillText(st.k+":",22,y);
+      ctx.fillStyle="#334155";ctx.font="13px system-ui";ctx.fillText(st.t,110,y);y+=22;if(y>H-10)break;}
+    s.read.textContent=i>=steps.length-1?"Loop complete — 3 tool calls (2 search, 1 calculator) across "+steps.length+" steps to reach a grounded answer.":"step "+(i+1)+" of "+steps.length+" — press Step to continue the loop.";
+  }
+  btn(s.body,"Step ▸",function(){if(i<steps.length-1)i++;draw();});
+  btn(s.body,"Reset",function(){i=0;draw();});draw();
+};
+
+/* ================= drift-monitor (MLOps) ================= */
+reg["drift-monitor"]=function(host){
+  var s=shell(host,"▶ Interactive · model drift and the retraining loop",
+    "A deployed model silently decays as live data drifts from its training distribution. Raise the drift severity and watch accuracy fall past the alert line. Turn on auto-retrain to see the sawtooth: monitor → detect → retrain → recover.",600,360);
+  var ctx=s.ctx,W=600,H=360,sev=0.4,retrain=false,pad=44,gw=W-2*pad,gh=H-2*pad,thr=0.85,days=60;
+  function X(d){return pad+d/days*gw;} function Y(a){return pad+gh-(a-0.5)/0.5*gh;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle="#e2e8f0";ctx.lineWidth=1;ctx.strokeRect(pad,pad,gw,gh);
+    ctx.strokeStyle="#e11d48";ctx.setLineDash([5,4]);ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(pad,Y(thr));ctx.lineTo(W-pad,Y(thr));ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle="#e11d48";ctx.font="11px system-ui";ctx.textAlign="left";ctx.fillText("alert threshold "+thr,pad+4,Y(thr)-5);
+    var lastR=0,retrains=0,first=true;ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.4;ctx.beginPath();
+    for(var d=0;d<=days;d++){var a=0.96-sev*0.012*(d-lastR);
+      if(retrain&&a<thr){ctx.stroke();ctx.fillStyle="#059669";ctx.globalAlpha=0.5;ctx.fillRect(X(d)-1,pad,1.5,gh);ctx.globalAlpha=1;lastR=d;a=0.96;retrains++;ctx.strokeStyle="#4f46e5";ctx.beginPath();first=true;}
+      var qx=X(d),qy=Y(clamp(a,0.5,1));if(first){ctx.moveTo(qx,qy);first=false;}else ctx.lineTo(qx,qy);}
+    ctx.stroke();
+    ctx.fillStyle="#64748b";ctx.font="11px system-ui";ctx.fillText("days since deploy →",pad,H-14);ctx.save();ctx.translate(14,pad+gh/2+22);ctx.rotate(-1.57);ctx.fillText("accuracy",0,0);ctx.restore();
+    var finalNoR=clamp(0.96-sev*0.012*days,0.5,1);
+    s.read.textContent=(retrain?"Auto-retrain ON — "+retrains+" retrain(s) kept accuracy above "+thr+" (the sawtooth).":"No retraining — accuracy drifted to "+finalNoR.toFixed(2)+" by day "+days+".")+"\ndrift severity "+sev.toFixed(2)+": higher drift → faster decay → more frequent retraining needed.";
+  }
+  slider(s.body,"drift severity",0,1,0.05,sev,function(v){sev=v;draw();});
+  var rb;rb=btn(s.body,"Auto-retrain",function(b){retrain=!retrain;b.classList.toggle("on",retrain);draw();});draw();
+};
+
+/* ================= serving-sandbox (system design) ================= */
+reg["serving-sandbox"]=function(host){
+  var s=shell(host,"▶ Interactive · serving sandbox — latency, throughput, cost",
+    "Design a model-serving system and watch the trade-offs move together. Cache absorbs repeat traffic; replicas add capacity (and cost); batching lifts throughput but adds a little latency. Push utilization toward 100% and watch p99 latency explode — that's queueing.",600,330);
+  var ctx=s.ctx,W=600,H=330,qps=200,lat=40,batch=8,reps=4,hit=0.3;
+  function calc(){var effQps=qps*(1-hit),perRep=batch/(lat/1000),cap=reps*perRep,util=effQps/cap,p50=lat*(1+(batch-1)*0.04),p99=util>=1?Infinity:p50*(1+util/(1-util)),cost=reps*90;return {effQps:effQps,cap:cap,util:util,p50:p50,p99:p99,cost:cost};}
+  function draw(){
+    ctx.clearRect(0,0,W,H);var r=calc();
+    ctx.textAlign="left";ctx.fillStyle="#334155";ctx.font="700 13px system-ui";ctx.fillText("utilization",30,38);
+    var bx=150,by=27,bw=410;ctx.fillStyle="#e2e8f0";ctx.fillRect(bx,by,bw,16);var u=Math.min(1.15,r.util);
+    ctx.fillStyle=u<0.75?"#059669":u<0.95?"#d97706":"#e11d48";ctx.fillRect(bx,by,Math.min(bw,u*bw),16);
+    ctx.strokeStyle="#94a3b8";ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(bx+bw,by-3);ctx.lineTo(bx+bw,by+19);ctx.stroke();
+    ctx.fillStyle="#334155";ctx.font="700 12px system-ui";ctx.fillText((r.util*100).toFixed(0)+"%",bx+Math.min(bw,u*bw)+8,by+13);
+    function m(y,lab,val,col){ctx.fillStyle="#64748b";ctx.font="13px system-ui";ctx.fillText(lab,30,y);ctx.fillStyle=col||"#0f172a";ctx.font="700 15px system-ui";ctx.fillText(val,300,y);}
+    m(80,"effective QPS (after cache)",r.effQps.toFixed(0)+" /s");
+    m(110,"capacity",r.cap.toFixed(0)+" req/s");
+    m(140,"p50 latency",r.p50.toFixed(0)+" ms");
+    m(170,"p99 latency",r.util>=1?"∞ overloaded":r.p99.toFixed(0)+" ms",r.util>=1?"#e11d48":(r.p99>400?"#d97706":"#059669"));
+    m(200,"monthly cost","$"+r.cost.toLocaleString());
+    m(232,"keeps up?",r.util<1?"✓ yes":"✗ add replicas / cache",r.util<1?"#059669":"#e11d48");
+    s.read.textContent="Cache serves "+(hit*100).toFixed(0)+"% instantly, so "+r.effQps.toFixed(0)+" QPS reach the model; "+reps+" replicas × "+(batch/(lat/1000)).toFixed(0)+" = "+r.cap.toFixed(0)+" req/s.\n"+(r.util>=1?"Overloaded — requests queue and p99 blows up.":r.util>0.9?"Running hot (>90%) — p99 climbs steeply here.":"Healthy headroom.");
+  }
+  slider(s.body,"traffic (QPS)",50,1000,10,qps,function(v){qps=v;draw();});
+  slider(s.body,"model latency (ms)",5,120,5,lat,function(v){lat=v;draw();});
+  slider(s.body,"batch size",1,32,1,batch,function(v){batch=v;draw();});
+  slider(s.body,"replicas",1,20,1,reps,function(v){reps=v;draw();});
+  slider(s.body,"cache hit rate",0,0.9,0.05,hit,function(v){hit=v;draw();});draw();
+};
+
+/* ================= interview-drill (interview bank) ================= */
+reg["interview-drill"]=function(host){
+  var s=shell(host,"▶ Interactive · rapid-fire interview drill"," ",600,40);
+  s.cv.style.display="none";
+  var Q=[["Bias vs variance?","Bias = error from too-simple assumptions (underfit). Variance = sensitivity to the training sample (overfit). Model complexity trades one for the other."],
+   ["Why keep validation and test sets separate?","You tune on validation; the test set stays untouched so it gives an honest final estimate. Tune on test and you leak — scores lie."],
+   ["Precision vs recall?","Precision = of predicted positives, how many are right: TP/(TP+FP). Recall = of actual positives, how many you caught: TP/(TP+FN)."],
+   ["What does too-high a learning rate do?","Overshoots the minimum — loss oscillates or diverges. Too low crawls and can stall on plateaus."],
+   ["Why do we need nonlinear activations?","Without them, stacked linear layers collapse to a single linear map — the network could only draw straight boundaries."],
+   ["Attention in one line?","Each position forms a query, compares it to every key, and pulls a weighted mix of the values — sharing information across the whole sequence."],
+   ["Why does RAG cut hallucination?","It grounds the answer in documents retrieved at query time, so the model cites real, current sources instead of guessing from weights."],
+   ["What is data leakage?","Information from the test set or the future sneaking into training — inflating offline scores, collapsing in production."],
+   ["p50 vs p99 latency — which matters?","Both: p50 is the typical experience, p99 is the tail that defines SLAs and usually drives capacity planning."],
+   ["How do you detect model drift?","Monitor input feature distributions and outcome metrics over time; when they move away from training, alert and retrain."]];
+  var i=0,shown=false,got=0,seen=0;
+  var wrap=el("div");wrap.style.cssText="border:1px solid #e2e8f0;border-radius:12px;padding:16px;background:#fff";
+  s.body.appendChild(wrap);
+  function render(){
+    wrap.innerHTML="";
+    var meta=el("div",null,"Question "+(i+1)+" of "+Q.length+"  ·  score "+got+"/"+seen);meta.style.cssText="font:600 12px system-ui;color:#94a3b8;margin-bottom:8px";
+    var q=el("div",null,Q[i][0]);q.style.cssText="font:700 17px system-ui;color:#0f172a;margin-bottom:10px";
+    wrap.appendChild(meta);wrap.appendChild(q);
+    if(shown){var a=el("div",null,Q[i][1]);a.style.cssText="font:15px system-ui;color:#334155;line-height:1.5;background:#f8fafc;border-left:3px solid #6366f1;padding:10px 12px;border-radius:8px;margin-bottom:10px";wrap.appendChild(a);}
+    var row=el("div");row.style.cssText="display:flex;gap:8px;flex-wrap:wrap";
+    if(!shown){var rev=el("button","gdw-btn","Reveal answer");rev.onclick=function(){shown=true;seen++;render();};row.appendChild(rev);}
+    else{var g=el("button","gdw-btn on","✓ Got it");g.onclick=function(){got++;nxt();};var mm=el("button","gdw-btn","Review again");mm.onclick=nxt;row.appendChild(g);row.appendChild(mm);}
+    wrap.appendChild(row);
+  }
+  function nxt(){i=(i+1)%Q.length;shown=false;render();}
+  render();s.read.textContent="A quick self-test — reveal, judge yourself honestly, move on. For spaced repetition across every lesson, use the Review hub.";
+};
+
+/* ================= pipeline-flow (capstones) ================= */
+reg["pipeline-flow"]=function(host){
+  var s=shell(host,"▶ Interactive · the end-to-end ML pipeline",
+    "A capstone ties every track into one loop. Press Run to send a batch through the pipeline; click any stage to see what it does and where it commonly breaks. The dashed arrow back from Monitor is the part beginners forget — ML systems are never 'done'.",620,320);
+  var ctx=s.ctx,W=620,H=320;
+  var stages=[{n:"Data",d:"Ingest & validate raw data. Breaks on: schema changes, silent nulls, sampling bias."},
+    {n:"Features",d:"Transform into model inputs. Breaks on: train/serve skew — features computed differently offline vs online."},
+    {n:"Train",d:"Fit the model and track the run. Breaks on: data leakage, non-reproducible seeds."},
+    {n:"Evaluate",d:"Offline metrics + per-slice checks. Breaks on: one averaged number hiding a broken subgroup."},
+    {n:"Deploy",d:"Package & serve behind an API. Breaks on: dependency drift, no rollback path."},
+    {n:"Monitor",d:"Watch drift & live metrics — and feed back into retraining. This is the loop that keeps it alive."}];
+  var pos=[[90,90],[310,90],[530,90],[530,220],[310,220],[90,220]],sel=-1,flow=-1,timer=null;
+  function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function seg(a,b,dash){var A=pos[a],B=pos[b];ctx.strokeStyle=dash?"#94a3b8":"#cbd5e1";ctx.fillStyle="#cbd5e1";ctx.lineWidth=2;ctx.setLineDash(dash?[6,5]:[]);
+    var x1=A[0],y1=A[1],x2=B[0],y2=B[1];
+    if(y1===y2){var d=x2>x1?1:-1;x1+=52*d;x2-=52*d;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();if(!dash){ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-8*d,y2-4);ctx.lineTo(x2-8*d,y2+4);ctx.fill();}}
+    else{var e=y2>y1?1:-1;y1+=24*e;y2-=24*e;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();if(!dash){ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-4,y2-8*e);ctx.lineTo(x2+4,y2-8*e);ctx.fill();}}
+    ctx.setLineDash([]);}
+  function box(idx){var p=pos[idx],w=104,h=46,on=(flow===idx),sd=(sel===idx);ctx.fillStyle=on?"#4f46e5":sd?"#eef2ff":"#fff";ctx.strokeStyle=(sd||on)?"#4f46e5":"#cbd5e1";ctx.lineWidth=sd?2.4:1.6;rr(p[0]-w/2,p[1]-h/2,w,h,10);ctx.fill();ctx.stroke();
+    ctx.fillStyle=on?"#fff":"#334155";ctx.font="700 13px system-ui";ctx.textAlign="center";ctx.fillText(stages[idx].n,p[0],p[1]+4);}
+  function draw(){ctx.clearRect(0,0,W,H);seg(0,1);seg(1,2);seg(2,3);seg(3,4);seg(4,5);seg(5,0,true);
+    ctx.fillStyle="#94a3b8";ctx.font="11px system-ui";ctx.textAlign="left";ctx.fillText("retrain ↑",22,155);
+    for(var i=0;i<6;i++)box(i);
+    s.read.textContent=sel>=0?stages[sel].n+" — "+stages[sel].d:(flow>=0?"running: "+stages[flow].n+" …":"Click a stage to inspect it, or press Run to send data through the whole loop.");}
+  s.cv.addEventListener("click",function(e){var r=s.cv.getBoundingClientRect(),mx=(e.clientX-r.left)*W/r.width,my=(e.clientY-r.top)*H/r.height;for(var i=0;i<6;i++){if(Math.abs(mx-pos[i][0])<54&&Math.abs(my-pos[i][1])<25){sel=i;flow=-1;draw();return;}}});
+  btn(s.body,"Run ▸",function(){if(timer)return;flow=0;sel=-1;draw();timer=setInterval(function(){flow++;if(flow>=6){clearInterval(timer);timer=null;flow=-1;}draw();},520);});draw();
+};
+
 /* ---- boot: render every placeholder ---- */
 function boot(){
   [].forEach.call(document.querySelectorAll(".gdw[data-widget]"),function(host){
