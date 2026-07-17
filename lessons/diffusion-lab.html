@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diffusion Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0;text-align:center}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px;text-align:left}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px;text-align:left}
+canvas{border-radius:12px;background:#0b1120;image-rendering:pixelated}
+.track{display:flex;align-items:center;gap:14px;justify-content:center;margin:14px 0 4px}
+.track .lab{font-size:12px;color:#94a3b8;width:70px}
+input[type=range]{flex:1;max-width:440px;accent-color:var(--indigo2)}
+.btns{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;font-weight:700;border:1px solid #334155;background:#1e293b;color:#e2e8f0;padding:9px 16px;border-radius:10px;cursor:pointer}
+.btn.go{background:var(--emer);border-color:var(--emer);color:#fff}
+.btn.rev{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.readout{font-family:var(--mono);font-size:13px;color:#cbd5e1;margin-top:12px}
+.bars{display:flex;gap:0;max-width:440px;margin:10px auto 0;height:10px;border-radius:99px;overflow:hidden}
+.bars .sig{background:#10b981}.bars .noi{background:#f87171}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="llm8-diffusion.html">← Diffusion</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · Generative AI &amp; Vision</div>
+<h1>Diffusion Lab</h1>
+<p class="small">Diffusion models generate images by learning to <b>undo noise</b>. Here's the whole idea in one control: slide right to destroy an image with Gaussian noise, then press <b>Denoise</b> and watch it get rebuilt one step at a time — exactly the process a model like Stable Diffusion learns to run.</p>
+
+<div class="promise">Training is the forward direction: take a real image, add a known amount of noise, and ask a network to predict that noise. Generation is the reverse: start from pure static and remove predicted noise step by step until a picture appears. Drag the slider to feel the forward process, then hit <b>Denoise</b> to watch the reverse.</div>
+
+<div class="play">
+  <h3>▶ Forward noising ↔ reverse denoising</h3>
+  <p class="lead">One fixed noise pattern, a cosine schedule over the timesteps. Left = clean image (t=0), right = pure noise (t=T).</p>
+  <canvas id="cv" width="320" height="320"></canvas>
+  <div class="track"><span class="lab">t = <b id="tLab">0</b></span><input type="range" id="tSl" min="0" max="60" step="1" value="0"><span class="lab" style="text-align:right">noise</span></div>
+  <div class="bars"><div class="sig" id="sigBar" style="width:100%"></div><div class="noi" id="noiBar" style="width:0%"></div></div>
+  <div class="readout" id="read"></div>
+  <div class="btns">
+    <button class="btn go" id="noise">▶ Add noise (forward)</button>
+    <button class="btn rev" id="denoise">▶ Denoise (reverse)</button>
+    <button class="btn" id="reset">↻ Reset</button>
+  </div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>What the network actually learns.</b> At every noise level t, the model is shown the noisy image and trained to output the noise that was added. Subtract that predicted noise and you get a cleaner image; repeat from pure static and a brand-new image emerges. The forward "noising" needs no learning at all — it's just adding Gaussian noise on a fixed schedule. All the intelligence is in the reverse.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Watch signal die.</b> Drag the slider right slowly. The green/red bar shows the mix: early on it's mostly signal with a little noise; by the end it's almost pure noise and the image is gone. That schedule — how fast signal gives way to noise — is a real design choice (this one is a cosine schedule).</p>
+<p><b>2. Generate from static.</b> Push the slider all the way right (pure noise), then press <b>Denoise</b>. The image reassembles from what looks like random static — that's generation. A real model does this without ever seeing the original; it only predicts noise.</p>
+<p><b>3. Notice it's gradual.</b> Denoising takes many small steps, not one. Trying to jump from pure noise to a finished image in a single step is far too hard — taking dozens of small, easy steps is what makes diffusion work (and also why it's slower than a GAN).</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Forward = add noise (no learning).</b> <code>x_t = √ā·x₀ + √(1−ā)·ε</code> on a fixed schedule — trivial to compute.</li>
+<li><b>Reverse = predict &amp; remove noise (all the learning).</b> The network's only job is to estimate ε at each step.</li>
+<li><b>Generation is denoising from static.</b> Start at pure noise and run the reverse process to sample a new image.</li>
+<li><b>Many small steps beat one big one.</b> Each step is an easy denoise; stacking them turns noise into structure.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="cv6-diffusion.html">Diffusion for images →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var N=32, T=60;
+// build a smiley image x0 in [0,1] and a fixed noise field
+var x0=[], eps=[], g=123;
+function rnd(){g=(g*1103515245+12345)&0x7fffffff;return g/0x7fffffff;}
+function gauss(){var u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v);}
+for(var r=0;r<N;r++)for(var c=0;c<N;c++){
+  var cx=(c-15.5)/15.5, cy=(r-15.5)/15.5, d=Math.sqrt(cx*cx+cy*cy), val=0.06;
+  if(d<0.92&&d>0.72)val=0.9;                         // face outline
+  else if(d<=0.72)val=0.20;                          // face
+  if((Math.abs(cx+0.32)<0.11&&Math.abs(cy+0.26)<0.15)||(Math.abs(cx-0.32)<0.11&&Math.abs(cy+0.26)<0.15))val=0.97; // eyes
+  if(cy>0.1&&cy<0.5&&d<0.62&&d>0.4)val=0.97;         // smile
+  x0.push(val); eps.push(gauss());
+}
+function abar(t){return Math.pow(Math.cos(t/T*Math.PI/2),2);}   // cosine schedule, 1 → 0
+var cv=$("cv"),ctx=cv.getContext("2d"),px=cv.width/N;
+function drawAt(t){
+  var ab=abar(t), sa=Math.sqrt(ab), sn=Math.sqrt(1-ab);
+  for(var i=0;i<N*N;i++){
+    var v=sa*x0[i]+sn*(0.5+0.30*eps[i]); v=v<0?0:v>1?1:v;
+    var gg=Math.round(255*(1-v)); ctx.fillStyle="rgb("+gg+","+gg+","+gg+")";
+    ctx.fillRect((i%N)*px,(Math.floor(i/N))*px,px,px);
+  }
+  $("tLab").textContent=t;
+  $("sigBar").style.width=Math.round(ab*100)+"%"; $("noiBar").style.width=Math.round((1-ab)*100)+"%";
+  $("read").textContent="signal √ā = "+sa.toFixed(2)+"   noise √(1−ā) = "+sn.toFixed(2)+"   →   "+Math.round(ab*100)+"% signal / "+Math.round((1-ab)*100)+"% noise";
+}
+var timer=null;
+function animate(from,to,done){
+  if(timer)clearInterval(timer);
+  var t=from, dir=to>from?1:-1;
+  timer=setInterval(function(){ drawAt(t); $("tSl").value=t; if(t===to){clearInterval(timer);timer=null;done&&done();} t+=dir; },45);
+}
+$("tSl").oninput=function(){if(timer){clearInterval(timer);timer=null;}drawAt(+this.value);};
+$("noise").onclick=function(){animate(0,T);};
+$("denoise").onclick=function(){animate(T,0);};
+$("reset").onclick=function(){if(timer){clearInterval(timer);timer=null;}$("tSl").value=0;drawAt(0);};
+drawAt(0);
+</script>
+</body>
+</html>

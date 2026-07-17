@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Backprop Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+canvas{display:block;border-radius:12px;background:#0b1120;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 22px;margin-top:14px}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+label.cl{font-size:12.5px;color:#cbd5e1;display:flex;justify-content:space-between;margin-bottom:5px}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;font-weight:700;border:1px solid #334155;background:#1e293b;color:#e2e8f0;padding:9px 15px;border-radius:10px;cursor:pointer}
+.btn.go{background:var(--emer);border-color:var(--emer);color:#fff}
+.tog{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#cbd5e1;cursor:pointer}
+.statbar{display:flex;gap:24px;margin-top:14px}
+.st b{font-family:var(--mono);font-size:19px;display:block}.st span{font-size:11.5px;color:#94a3b8}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+.leg{display:flex;gap:16px;font-size:12px;color:#94a3b8;margin-top:8px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="dl3-backprop.html">← Backpropagation</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · Deep Learning</div>
+<h1>Backprop Lab</h1>
+<p class="small">A whole tiny network on one screen — two inputs, two hidden units, one output, one loss. Watch numbers flow <b>right</b> on the forward pass, then gradients flow <b>left</b> on the backward pass, exactly as the chain rule prescribes. Then press Train and watch every weight crawl downhill.</p>
+
+<div class="promise">Backprop feels like magic until you see it as bookkeeping. Every node knows its own value (forward, in white) and how much the loss would change if it wiggled (backward, in red). Press <b>Gradient step</b> and watch each weight move against its gradient — and the loss shrink.</div>
+
+<div class="play">
+  <h3>▶ Forward values &amp; backward gradients</h3>
+  <p class="lead">White = the forward value at each node. Red = ∂Loss/∂node — its gradient. Edge labels are the weights. Sigmoid activations; loss is ½(output − target)².</p>
+  <canvas id="cv" width="820" height="380"></canvas>
+  <div class="leg"><span><span class="sw" style="background:#e2e8f0"></span>forward value</span><span><span class="sw" style="background:#f87171"></span>gradient ∂L/∂·</span><span><span class="sw" style="background:#6366f1"></span>weight</span></div>
+
+  <div class="row">
+    <div><label class="cl">input x₁ <b id="x1Lab">1.0</b></label><input type="range" id="x1" min="-2" max="2" step="0.1" value="1"></div>
+    <div><label class="cl">input x₂ <b id="x2Lab">0.5</b></label><input type="range" id="x2" min="-2" max="2" step="0.1" value="0.5"></div>
+    <div><label class="cl">target y <b id="yLab">1.0</b></label><input type="range" id="y" min="0" max="1" step="0.05" value="1"></div>
+  </div>
+  <label class="cl" style="margin-top:12px">learning rate <b id="lrLab">0.8</b></label>
+  <input type="range" id="lr" min="0.05" max="2" step="0.05" value="0.8">
+
+  <div class="btns">
+    <button class="btn" id="stepBtn">Gradient step ×1</button>
+    <button class="btn go" id="train">▶ Train</button>
+    <button class="btn" id="reset">↻ Reset weights</button>
+    <label class="tog"><input type="checkbox" id="showg" checked> show gradients</label>
+  </div>
+  <div class="statbar">
+    <div class="st"><b id="mLoss" style="color:#f87171">0</b><span>loss</span></div>
+    <div class="st"><b id="mOut" style="color:#e2e8f0">0</b><span>output</span></div>
+    <div class="st"><b id="mStep" style="color:#a5b4fc">0</b><span>steps</span></div>
+  </div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Read one red number.</b> Click nothing — just look at the gradient under a weight. If it's positive, nudging that weight <em>up</em> would <em>raise</em> the loss, so gradient descent pushes it <em>down</em> (and vice-versa). Every weight update is just: move a little in the direction that lowers the loss. Backprop's only job is to compute all those red numbers efficiently, in one backward sweep.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Do one step by eye.</b> Note the loss. Press <em>Gradient step ×1</em> once. The loss drops a little and every weight changed by −(learning rate)×(its red gradient). That single move, repeated, is all of training.</p>
+<p><b>2. Break it with the learning rate.</b> Push the learning rate to 2 and hold <em>Train</em>. The loss may overshoot and bounce instead of settling — the same divergence you saw in the gradient-descent lab, now inside a real network.</p>
+<p><b>3. Make it impossible, then possible.</b> Set the target and inputs so the network struggles, then Train — watch it find weights that work anyway. Two hidden units are enough to bend the output wherever the loss needs it.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Forward makes predictions, backward assigns blame.</b> One pass right computes the output; one pass left computes every gradient.</li>
+<li><b>The chain rule multiplies along paths.</b> A node's gradient is its downstream gradient times its local derivative — nothing more.</li>
+<li><b>Learning = gradient step, repeated.</b> Every weight moves against its gradient by the learning rate; do it thousands of times and the network learns.</li>
+<li><b>The learning rate is delicate.</b> Too big overshoots, too small crawls — visible right here in a 9-weight network.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · then try the <a href="nn-playground.html">Neural Network Playground →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+function sig(z){return 1/(1+Math.exp(-z));}
+var init={w1:0.5,w2:-0.4,w3:0.9,w4:0.3,w5:0.7,w6:-0.6,b1:0.1,b2:-0.2,b3:0.05};
+var w=Object.assign({},init), x1=1,x2=0.5,y=1,lr=0.8, steps=0, showg=true, timer=null;
+function forward(){var z1=w.w1*x1+w.w2*x2+w.b1,h1=sig(z1),z2=w.w3*x1+w.w4*x2+w.b2,h2=sig(z2),zo=w.w5*h1+w.w6*h2+w.b3,o=sig(zo),L=0.5*(o-y)*(o-y);return {h1:h1,h2:h2,o:o,L:L};}
+function grads(f){var dzo=(f.o-y)*f.o*(1-f.o);var g={o:(f.o-y),w5:dzo*f.h1,w6:dzo*f.h2,b3:dzo};
+  var dh1=dzo*w.w5,dh2=dzo*w.w6,dz1=dh1*f.h1*(1-f.h1),dz2=dh2*f.h2*(1-f.h2);
+  g.h1=dh1;g.h2=dh2;g.w1=dz1*x1;g.w2=dz1*x2;g.b1=dz1;g.w3=dz2*x1;g.w4=dz2*x2;g.b2=dz2;g.x1=dz1*w.w1+dz2*w.w3;g.x2=dz1*w.w2+dz2*w.w4;return g;}
+function step(){var g=grads(forward());["w1","w2","w3","w4","w5","w6","b1","b2","b3"].forEach(function(k){w[k]-=lr*g[k];});steps++;}
+var cv=$("cv"),ctx=cv.getContext("2d"),W=820,H=380;
+var P={x1:[130,120],x2:[130,270],h1:[380,120],h2:[380,270],o:[600,195],L:[730,195]};
+function node(key,val,grad,label,col){var p=P[key];ctx.fillStyle="#111827";ctx.strokeStyle=col||"#334155";ctx.lineWidth=2;ctx.beginPath();ctx.arc(p[0],p[1],28,0,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle="#e2e8f0";ctx.font="700 14px "+"ui-monospace";ctx.textAlign="center";ctx.fillText(val,p[0],p[1]+2);
+  ctx.fillStyle="#94a3b8";ctx.font="11px system-ui";ctx.fillText(label,p[0],p[1]-36);
+  if(showg&&grad!=null){ctx.fillStyle="#f87171";ctx.font="700 11px "+"ui-monospace";ctx.fillText((grad>=0?"+":"")+grad.toFixed(2),p[0],p[1]+44);}}
+function edge(a,b,wt){var A=P[a],B=P[b],ang=Math.atan2(B[1]-A[1],B[0]-A[0]),sx=A[0]+28*Math.cos(ang),sy=A[1]+28*Math.sin(ang),ex=B[0]-28*Math.cos(ang),ey=B[1]-28*Math.sin(ang);
+  ctx.strokeStyle="#1e293b";ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();
+  if(wt!=null){var mx=(sx+ex)/2,my=(sy+ey)/2;ctx.fillStyle="#312e81";ctx.fillRect(mx-19,my-9,38,16);ctx.fillStyle="#a5b4fc";ctx.font="10px "+"ui-monospace";ctx.textAlign="center";ctx.fillText(wt.toFixed(2),mx,my+3);}}
+function draw(){
+  var f=forward(),g=grads(f);
+  ctx.clearRect(0,0,W,H);
+  edge("x1","h1",w.w1);edge("x2","h1",w.w2);edge("x1","h2",w.w3);edge("x2","h2",w.w4);edge("h1","o",w.w5);edge("h2","o",w.w6);
+  ctx.strokeStyle="#1e293b";ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(P.o[0]+28,P.o[1]);ctx.lineTo(P.L[0]-28,P.L[1]);ctx.stroke();
+  node("x1",x1.toFixed(1),g.x1,"input x₁","#475569");node("x2",x2.toFixed(1),g.x2,"input x₂","#475569");
+  node("h1",f.h1.toFixed(2),g.h1,"hidden h₁","#6366f1");node("h2",f.h2.toFixed(2),g.h2,"hidden h₂","#6366f1");
+  node("o",f.o.toFixed(2),g.o,"output","#059669");
+  var p=P.L;ctx.fillStyle="#111827";ctx.strokeStyle="#e11d48";ctx.lineWidth=2;ctx.beginPath();ctx.arc(p[0],p[1],28,0,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle="#fca5a5";ctx.font="700 13px "+"ui-monospace";ctx.textAlign="center";ctx.fillText(f.L.toFixed(3),p[0],p[1]+2);ctx.fillStyle="#94a3b8";ctx.font="11px system-ui";ctx.fillText("loss",p[0],p[1]-36);
+  ctx.fillStyle="#64748b";ctx.font="11px system-ui";ctx.fillText("forward →",W/2-40,26);ctx.fillStyle="#f87171";ctx.fillText("← backward (gradients)",W/2+90,26);
+  ctx.fillStyle="#94a3b8";ctx.textAlign="left";ctx.fillText("target y = "+y.toFixed(2),P.L[0]-30,P.L[1]+62);
+  $("mLoss").textContent=f.L.toFixed(4);$("mOut").textContent=f.o.toFixed(3);$("mStep").textContent=steps;
+}
+$("x1").oninput=function(){x1=+this.value;$("x1Lab").textContent=x1.toFixed(1);draw();};
+$("x2").oninput=function(){x2=+this.value;$("x2Lab").textContent=x2.toFixed(1);draw();};
+$("y").oninput=function(){y=+this.value;$("yLab").textContent=y.toFixed(2);draw();};
+$("lr").oninput=function(){lr=+this.value;$("lrLab").textContent=lr.toFixed(2);};
+$("showg").onchange=function(){showg=this.checked;draw();};
+$("stepBtn").onclick=function(){step();draw();};
+$("reset").onclick=function(){w=Object.assign({},init);steps=0;draw();};
+$("train").onclick=function(){if(timer){clearInterval(timer);timer=null;this.textContent="▶ Train";this.classList.add("go");return;}this.textContent="⏸ Stop";this.classList.remove("go");var b=this;timer=setInterval(function(){for(var k=0;k<3;k++)step();draw();if(forward().L<1e-4){clearInterval(timer);timer=null;b.textContent="▶ Train";b.classList.add("go");}},80);};
+draw();
+</script>
+</body>
+</html>

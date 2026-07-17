@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attention Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+canvas{display:block;border-radius:12px;background:#0b1120;width:100%;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.chlab{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin:12px 0 4px}
+.chip{font-size:12.5px;padding:6px 11px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover{border-color:var(--indigo2)}.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+label.cl{font-size:12.5px;color:#cbd5e1;display:flex;justify-content:space-between;margin:14px 0 5px}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.tog{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#cbd5e1;cursor:pointer;margin-top:14px}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="nlp5-selfattention.html">← Self-attention</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · NLP &amp; Transformers</div>
+<h1>Attention Lab</h1>
+<p class="small">The one mechanism behind every modern language model: each word looks at every other word and decides how much to borrow from it. Here it's computed live — real scaled dot-product attention, <code>softmax(QKᵀ/√d)</code> — and drawn as arcs you can read.</p>
+
+<div class="promise">Click a word to see what it pays attention to. Then switch heads: watch the <b>same sentence</b> light up completely differently — one head links a pronoun to its noun, another links a verb to its subject. That specialization, discovered by training, is why transformers understand structure.</div>
+
+<div class="play">
+  <h3>▶ Self-attention, visualized</h3>
+  <p class="lead">Click any word (or a row in the grid) to make it the <em>query</em>. Arc thickness = how much attention it sends to each other word. The grid is the full attention matrix.</p>
+  <canvas id="cv" width="820" height="470"></canvas>
+
+  <div class="chlab">Attention head — each was &ldquo;trained&rdquo; to track a different relationship</div>
+  <div class="chips" id="heads"></div>
+
+  <label class="cl">Temperature (softmax sharpness) <b id="tLab">0.50</b></label>
+  <input type="range" id="tSl" min="0.2" max="2" step="0.05" value="0.5">
+  <label class="tog"><input type="checkbox" id="mask"> Causal mask (a word can only attend to earlier words — how GPT reads)</label>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>What are Q, K and V?</b> Every token is projected into a <em>query</em> ("what am I looking for?"), a <em>key</em> ("what do I offer?") and a <em>value</em> ("what will I hand over?"). A token's query is compared to every key by dot product; softmax turns those scores into weights; the output is the weighted mix of values. Different heads use different projections — so they ask different questions of the same sentence.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Follow a pronoun.</b> On the <em>coreference</em> head, click <code>it</code>. The thickest arc lands on <code>cat</code> — the model has linked the pronoun to what it refers to, across four words. That long-range link is exactly what older models (RNNs) struggled with.</p>
+<p><b>2. Find the subject.</b> Switch to the <em>verb→subject</em> head and click <code>sat</code>. Now the attention flows to <code>cat</code> — the thing doing the sitting. Same sentence, different question.</p>
+<p><b>3. Turn on the causal mask.</b> Now each word can only attend to itself and earlier words — the upper triangle goes dark. This is the difference between a model that reads the whole sentence at once (BERT-style) and one that generates left-to-right (GPT-style).</p>
+<p><b>4. Sharpen the focus.</b> Drop the temperature: attention concentrates on a single word (confident). Raise it: attention spreads out (hedging). It's the same knob that controls randomness when a model generates text.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Attention is a soft lookup</b> — a query scores every key, softmax makes weights, the output is a weighted blend of values.</li>
+<li><b>Range is free</b> — a word can attend to any other word directly, near or far, in one step. No recurrence, no forgetting.</li>
+<li><b>Heads specialize</b> — with different Q/K projections, different heads track different relationships (coreference, syntax, position) in parallel.</li>
+<li><b>The causal mask makes a generator</b> — hide the future and the same machinery becomes a left-to-right predictor like GPT.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · next: <a href="nlp6-transformer.html">The Transformer architecture →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var tokens=["the","cat","sat","because","it","was","tired"];
+// embedding dims: [animal-noun, verb, function, pronoun-ref, adjective]
+var E=[[0,0,1,0,0],[1,0,0,0.2,0],[0,1,0,0,0],[0,0,1,0,0],[0.2,0,0,1,0],[0,1,0,0,0],[0.5,0,0,0,1]];
+var HEADS=[
+  {name:"content",Q:[[1,0,0,0,0],[0,1,1,0,1]],K:[[1,0,0,0,0],[0,1,1,0,1]]},
+  {name:"coreference",Q:[[0,0,0,1,0],[0,0,0,0,0]],K:[[1,0,0,0,0],[0,0,0,0,0]]},
+  {name:"verb→subject",Q:[[0,1,0,0,0],[0,0,0,0,0]],K:[[1,0,0,0,0],[0,0,0,0,0]]}
+];
+var head=1, temp=0.5, causal=false, sel=4;
+function mv(M,v){return M.map(function(r){var s=0;for(var d=0;d<v.length;d++)s+=r[d]*v[d];return s;});}
+function attn(){
+  var H=HEADS[head],n=tokens.length,out=[];
+  for(var i=0;i<n;i++){var q=mv(H.Q,E[i]),sc=[];
+    for(var j=0;j<n;j++){if(causal&&j>i){sc.push(-1e9);continue;}var k=mv(H.K,E[j]);sc.push((q[0]*k[0]+q[1]*k[1])/Math.sqrt(2)/temp);}
+    var mx=Math.max.apply(null,sc),ex=sc.map(function(x){return Math.exp(x-mx);}),Z=ex.reduce(function(a,b){return a+b;});
+    out.push(ex.map(function(e){return e/Z;}));}
+  return out;
+}
+var cv=$("cv"),ctx=cv.getContext("2d"),W=820,Hh=470;
+var n=tokens.length, tx=[], TW=104, x0=(W-n*TW)/2, tokenY=150, gridY=210, cell=34, gx0=(W-n*cell)/2;
+for(var i=0;i<n;i++)tx.push(x0+i*TW+TW/2);
+function draw(){
+  var A=attn();
+  ctx.clearRect(0,0,W,Hh);
+  // arcs from selected query to keys
+  var row=A[sel];
+  for(var j=0;j<n;j++){if(j===sel)continue;var w=row[j];if(w<0.02)continue;
+    ctx.strokeStyle="rgba(99,102,241,"+Math.min(1,w*2.2)+")";ctx.lineWidth=1+w*16;
+    var xa=tx[sel],xb=tx[j],my=tokenY-40-Math.abs(xa-xb)*0.14;
+    ctx.beginPath();ctx.moveTo(xa,tokenY-16);ctx.bezierCurveTo(xa,my,xb,my,xb,tokenY-16);ctx.stroke();}
+  // token boxes
+  for(i=0;i<n;i++){var q=(i===sel);ctx.fillStyle=q?"#4f46e5":"#1e293b";ctx.strokeStyle=q?"#6366f1":"#334155";ctx.lineWidth=1.5;
+    ctx.beginPath();(ctx.roundRect?ctx.roundRect(tx[i]-TW/2+6,tokenY-16,TW-12,32,9):ctx.rect(tx[i]-TW/2+6,tokenY-16,TW-12,32));ctx.fill();ctx.stroke();
+    ctx.fillStyle=q?"#fff":"#e2e8f0";ctx.font=(q?"700 ":"600 ")+"15px system-ui";ctx.textAlign="center";ctx.fillText(tokens[i],tx[i],tokenY+5);}
+  // heatmap
+  ctx.font="11px system-ui";
+  for(i=0;i<n;i++){ctx.fillStyle=i===sel?"#a5b4fc":"#64748b";ctx.textAlign="right";ctx.fillText(tokens[i],gx0-6,gridY+i*cell+cell/2+4);
+    ctx.save();ctx.translate(gx0+i*cell+cell/2,gridY-8);ctx.fillStyle="#64748b";ctx.textAlign="left";ctx.rotate(-0.9);ctx.fillText(tokens[i],0,0);ctx.restore();}
+  for(i=0;i<n;i++)for(j=0;j<n;j++){var w2=A[i][j];ctx.fillStyle="rgba(99,102,241,"+Math.min(1,w2*1.9)+")";ctx.fillRect(gx0+j*cell,gridY+i*cell,cell-2,cell-2);
+    if(i===sel){ctx.strokeStyle="#a5b4fc";ctx.lineWidth=1.4;ctx.strokeRect(gx0+j*cell,gridY+i*cell,cell-2,cell-2);}
+    if(w2>0.14){ctx.fillStyle="#fff";ctx.font="9px "+"ui-monospace";ctx.textAlign="center";ctx.fillText(Math.round(w2*100),gx0+j*cell+cell/2-1,gridY+i*cell+cell/2+3);}}
+  ctx.fillStyle="#94a3b8";ctx.font="11px system-ui";ctx.textAlign="center";ctx.fillText("keys  (attended to) →",gx0+n*cell/2,gridY+n*cell+20);
+  ctx.save();ctx.translate(gx0-56,gridY+n*cell/2);ctx.rotate(-1.5708);ctx.fillText("queries ↓",0,0);ctx.restore();
+  ctx.fillStyle="#e2e8f0";ctx.font="600 13px system-ui";ctx.textAlign="left";ctx.fillText("“"+tokens.join(" ")+"”",x0-8,40);
+  // readout
+  var best=0;for(j=1;j<n;j++)if(row[j]>row[best])best=j;
+  $("out")&&($("out").textContent="");
+}
+cv.addEventListener("click",function(e){var r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)*W/r.width,my=(e.clientY-r.top)*Hh/r.height;
+  for(var i=0;i<n;i++){if(Math.abs(mx-tx[i])<TW/2&&Math.abs(my-tokenY)<20){sel=i;draw();return;}}
+  if(mx>gx0&&mx<gx0+n*cell&&my>gridY&&my<gridY+n*cell){sel=Math.floor((my-gridY)/cell);draw();}});
+var hc=$("heads");HEADS.forEach(function(h,i){var labels=["content (similar meaning)","coreference (it → its noun)","verb → subject"];var c=document.createElement("span");c.className="chip"+(i===head?" sel":"");c.textContent=labels[i];c.onclick=function(){head=i;[].forEach.call(hc.children,function(x){x.classList.remove("sel");});c.classList.add("sel");draw();};hc.appendChild(c);});
+$("tSl").oninput=function(){temp=+this.value;$("tLab").textContent=temp.toFixed(2);draw();};
+$("mask").onchange=function(){causal=this.checked;draw();};
+draw();
+</script>
+</body>
+</html>

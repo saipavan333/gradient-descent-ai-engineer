@@ -259,6 +259,7 @@ fits in one line:</p>
 </svg>
 <figcaption><b>Scaled dot-product attention.</b> Q·Kᵀ gives all pairwise relevance scores; dividing by √dₖ keeps them from getting too large; softmax turns each row into weights summing to 1; multiplying by V blends the values. This one equation is the heart of every transformer.</figcaption></figure>
 <div class="gdw" data-widget="attention"></div>
+<div class="callout tip"><div class="ic">▶</div><div class="bd"><div class="ti">Take it to the lab</div><p style="margin:.2em 0 0">Open the <a href="attention-lab.html">Attention Lab</a> — click any word and watch real scaled-dot-product attention light up across the sentence, switch heads to see different relationships, and flip on the causal mask that turns it into a GPT-style generator.</p></div></div>
 
 <p>Read the equation right to left through the diagram. $QK^\top$ produces an $n \times n$ matrix of scores — every
 token's Query dotted with every token's Key. We divide by $\sqrt{d_k}$ (the square root of the key dimension) for

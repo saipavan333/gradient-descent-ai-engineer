@@ -243,6 +243,7 @@ they point the same way regardless of length.</p>
 </svg>
 <figcaption><b>Retrieval as nearest-neighbor search.</b> Chunks and the query are all embedded into the same vector space. The chunks whose vectors are closest to the query's (by cosine similarity) are the most semantically relevant — here, docs A and B — and get retrieved.</figcaption></figure>
 <div class="gdw" data-widget="cosine-search"></div>
+<div class="callout tip"><div class="ic">▶</div><div class="bd"><div class="ti">Take it to the lab</div><p style="margin:.2em 0 0">Open the <a href="rag-lab.html">RAG Pipeline Lab</a> — type a question and watch the whole retrieval-augmented-generation flow run: embed the query, rank every document by cosine similarity, and assemble the grounded answer.</p></div></div>
 
 <p>This is the heart of RAG, and it's why embeddings matter so much: the model can only answer from chunks the retriever
 finds, and the retriever finds them by vector closeness. A query and a chunk that <em>mean</em> the same thing will have

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RAG Pipeline Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--emer2:#10b981;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+.qbox{display:flex;gap:8px;margin-bottom:10px}
+.qbox input{flex:1;background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:10px;padding:11px 13px;font-size:15px;font-family:var(--sans)}
+.qbox input:focus{outline:2px solid var(--indigo2);border-color:var(--indigo2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chip{font-size:12px;padding:5px 10px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover{border-color:var(--indigo2);color:#fff}
+.stage{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+.stage .n{background:var(--indigo);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-grid;place-items:center;font-size:11px}
+.chunk{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:10px;background:#111827;border:1px solid #1e293b;margin:6px 0}
+.chunk.hit{border-color:var(--emer);background:#0c1f18}
+.chunk .bar{flex:0 0 90px;height:8px;background:#1e293b;border-radius:99px;overflow:hidden}
+.chunk .bar i{display:block;height:100%;background:linear-gradient(90deg,#6366f1,#10b981)}
+.chunk .sc{flex:0 0 42px;font-family:var(--mono);font-size:12px;color:#a5b4fc;text-align:right}
+.chunk .tx{font-size:13.5px;color:#cbd5e1}
+.chunk .rank{flex:0 0 20px;font-family:var(--mono);color:#64748b;font-size:12px}
+.ctx{background:#0c1f18;border:1px solid #14532d;border-radius:10px;padding:12px 14px;font-size:13.5px;color:#bbf7d0;line-height:1.55}
+.ans{background:#1e1b4b;border:1px solid #3730a3;border-radius:10px;padding:14px 16px;font-size:15px;color:#e0e7ff;line-height:1.55}
+.ans b{color:#c7d2fe}
+label.cl{font-size:12.5px;color:#cbd5e1;display:flex;justify-content:space-between;margin:6px 0 5px}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="rag1-why.html">← RAG</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · RAG &amp; Vector Search</div>
+<h1>RAG Pipeline Lab</h1>
+<p class="small">Retrieval-Augmented Generation in one screen: your question is embedded, compared to a library of documents by <b>cosine similarity</b>, and the best matches are handed to the model as context. Ask a question and watch every stage run — real vector retrieval, no libraries.</p>
+
+<div class="promise">The whole point of RAG is that the model answers from <b>retrieved facts</b>, not just its memory. Type a question below and watch it become a vector, pull the most similar chunks out of the knowledge base, and assemble the exact context an LLM would read before answering. Then ask something the library doesn't cover — and watch retrieval come up empty.</div>
+
+<div class="play">
+  <h3>▶ Ask the knowledge base</h3>
+  <p class="lead">8 document chunks. Your query is embedded into the same space, then ranked by cosine similarity. The top-k become the model's context.</p>
+  <div class="qbox"><input id="q" type="text" placeholder="Ask something about ML…" value="how does the learning rate affect gradient descent?"></div>
+  <div class="chips" id="presets"></div>
+
+  <label class="cl" style="margin-top:14px">how many chunks to retrieve (top-k) <b id="kLab">3</b></label>
+  <input type="range" id="kSl" min="1" max="6" step="1" value="3">
+
+  <div class="stage"><span class="n">1</span> Retrieval — every chunk scored by cosine similarity to your query</div>
+  <div id="ranked"></div>
+
+  <div class="stage"><span class="n">2</span> Context assembled — only the top-k are sent to the model</div>
+  <div class="ctx" id="ctx"></div>
+
+  <div class="stage"><span class="n">3</span> Grounded answer — the model responds using that context</div>
+  <div class="ans" id="ans"></div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Why not just ask the model directly?</b> The model's weights are frozen at training time — it can't know your private docs or today's news, and it will confidently make things up. RAG fixes both: it fetches real, current, citable text and puts it in front of the model, so the answer is grounded in something you can check. Retrieval quality is everything — if the right chunk isn't fetched, the model can't use it.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Watch a good match win.</b> Ask about the learning rate. The gradient-descent chunk scores near 1.0 and floats to the top; unrelated chunks score near zero. That gap is what makes retrieval work.</p>
+<p><b>2. Shrink k to 1.</b> Now only the single best chunk reaches the model. Great when retrieval is confident, risky when the answer spans several documents — a real tuning decision.</p>
+<p><b>3. Ask something off-topic.</b> Ask about cooking or football. Every score collapses toward zero — the library simply doesn't contain the answer. A good RAG system detects this and says "I don't know" instead of hallucinating.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>RAG = retrieve then generate.</b> Embed the query, find the nearest chunks by cosine similarity, feed them in as context.</li>
+<li><b>Similarity is a dot product of directions.</b> Cosine ignores length and measures alignment of meaning — that's the whole retrieval engine.</li>
+<li><b>You can only answer what you retrieve.</b> If the right chunk isn't fetched, the model can't use it — retrieval quality caps the whole system.</li>
+<li><b>Grounding beats memorizing.</b> The answer cites fetched text, so it stays current, private-aware, and checkable.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="rag4-vectordb.html">Vector databases &amp; ANN search →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var VOCAB=["gradient","learning","rate","overfit","overfitting","regularization","dropout","neuron","activation","backprop","backpropagation","attention","transformer","token","tokenize","embedding","embed","rag","retrieval","retrieve","vector","cosine","similarity","cnn","image","convolution","drift","deploy","latency","cost","monitor","train","weight","loss"];
+var STEM={overfitting:"overfit",backpropagation:"backprop",tokenize:"token",embed:"embedding",retrieve:"retrieval",similarity:"cosine"};
+var CHUNKS=[
+ {t:"Gradient descent updates each weight against its gradient; the learning rate sets how big each step is. Too high diverges, too low crawls.",k:["gradient","learning","rate","weight","loss","train"]},
+ {t:"Overfitting is fought with regularization — L1/L2 penalties, dropout, and early stopping keep the model from memorizing noise.",k:["overfit","regularization","dropout","learning"]},
+ {t:"A neuron computes a weighted sum then a nonlinear activation. Backpropagation finds every weight's gradient in one backward pass.",k:["neuron","activation","backprop","gradient","weight"]},
+ {t:"Attention lets every token look at every other token and borrow from it. Transformers stack many attention layers.",k:["attention","transformer","token"]},
+ {t:"Embeddings map tokens to dense vectors where similar meanings land close together — the basis of semantic search.",k:["embedding","token","vector","similarity"]},
+ {t:"RAG retrieves relevant chunks by vector cosine similarity, then grounds the language model's answer in the retrieved text.",k:["rag","retrieval","vector","cosine","similarity","embedding"]},
+ {t:"A CNN slides small convolution filters across an image to detect a pattern wherever it appears, sharing weights across positions.",k:["cnn","image","convolution","weight"]},
+ {t:"In production, live data drifts from training; you monitor metrics, retrain when they fall, and watch deploy latency and cost.",k:["drift","deploy","latency","cost","monitor","train"]}
+];
+function keywords(text){text=text.toLowerCase();var found={};VOCAB.forEach(function(w){if(text.indexOf(w)>=0){var s=STEM[w]||w;found[s]=1;}});return Object.keys(found);}
+function vec(keys){var base=VOCAB.map(function(w){return STEM[w]||w;});var uniq=[];base.forEach(function(w){if(uniq.indexOf(w)<0)uniq.push(w);});return uniq.map(function(w){return keys.indexOf(w)>=0?1:0;});}
+function cos(a,b){var d=0,na=0,nb=0;for(var i=0;i<a.length;i++){d+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i];}return d/(Math.sqrt(na*nb)||1);}
+var topk=3;
+function run(){
+  var q=$("q").value, qk=keywords(q), qv=vec(qk);
+  var ranked=CHUNKS.map(function(c,i){return {i:i,s:cos(qv,vec(c.k)),t:c.t};}).sort(function(a,b){return b.s-a.s;});
+  var html="";
+  ranked.forEach(function(r,idx){var hit=idx<topk && r.s>0.001;
+    html+='<div class="chunk'+(hit?" hit":"")+'"><span class="rank">'+(hit?"#"+(idx+1):"·")+'</span><span class="bar"><i style="width:'+Math.round(r.s*100)+'%"></i></span><span class="sc">'+r.s.toFixed(2)+'</span><span class="tx">'+r.t+'</span></div>';});
+  $("ranked").innerHTML=html;
+  var top=ranked.filter(function(r){return r.s>0.001;}).slice(0,topk);
+  if(!top.length){
+    $("ctx").innerHTML='<span style="color:#94a3b8">— no chunk scored above zero. The knowledge base doesn\'t contain this. —</span>';
+    $("ans").innerHTML='<b>Model:</b> I don\'t have information about that in my knowledge base, so I can\'t answer reliably. <span style="color:#a5b4fc">(A good RAG system refuses instead of hallucinating.)</span>';
+    return;
+  }
+  $("ctx").innerHTML=top.map(function(r,i){return "[doc "+(i+1)+"] "+r.t;}).join("<br>");
+  $("ans").innerHTML='<b>Model (grounded in '+top.length+' retrieved doc'+(top.length>1?"s":"")+'):</b> '+top[0].t+(top.length>1?' <span style="color:#a5b4fc">— combined with '+(top.length-1)+' more retrieved passage'+(top.length>2?"s":"")+' as supporting context.</span>':'');
+}
+var presets=["how does the learning rate affect gradient descent?","what is attention in a transformer?","how does RAG retrieve documents?","why do deployed models drift?","what is my favourite pizza topping?"];
+var pc=$("presets");presets.forEach(function(p){var c=document.createElement("span");c.className="chip";c.textContent=p;c.onclick=function(){$("q").value=p;run();};pc.appendChild(c);});
+$("q").addEventListener("input",run);
+$("kSl").oninput=function(){topk=+this.value;$("kLab").textContent=topk;run();};
+run();
+</script>
+</body>
+</html>
