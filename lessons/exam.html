@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Job-Readiness Exam · Gradient Descent</title>
+<link rel="stylesheet" href="../assets/gd-enhance.css">
+<style>
+:root{--indigo:#4f46e5;--emer:#059669;--amber:#d97706;--rose:#e11d48;--muted:#64748b;--ink:#0f172a;--body:#1e293b;--line:#e6e8f2;--bg:#f6f7fb;--card:#fff;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 90px}
+a{color:var(--indigo);text-decoration:none}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);margin-bottom:18px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.logo svg{width:22px;height:22px}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}.top a.back{font-size:14px;font-weight:600}
+h1{font-size:30px;letter-spacing:-.02em;color:var(--ink);margin:16px 0 2px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 8px}
+.bar{position:sticky;top:0;background:rgba(246,247,251,.9);backdrop-filter:blur(6px);padding:10px 0;z-index:5;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:12px}
+.bar .track{flex:1;height:7px;background:#e6e8f2;border-radius:99px;overflow:hidden}
+.bar .track i{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--emer));width:0;transition:width .3s}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+.q .tk{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--indigo);margin-bottom:6px}
+.q .stem{font-weight:650;color:var(--ink);margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;margin:6px 0;cursor:pointer;font-size:14.5px;color:var(--body);transition:.1s}
+.opt:hover{border-color:var(--indigo)}
+.opt.sel{border-color:var(--indigo);background:#eef2ff}
+.opt.correct{border-color:var(--emer);background:#ecfdf5;color:#065f46}
+.opt.wrong{border-color:var(--rose);background:#fef2f2;color:#991b1b}
+.why{font-size:13px;color:var(--muted);margin-top:8px;padding-left:12px;border-left:3px solid var(--line);display:none}
+.why.show{display:block}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--indigo);color:#fff;font-weight:700;font-size:15px;padding:12px 24px;border-radius:12px;margin:14px 0;border:none;cursor:pointer}
+.cta:hover{background:#4338ca}
+.cta:disabled{opacity:.5;cursor:not-allowed}
+.result{display:none;margin-top:10px}.result.show{display:block}
+.score{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-radius:16px;padding:22px;text-align:center;margin-bottom:18px}
+.score .big{font-size:46px;font-weight:800;letter-spacing:-.02em}
+.score .verdict{font-size:16px;font-weight:700;margin-top:2px}
+.trkrow{display:flex;align-items:center;gap:12px;margin:7px 0;font-size:14px}
+.trkrow .nm{flex:0 0 168px;color:var(--ink);font-weight:600}
+.trkrow .mtrack{flex:1;height:9px;background:#e6e8f2;border-radius:99px;overflow:hidden}
+.trkrow .mtrack i{display:block;height:100%;border-radius:99px}
+.trkrow .sc{flex:0 0 40px;text-align:right;font-family:ui-monospace;font-size:12.5px;color:var(--muted)}
+.weak{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:14px 16px;margin-top:16px}
+.weak b{color:#9a3412}
+.weak a{display:inline-block;margin:4px 8px 4px 0;font-size:13px;font-weight:600}
+.foot{margin-top:20px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Job-readiness exam</span></span>
+  <span class="sp"></span>
+  <a class="back" href="../index.html">← All lessons</a>
+</div>
+
+<h1>Are you job-ready?</h1>
+<p class="sub">28 questions, two from each of the 14 tracks — the kind of thing an interviewer actually checks. Answer them all, then get a scorecard that tells you exactly where you're solid and where to go back.</p>
+
+<div class="bar"><span id="cnt">0 / 28</span><span class="track"><i id="prog"></i></span></div>
+
+<div id="quiz"></div>
+<button class="cta" id="score" disabled>Score me →</button>
+
+<div class="result" id="result"></div>
+<p class="foot">Answers stay on this page — nothing is sent anywhere. Retake it any time as you learn more.</p>
+</div>
+
+<script src="../assets/gd-enhance.js"></script>
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var TRACKS={1:["Math Foundations","m1-vectors.html"],2:["Python for ML","py1-stack.html"],3:["Classical ML","cm1-setup.html"],4:["Deep Learning","dl1-neuron.html"],5:["Computer Vision","cv1-images.html"],6:["NLP & Transformers","nlp1-tokenization.html"],7:["LLMs & GenAI","llm1-what.html"],8:["RAG & Vector Search","rag1-why.html"],9:["AI Agents","ag1-what.html"],10:["MLOps & Serving","ops1-lifecycle.html"],11:["AI System Design","sd1-framework.html"],12:["Evals & Safety","ev1-why.html"],13:["Interview Bank","iv1-process.html"],14:["Capstones","cap0-setup.html"]};
+var Q=[
+ {t:1,q:"The L2 norm (length) of the vector (3, 4) is:",o:["7","5","12","25"],a:1,e:"√(3²+4²) = √25 = 5."},
+ {t:1,q:"The gradient of a function points in the direction of:",o:["steepest decrease","steepest increase","zero change","the origin"],a:1,e:"The gradient points uphill; we step opposite to it to minimise."},
+ {t:2,q:"Broadcasting adds arrays of shape (3,1) and (1,4). The result shape is:",o:["(3,4)","(4,3)","error","(1,1)"],a:0,e:"Each size-1 dimension stretches to match, giving (3,4)."},
+ {t:2,q:"Why vectorise with NumPy instead of Python for-loops?",o:["it uses less memory always","it runs in optimised C, far faster","it's the only way to add arrays","it avoids floating point error"],a:1,e:"Array ops run in compiled C over contiguous memory — often 10-100× faster."},
+ {t:3,q:"High training accuracy but low test accuracy indicates:",o:["underfitting","overfitting","data leakage in test","perfect generalisation"],a:1,e:"The model memorised the training data (including noise) and fails to generalise."},
+ {t:3,q:"Precision is defined as:",o:["TP / (TP + FN)","TP / (TP + FP)","(TP+TN) / total","TP / FN"],a:1,e:"Of the items predicted positive, the fraction that truly were."},
+ {t:4,q:"Without a nonlinear activation, a deep network is equivalent to:",o:["a single linear layer","a decision tree","a random forest","a transformer"],a:0,e:"Stacked linear maps collapse into one linear map — no extra power."},
+ {t:4,q:"Backpropagation computes gradients using:",o:["the chain rule","matrix inversion","random search","the quadratic formula"],a:0,e:"It applies the chain rule backward through the network in one pass."},
+ {t:5,q:"A convolution filter detects its pattern:",o:["only in the top-left","anywhere in the image (weight sharing)","only if the image is greyscale","only after pooling"],a:1,e:"The same filter slides everywhere, so the pattern is found wherever it appears."},
+ {t:5,q:"Intersection over Union (IoU) of two boxes is:",o:["intersection − union","intersection / union area","union / intersection","the box centre distance"],a:1,e:"Overlap area divided by combined area; a detection usually counts at IoU ≥ 0.5."},
+ {t:6,q:"Self-attention lets each token:",o:["ignore all other tokens","attend to every other token","see only the previous token","only attend to itself"],a:1,e:"Every position can pull information from every other, directly and in parallel."},
+ {t:6,q:"A BPE tokenizer handles a rare, never-seen word by:",o:["throwing an error","returning <UNK>","splitting it into subword pieces","ignoring it"],a:2,e:"Subword merging means it degrades gracefully into known pieces — no unknown tokens."},
+ {t:7,q:"Raising the decoding temperature makes the output:",o:["more random / diverse","more deterministic","shorter","always correct"],a:0,e:"Higher temperature flattens the distribution, so less-likely tokens get picked more."},
+ {t:7,q:"LoRA fine-tunes a model by:",o:["retraining all weights","training small low-rank adapters while freezing the base","deleting layers","increasing the vocabulary"],a:1,e:"Cheap, swappable adapters — a fraction of the parameters, base model frozen."},
+ {t:8,q:"RAG reduces hallucination mainly by:",o:["using a bigger model","grounding answers in retrieved documents","lowering temperature","fine-tuning on more data"],a:1,e:"It fetches real, current text and puts it in the prompt, so answers are grounded and citable."},
+ {t:8,q:"In RAG, documents are retrieved by:",o:["alphabetical order","cosine similarity of embeddings","file size","random sampling"],a:1,e:"The query is embedded and matched to the nearest chunk vectors."},
+ {t:9,q:"An agent's ReAct loop is:",o:["Read → Act → Close","Thought → Action → Observation, repeated","a single forward pass","train then test"],a:1,e:"It reasons, calls a tool, observes the result, and repeats until it can answer."},
+ {t:9,q:"Prompt injection is:",o:["a faster prompting method","malicious instructions hidden in content the model reads","a fine-tuning technique","a type of embedding"],a:1,e:"Hostile text in retrieved/observed content tries to hijack the model — an unsolved security issue."},
+ {t:10,q:"Model drift is:",o:["the model file growing over time","live data moving away from the training distribution","GPU memory leaking","slow inference"],a:1,e:"When inputs shift, a once-good model silently degrades; monitor and retrain."},
+ {t:10,q:"A feature store's main job is to prevent:",o:["overfitting","train/serve skew","GPU cost","label noise"],a:1,e:"It serves features consistently for both training and serving, so they can't diverge."},
+ {t:11,q:"As utilisation approaches 100%, tail (p99) latency:",o:["stays flat","drops","rises sharply (queueing)","becomes zero"],a:2,e:"Requests queue; past ~80% utilisation the tail blows up non-linearly."},
+ {t:11,q:"A two-stage retrieve-then-rank funnel exists to:",o:["save disk space","scale — cheap wide retrieval, then precise ranking","avoid embeddings","improve training"],a:1,e:"Recommenders and search cast a cheap wide net, then rank the top candidates precisely."},
+ {t:12,q:"An AUC of 0.5 means the model:",o:["is perfect","is no better than random at ranking","has high precision","is overfit"],a:1,e:"0.5 is the diagonal — it can't separate the classes at all."},
+ {t:12,q:"In an A/A test (identical variants) at α = 0.05, how often is it 'significant'?",o:["never","about 5% of the time","about 50%","always"],a:1,e:"That's the false-positive rate you chose — exactly why you don't peek and stop early."},
+ {t:13,q:"Asked to design an ML system, your FIRST move should be:",o:["pick a model","clarify requirements, scale and constraints","write code","choose a database"],a:1,e:"Senior signal: nail down the problem, traffic, latency and cost budgets before designing."},
+ {t:13,q:"Goodhart's law warns that:",o:["bigger models always win","when a metric becomes the target it stops being a good measure","p-values are unreliable","data is always biased"],a:1,e:"Optimising a single proxy hard enough breaks the thing it was measuring."},
+ {t:14,q:"The ML lifecycle loop ends with monitoring, which feeds back into:",o:["data labelling only","retraining","deleting the model","nothing — it's done"],a:1,e:"Monitoring detects drift and triggers retraining — the loop that keeps a system alive."},
+ {t:14,q:"A strong portfolio capstone should demonstrate:",o:["the most complex model possible","an end-to-end system that actually runs","only a Jupyter notebook","a high leaderboard score"],a:1,e:"Proof you can do the whole job — data to deployment — not just a model in isolation."}
+];
+var chosen={};
+function render(){
+  $("quiz").innerHTML=Q.map(function(item,i){
+    return '<div class="q" id="q'+i+'"><div class="tk">Track '+item.t+' · '+TRACKS[item.t][0]+'</div><div class="stem">'+(i+1)+'. '+item.q+'</div>'+
+      item.o.map(function(o,j){return '<button class="opt" data-q="'+i+'" data-o="'+j+'">'+o+'</button>';}).join('')+
+      '<div class="why" id="w'+i+'"></div></div>';
+  }).join('');
+  [].forEach.call(document.querySelectorAll(".opt"),function(b){b.onclick=function(){
+    if($("result").classList.contains("show"))return;
+    var qi=+b.getAttribute("data-q");chosen[qi]=+b.getAttribute("data-o");
+    [].forEach.call(document.querySelectorAll('.opt[data-q="'+qi+'"]'),function(x){x.classList.remove("sel");});
+    b.classList.add("sel");
+    var n=Object.keys(chosen).length;$("cnt").textContent=n+" / "+Q.length;$("prog").style.width=(n/Q.length*100)+"%";
+    $("score").disabled=n<Q.length;
+  };});
+}
+$("score").onclick=function(){
+  var byTrack={},correct=0;
+  Q.forEach(function(item,i){
+    var pick=chosen[i], ok=pick===item.a; if(ok)correct++;
+    byTrack[item.t]=byTrack[item.t]||{c:0,n:0}; byTrack[item.t].n++; if(ok)byTrack[item.t].c++;
+    [].forEach.call(document.querySelectorAll('.opt[data-q="'+i+'"]'),function(b){var o=+b.getAttribute("data-o");
+      if(o===item.a)b.classList.add("correct"); else if(o===pick)b.classList.add("wrong");});
+    var w=$("w"+i);w.innerHTML=(ok?"✓ ":"✗ ")+item.e;w.classList.add("show");
+  });
+  var pct=Math.round(correct/Q.length*100);
+  var verdict=pct>=85?["Interview-ready.","#059669"]:pct>=70?["Solid — patch the gaps.","#4f46e5"]:pct>=50?["Getting there — review the weak areas.","#d97706"]:["Keep going — you've got the map.","#e11d48"];
+  var html='<div class="score"><div class="big" style="color:'+verdict[1]+'">'+pct+'%</div><div class="verdict" style="color:'+verdict[1]+'">'+verdict[0]+'</div><div style="color:var(--muted);font-size:13px;margin-top:4px">'+correct+' of '+Q.length+' correct</div></div>';
+  html+='<h3 style="margin:6px 0 4px;color:var(--ink)">By track</h3>';
+  var weak=[];
+  Object.keys(TRACKS).forEach(function(t){var b=byTrack[t]||{c:0,n:0};var p=b.n?b.c/b.n:0;
+    var col=p>=1?"#059669":p>=0.5?"#d97706":"#e11d48";
+    html+='<div class="trkrow"><span class="nm">'+t+'. '+TRACKS[t][0]+'</span><span class="mtrack"><i style="width:'+(p*100)+'%;background:'+col+'"></i></span><span class="sc">'+b.c+'/'+b.n+'</span></div>';
+    if(p<1)weak.push(t);
+  });
+  if(weak.length){
+    html+='<div class="weak"><b>Go back to these ('+weak.length+'):</b><br>'+weak.map(function(t){return '<a href="'+TRACKS[t][1]+'">'+TRACKS[t][0]+' →</a>';}).join('')+
+      '<div style="margin-top:8px;font-size:13px;color:var(--muted)">Then drill them in the <a href="review.html">spaced-repetition review hub →</a></div></div>';
+  } else {
+    html+='<div class="weak" style="background:#ecfdf5;border-color:#a7f3d0"><b style="color:#065f46">Clean sweep — every track solid. Go get the job. 🎯</b></div>';
+  }
+  var r=$("result");r.innerHTML=html;r.classList.add("show");
+  $("score").disabled=true;$("score").textContent="Scored ✓";
+  r.scrollIntoView({behavior:"smooth",block:"start"});
+};
+render();
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 "use strict";
 if(window.__gdrunLoaded)return; window.__gdrunLoaded=true;
 var PYVER="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js";
-var _py=null, cells=[], loaded={};
+var cells=[], loaded=(window.__gdPyPkgs=window.__gdPyPkgs||{});
 function loadScript(src){
   return new Promise(function(res,rej){
     if(window.loadPyodide){res();return;}
@@ -11,12 +11,12 @@ function loadScript(src){
   });
 }
 function ensurePy(status){
-  if(!_py){
+  if(!window.__gdPy){
     status.textContent="⏳ loading Python… (first run, ~15s)";
-    _py=loadScript(PYVER).then(function(){return loadPyodide();})
-      .catch(function(e){status.textContent="⚠ couldn't load Python (needs internet on first run)";_py=null;throw e;});
+    window.__gdPy=loadScript(PYVER).then(function(){return loadPyodide();})
+      .catch(function(e){status.textContent="⚠ couldn't load Python (needs internet on first run)";window.__gdPy=null;throw e;});
   }
-  return _py;
+  return window.__gdPy;
 }
 function pkgsFor(code){
   var need=["numpy"];

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Path · Gradient Descent</title>
+<link rel="stylesheet" href="../assets/gd-enhance.css">
+<style>
+:root{--indigo:#4f46e5;--emer:#059669;--amber:#d97706;--muted:#64748b;--ink:#0f172a;--body:#1e293b;--line:#e6e8f2;--bg:#f6f7fb;--card:#fff;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px 90px}
+a{color:var(--indigo);text-decoration:none}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line);margin-bottom:18px}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.logo svg{width:22px;height:22px}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}.top a.back{font-size:14px;font-weight:600}
+h1{font-size:30px;letter-spacing:-.02em;color:var(--ink);margin:16px 0 2px}
+.sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+.q{margin:22px 0}
+.q .lab{font-weight:700;color:var(--ink);margin-bottom:9px;font-size:15.5px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font-size:14px;font-weight:600;padding:9px 15px;border-radius:11px;border:1px solid var(--line);background:#fff;color:var(--body);cursor:pointer;transition:.12s}
+.opt:hover{border-color:var(--indigo)}
+.opt.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--indigo);color:#fff;font-weight:700;font-size:15px;padding:12px 22px;border-radius:12px;margin-top:8px;border:none;cursor:pointer}
+.cta:hover{background:#4338ca}
+.result{margin-top:26px;display:none}
+.result.show{display:block}
+.summary{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-radius:14px;padding:18px 20px;margin-bottom:18px}
+.summary b{color:var(--indigo)}
+.stats{display:flex;gap:22px;margin-top:10px;flex-wrap:wrap}
+.stat b{display:block;font-size:22px;color:var(--ink)}.stat span{font-size:12px;color:var(--muted)}
+.trk{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;margin:7px 0}
+.trk .n{flex:0 0 26px;height:26px;border-radius:7px;display:grid;place-items:center;font:700 12px ui-monospace;color:#fff}
+.trk .nm{font-weight:650;color:var(--ink)}
+.trk .tag{margin-left:auto;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:99px}
+.tag.do{background:#dcfce7;color:#166534}.tag.skim{background:#fef9c3;color:#854d0e}.tag.opt{background:#f1f5f9;color:#475569}.tag.skip{background:#fee2e2;color:#991b1b}
+.trk.skip{opacity:.55}
+.why{font-size:12.5px;color:var(--muted);margin-left:38px;margin-top:-2px;margin-bottom:6px}
+.foot{margin-top:24px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Your path</span></span>
+  <span class="sp"></span>
+  <a class="back" href="../index.html">← All lessons</a>
+</div>
+
+<h1>Build your path</h1>
+<p class="sub">The full course runs 1 → 14 in order. But if you already know some of it, or you're aiming at a specific role, here's a route tuned to you. Four quick questions.</p>
+
+<div id="quiz"></div>
+<button class="cta" id="build">Build my path →</button>
+
+<div class="result" id="result"></div>
+
+<p class="foot">This is a suggestion, not a cage — every lesson is always one click away in the sidebar, and you can follow the full 1 → 14 order any time.</p>
+</div>
+
+<script src="../assets/gd-enhance.js"></script>
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var Q=[
+ {id:"py",lab:"How comfortable are you with Python?",opts:["New to it","Comfortable","Fluent"]},
+ {id:"math",lab:"And the math — linear algebra, calculus, probability?",opts:["Rusty / never learned","Some of it","Strong"]},
+ {id:"goal",lab:"What are you aiming for?",opts:["General ML engineer","LLM / GenAI engineer","Computer-vision engineer","Just exploring"]},
+ {id:"time",lab:"Roughly how much time per week?",opts:["A few hours","~10 hours","Full-time"]}
+];
+var ans={};
+function renderQuiz(){
+  $("quiz").innerHTML=Q.map(function(q){
+    return '<div class="q"><div class="lab">'+q.lab+'</div><div class="opts">'+q.opts.map(function(o,i){
+      return '<span class="opt" data-q="'+q.id+'" data-v="'+i+'">'+o+'</span>';}).join('')+'</div></div>';
+  }).join('');
+  [].forEach.call(document.querySelectorAll(".opt"),function(el){el.onclick=function(){
+    var qid=el.getAttribute("data-q");ans[qid]=+el.getAttribute("data-v");
+    [].forEach.call(document.querySelectorAll('.opt[data-q="'+qid+'"]'),function(x){x.classList.remove("sel");});
+    el.classList.add("sel");};});
+}
+var TRACKS=[
+ [1,"Math Foundations","m1-vectors.html",11,"#4f46e5"],
+ [2,"Python for ML","py1-stack.html",8,"#0891b2"],
+ [3,"Classical ML","cm1-setup.html",13,"#059669"],
+ [4,"Deep Learning","dl1-neuron.html",10,"#7c3aed"],
+ [5,"Computer Vision","cv1-images.html",8,"#db2777"],
+ [6,"NLP & Transformers","nlp1-tokenization.html",9,"#d97706"],
+ [7,"LLMs & GenAI","llm1-what.html",10,"#dc2626"],
+ [8,"RAG & Vector Search","rag1-why.html",8,"#0284c7"],
+ [9,"AI Agents","ag1-what.html",8,"#9333ea"],
+ [10,"MLOps & Serving","ops1-lifecycle.html",10,"#0d9488"],
+ [11,"AI System Design","sd1-framework.html",8,"#ca8a04"],
+ [12,"Evals & Safety","ev1-why.html",8,"#e11d48"],
+ [13,"Interview Bank","iv1-process.html",7,"#475569"],
+ [14,"Capstones","cap0-setup.html",7,"#2563eb"]
+];
+function plan(){
+  var py=ans.py,math=ans.math,goal=ans.goal;
+  var st={}; TRACKS.forEach(function(t){st[t[0]]={s:"do",why:""};});
+  // python
+  if(py===2){st[2]={s:"skip",why:"You're fluent in Python — skip the toolkit track (dip in only if a NumPy/pandas idiom trips you up)."};}
+  else if(py===1){st[2]={s:"skim",why:"You know Python — skim for the ML-specific NumPy/pandas/vectorization patterns."};}
+  // math
+  if(math===2){st[1]={s:"skim",why:"Strong math already — skim as a refresher and keep it as reference."};}
+  else if(math===1){st[1]={s:"do",why:"Worth a light pass — you only need the intuition, not proofs."};}
+  // goal
+  if(goal===1){ // LLM/GenAI
+    st[5]={s:"opt",why:"Optional for an LLM focus — come back to vision later if you want breadth."};
+    [6,7,8,9].forEach(function(n){st[n].why="Core of your target role — go deep here.";});
+  } else if(goal===2){ // CV
+    st[5].why="Your specialization — go deep here.";
+    [7,8,9].forEach(function(n){st[n]={s:"opt",why:"Optional for a vision focus — useful breadth, not required."};});
+  } else if(goal===3){ // exploring
+    [10,11,12,13,14].forEach(function(n){st[n]={s:"opt",why:"Production & career tracks — do these once you know you want the job."};});
+  }
+  return st;
+}
+function estimate(lessons){
+  var t=ans.time, perWk = t===0?4:t===1?10:35; // hours/week
+  var hrs=lessons*0.6; // ~36 min/lesson incl. exercises
+  var wks=Math.max(1,Math.round(hrs/perWk));
+  return {hrs:Math.round(hrs),wks:wks};
+}
+$("build").onclick=function(){
+  if(Object.keys(ans).length<4){alert("Pick an answer for all four questions first.");return;}
+  var st=plan();
+  var order=TRACKS.filter(function(t){return st[t[0]].s!=="skip";});
+  var lessons=order.reduce(function(a,t){var s=st[t[0]].s;return a+(s==="skim"?Math.round(t[3]*0.5):t[3]);},0);
+  var est=estimate(lessons);
+  var first=order[0];
+  var goalName=["a general ML engineer","an LLM / GenAI engineer","a computer-vision engineer","exploring AI/ML"][ans.goal];
+  var html='<div class="summary"><b>Your route to becoming '+goalName+'.</b> '+
+    (st[2].s==="skip"?"Skipping Python, ":"")+(st[1].s==="skim"?"skimming the math, ":"")+
+    'focused on what gets you there.<div class="stats">'+
+    '<div class="stat"><b>'+order.filter(function(t){return st[t[0]].s!=="opt";}).length+'</b><span>core tracks</span></div>'+
+    '<div class="stat"><b>~'+lessons+'</b><span>lessons to do</span></div>'+
+    '<div class="stat"><b>~'+est.wks+' wk'+(est.wks>1?"s":"")+'</b><span>at your pace</span></div></div>'+
+    '<a class="cta" href="'+first[2]+'" style="margin-top:14px">▸ Start: '+first[1]+'</a></div>';
+  var TAG={do:"do",skim:"skim",opt:"optional",skip:"skip"};
+  TRACKS.forEach(function(t){var s=st[t[0]].s;
+    html+='<div class="trk '+(s==="skip"?"skip":"")+'"><span class="n" style="background:'+t[4]+'">'+t[0]+'</span><span class="nm">'+t[1]+'</span><span class="tag '+s+'">'+TAG[s]+'</span></div>';
+    if(st[t[0]].why)html+='<div class="why">'+st[t[0]].why+'</div>';
+  });
+  var r=$("result");r.innerHTML=html;r.classList.add("show");r.scrollIntoView({behavior:"smooth",block:"start"});
+};
+renderQuiz();
+</script>
+</body>
+</html>
