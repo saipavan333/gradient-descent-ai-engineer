@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Embedding Space Explorer — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+canvas{border-radius:12px;background:#0b1120;width:100%;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.chip{font-size:12.5px;padding:6px 11px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover{border-color:var(--indigo2)}.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.chlab{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94a3b8;margin:12px 0 4px}
+.readout{font-family:var(--mono);font-size:13px;color:#cbd5e1;margin-top:12px;min-height:34px}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="nlp2-embeddings.html">← Embeddings</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · NLP &amp; Transformers</div>
+<h1>Embedding Space Explorer</h1>
+<p class="small">Words become points in space, and their <b>positions carry meaning</b>. Similar words sit close together; consistent relationships become consistent directions. Click a word to find its neighbours, or run an analogy and watch the arithmetic land on the right answer.</p>
+
+<div class="promise">The famous result: <code>king − man + woman ≈ queen</code>. It isn't a trick — it's what happens when a model places words so that "male → female" is the <em>same arrow</em> everywhere. Click <b>Analogy</b> below and watch two parallel arrows point straight at the answer.</div>
+
+<div class="play">
+  <h3>▶ A semantic map you can query</h3>
+  <p class="lead">Blue = one group, pink = the other. In <em>Explore</em> mode, click a word to see its nearest neighbours. In <em>Analogy</em> mode, pick a preset and watch <code>A − B + C</code> find its target.</p>
+  <canvas id="cv" width="820" height="440"></canvas>
+  <div class="chlab">Mode</div>
+  <div class="chips" id="mode"></div>
+  <div class="chlab" id="alab" style="display:none">Analogy — A − B + C = ?</div>
+  <div class="chips" id="analogy" style="display:none"></div>
+  <div class="readout" id="read">Click any word to see its nearest neighbours.</div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Where do these vectors come from?</b> Real embeddings aren't hand-placed — a model learns them by predicting which words appear together, then a technique like PCA or t-SNE squashes the hundreds of real dimensions down to two so we can look. But the property is genuine: distance means similarity, and direction means relationship. That's what powers semantic search, recommendations, and RAG.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Find neighbours.</b> In Explore mode, click <code>king</code>. Its closest words are other royalty and male terms — because the model placed related meanings nearby. That "nearby = similar" is the entire basis of vector search.</p>
+<p><b>2. Run the classic analogy.</b> Switch to Analogy and pick <code>king − man + woman</code>. The grey arrow (man→king) and the blue arrow (woman→result) are parallel and the same length — so the result lands exactly on <code>queen</code>.</p>
+<p><b>3. Prove it's a direction, not magic.</b> Try <code>uncle − man + woman</code> and <code>actor − man + woman</code>. The same "male→female" arrow works everywhere, giving <code>aunt</code> and <code>actress</code>. One consistent direction, reused.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Distance = similarity.</b> Nearby vectors mean related meanings — the engine behind semantic search and RAG.</li>
+<li><b>Direction = relationship.</b> A consistent offset (male→female, singular→plural) is reused across the whole space.</li>
+<li><b>Analogies are vector arithmetic.</b> <code>A − B + C</code> lands on the word that completes the relationship.</li>
+<li><b>Real embeddings are just higher-dimensional.</b> Same idea, hundreds of dimensions, learned from data.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="rag3-embeddings.html">Embeddings for retrieval →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var WORDS={man:[2,1,0],woman:[2,3,1],king:[6.2,1,0],queen:[6.2,3,1],prince:[5,0.4,0],princess:[5,2.4,1],
+ uncle:[3.5,1,0],aunt:[3.5,3,1],boy:[1.1,0.3,0],girl:[1.1,2.3,1],actor:[4.2,0,0],actress:[4.2,2,1],
+ sir:[6.9,0.5,0],madam:[6.9,2.5,1]};
+var xlo=0,xhi=7.6,ylo=-0.6,yhi=3.6;
+var cv=$("cv"),ctx=cv.getContext("2d"),W=820,H=440,pad=44;
+function X(x){return pad+(x-xlo)/(xhi-xlo)*(W-2*pad);} function Y(y){return H-pad-(y-ylo)/(yhi-ylo)*(H-2*pad);}
+function dist(a,b){return Math.hypot(WORDS[a][0]-WORDS[b][0],WORDS[a][1]-WORDS[b][1]);}
+function nearest(w,k){return Object.keys(WORDS).filter(function(x){return x!==w;}).map(function(x){return {w:x,d:dist(w,x)};}).sort(function(a,b){return a.d-b.d;}).slice(0,k);}
+function nearestVec(v,ex){var best=null;for(var w in WORDS){if(ex.indexOf(w)>=0)continue;var dd=Math.hypot(WORDS[w][0]-v[0],WORDS[w][1]-v[1]);if(!best||dd<best.d)best={w:w,d:dd};}return best;}
+var mode="explore", sel="king", ana=0;
+var ANALOGIES=[["king","man","woman"],["uncle","man","woman"],["actor","man","woman"],["prince","boy","girl"],["queen","woman","man"]];
+function arrow(x1,y1,x2,y2,c,w){ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();var a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-11*Math.cos(a-.4),y2-11*Math.sin(a-.4));ctx.lineTo(x2-11*Math.cos(a+.4),y2-11*Math.sin(a+.4));ctx.closePath();ctx.fill();}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle="#111a2e";ctx.lineWidth=1;for(var gx=1;gx<=7;gx++){ctx.beginPath();ctx.moveTo(X(gx),pad);ctx.lineTo(X(gx),H-pad);ctx.stroke();}for(var gy=0;gy<=3;gy++){ctx.beginPath();ctx.moveTo(pad,Y(gy));ctx.lineTo(W-pad,Y(gy));ctx.stroke();}
+  if(mode==="explore"){
+    var nn=nearest(sel,3);
+    nn.forEach(function(o){ctx.strokeStyle="rgba(99,102,241,0.6)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(WORDS[sel][0]),Y(WORDS[sel][1]));ctx.lineTo(X(WORDS[o.w][0]),Y(WORDS[o.w][1]));ctx.stroke();});
+    $("read").textContent=sel+"  →  nearest: "+nn.map(function(o){return o.w+" ("+o.d.toFixed(2)+")";}).join(",  ");
+  } else {
+    var A=ANALOGIES[ana][0],B=ANALOGIES[ana][1],C=ANALOGIES[ana][2];
+    var res=[WORDS[A][0]-WORDS[B][0]+WORDS[C][0], WORDS[A][1]-WORDS[B][1]+WORDS[C][1]];
+    var near=nearestVec(res,[A,B,C]);
+    arrow(X(WORDS[B][0]),Y(WORDS[B][1]),X(WORDS[A][0]),Y(WORDS[A][1]),"#94a3b8",2);
+    arrow(X(WORDS[C][0]),Y(WORDS[C][1]),X(res[0]),Y(res[1]),"#6366f1",2.6);
+    ctx.strokeStyle="#6366f1";ctx.lineWidth=2;ctx.beginPath();ctx.arc(X(res[0]),Y(res[1]),11,0,7);ctx.stroke();
+    $("read").textContent=A+" − "+B+" + "+C+"   =   "+near.w.toUpperCase()+"   (nearest word to the result)";
+  }
+  for(var w in WORDS){var hi=(mode==="explore"&&w===sel);ctx.fillStyle=WORDS[w][2]?"#ec4899":"#3b82f6";ctx.beginPath();ctx.arc(X(WORDS[w][0]),Y(WORDS[w][1]),hi?7:5,0,7);ctx.fill();
+    ctx.fillStyle=hi?"#fff":"#cbd5e1";ctx.font=(hi?"700 ":"600 ")+"13px system-ui";ctx.textAlign="left";ctx.fillText(w,X(WORDS[w][0])+9,Y(WORDS[w][1])+4);}
+}
+cv.addEventListener("click",function(e){if(mode!=="explore")return;var r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)*W/r.width,my=(e.clientY-r.top)*H/r.height,best=null;
+  for(var w in WORDS){var d=Math.hypot(mx-X(WORDS[w][0]),my-Y(WORDS[w][1]));if(!best||d<best.d)best={w:w,d:d};}
+  if(best&&best.d<40){sel=best.w;draw();}});
+var mc=$("mode");[["explore","Explore (nearest neighbours)"],["analogy","Analogy (A − B + C)"]].forEach(function(m){var c=document.createElement("span");c.className="chip"+(m[0]==="explore"?" sel":"");c.textContent=m[1];c.onclick=function(){mode=m[0];[].forEach.call(mc.children,function(x){x.classList.remove("sel");});c.classList.add("sel");$("alab").style.display=$("analogy").style.display=(mode==="analogy"?"flex":"none");$("alab").style.display=(mode==="analogy"?"block":"none");draw();};mc.appendChild(c);});
+var ac=$("analogy");ANALOGIES.forEach(function(a,i){var c=document.createElement("span");c.className="chip"+(i===0?" sel":"");c.textContent=a[0]+" − "+a[1]+" + "+a[2];c.onclick=function(){ana=i;[].forEach.call(ac.children,function(x){x.classList.remove("sel");});c.classList.add("sel");draw();};ac.appendChild(c);});
+draw();
+</script>
+</body>
+</html>

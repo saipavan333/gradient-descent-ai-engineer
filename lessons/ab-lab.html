@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A/B Test Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--emer2:#10b981;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+canvas{border-radius:12px;background:#0b1120;width:100%}
+.verdict{border-radius:12px;padding:12px 16px;margin-top:14px;font-weight:700;font-size:15px}
+.verdict.yes{background:#0c2a1e;border:1px solid #10b981;color:#6ee7b7}
+.verdict.no{background:#2a1e0c;border:1px solid #d97706;color:#fcd34d}
+.verdict .sub{display:block;font-weight:400;font-size:13px;color:#94a3b8;margin-top:3px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 22px;margin-top:16px}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+label.cl{font-size:12.5px;color:#cbd5e1;display:flex;justify-content:space-between;margin-bottom:5px}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.btns{display:flex;gap:8px;margin-top:14px}
+.btn{font:inherit;font-size:14px;font-weight:700;border:1px solid #334155;background:#1e293b;color:#e2e8f0;padding:9px 16px;border-radius:10px;cursor:pointer}
+.btn.go{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="ev3-online.html">← Online evals</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · Evals &amp; Experimentation</div>
+<h1>A/B Test Lab</h1>
+<p class="small">Offline metrics are a proxy; the ground truth is a live experiment. Ship variant B to half your users, keep A for the rest, and ask the hard question: is B <b>really</b> better, or did you just get lucky? This lab runs that experiment and does the statistics for you.</p>
+
+<div class="promise">Set a real improvement (or none at all), choose how many users you test, and press <b>Run</b>. You'll get observed conversion rates, a confidence interval, and a p-value. Run it a few times with a tiny sample and watch the verdict flip-flop — that randomness is exactly why you need statistics, not eyeballs.</div>
+
+<div class="play">
+  <h3>▶ Run the experiment</h3>
+  <p class="lead">Bars are observed conversion; whiskers are 95% confidence intervals. If the intervals barely overlap and p &lt; 0.05, the difference is unlikely to be chance.</p>
+  <canvas id="cv" width="820" height="260"></canvas>
+  <div class="verdict no" id="verdict"></div>
+  <div class="row">
+    <div><label class="cl">true rate of A <b id="aLab">10%</b></label><input type="range" id="aSl" min="2" max="40" step="1" value="10"></div>
+    <div><label class="cl">true lift of B <b id="lLab">+2.0%</b></label><input type="range" id="lSl" min="0" max="10" step="0.5" value="2"></div>
+    <div><label class="cl">users per variant <b id="nLab">1000</b></label><input type="range" id="nSl" min="100" max="20000" step="100" value="1000"></div>
+  </div>
+  <div class="btns"><button class="btn go" id="run">🎲 Run experiment</button><button class="btn" id="run100">Run 100× (how often significant?)</button></div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>What the p-value means.</b> It's the probability of seeing a gap this big <em>if B were actually no better than A</em>. Small p (&lt; 0.05) means "chance alone rarely produces this" → we call it significant. But note the trap: with a huge sample, even a meaningless 0.1% lift becomes "significant"; with a tiny sample, a real lift can hide in the noise. Significance is not the same as importance.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. The A/A test.</b> Set the true lift to 0 — B is identical to A. Run it 100×. About 5% of the time it still reports "significant". That false-positive rate is exactly the 0.05 threshold you chose, and it's why you don't peek and stop early.</p>
+<p><b>2. Underpowered.</b> Keep a real +2% lift but set users to 100. Run repeatedly — sometimes significant, mostly not. The effect is real but your sample is too small to see it reliably. That's low statistical power.</p>
+<p><b>3. Power up.</b> Now slide users to 20,000. The confidence intervals shrink, the same +2% lift becomes reliably significant. More data doesn't change the truth — it sharpens your ability to detect it.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>Observed ≠ true.</b> Each experiment is a noisy sample; the confidence interval shows how noisy.</li>
+<li><b>p &lt; 0.05 = unlikely by chance.</b> But ~5% of null experiments cross it anyway — real false positives.</li>
+<li><b>Sample size is power.</b> More users → tighter intervals → smaller real effects become detectable.</li>
+<li><b>Significant ≠ important.</b> A tiny lift can be significant at scale; always check the effect size too.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="ev3-online.html">Online evaluation &amp; A/B testing →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var rA=0.10, lift=0.02, n=1000, res=null;
+function erf(x){var s=x>=0?1:-1;x=Math.abs(x);var t=1/(1+0.3275911*x);var y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return s*y;}
+function Phi(z){return 0.5*(1+erf(z/Math.SQRT2));}
+function trial(p){var c=0;for(var i=0;i<n;i++)if(Math.random()<p)c++;return c;}
+function run(){
+  var cA=trial(rA), cB=trial(Math.min(0.99,rA+lift));
+  var pA=cA/n, pB=cB/n, pool=(cA+cB)/(2*n);
+  var se=Math.sqrt(pool*(1-pool)*(2/n))||1e-9;
+  var z=(pB-pA)/se, pval=2*(1-Phi(Math.abs(z)));
+  res={cA:cA,cB:cB,pA:pA,pB:pB,z:z,pval:pval,seA:Math.sqrt(pA*(1-pA)/n),seB:Math.sqrt(pB*(1-pB)/n)};
+  draw();
+}
+var cv=$("cv"),ctx=cv.getContext("2d"),W=820,H=260;
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  if(!res)return;
+  var maxR=Math.max(res.pA,res.pB, rA+lift)*1.5+0.02, base=H-46, top=30, plotH=base-top;
+  function bar(x,p,se,col,label){
+    var h=p/maxR*plotH, y=base-h;
+    ctx.fillStyle=col;ctx.fillRect(x,y,150,h);
+    // CI whisker (±1.96 se)
+    var ciHi=base-(p+1.96*se)/maxR*plotH, ciLo=base-(p-1.96*se)/maxR*plotH;
+    ctx.strokeStyle="#e2e8f0";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x+75,ciHi);ctx.lineTo(x+75,ciLo);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x+60,ciHi);ctx.lineTo(x+90,ciHi);ctx.moveTo(x+60,ciLo);ctx.lineTo(x+90,ciLo);ctx.stroke();
+    ctx.fillStyle="#fff";ctx.font="700 16px "+"ui-monospace";ctx.textAlign="center";ctx.fillText((p*100).toFixed(2)+"%",x+75,y-8);
+    ctx.fillStyle="#94a3b8";ctx.font="13px system-ui";ctx.fillText(label,x+75,base+20);
+  }
+  bar(180,res.pA,res.seA,"#3b82f6","Variant A ("+res.cA+"/"+n+")");
+  bar(480,res.pB,res.seB,"#10b981","Variant B ("+res.cB+"/"+n+")");
+  ctx.strokeStyle="#334155";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,base);ctx.lineTo(W-20,base);ctx.stroke();
+  var sig=res.pval<0.05, lift2=(res.pB-res.pA)*100;
+  var v=$("verdict");v.className="verdict "+(sig?"yes":"no");
+  v.innerHTML=(sig?"✓ Significant":"✗ Not significant")+" — observed lift "+(lift2>=0?"+":"")+lift2.toFixed(2)+" points, p = "+res.pval.toFixed(4)+
+    '<span class="sub">'+(sig?"A gap this large would rarely happen by chance. B looks genuinely different.":"This gap could easily be random noise. Need a bigger sample or there's no real effect.")+'</span>';
+}
+$("aSl").oninput=function(){rA=+this.value/100;$("aLab").textContent=this.value+"%";};
+$("lSl").oninput=function(){lift=+this.value/100;$("lLab").textContent="+"+(+this.value).toFixed(1)+"%";};
+$("nSl").oninput=function(){n=+this.value;$("nLab").textContent=n;};
+$("run").onclick=run;
+$("run100").onclick=function(){var sig=0;for(var i=0;i<100;i++){var cA=trial(rA),cB=trial(Math.min(0.99,rA+lift)),pool=(cA+cB)/(2*n),se=Math.sqrt(pool*(1-pool)*(2/n))||1e-9,z=(cB/n-cA/n)/se;if(2*(1-Phi(Math.abs(z)))<0.05)sig++;}run();$("verdict").innerHTML+='<span class="sub" style="color:#fbbf24">Over 100 runs at these settings: significant '+sig+'% of the time.</span>';};
+run();
+</script>
+</body>
+</html>

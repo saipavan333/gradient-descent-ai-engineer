@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Evaluation Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px}
+canvas{border-radius:12px;background:#0b1120;width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin-top:16px}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+label.cl{font-size:12.5px;color:#cbd5e1;display:flex;justify-content:space-between;margin-bottom:5px}
+label.cl b{color:#fff;font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--indigo2)}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="ev2-offline.html">← Evals</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · Evals &amp; Responsible AI</div>
+<h1>Evaluation Lab</h1>
+<p class="small">A model outputs a <b>score</b>, but a decision needs a <b>threshold</b>. Where you set it silently trades false alarms against misses — and every metric you'll be asked about in an interview moves as you slide it. Here they all move together, live.</p>
+
+<div class="promise">One classifier, one set of scores. Drag the threshold and watch the confusion matrix reshuffle, precision and recall pull against each other, and the operating point slide along the ROC and PR curves. Then make the problem harder and watch the whole thing degrade — that's what a weak model feels like.</div>
+
+<div class="play">
+  <h3>▶ Threshold, confusion matrix, and the curves</h3>
+  <p class="lead">Left: the two score distributions with your threshold. Middle: the confusion matrix + metrics. Right: ROC and PR curves with the current operating point.</p>
+  <canvas id="cv" width="820" height="440"></canvas>
+  <div class="row">
+    <div><label class="cl">decision threshold <b id="tLab">0.50</b></label><input type="range" id="tSl" min="0" max="1" step="0.01" value="0.5"></div>
+    <div><label class="cl">problem difficulty (class overlap) <b id="dLab">medium</b></label><input type="range" id="dSl" min="0" max="4" step="1" value="2"></div>
+  </div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Precision vs recall, in one sentence each.</b> Precision: of everything you flagged positive, how much was right (low precision = crying wolf). Recall: of everything that was actually positive, how much you caught (low recall = missing real cases). You almost never get both — lowering the threshold raises recall and lowers precision. <em>F1</em> balances them; <em>AUC</em> summarises the model's ranking ability independent of any threshold.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Chase recall.</b> Drag the threshold low. You catch almost every positive (recall → 100%) but flag a pile of negatives too (precision drops). This is the right call for cancer screening — a miss is far worse than a false alarm.</p>
+<p><b>2. Chase precision.</b> Drag the threshold high. Now everything you flag is correct (precision → 100%) but you miss many real positives (recall drops). Right for, say, auto-blocking content where a wrong block is costly.</p>
+<p><b>3. Weaken the model.</b> Slide difficulty up so the distributions overlap. The ROC curve sags toward the diagonal and AUC falls toward 0.5 — no threshold can save a model that can't separate the classes. Evaluation tells you <em>that</em>, before you ship.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>A score isn't a decision.</b> The threshold turns probabilities into labels — and it's a real, tunable choice.</li>
+<li><b>Precision and recall trade off.</b> Moving the threshold helps one and hurts the other; pick based on which error is costlier.</li>
+<li><b>ROC/PR curves show all thresholds at once.</b> AUC measures ranking quality independent of where you set the line.</li>
+<li><b>Accuracy lies on imbalanced data.</b> Always look at the confusion matrix and per-class metrics.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="cm4-metrics.html">Metrics from scratch →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var thr=0.5, diff=2;
+var seed=11; function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;}
+function gauss(){var u=rnd()||1e-9,v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v);}
+var pos=[],neg=[];
+function regen(){pos=[];neg=[];seed=11;var sd=0.10+diff*0.06, gap=0.34-diff*0.075;
+  for(var i=0;i<220;i++){pos.push(Math.max(0,Math.min(1,0.5+gap+gauss()*sd)));neg.push(Math.max(0,Math.min(1,0.5-gap+gauss()*sd)));}}
+function conf(t){var tp=0,fp=0,fn=0,tn=0;for(var i=0;i<pos.length;i++)(pos[i]>=t?tp++:fn++);for(i=0;i<neg.length;i++)(neg[i]>=t?fp++:tn++);return {tp:tp,fp:fp,fn:fn,tn:tn};}
+function rates(t){var c=conf(t);return [c.fp/(c.fp+c.tn||1), c.tp/(c.tp+c.fn||1)];}
+function prPoint(t){var c=conf(t);return [c.tp/(c.tp+c.fn||1), c.tp/(c.tp+c.fp||1)];}
+var cv=$("cv"),ctx=cv.getContext("2d"),W=820,H=440;
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // --- left: score distributions with threshold ---
+  var dx=20,dy=30,dw=250,dh=150;
+  ctx.fillStyle="#94a3b8";ctx.font="12px system-ui";ctx.textAlign="left";ctx.fillText("score distributions",dx,dy-8);
+  function hist(arr,col){var b=new Array(28).fill(0);arr.forEach(function(s){b[Math.min(27,Math.floor(s*28))]++;});var mx=Math.max.apply(null,b)||1;ctx.fillStyle=col;for(var i=0;i<28;i++){var h=b[i]/mx*dh;ctx.fillRect(dx+i/28*dw,dy+dh-h,dw/28-1,h);}}
+  ctx.globalAlpha=0.6;hist(neg,"#ef4444");hist(pos,"#3b82f6");ctx.globalAlpha=1;
+  var tx=dx+thr*dw;ctx.strokeStyle="#fbbf24";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(tx,dy-4);ctx.lineTo(tx,dy+dh+4);ctx.stroke();
+  ctx.fillStyle="#fbbf24";ctx.font="11px system-ui";ctx.fillText("threshold",tx-24,dy+dh+16);
+  ctx.fillStyle="#3b82f6";ctx.fillText("● positives",dx,dy+dh+34);ctx.fillStyle="#ef4444";ctx.fillText("● negatives",dx+90,dy+dh+34);
+  // --- confusion matrix + metrics ---
+  var c=conf(thr), mx0=20,my0=250, cell=64;
+  var cells=[["TP",c.tp,"#065f46"],["FN",c.fn,"#7c2d12"],["FP",c.fp,"#7c2d12"],["TN",c.tn,"#065f46"]];
+  for(var i=0;i<4;i++){var rr=i>>1,cc=i&1;ctx.fillStyle=cells[i][2];ctx.fillRect(mx0+cc*cell,my0+rr*cell,cell-3,cell-3);
+    ctx.fillStyle="#e2e8f0";ctx.font="700 16px "+"ui-monospace";ctx.textAlign="center";ctx.fillText(cells[i][1],mx0+cc*cell+cell/2-1,my0+rr*cell+cell/2);
+    ctx.font="9px system-ui";ctx.fillStyle="#cbd5e1";ctx.fillText(cells[i][0],mx0+cc*cell+cell/2-1,my0+rr*cell+14);}
+  ctx.fillStyle="#94a3b8";ctx.font="10px system-ui";ctx.textAlign="left";ctx.fillText("pred +   pred −",mx0,my0-6);
+  var prec=c.tp/(c.tp+c.fp||1),rec=c.tp/(c.tp+c.fn||1),f1=2*prec*rec/((prec+rec)||1),acc=(c.tp+c.tn)/(pos.length+neg.length);
+  var mx1=170,my1=250;ctx.font="13px "+"ui-monospace";
+  [["precision",prec,"#6366f1"],["recall",rec,"#10b981"],["F1",f1,"#f59e0b"],["accuracy",acc,"#94a3b8"]].forEach(function(m,i){ctx.fillStyle="#94a3b8";ctx.fillText(m[0],mx1,my1+i*24);ctx.fillStyle=m[2];ctx.font="700 15px "+"ui-monospace";ctx.fillText((m[1]*100).toFixed(1)+"%",mx1+90,my1+i*24);ctx.font="13px "+"ui-monospace";});
+  // --- ROC (middle) ---
+  function plot(ox,oy,side,title){ctx.strokeStyle="#334155";ctx.lineWidth=1.2;ctx.strokeRect(ox,oy,side,side);ctx.fillStyle="#94a3b8";ctx.font="12px system-ui";ctx.textAlign="left";ctx.fillText(title,ox,oy-6);}
+  var rox=320,roy=40,rs=180;plot(rox,roy,rs,"ROC curve");
+  ctx.strokeStyle="#1e293b";ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(rox,roy+rs);ctx.lineTo(rox+rs,roy);ctx.stroke();ctx.setLineDash([]);
+  var auc=0,prev=null;ctx.strokeStyle="#4f46e5";ctx.lineWidth=2.2;ctx.beginPath();
+  for(var t=1.0;t>=-0.001;t-=0.02){var r=rates(t);var X=rox+r[0]*rs,Y=roy+rs-r[1]*rs;prev?ctx.lineTo(X,Y):ctx.moveTo(X,Y);if(prev)auc+=(r[0]-prev[0])*(r[1]+prev[1])/2;prev=r;}ctx.stroke();
+  var cr=rates(thr);ctx.fillStyle="#fbbf24";ctx.beginPath();ctx.arc(rox+cr[0]*rs,roy+rs-cr[1]*rs,5,0,7);ctx.fill();
+  ctx.fillStyle="#e2e8f0";ctx.font="700 12px system-ui";ctx.fillText("AUC "+auc.toFixed(3),rox+6,roy+16);
+  ctx.fillStyle="#64748b";ctx.font="10px system-ui";ctx.fillText("FPR→",rox+rs/2-10,roy+rs+14);
+  // --- PR (right) ---
+  var pox=560,poy=40,ps=180;plot(pox,poy,ps,"Precision–Recall");
+  ctx.strokeStyle="#059669";ctx.lineWidth=2.2;ctx.beginPath();var first=true;
+  for(t=0.0;t<=1.001;t+=0.02){var p=prPoint(t);var X=pox+p[0]*ps,Y=poy+ps-p[1]*ps;first?ctx.moveTo(X,Y):ctx.lineTo(X,Y);first=false;}ctx.stroke();
+  var cp=prPoint(thr);ctx.fillStyle="#fbbf24";ctx.beginPath();ctx.arc(pox+cp[0]*ps,poy+ps-cp[1]*ps,5,0,7);ctx.fill();
+  ctx.fillStyle="#64748b";ctx.font="10px system-ui";ctx.fillText("recall→",pox+ps/2-14,poy+ps+14);
+  $("tLab").textContent=thr.toFixed(2);
+  $("dLab").textContent=["very easy","easy","medium","hard","very hard"][diff];
+}
+$("tSl").oninput=function(){thr=+this.value;draw();};
+$("dSl").oninput=function(){diff=+this.value;regen();draw();};
+regen();draw();
+</script>
+</body>
+</html>

@@ -249,6 +249,7 @@ generic text, because always choosing the safest word produces bland output and 
 </svg>
 <figcaption><b>Greedy vs beam search.</b> Greedy commits to the top token at every step — one path, locally optimal but often globally dull. Beam search keeps the few highest-probability partial sequences and extends them, finding better overall sequences. Beam helps for tasks with a "correct" answer (translation); open-ended text usually prefers sampling.</figcaption></figure>
 <div class="gdw" data-widget="softmax-temp"></div>
+<div class="callout tip"><div class="ic">▶</div><div class="bd"><div class="ti">Take it to the lab</div><p style="margin:.2em 0 0">Open the <a href="decoding-lab.html">Decoding &amp; Sampling Lab</a> — drag temperature, top-k and top-p on a live next-token distribution and sample tokens from exactly those bars.</p></div></div>
 
 <p><span class="term">Beam search</span> improves on greedy by keeping the $k$ best <em>partial</em> sequences (the
 "beams") at each step rather than committing to one, so it can find a higher-probability overall sequence. It's

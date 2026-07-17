@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CNN Feature-Map Lab — Gradient Descent</title>
+<link rel="icon" type="image/svg+xml" href="../assets/img/logo-descent.svg">
+<style>
+:root{--indigo:#4f46e5;--indigo2:#6366f1;--emer:#059669;--amber:#d97706;--rose:#e11d48;--sky:#0284c7;
+ --ink:#0f172a;--body:#1e293b;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--card:#fff;--mono:ui-monospace,'Cascadia Code',Consolas,monospace;
+ --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.65;font-size:17px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px}
+a{color:var(--indigo);text-decoration:none}
+h1{font-size:33px;letter-spacing:-.02em;color:var(--ink);margin:.3em 0 .1em}
+h2{font-size:22px;color:var(--ink);margin:1.7em 0 .4em}
+p{margin:.7em 0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:grid;place-items:center}
+.brand b{display:block;font-size:15px;color:var(--ink);line-height:1.1}.brand span{font-size:11.5px;color:var(--muted)}
+.top .sp{flex:1}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo2)}
+.promise{background:linear-gradient(180deg,#eef2ff,#f5f7ff);border:1px solid #dbe2ff;border-left:4px solid var(--indigo);border-radius:12px;padding:14px 18px;margin:18px 0;font-size:16px}
+.play{background:#0f172a;border-radius:18px;padding:22px;margin:22px 0;color:#e2e8f0;text-align:center}
+.play h3{color:#fff;margin:0 0 4px;font-size:17px;text-align:left}
+.play .lead{color:#94a3b8;font-size:14px;margin:0 0 14px;text-align:left}
+canvas{border-radius:12px;background:#0b1120;max-width:100%;image-rendering:pixelated}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px;justify-content:center}
+.chip{font-size:12.5px;padding:6px 11px;border-radius:999px;background:#1e293b;border:1px solid #334155;color:#cbd5e1;cursor:pointer}
+.chip:hover{border-color:var(--indigo2)}.chip.sel{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.togs{display:flex;gap:16px;justify-content:center;margin-top:12px}
+.tog{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#cbd5e1;cursor:pointer}
+.callout{border-radius:12px;padding:14px 16px;margin:16px 0;border:1px solid var(--line);background:#fff;display:flex;gap:12px}
+.callout .ic{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;background:var(--sky)}
+.key{background:#eef2ff;border:1px solid #dbe2ff;border-radius:14px;padding:16px 20px;margin:18px 0}.key li{margin:.35em 0}.key b{color:var(--indigo)}
+.small{font-size:14.5px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;padding:.06em .35em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+  <span class="logo"><svg viewBox="0 0 40 40" fill="none" width="22" height="22"><path d="M12 14h16L20 27z" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/><circle cx="20" cy="31.4" r="2.1" fill="#fff"/></svg></span>
+  <span class="brand"><b>Gradient Descent</b><span>Interactive lab</span></span>
+  <span class="sp"></span>
+  <a href="dl6-cnn.html">← CNNs</a>
+</div>
+
+<div class="eyebrow" style="margin-top:22px">Interactive Lab · Computer Vision &amp; Deep Learning</div>
+<h1>CNN Feature-Map Lab</h1>
+<p class="small">A convolutional layer isn't one operation — it's a whole bank of small filters, each sliding over the image and lighting up wherever it finds its pattern. Here are six classic filters running on one image, so you can literally see <b>what a CNN sees</b>.</p>
+
+<div class="promise">The magic of CNNs is that these filters aren't programmed — they're <em>learned</em>. But the mechanism is exactly what you see here: each 3×3 filter produces a "feature map" that's bright where its pattern appears (a vertical edge, a corner, a texture) and dark elsewhere. Stack layers, and later filters combine these into eyes, wheels, faces.</div>
+
+<div class="play">
+  <h3>▶ One image, six filters, six feature maps</h3>
+  <p class="lead">Top-left is the input. Each other tile is that image after one 3×3 convolution filter. Bright = the filter found its pattern there.</p>
+  <canvas id="cv" width="820" height="360"></canvas>
+  <div class="chips" id="imgs"></div>
+  <div class="togs">
+    <label class="tog"><input type="checkbox" id="relu" checked> ReLU (keep only positive activations)</label>
+    <label class="tog"><input type="checkbox" id="pool"> 2×2 max-pool (downsample)</label>
+  </div>
+</div>
+
+<div class="callout"><div class="ic">i</div><div><b>Why edges first?</b> Trained CNNs almost always learn edge and colour-blob detectors in their first layer — because edges are the most reusable building block of every image. The filters here are hand-set versions of exactly that. <em>ReLU</em> throws away negative responses (a filter either fires or it doesn't); <em>pooling</em> shrinks the map, making the network care <em>whether</em> a feature appeared, not exactly where.</div></div>
+
+<h2>Try these</h2>
+<p><b>1. Match filter to feature.</b> Look at the vertical-edge map: it's bright only along the up-down borders of the shape, dark on flat areas and horizontal edges. The horizontal-edge filter does the opposite. Each filter is tuned to one orientation.</p>
+<p><b>2. Toggle ReLU.</b> With ReLU off you see both bright and dark responses (positive and negative). With it on, the negatives are clipped to black — the map now says "my pattern is here" or "it isn't", which is what the next layer wants.</p>
+<p><b>3. Pool it.</b> Turn on max-pooling and the maps get chunkier and smaller. The network keeps the strongest response in each little region and drops the rest — cheaper, and slightly position-invariant.</p>
+
+<div class="key">
+<div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
+<ul>
+<li><b>A conv layer = many filters.</b> Each produces its own feature map highlighting one pattern.</li>
+<li><b>Weight sharing.</b> The same 3×3 filter slides everywhere, so a pattern is detected wherever it appears.</li>
+<li><b>ReLU makes it a detector.</b> Keep positive responses, drop the rest — "found it / didn't".</li>
+<li><b>Pooling adds robustness.</b> Downsampling keeps the strongest signal and a little position-invariance.</li>
+</ul>
+</div>
+
+<p class="small" style="margin-top:26px">Part of <a href="../index.html">Gradient Descent</a> · related: <a href="convolution-masterclass.html">Convolution from scratch →</a></p>
+</div>
+
+<script>
+"use strict";
+var $=function(i){return document.getElementById(i);};
+var N=26;
+var FILTERS=[
+ {n:"vertical edge",k:[[-1,0,1],[-2,0,2],[-1,0,1]]},
+ {n:"horizontal edge",k:[[-1,-2,-1],[0,0,0],[1,2,1]]},
+ {n:"diagonal",k:[[0,1,2],[-1,0,1],[-2,-1,0]]},
+ {n:"blur",k:[[1,1,1],[1,1,1],[1,1,1]].map(function(r){return r.map(function(v){return v/9;});})},
+ {n:"sharpen",k:[[0,-1,0],[-1,5,-1],[0,-1,0]]},
+ {n:"outline",k:[[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]}
+];
+function makeImg(kind){
+  var g=[];for(var r=0;r<N;r++){g[r]=[];for(var c=0;c<N;c++){
+    var v=0.04, cx=(c-12.5)/12.5, cy=(r-12.5)/12.5;
+    if(kind==="square"){ if(r>=7&&r<=18&&c>=7&&c<=18)v=0.92; if(Math.abs(r-c)<1.4)v=0.6; }
+    else if(kind==="circle"){ var d=Math.sqrt(cx*cx+cy*cy); if(d<0.7)v=0.9; if(d>0.7&&d<0.78)v=0.3; }
+    else if(kind==="cross"){ if(Math.abs(c-12.5)<2.2||Math.abs(r-12.5)<2.2)v=0.9; }
+    else { // "A"
+      if(Math.abs((c-12.5)+(r-6)*0.0)<0){}
+      if(r>=6&&r<=20){ var w=(r-6)/14*7; if(Math.abs(c-12.5)-w<1.2&&Math.abs(c-12.5)-w>-1.2)v=0.92; if(r>=13&&r<=15&&Math.abs(c-12.5)<w)v=0.9; }
+    }
+    g[r][c]=v;
+  }}
+  return g;
+}
+var img=makeImg("square"), relu=true, pool=false;
+function conv(im,k){var out=[];for(var r=0;r<N;r++){out[r]=[];for(var c=0;c<N;c++){var s=0;for(var i=-1;i<=1;i++)for(var j=-1;j<=1;j++){var rr=r+i,cc=c+j,v=(rr>=0&&rr<N&&cc>=0&&cc<N)?im[rr][cc]:0;s+=v*k[i+1][j+1];}out[r][c]=s;}}return out;}
+function maxpool(m){var s=m.length,h=s>>1,o=[];for(var r=0;r<h;r++){o[r]=[];for(var c=0;c<h;c++){o[r][c]=Math.max(m[2*r][2*c],m[2*r][2*c+1],m[2*r+1][2*c],m[2*r+1][2*c+1]);}}return o;}
+var cv=$("cv"),ctx=cv.getContext("2d"),W=820,H=360;
+function tile(m,ox,oy,side,label,signed){
+  var s=m.length, px=side/s, lo=Infinity,hi=-Infinity;
+  for(var r=0;r<s;r++)for(var c=0;c<s;c++){if(m[r][c]<lo)lo=m[r][c];if(m[r][c]>hi)hi=m[r][c];}
+  var rng=(hi-lo)||1;
+  for(r=0;r<s;r++)for(c=0;c<s;c++){var v=(m[r][c]-lo)/rng, g=Math.round(255*v);ctx.fillStyle="rgb("+g+","+g+","+g+")";ctx.fillRect(ox+c*px,oy+r*px,Math.ceil(px),Math.ceil(px));}
+  ctx.strokeStyle="#1e293b";ctx.lineWidth=1;ctx.strokeRect(ox,oy,side,side);
+  ctx.fillStyle="#94a3b8";ctx.font="11px system-ui";ctx.textAlign="left";ctx.fillText(label,ox,oy-5);
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  var side=150;
+  tile(img, 20, 26, side, "input image");
+  ctx.fillStyle="#6366f1";ctx.font="700 11px system-ui";ctx.fillText("↓ 6 conv filters", 20, 26+side+22);
+  var gx0=250, gy=[26,26,26,206,206,206], gxs=[gx0,gx0+185,gx0+370,gx0,gx0+185,gx0+370];
+  FILTERS.forEach(function(f,i){
+    var m=conv(img,f.k);
+    if(relu)m=m.map(function(row){return row.map(function(v){return v<0?0:v;});});
+    if(pool)m=maxpool(m);
+    tile(m, gxs[i], gy[i], 140, f.n);
+  });
+}
+var ic=$("imgs");[["square","Square"],["circle","Circle"],["cross","Cross"],["A","Letter A"]].forEach(function(o,i){var c=document.createElement("span");c.className="chip"+(i===0?" sel":"");c.textContent=o[1];c.onclick=function(){img=makeImg(o[0]);[].forEach.call(ic.children,function(x){x.classList.remove("sel");});c.classList.add("sel");draw();};ic.appendChild(c);});
+$("relu").onchange=function(){relu=this.checked;draw();};
+$("pool").onchange=function(){pool=this.checked;draw();};
+draw();
+</script>
+</body>
+</html>
