@@ -117,6 +117,7 @@ function gen(name){
   else if(name==="XOR"){for(i=0;i<160;i++){var x=Math.random()*1.8-0.9,y=Math.random()*1.8-0.9;pts.push({x:x,y:y,c:((x>0)!==(y>0))?0:1});}}
   else if(name==="Blobs"){for(i=0;i<80;i++){pts.push({x:-0.45+randn()*0.2,y:-0.35+randn()*0.2,c:0});pts.push({x:0.45+randn()*0.2,y:0.4+randn()*0.2,c:1});}}
   else if(name==="Moons"){for(i=0;i<80;i++){var t=Math.random()*Math.PI;pts.push({x:Math.cos(t)*0.7-0.35+randn()*0.06,y:Math.sin(t)*0.7-0.3+randn()*0.06,c:0});pts.push({x:Math.cos(t)*0.7+0.35+randn()*0.06,y:-Math.sin(t)*0.7+0.3+randn()*0.06,c:1});}}
+  var mxc=0;pts.forEach(function(p){mxc=Math.max(mxc,Math.abs(p.x),Math.abs(p.y));});if(mxc>0.92){var sc=0.92/mxc;pts.forEach(function(p){p.x*=sc;p.y*=sc;});}
   retrain();
 }
 /* ---------- classifiers ---------- */
