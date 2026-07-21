@@ -130,7 +130,7 @@ details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
 
 <!-- 1 HOOK -->
 <section data-sec>
-<p data-narr>Imagine you're standing on a foggy hillside at night, and you want to reach the bottom of the valley. You can't see anything. But you <em>can</em> feel the ground under your feet — which way it slopes. So you do the only sensible thing: feel the downhill direction, take one small step that way, and repeat. Step by step, you descend, even blind. That is the <b>entire</b> idea behind how a neural network learns to recognise a face, translate a sentence, or drive a car. The "hill" is how wrong the model is, and the model keeps stepping downhill until it's as right as it can be. This one move is called <b>gradient descent</b> — and this course is named after it for a reason.</p>
+<p data-narr>Imagine you're standing on a foggy hillside at night, and you want to reach the bottom of the valley. You can't see anything. But you <em>can</em> feel the ground under your feet — which way it slopes. So you do the only sensible thing: feel the downhill direction, take one small step that way, and repeat. Step by step, you descend, even blind. That is the <b>entire</b> idea behind how a neural network learns to recognize a face, translate a sentence, or drive a car. The "hill" is how wrong the model is, and the model keeps stepping downhill until it's as right as it can be. This one move is called <b>gradient descent</b> — and this course is named after it for a reason.</p>
 <div class="promise" data-narr><b>By the end you'll be able to</b> explain gradient descent with a picture, work through the steps by hand with real numbers, run and tweak it in real Python right here in the page, build it from scratch to fit an actual line to data, and know exactly why the learning rate makes or breaks it.</div>
 </section>
 
@@ -239,7 +239,7 @@ print("prediction for 8 hours studied:", round(float(m*8+b), 2))</textarea>
 <h2><span class="sec-tag t-miss">7 · Common mistakes</span> The traps that actually bite</h2>
 <div class="card"><h3>❌ Learning rate too big → it explodes</h3><p style="margin:.3em 0">If <code>η</code> is too large, each step overshoots the bottom by more than it started, so the loss grows every step and shoots to infinity (you'll see <code>nan</code> — "not a number"). <b>Fix:</b> lower the learning rate (try 10× smaller). If the loss is <em>rising</em>, the rate is almost always too high — you saw this in the widget past η ≈ 1.</p></div>
 <div class="card"><h3>❌ Learning rate too small → it crawls</h3><p style="margin:.3em 0">Too tiny and it takes forever, or stalls before reaching the bottom in the time you allow. <b>Fix:</b> increase it until progress is quick but still stable. Good rates are usually found by trying a few (0.001, 0.01, 0.1) and watching the loss curve.</p></div>
-<div class="card"><h3>❌ Forgetting the minus sign → it climbs</h3><p style="margin:.3em 0">Write <code>x = x + η·f′(x)</code> and you do <em>gradient ascent</em> — you climb the hill, maximising the loss. <b>Fix:</b> to <em>minimise</em>, always subtract the gradient. (Sometimes you <em>do</em> want to ascend — that's literally the sister site, Gradient Ascent.)</p></div>
+<div class="card"><h3>❌ Forgetting the minus sign → it climbs</h3><p style="margin:.3em 0">Write <code>x = x + η·f′(x)</code> and you do <em>gradient ascent</em> — you climb the hill, maximizing the loss. <b>Fix:</b> to <em>minimize</em>, always subtract the gradient. (Sometimes you <em>do</em> want to ascend — that's literally the sister site, Gradient Ascent.)</p></div>
 <div class="card"><h3>❌ Expecting the global bottom every time</h3><p style="margin:.3em 0">Simple bowls have one bottom. Complex loss landscapes have many dips (<span class="term" title="a valley that is low but not the lowest — a bottom you can get stuck in">local minima</span>) and flat spots, so plain gradient descent can settle in a merely-good valley, not the best one. <b>Fix in practice:</b> randomness (stochastic gradient descent), momentum, and good starting points — the frontier note has more.</p></div>
 </section>
 
@@ -283,7 +283,7 @@ print("prediction for 8 hours studied:", round(float(m*8+b), 2))</textarea>
 <!-- 12 FRONTIER + RECAP + TEST -->
 <section data-sec>
 <h2><span class="sec-tag t-front">11 · Frontier note</span> Where this goes next</h2>
-<p data-narr>Real training rarely uses plain gradient descent. Because computing the slope over millions of examples every step is too slow, models use <b>stochastic gradient descent (SGD)</b>: estimate the slope from a small random batch each step — noisier, but far faster, and the noise even helps escape bad valleys. On top of that sit <b>momentum</b> (keep some velocity from past steps, like a ball that builds speed rolling downhill) and adaptive optimisers like <b>Adam</b> (give each parameter its own learning rate). And the gradients themselves, for deep networks, are computed by <b>backpropagation</b> — the chain rule applied at scale, which is the very next thing worth learning. But every one of these is a refinement of the sentence you now own: step opposite the slope.</p>
+<p data-narr>Real training rarely uses plain gradient descent. Because computing the slope over millions of examples every step is too slow, models use <b>stochastic gradient descent (SGD)</b>: estimate the slope from a small random batch each step — noisier, but far faster, and the noise even helps escape bad valleys. On top of that sit <b>momentum</b> (keep some velocity from past steps, like a ball that builds speed rolling downhill) and adaptive optimizers like <b>Adam</b> (give each parameter its own learning rate). And the gradients themselves, for deep networks, are computed by <b>backpropagation</b> — the chain rule applied at scale, which is the very next thing worth learning. But every one of these is a refinement of the sentence you now own: step opposite the slope.</p>
 
 <h2><span class="sec-tag t-recap">12 · Recap</span> Say it to a friend</h2>
 <div class="promise" data-narr style="font-size:17px">"To make a model less wrong, treat its error as a hill, measure the slope, and take a small step downhill — then repeat. That step is <code>new = old − learning_rate × slope</code>. Do it millions of times over a million knobs and you've trained a neural network."</div>
@@ -403,9 +403,9 @@ var QUIZ=[
   {t:"It's random",w:"It's deterministic — driven by the shrinking slope."}]},
  {q:"How does training a billion-parameter model differ from the 2-parameter line fit you ran?",o:[
   {t:"A completely different algorithm is used",w:"The core update rule is identical."},
-  {t:"Mainly scale + machinery (backprop for gradients, mini-batches, smarter optimisers) — the update rule is the same",c:1},
+  {t:"Mainly scale + machinery (backprop for gradients, mini-batches, smarter optimizers) — the update rule is the same",c:1},
   {t:"No gradients are involved",w:"Gradients are still the heart of it."},
-  {t:"The minus sign becomes a plus",w:"You still subtract the gradient to minimise loss."}]},
+  {t:"The minus sign becomes a plus",w:"You still subtract the gradient to minimize loss."}]},
  {q:"What does the learning rate η control?",o:[
   {t:"How wrong the model is",w:"That's the loss, a separate quantity."},
   {t:"The size of each downhill step",c:1},
@@ -439,7 +439,7 @@ var CARDS=[
  {q:"Why do steps shrink near the minimum with a fixed η?",a:"Step size is proportional to the slope, and the slope shrinks toward zero near the flat bottom."},
  {q:"A loss curve that rises to nan means what?",a:"The learning rate is too high — steps overshoot and diverge. Lower it (often 10×)."},
  {q:"What is stochastic gradient descent (SGD)?",a:"Gradient descent that estimates the slope from a small random batch of data each step — faster, noisier, and the noise helps escape bad valleys."},
- {q:"What stays the same when scaling from 2 parameters to a billion?",a:"The update rule: every parameter ← itself − η × its gradient. Only the machinery (backprop, batches, optimisers) scales up."}
+ {q:"What stays the same when scaling from 2 parameters to a billion?",a:"The update rule: every parameter ← itself − η × its gradient. Only the machinery (backprop, batches, optimizers) scales up."}
 ];
 var deck,cur,flipped;
 function initDeck(){var s=store.get();deck=(s.deck&&s.deck.length===CARDS.length)?s.deck:CARDS.map(function(_,i){return {i:i,box:1};});next();}

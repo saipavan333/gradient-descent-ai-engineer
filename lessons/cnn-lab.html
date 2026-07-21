@@ -66,7 +66,7 @@ code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;pa
   </div>
 </div>
 
-<div class="callout"><div class="ic">i</div><div><b>Why edges first?</b> Trained CNNs almost always learn edge and colour-blob detectors in their first layer — because edges are the most reusable building block of every image. The filters here are hand-set versions of exactly that. <em>ReLU</em> throws away negative responses (a filter either fires or it doesn't); <em>pooling</em> shrinks the map, making the network care <em>whether</em> a feature appeared, not exactly where.</div></div>
+<div class="callout"><div class="ic">i</div><div><b>Why edges first?</b> Trained CNNs almost always learn edge and color-blob detectors in their first layer — because edges are the most reusable building block of every image. The filters here are hand-set versions of exactly that. <em>ReLU</em> throws away negative responses (a filter either fires or it doesn't); <em>pooling</em> shrinks the map, making the network care <em>whether</em> a feature appeared, not exactly where.</div></div>
 
 <h2>Try these</h2>
 <p><b>1. Match filter to feature.</b> Look at the vertical-edge map: it's bright only along the up-down borders of the shape, dark on flat areas and horizontal edges. The horizontal-edge filter does the opposite. Each filter is tuned to one orientation.</p>

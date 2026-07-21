@@ -72,7 +72,7 @@ code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;pa
 
 <div class="play">
   <h3>▶ Pick the next token</h3>
-  <p class="lead">Grey bar = raw probability. Coloured bar = after your temperature + top-k + top-p filters (renormalised). Struck-through words were cut.</p>
+  <p class="lead">Grey bar = raw probability. Colored bar = after your temperature + top-k + top-p filters (renormalized). Struck-through words were cut.</p>
   <div class="ctx">The weather today is <span class="cur">___</span></div>
   <div class="rows" id="rows"></div>
 
@@ -89,7 +89,7 @@ code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;pa
   <div class="gen" id="genOut">Sampled tokens will appear here…</div>
 </div>
 
-<div class="callout"><div class="ic">i</div><div><b>The pipeline, in order.</b> (1) Divide the scores by <em>temperature</em> and softmax them into probabilities. (2) <em>top-k</em> keeps only the k most likely tokens. (3) <em>top-p</em> keeps the smallest set of tokens whose probability adds up to p (the "nucleus"). (4) Renormalise what's left and sample. Greedy skips all of it and just takes the top token every time — repeatable, but often dull and repetitive.</div></div>
+<div class="callout"><div class="ic">i</div><div><b>The pipeline, in order.</b> (1) Divide the scores by <em>temperature</em> and softmax them into probabilities. (2) <em>top-k</em> keeps only the k most likely tokens. (3) <em>top-p</em> keeps the smallest set of tokens whose probability adds up to p (the "nucleus"). (4) Renormalize what's left and sample. Greedy skips all of it and just takes the top token every time — repeatable, but often dull and repetitive.</div></div>
 
 <h2>Try these</h2>
 <p><b>1. Temperature extremes.</b> Slide temperature to 0.1 — one bar dominates, the model is nearly deterministic. Slide to 2.0 — the bars flatten out and even unlikely words get a real chance. This single number is the creativity dial.</p>

@@ -444,8 +444,8 @@ real latency-sensitive systems from someone who only optimizes averages.</p>
 bigger, more accurate model takes longer to run (worse latency) and uses more compute (higher cost). <strong>Latency vs
 cost:</strong> you can cut latency by adding more/faster hardware (higher cost), or by batching (better cost/throughput but
 slightly worse per-request latency). So improving one axis typically costs you on another, and the "best" point depends on
-the requirements. Example: suppose a large model gives 94% accuracy at 300ms and $0.01/request, while a distilled model
-gives 92% at 60ms and $0.002/request. If your latency budget is 150ms, the large model is simply <em>infeasible</em> — you
+the requirements. Example: suppose a large model gives 94% accuracy at 300ms and <span class="gd-nomath">$</span>0.01/request, while a distilled model
+gives 92% at 60ms and <span class="gd-nomath">$</span>0.002/request. If your latency budget is 150ms, the large model is simply <em>infeasible</em> — you
 must take the distilled one, trading 2 points of accuracy for a 5× latency improvement and 5× cost reduction. The
 requirement (150ms budget) forced the trade.</p>
 <p>The reasoning skill is seeing that there's no universally "right" model — only the model that best fits the
@@ -477,7 +477,7 @@ requirement you elicit and design against, and each trades against the others �
 tension between consistency and availability in distributed systems.</p>
 <p>The deeper principle is that <strong>non-functional requirements are where most of the system's real complexity and
 cost live</strong>. The functional requirement ("recommend videos") is often a one-liner; the non-functional ones
-("at 7,000 QPS, p99 &lt; 150ms, 99.99% available, under $X/month, fair across user groups") are what force the
+("at 7,000 QPS, p99 &lt; 150ms, 99.99% available, under <span class="gd-nomath">$</span>X/month, fair across user groups") are what force the
 architecture to be sophisticated — the replicas, load balancers, caches, shards, fallbacks, and monitoring all exist to
 satisfy non-functional requirements, not functional ones. This is why experienced designers spend so much time pinning
 them down: they <em>are</em> the design constraints. It also explains why the same functional system (say, a recommender)

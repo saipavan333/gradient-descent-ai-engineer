@@ -289,7 +289,7 @@ for C in [1e18, 1e20, 1e22]:       # compute budgets (FLOPs), each 100x the last
 <p>Each 100× increase in compute drops the loss by a constant <em>factor</em> (here ×0.794: 0.252 → 0.200 → 0.159) — the
 signature of a power law, and exactly why it's a straight line on a log-log plot. This is forecasting, not hindsight: a
 lab can run cheap small-scale experiments, fit $a$ and $b$, and <em>predict</em> the loss of a model that would cost
-\$100M to train — then decide whether it's worth it. Two sobering implications follow from the math. First, returns
+<span class="gd-nomath">$</span>100M to train — then decide whether it's worth it. Two sobering implications follow from the math. First, returns
 <strong>diminish</strong>: because loss falls by a fixed factor per 100× compute, getting from 0.20 to 0.16 costs as much
 as getting from 0.25 to 0.20 — each increment of quality costs exponentially more. Second, the curve has a
 <strong>floor</strong> (the irreducible loss from Lesson 3.5 — language has inherent unpredictability), so you can't
@@ -386,8 +386,8 @@ drive loss to zero no matter the budget. Scaling is powerful and predictable, bu
 <p>Each 10× compute multiplies loss by the same factor: $0.171 / 0.180 = 0.95$. So $10^{23}$ would give roughly
 $0.171 \times 0.95 \approx \mathbf{0.162}$, and $10^{24}$ about $0.154$, and so on — each 10× shaves off less in absolute
 terms.</p>
-<p>The cost implication is stark: improving loss from 0.180 to 0.171 cost a 10× compute increase (say \$10M → \$100M),
-and the <em>next</em> 0.009 drop costs another 10× (\$1B), and the next another 10×. Absolute quality gains get
+<p>The cost implication is stark: improving loss from 0.180 to 0.171 cost a 10× compute increase (say <span class="gd-nomath">$</span>10M → <span class="gd-nomath">$</span>100M),
+and the <em>next</em> 0.009 drop costs another 10× (<span class="gd-nomath">$</span>1B), and the next another 10×. Absolute quality gains get
 exponentially more expensive — which is why frontier training runs cost hundreds of millions and why efficiency
 improvements (better data, architectures, the methods in Lesson 7.6) matter so much: they shift the whole curve down
 cheaply rather than buying tiny increments at exponential cost. This economics shapes the entire competitive landscape

@@ -80,13 +80,13 @@ code{font-family:var(--mono);font-size:.92em;background:#eef2ff;color:#3730a3;pa
 
 <h2>Try these</h2>
 <p><b>1. The ravine.</b> Pick <em>Ravine</em> (steep one way, shallow the other). Watch SGD (red) bounce between the walls while barely moving forward, while Adam and RMSProp cruise straight down the valley. This ill-conditioning is why plain SGD is rarely used alone.</p>
-<p><b>2. The saddle.</b> Pick <em>Saddle</em> and start near the centre. SGD can crawl on the flat plateau; momentum and Adam carry speed through it and escape faster. Saddles, not local minima, are the real slow-down in high dimensions.</p>
+<p><b>2. The saddle.</b> Pick <em>Saddle</em> and start near the center. SGD can crawl on the flat plateau; momentum and Adam carry speed through it and escape faster. Saddles, not local minima, are the real slow-down in high dimensions.</p>
 <p><b>3. Break it.</b> On any surface, crank the learning rate. Watch an optimizer overshoot and spiral outward — divergence. Every optimizer has a stability limit, and adaptive ones often tolerate a higher rate.</p>
 
 <div class="key">
 <div style="font-weight:800;color:var(--indigo);margin-bottom:6px">What this lab proves</div>
 <ul>
-<li><b>The landscape decides the winner.</b> No optimizer is best everywhere; ravines and saddles favour adaptive methods.</li>
+<li><b>The landscape decides the winner.</b> No optimizer is best everywhere; ravines and saddles favor adaptive methods.</li>
 <li><b>Momentum fights zig-zag.</b> A velocity term smooths the path and speeds narrow valleys.</li>
 <li><b>Adaptive methods rescale directions.</b> RMSProp/Adam move steep and shallow axes at comparable speed.</li>
 <li><b>Learning rate is the stability knob.</b> Too high and any of them diverges.</li>

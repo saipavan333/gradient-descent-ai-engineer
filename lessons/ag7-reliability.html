@@ -360,7 +360,7 @@ exactly this: <strong>check before you act, and make the checks something the mo
 <div class="ex" data-for="a">Budgets cap actions, not spelling.</div>
 <div class="ex" data-for="b">It's about the agent's own behavior, not the network.</div>
 <div class="ex" data-for="c">Unrelated to model size.</div>
-<div class="ex" data-for="d">Correct. Without a cap, a confused agent can loop indefinitely; a budget forces it to stop after N steps or $X.</div>
+<div class="ex" data-for="d">Correct. Without a cap, a confused agent can loop indefinitely; a budget forces it to stop after N steps or <span class="gd-nomath">$</span>X.</div>
 </div>
 </div>
 
@@ -390,8 +390,8 @@ exactly this: <strong>check before you act, and make the checks something the mo
 <p>Layer multiple guardrails. <strong>Permissions</strong>: an allowlist of exactly which actions are allowed (send email
 to known contacts, purchase from approved vendors), with everything else blocked by default. <strong>Human-in-the-loop</strong>:
 high-stakes actions require explicit user approval before executing — <em>any</em> purchase over a threshold, or any email
-to a new recipient, pauses and asks "OK to send this $200 order? [approve/deny]." <strong>Budgets</strong>: a spending cap
-(e.g., max $X/day) and a step cap so a confused agent can't drain the account or spam. <strong>Monitoring</strong>: log
+to a new recipient, pauses and asks "OK to send this <span class="gd-nomath">$</span>200 order? [approve/deny]." <strong>Budgets</strong>: a spending cap
+(e.g., max <span class="gd-nomath">$</span>X/day) and a step cap so a confused agent can't drain the account or spam. <strong>Monitoring</strong>: log
 every action with its inputs/outputs so the user can audit and you can debug. <strong>Sandboxing/dry-run</strong>: where
 possible, let the agent <em>draft</em> the email or <em>prepare</em> the order and show it before committing.</p>
 <p>The reasoning: email and purchases are <em>irreversible, high-consequence</em> actions, so the guardrails should make

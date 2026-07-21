@@ -313,12 +313,12 @@ with_cache    = requests * (1 - hit_rate) * cost_miss
 print(f"without cache        : ${without_cache:,.0f}")
 print(f"with {hit_rate:.0%} hit rate    : ${with_cache:,.0f}")
 print(f"saved                : ${without_cache - with_cache:,.0f} ({hit_rate:.0%})")</code></pre>
-<div class="out"><span class="lbl">Output</span>without cache        : $2,000
-with 60% hit rate    : $800
-saved                : $1,200 (60%)</div>
+<div class="out"><span class="lbl">Output</span>without cache        : <span class="gd-nomath">$</span>2,000
+with 60% hit rate    : <span class="gd-nomath">$</span>800
+saved                : <span class="gd-nomath">$</span>1,200 (60%)</div>
 
-<p>Without a cache, all 1 million requests hit the model at $0.002 each: <strong>$2,000</strong>. With a 60% cache hit
-rate, only 400,000 requests reach the model: <strong>$800</strong> — a <strong>$1,200 (60%) saving</strong>. The saving is
+<p>Without a cache, all 1 million requests hit the model at <span class="gd-nomath">$</span>0.002 each: <strong><span class="gd-nomath">$</span>2,000</strong>. With a 60% cache hit
+rate, only 400,000 requests reach the model: <strong><span class="gd-nomath">$</span>800</strong> — a <strong><span class="gd-nomath">$</span>1,200 (60%) saving</strong>. The saving is
 exactly the hit rate: a cache that serves 60% of traffic cuts model cost by 60% (and cuts latency too, since a cache hit
 returns almost instantly versus running the model). This is why caching is the first cost lever to reach for — the savings
 are proportional to how repetitive your traffic is, and much real traffic is very repetitive (a small number of popular

@@ -394,14 +394,14 @@ want, and it conforms — often more reliably than describing the format in word
 <div class="practice">
 
 <div class="p-item">
-<div class="ph"><span class="pn">1</span><span>An LLM answers "If a shirt costs $20 after a 20% discount, what was the original price?" incorrectly. How might chain-of-thought prompting fix it?</span></div>
+<div class="ph"><span class="pn">1</span><span>An LLM answers "If a shirt costs <span class="gd-nomath">$</span>20 after a 20% discount, what was the original price?" incorrectly. How might chain-of-thought prompting fix it?</span></div>
 <details><summary>Show solution &amp; reasoning</summary><div class="sol">
 <p>Add "Let's think step by step" (or provide a worked example). Instead of blurting a number, the model now generates
-intermediate reasoning: "A 20% discount means the price is 80% of the original. So $20 = 0.8 × original. Therefore
-original = $20 / 0.8 = $25." Each step conditions the next, and the model effectively does the arithmetic on the page
+intermediate reasoning: "A 20% discount means the price is 80% of the original. So <span class="gd-nomath">$</span>20 = 0.8 × original. Therefore
+original = <span class="gd-nomath">$</span>20 / 0.8 = <span class="gd-nomath">$</span>25." Each step conditions the next, and the model effectively does the arithmetic on the page
 rather than guessing the answer in one leap.</p>
 <p>Without CoT, the model must produce the final number immediately, which for multi-step problems often fails — it
-pattern-matches to a plausible-looking answer (a common wrong one here is $24, from naively adding 20%). CoT works
+pattern-matches to a plausible-looking answer (a common wrong one here is <span class="gd-nomath">$</span>24, from naively adding 20%). CoT works
 because the transformer can only "compute" by generating tokens; giving it room to write the steps lets it use that
 computation. It's one of the most reliable, free accuracy boosts for any reasoning task — and it's why modern models
 often reason in steps by default.</p>

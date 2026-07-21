@@ -278,7 +278,7 @@ O[i,j] &nbsp;=&nbsp; Σ<sub>a</sub> Σ<sub>b</sub> &nbsp; I[i+a, j+b] &nbsp;×&n
 </div>
 </div>
 
-<p data-narr>This filter means: "take 8 times the centre pixel, then subtract all 8 neighbours." If a pixel looks just like its neighbours (a flat region), the result is 0. If it's different from its surroundings (an edge or corner), the result is large. Let's compute the very first output, <code>O[0,0]</code>, where the filter's corner sits at the top-left.</p>
+<p data-narr>This filter means: "take 8 times the center pixel, then subtract all 8 neighbours." If a pixel looks just like its neighbours (a flat region), the result is 0. If it's different from its surroundings (an edge or corner), the result is large. Let's compute the very first output, <code>O[0,0]</code>, where the filter's corner sits at the top-left.</p>
 
 <p>The 3×3 patch under the filter is the top-left corner of the image:</p>
 <pre style="font-size:13px">patch      K           products
@@ -292,7 +292,7 @@ O[i,j] &nbsp;=&nbsp; Σ<sub>a</sub> Σ<sub>b</sub> &nbsp; I[i+a, j+b] &nbsp;×&n
 45 27 45
 27  0 27
 45 27 45</pre>
-<p data-narr>Look at what it found. The four <b>45</b>s are the four corners of the block — the sharpest features. The <b>27</b>s are the flat edges — still a change, but less sharp than a corner. The <b>0</b> in the dead centre is the one pixel whose neighbours are all identical to it (all 9s), so there's nothing to detect. The filter has drawn the outline of the block. That is edge detection, and you just did it with nothing but multiply and add. <span class="tagref">(You'll re-run these exact numbers in code in the next section.)</span></p>
+<p data-narr>Look at what it found. The four <b>45</b>s are the four corners of the block — the sharpest features. The <b>27</b>s are the flat edges — still a change, but less sharp than a corner. The <b>0</b> in the dead center is the one pixel whose neighbours are all identical to it (all 9s), so there's nothing to detect. The filter has drawn the outline of the block. That is edge detection, and you just did it with nothing but multiply and add. <span class="tagref">(You'll re-run these exact numbers in code in the next section.)</span></p>
 </section>
 
 <!-- 6. FROM SCRATCH -->
@@ -366,7 +366,7 @@ print(conv2d(I, K).astype(int))
 
 <div class="card">
 <h3>❌ Forgetting the output shrinks (and blaming a bug)</h3>
-<p style="margin:.3em 0">People expect the feature map to be the same size as the image and panic when it's smaller. <b>Why it happens:</b> a 3×3 filter can't centre on the outermost pixels — there's no room. <b>Fix:</b> either accept the <code>(N−2)×(N−2)</code> output, or add a one-pixel border of zeros around the image (<span class="term" title="adding a border of zeros around the image so the output keeps the same size">padding</span>) so every pixel can be a centre. Padding of 1 with a 3×3 filter keeps the size identical.</p>
+<p style="margin:.3em 0">People expect the feature map to be the same size as the image and panic when it's smaller. <b>Why it happens:</b> a 3×3 filter can't center on the outermost pixels — there's no room. <b>Fix:</b> either accept the <code>(N−2)×(N−2)</code> output, or add a one-pixel border of zeros around the image (<span class="term" title="adding a border of zeros around the image so the output keeps the same size">padding</span>) so every pixel can be a center. Padding of 1 with a 3×3 filter keeps the size identical.</p>
 </div>
 <div class="card">
 <h3>❌ Thinking a filter detects "everything"</h3>
@@ -416,7 +416,7 @@ print(conv2d(I, K).astype(int))
 2 2 2       0 0 0
 0 0 0   ×   0 1 0
 0 0 0       0 0 0</pre>
-<p><b>Solution.</b> This filter is the <em>identity</em>: only the centre cell is 1, everything else 0. So the output equals the centre pixel of the patch. The centre of the patch is the middle value, <code>0</code>. Multiply: only <code>0 × 1 = 0</code> survives; all other products are <code>×0 = 0</code>. <b>Output = 0.</b> Teaching point: a filter that is all zeros except a 1 in the middle copies the image unchanged — a useful sanity check when you build convolution.</p>
+<p><b>Solution.</b> This filter is the <em>identity</em>: only the center cell is 1, everything else 0. So the output equals the center pixel of the patch. The center of the patch is the middle value, <code>0</code>. Multiply: only <code>0 × 1 = 0</code> survives; all other products are <code>×0 = 0</code>. <b>Output = 0.</b> Teaching point: a filter that is all zeros except a 1 in the middle copies the image unchanged — a useful sanity check when you build convolution.</p>
 </div>
 </details>
 
@@ -440,7 +440,7 @@ print(conv2d(I, K).astype(int))
 <!-- 11. FRONTIER -->
 <section data-sec>
 <h2><span class="sec-tag tag-front">10 · Frontier note</span> Where this lives in the real world</h2>
-<p data-narr>The operation you just built is, essentially unchanged, the core of every <span class="term" title="Convolutional Neural Network — a network built from stacked convolution layers">Convolutional Neural Network (CNN)</span> that ran computer vision from roughly 2012 onward: the systems that read handwritten cheques, sort photos, guide self-driving cars, and screen medical scans. Real networks differ from our toy only in scale and trimmings: filters operate on colour (three numbers per pixel), each layer holds many filters, and the learned scores pass through simple on/off functions and downsampling steps. But the beating heart is exactly your slide-multiply-add.</p>
+<p data-narr>The operation you just built is, essentially unchanged, the core of every <span class="term" title="Convolutional Neural Network — a network built from stacked convolution layers">Convolutional Neural Network (CNN)</span> that ran computer vision from roughly 2012 onward: the systems that read handwritten cheques, sort photos, guide self-driving cars, and screen medical scans. Real networks differ from our toy only in scale and trimmings: filters operate on color (three numbers per pixel), each layer holds many filters, and the learned scores pass through simple on/off functions and downsampling steps. But the beating heart is exactly your slide-multiply-add.</p>
 <p data-narr>Two frontier threads worth knowing. First, in real CNNs the filter numbers are <em>not</em> hand-picked like our edge detector — they are <b>learned</b>: the network starts with random filters and gradient descent tunes them until they become whatever detectors best solve the task. Second, since around 2020 a newer design, the <span class="term" title="Vision Transformer — a model that treats image patches as a sequence and uses attention instead of convolution">Vision Transformer</span>, competes with and sometimes beats CNNs by treating image patches like words in a sentence. But convolution is far from retired — it remains dominant when data is limited, powers the denoisers inside image generators like Stable Diffusion, and is increasingly blended <em>into</em> transformers. Understanding convolution is still the price of admission to computer vision.</p>
 </section>
 
@@ -633,7 +633,7 @@ let painting=false, paintVal=9;
 imgGrid.addEventListener("mousedown",e=>{
   const cell=e.target.closest(".cell"); if(!cell)return;
   const r=+cell.dataset.r,c=+cell.dataset.c;
-  paintVal = img[r][c]>0?0:9;         // toggle behaviour
+  paintVal = img[r][c]>0?0:9;         // toggle behavior
   img[r][c]=paintVal; painting=true; render(); e.preventDefault();
 });
 imgGrid.addEventListener("mouseover",e=>{
@@ -721,7 +721,7 @@ const QUIZ=[
   ]},
  {q:"A 10×10 image is convolved with a 3×3 filter, no padding. What size is the feature map?",
   opts:[
-   {t:"10×10",w:"Same-size output needs zero-padding of 1; without padding the filter can't centre on the border."},
+   {t:"10×10",w:"Same-size output needs zero-padding of 1; without padding the filter can't center on the border."},
    {t:"8×8",c:1},
    {t:"7×7",w:"That would be for a 4×4 filter (10−4+1=7). For 3×3 it's 10−3+1=8."},
    {t:"3×3",w:"3×3 is the filter size, not the output size."}
@@ -776,8 +776,8 @@ QUIZ.forEach((item,qi)=>{
 const CARDS=[
  {q:"In one sentence, what is convolution?",a:"Sliding a small filter over an image and, at each spot, multiplying overlapping numbers and adding them into a single score."},
  {q:"What is a feature map?",a:"The grid of scores produced by sliding a filter over the image; it lights up where the filter's pattern appears."},
- {q:"Image is N×N, filter is 3×3, no padding. Output size?",a:"(N−2)×(N−2) — the filter can't centre on the outer border."},
- {q:"What is 'padding' and what does it do?",a:"Adding a border of zeros around the image so the filter can centre on every pixel, keeping the output the same size."},
+ {q:"Image is N×N, filter is 3×3, no padding. Output size?",a:"(N−2)×(N−2) — the filter can't center on the outer border."},
+ {q:"What is 'padding' and what does it do?",a:"Adding a border of zeros around the image so the filter can center on every pixel, keeping the output the same size."},
  {q:"Why does one filter detect only one pattern?",a:"Its numbers are shaped for a specific pattern; a patch that doesn't match sums to near zero. Different patterns need different filters."},
  {q:"What is weight sharing and why does it matter?",a:"Using the same filter everywhere. It detects a pattern anywhere in the image and needs far fewer learned numbers than full connection."},
  {q:"In a real CNN, where do filter values come from?",a:"They are learned from data by gradient descent, starting from random values — not hand-designed."},

@@ -422,7 +422,7 @@ schema. <strong>Planning:</strong> for a multi-leg trip I'd have it plan first (
 step by step, re-planning if something's unavailable. <strong>Memory:</strong> hold user preferences (aisle seat, budget,
 loyalty numbers) in long-term memory so it personalizes without re-asking. Now the part I'd emphasize —
 <strong>guardrails</strong>, because this agent <em>spends money</em>: a strict permission allowlist (it can search freely
-but booking is gated), <strong>human-in-the-loop approval</strong> before any purchase ('Book this $480 flight?
+but booking is gated), <strong>human-in-the-loop approval</strong> before any purchase ('Book this <span class="gd-nomath">$</span>480 flight?
 [confirm]'), a spending <strong>budget</strong> cap, and full logging. I'd also treat search results as untrusted (prompt
 -injection risk) and never let the agent act on instructions embedded in a webpage. <strong>Reliability:</strong> a step
 budget so it can't loop forever, and graceful 'I couldn't complete this, here's how far I got' on failure."</p>

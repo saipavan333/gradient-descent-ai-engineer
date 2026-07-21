@@ -402,10 +402,10 @@ mechanism is the core of every agent: decide which tool to call, execute it, obs
 <div class="practice">
 
 <div class="p-item">
-<div class="ph"><span class="pn">1</span><span>You give an agent two tools: <code>search</code> and <code>calculator</code>. For "What is 17% of last year's revenue of $4.2M?", what sequence of tool calls would you expect, and why two tools?</span></div>
+<div class="ph"><span class="pn">1</span><span>You give an agent two tools: <code>search</code> and <code>calculator</code>. For "What is 17% of last year's revenue of <span class="gd-nomath">$</span>4.2M?", what sequence of tool calls would you expect, and why two tools?</span></div>
 <details><summary>Show solution &amp; reasoning</summary><div class="sol">
-<p>The model would likely first decide it has the numbers it needs (revenue $4.2M is in the question, 17% is given), so
-it might just call <code>calculator</code> with "0.17 * 4200000" → $714,000, then answer. If the revenue <em>weren't</em>
+<p>The model would likely first decide it has the numbers it needs (revenue <span class="gd-nomath">$</span>4.2M is in the question, 17% is given), so
+it might just call <code>calculator</code> with "0.17 * 4200000" → <span class="gd-nomath">$</span>714,000, then answer. If the revenue <em>weren't</em>
 given, it would first call <code>search</code> to find it, observe the result, <em>then</em> call <code>calculator</code>
 with that value — two tools in sequence, each call informed by the previous observation.</p>
 <p>This shows why agents chain tools: a real task often needs information (search) <em>and</em> computation (calculator),

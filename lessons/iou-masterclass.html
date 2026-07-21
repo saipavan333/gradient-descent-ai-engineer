@@ -159,7 +159,7 @@ details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
 <!-- 2 INTUITION -->
 <section data-sec>
 <h2><span class="sec-tag tag-intu">1 · Intuition</span> Shared area over combined area</h2>
-<p data-narr><span class="term" title="finding objects in an image and drawing a box around each">Object detection</span> means: for every object in a picture, draw a <span class="term" title="a rectangle around an object, given by its corners">bounding box</span> and name it. To grade a predicted box, we compare it to the <span class="term" title="the correct box, labelled by a human">ground-truth box</span> — the human-drawn correct answer.</p>
+<p data-narr><span class="term" title="finding objects in an image and drawing a box around each">Object detection</span> means: for every object in a picture, draw a <span class="term" title="a rectangle around an object, given by its corners">bounding box</span> and name it. To grade a predicted box, we compare it to the <span class="term" title="the correct box, labeled by a human">ground-truth box</span> — the human-drawn correct answer.</p>
 <p data-narr>Two rectangles can relate in messy ways: one bigger, shifted, tilted apart. We want a score that is <b>1 when they match perfectly</b> and <b>0 when they don't touch at all</b>, smoothly in between. The trick is beautifully simple: measure the area they <em>share</em>, and divide by the total area they <em>cover together</em>. Lots of shared area relative to the total ⇒ score near 1. Little shared area ⇒ score near 0. That ratio is <span class="term" title="Intersection over Union: shared area divided by combined area">Intersection over Union (IoU)</span> — "how much of the combined footprint is agreement."</p>
 <div class="callout tip"><div class="ic">✦</div><div data-narr><b>The picture:</b> two overlapping boxes. The dark middle sliver they share is the <em>intersection</em>. Everything either box covers is the <em>union</em>. IoU = middle ÷ everything. That's the whole idea.</div></div>
 </section>
@@ -207,7 +207,7 @@ IoU &nbsp;=&nbsp; area(intersection) &nbsp;/&nbsp; area(union)
     </div>
   </div>
 </div>
-<p class="small" data-narr>Notice three things as you play. Perfectly aligned boxes give IoU = 1. Slide the prediction halfway off and IoU drops fast — overlap shrinks <em>and</em> union grows, hitting the ratio from both sides. And a tiny box sitting entirely inside the big one never scores high, because the union stays as large as the big box while the intersection is only the tiny box — size mismatch is penalised too.</p>
+<p class="small" data-narr>Notice three things as you play. Perfectly aligned boxes give IoU = 1. Slide the prediction halfway off and IoU drops fast — overlap shrinks <em>and</em> union grows, hitting the ratio from both sides. And a tiny box sitting entirely inside the big one never scores high, because the union stays as large as the big box while the intersection is only the tiny box — size mismatch is penalized too.</p>
 </section>
 
 <!-- 5 WORKED -->
@@ -279,7 +279,7 @@ print(round(iou((80,60,240,180), (100,80,260,200)), 3))   # 0.574</code></pre>
 <div class="card"><h3>❌ Not clamping negative overlap to zero</h3><p style="margin:.3em 0">When boxes don't overlap, <code>ix2 − ix1</code> comes out <em>negative</em>. Multiply two negatives (width and height) and you get a bogus <em>positive</em> "intersection." <b>Fix:</b> clamp each side with <code>max(0, …)</code> before multiplying, so non-overlapping boxes correctly give intersection 0.</p></div>
 <div class="card"><h3>❌ Forgetting to subtract the intersection from the union</h3><p style="margin:.3em 0">Union is <em>not</em> areaA + areaB — that double-counts the shared region. <b>Fix:</b> <code>union = areaA + areaB − intersection</code>. This one silently makes every IoU too small.</p></div>
 <div class="card"><h3>❌ Treating IoU ≥ 0.5 as sacred</h3><p style="margin:.3em 0">0.5 is a convention. Fine-grained tasks (medical, robotics) demand 0.75 or higher; the standard COCO benchmark averages over IoU thresholds 0.50–0.95. <b>Fix:</b> pick the threshold your application actually needs, and report which one you used.</p></div>
-<div class="card"><h3>❌ Mixing up box formats</h3><p style="margin:.3em 0">Some libraries use <code>(x, y, width, height)</code>, others <code>(x1, y1, x2, y2)</code>, others centre-based <code>(cx, cy, w, h)</code>. Feeding one format into a function expecting another gives nonsense IoUs. <b>Fix:</b> convert to one convention first and be explicit about which.</p></div>
+<div class="card"><h3>❌ Mixing up box formats</h3><p style="margin:.3em 0">Some libraries use <code>(x, y, width, height)</code>, others <code>(x1, y1, x2, y2)</code>, others center-based <code>(cx, cy, w, h)</code>. Feeding one format into a function expecting another gives nonsense IoUs. <b>Fix:</b> convert to one convention first and be explicit about which.</p></div>
 </section>
 
 <!-- 8 KEY -->
@@ -291,7 +291,7 @@ print(round(iou((80,60,240,180), (100,80,260,200)), 3))   # 0.574</code></pre>
 <li>Intersection corners: <code>max</code> of the left/top edges, <code>min</code> of the right/bottom edges; <b>clamp width and height to ≥ 0</b>.</li>
 <li>Union = areaA + areaB − intersection (<b>subtract the overlap once</b>).</li>
 <li>A detection usually counts as correct at <b>IoU ≥ 0.5</b> — a convention; stricter tasks use higher thresholds.</li>
-<li>IoU penalises both <b>position</b> error and <b>size</b> mismatch, which is why it's the universal detection metric.</li>
+<li>IoU penalizes both <b>position</b> error and <b>size</b> mismatch, which is why it's the universal detection metric.</li>
 </ul></div>
 </section>
 
@@ -308,9 +308,9 @@ print(round(iou((80,60,240,180), (100,80,260,200)), 3))   # 0.574</code></pre>
 <p>What is the IoU of a box with an exact copy of itself?</p>
 <p><b>Solution.</b> The intersection is the whole box; the union is also the whole box. So IoU = area / area = <b>1.0</b>. This is the sanity check every IoU implementation must pass — if <code>iou(b, b)</code> isn't 1, you have a bug (usually a format or clamp error).</p>
 </div></details>
-<details><summary><span class="lvl t">Transfer</span> A box half the size, centred inside</summary><div class="sol">
-<p>Ground truth is 100×100. The prediction is 50×50, sitting exactly in the centre of it. What's the IoU — and what does it teach?</p>
-<p><b>Solution.</b> Intersection = the small box = 50×50 = 2500. Union = 100×100 + 50×50 − 2500 = 10000 + 2500 − 2500 = 10000 (the big box entirely contains the small one, so the union is just the big box). IoU = 2500 / 10000 = <b>0.25</b>. Even though the small box is <em>perfectly positioned</em> (dead centre, fully inside), IoU is only 0.25 — a miss at the 0.5 line. The lesson: <b>IoU punishes size mismatch, not just position</b>. A detector that finds the right spot but the wrong scale still fails, which is exactly what you want for "did you box the object correctly?"</p>
+<details><summary><span class="lvl t">Transfer</span> A box half the size, centered inside</summary><div class="sol">
+<p>Ground truth is 100×100. The prediction is 50×50, sitting exactly in the center of it. What's the IoU — and what does it teach?</p>
+<p><b>Solution.</b> Intersection = the small box = 50×50 = 2500. Union = 100×100 + 50×50 − 2500 = 10000 + 2500 − 2500 = 10000 (the big box entirely contains the small one, so the union is just the big box). IoU = 2500 / 10000 = <b>0.25</b>. Even though the small box is <em>perfectly positioned</em> (dead center, fully inside), IoU is only 0.25 — a miss at the 0.5 line. The lesson: <b>IoU punishes size mismatch, not just position</b>. A detector that finds the right spot but the wrong scale still fails, which is exactly what you want for "did you box the object correctly?"</p>
 </div></details>
 <details><summary><span class="lvl s">Stretch</span> From IoU to a real detector: NMS &amp; mAP</summary><div class="sol">
 <p>A detector often outputs several overlapping boxes for the same object, each with a confidence score. How is IoU used to (a) clean that up, and (b) turn detections into a single accuracy number?</p>
@@ -322,7 +322,7 @@ print(round(iou((80,60,240,180), (100,80,260,200)), 3))   # 0.574</code></pre>
 <section data-sec>
 <h2><span class="sec-tag tag-front">10 · Frontier note</span> Where this lives in the real world</h2>
 <p data-narr>Every object-detection leaderboard — the COCO benchmark, autonomous-driving datasets, medical-imaging challenges — ranks models by mAP, and mAP is IoU all the way down. IoU also trains detectors: variants like <span class="term" title="IoU-based loss functions that also account for how boxes are separated">GIoU, DIoU, and CIoU</span> are used directly as loss functions, because plain IoU gives no gradient when boxes don't overlap, and these fixes add a signal that pulls a stray box toward the target.</p>
-<p data-narr>The frontier is moving past hand-tuned box cleanup: transformer detectors like <span class="term" title="DEtection TRansformer — predicts a set of boxes directly, no NMS">DETR</span> predict a <em>set</em> of boxes directly and match them to ground truth with a global assignment, sidestepping NMS entirely — but they still evaluate with IoU-based mAP. And the same overlap idea generalises from boxes to pixel <span class="term" title="per-pixel region labels">masks</span> (mask IoU) for segmentation, and to 3-D boxes for lidar. Two rectangles' shared area over their combined area turns out to be one of the most reused ideas in all of computer vision.</p>
+<p data-narr>The frontier is moving past hand-tuned box cleanup: transformer detectors like <span class="term" title="DEtection TRansformer — predicts a set of boxes directly, no NMS">DETR</span> predict a <em>set</em> of boxes directly and match them to ground truth with a global assignment, sidestepping NMS entirely — but they still evaluate with IoU-based mAP. And the same overlap idea generalizes from boxes to pixel <span class="term" title="per-pixel region labels">masks</span> (mask IoU) for segmentation, and to 3-D boxes for lidar. Two rectangles' shared area over their combined area turns out to be one of the most reused ideas in all of computer vision.</p>
 </section>
 
 <!-- 12 + 13 -->
@@ -333,7 +333,7 @@ print(round(iou((80,60,240,180), (100,80,260,200)), 3))   # 0.574</code></pre>
 <p style="color:#cbd5e1;margin-top:0" data-narr>Tick these off honestly:</p>
 <label class="chk"><input type="checkbox" class="testchk"> <span><b>Derive it:</b> given two boxes' corners, compute intersection, union, and IoU by hand — and get 0 for non-overlapping boxes.</span></label>
 <label class="chk"><input type="checkbox" class="testchk"> <span><b>Build it:</b> write <code>iou()</code> from memory, with the two clamps and the union subtraction.</span></label>
-<label class="chk"><input type="checkbox" class="testchk"> <span><b>Explain it:</b> tell a friend why a perfectly-centred but too-small box still fails, and how NMS and mAP use IoU.</span></label>
+<label class="chk"><input type="checkbox" class="testchk"> <span><b>Explain it:</b> tell a friend why a perfectly-centered but too-small box still fails, and how NMS and mAP use IoU.</span></label>
 <div class="cert" id="cert">🎓 <b>Lesson mastered.</b> You own the metric behind every object detector. Next time you read "45.2 mAP," you know exactly what was measured.</div>
 </div>
 </section>
@@ -436,15 +436,15 @@ const QUIZ=[
  {q:"What does IoU measure?",opts:[
   {t:"How confident the detector is",w:"That's the confidence score, a separate output — IoU is about geometric overlap."},
   {t:"Shared area divided by combined area of two boxes",c:1},
-  {t:"The distance between box centres",w:"Centre distance ignores size; IoU uses areas and captures both position and scale."},
+  {t:"The distance between box centers",w:"Center distance ignores size; IoU uses areas and captures both position and scale."},
   {t:"The number of objects found",w:"That's a count; IoU grades one box against another."}]},
  {q:"Two boxes don't overlap at all. If you forget to clamp width/height to ≥ 0, what can happen?",opts:[
   {t:"Nothing, it's always fine",w:"It's specifically not fine for non-overlapping boxes."},
   {t:"You can get a bogus positive intersection from two negative sides multiplied",c:1},
   {t:"The union becomes negative",w:"The bug is in the intersection (negative × negative = positive), not the union."},
   {t:"IoU becomes exactly 1",w:"It becomes wrongly positive, not 1 — the clamp prevents the false overlap."}]},
- {q:"A prediction is perfectly centred inside the ground truth but only 1/4 of its area. Roughly what IoU?",opts:[
-  {t:"1.0 — it's centred",w:"Centred isn't enough; size mismatch lowers IoU."},
+ {q:"A prediction is perfectly centered inside the ground truth but only 1/4 of its area. Roughly what IoU?",opts:[
+  {t:"1.0 — it's centered",w:"Centered isn't enough; size mismatch lowers IoU."},
   {t:"0.5 — it's a hit",w:"Close, but the union is the full big box, so it's lower than 0.5."},
   {t:"0.25 — union is the big box, intersection is the small one",c:1},
   {t:"0.0 — it's a miss with no overlap",w:"There is overlap (it's inside), so IoU is positive."}]},
@@ -477,7 +477,7 @@ const CARDS=[
  {q:"How do you find the intersection rectangle's corners?",a:"Left/top = max of the two left/top edges; right/bottom = min of the two right/bottom edges. Clamp width & height to ≥ 0."},
  {q:"Formula for the union area?",a:"areaA + areaB − intersection (subtract the shared part once)."},
  {q:"What IoU threshold usually counts as a correct detection?",a:"0.5 by convention; stricter tasks use 0.75, and COCO averages 0.50–0.95."},
- {q:"Why does a centred but too-small box score low?",a:"The union stays as big as the large box while the intersection is only the small box, so the ratio is small — IoU punishes size mismatch."},
+ {q:"Why does a centered but too-small box score low?",a:"The union stays as big as the large box while the intersection is only the small box, so the ratio is small — IoU punishes size mismatch."},
  {q:"What is NMS and how does IoU drive it?",a:"Non-Maximum Suppression: keep the highest-confidence box, delete lower ones whose IoU with it exceeds a threshold — removing duplicate detections."},
  {q:"What is mAP, in one line?",a:"Mean Average Precision: match predictions to truth via IoU, trace precision–recall by confidence, take area under it per class, average across classes."},
 ];

@@ -144,7 +144,7 @@ function run(){
   $("ctx").innerHTML=top.map(function(r,i){return "[doc "+(i+1)+"] "+r.t;}).join("<br>");
   $("ans").innerHTML='<b>Model (grounded in '+top.length+' retrieved doc'+(top.length>1?"s":"")+'):</b> '+top[0].t+(top.length>1?' <span style="color:#a5b4fc">— combined with '+(top.length-1)+' more retrieved passage'+(top.length>2?"s":"")+' as supporting context.</span>':'');
 }
-var presets=["how does the learning rate affect gradient descent?","what is attention in a transformer?","how does RAG retrieve documents?","why do deployed models drift?","what is my favourite pizza topping?"];
+var presets=["how does the learning rate affect gradient descent?","what is attention in a transformer?","how does RAG retrieve documents?","why do deployed models drift?","what is my favorite pizza topping?"];
 var pc=$("presets");presets.forEach(function(p){var c=document.createElement("span");c.className="chip";c.textContent=p;c.onclick=function(){$("q").value=p;run();};pc.appendChild(c);});
 $("q").addEventListener("input",run);
 $("kSl").oninput=function(){topk=+this.value;$("kLab").textContent=topk;run();};

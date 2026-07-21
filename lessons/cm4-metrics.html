@@ -488,8 +488,8 @@ all the TP/FP/FN counts first, which lets common classes dominate (and equals ov
 case). <strong>Weighted</strong> averaging splits the difference by class frequency. Reporting the wrong average can
 make a model look much better or worse than it is on the classes you care about.</p>
 <p>The deepest version of "pick the right metric" is to skip the proxy and compute <strong>expected cost</strong>
-directly. Assign a dollar (or utility) value to each cell of the confusion matrix — a missed fraud costs $200, a false
-alarm costs $5 of review time — and choose the threshold that minimizes total expected cost on the validation set.
+directly. Assign a dollar (or utility) value to each cell of the confusion matrix — a missed fraud costs <span class="gd-nomath">$</span>200, a false
+alarm costs <span class="gd-nomath">$</span>5 of review time — and choose the threshold that minimizes total expected cost on the validation set.
 This turns a fuzzy "precision vs recall" debate into an optimization with a clear answer, and it's how mature teams
 actually set thresholds in production. Metrics like F1 are convenient defaults; the cost matrix is the real
 objective.</p>

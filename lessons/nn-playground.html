@@ -103,7 +103,7 @@ input[type=range]{width:100%;accent-color:var(--indigo2)}
   </div>
 </div>
 
-<div class="callout"><div class="ic">i</div><div><b>What am I looking at?</b> The background colour is the network's prediction at every point — blue where it says "class A", red where it says "class B". The line between them is the <em>decision boundary</em>. At the start it's random. Each training step, backprop measures how each weight contributed to the error and nudges it; the boundary bends to fit. With too few neurons the boundary stays too simple to fit the data.</div></div>
+<div class="callout"><div class="ic">i</div><div><b>What am I looking at?</b> The background color is the network's prediction at every point — blue where it says "class A", red where it says "class B". The line between them is the <em>decision boundary</em>. At the start it's random. Each training step, backprop measures how each weight contributed to the error and nudges it; the boundary bends to fit. With too few neurons the boundary stays too simple to fit the data.</div></div>
 
 <h2>Try these three things</h2>
 <p><b>1. Watch depth matter.</b> Put the dataset on <b>Circle</b> and set hidden neurons to <b>1</b>. Train. It gets stuck around 75% — one neuron can only draw a straight line, and no straight line separates an inner disk from an outer ring. Now raise it to <b>6</b> and retrain: the boundary curves into a loop and accuracy jumps to ~100%. That leap is the whole reason we use hidden layers.</p>
