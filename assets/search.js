@@ -52,6 +52,7 @@ function boot(){
 
   function show(){open=true;ov.classList.add("show");input.value="";input.focus();render("");}
   function hide(){open=false;ov.classList.remove("show");}
+  window.gdSearchOpen=function(q){open=true;ov.classList.add("show");input.value=q||"";input.focus();render(input.value);};
   fab.onclick=show;
   ov.addEventListener("click",function(e){if(e.target===ov)hide();});
   document.addEventListener("keydown",function(e){

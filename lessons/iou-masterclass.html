@@ -7,6 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
 <link rel="shortcut icon" href="../assets/img/favicon.ico">
+<link rel="stylesheet" href="../assets/gd-glossary.css">
 <style>
 :root{
   --indigo:#4f46e5; --indigo2:#6366f1; --emer:#059669; --emer2:#10b981;
@@ -516,5 +517,6 @@ $("#resetProg").onclick=()=>{localStorage.removeItem(LSKEY);seen.clear();$$(".te
 (function(){const s=store.get();if(s.pct){$("#pct").textContent=s.pct+"% read";$("#bar").style.width=s.pct+"%";}})();
 markProgress();
 </script>
+<script defer src="../assets/gd-glossary.js"></script>
 </body>
 </html>

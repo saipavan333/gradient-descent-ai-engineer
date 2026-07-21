@@ -1,0 +1,21 @@
+/* Gradient Descent — inline term definitions (hover / tap) */
+.term.gdef-yes{border-bottom:1px dotted #a5b4fc;cursor:help}
+.term.gdef-maybe{cursor:help}
+.gdef-tip{
+  position:fixed;z-index:2147483200;max-width:320px;min-width:180px;
+  background:#0f172a;color:#e2e8f0;border:1px solid #334155;border-radius:11px;
+  padding:11px 13px;box-shadow:0 12px 34px rgba(15,23,42,.34);
+  font:14px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  opacity:0;transform:translateY(4px);pointer-events:none;transition:opacity .12s,transform .12s;
+}
+.gdef-tip.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.gdef-tip b{display:block;color:#a5b4fc;font-weight:700;font-size:13.5px;margin-bottom:3px;text-transform:capitalize}
+.gdef-tip span{color:#cbd5e1}
+.gdef-tip .gdef-none{color:#94a3b8}
+.gdef-tip .gdef-search{color:#a5b4fc;font-weight:600}
+.gdef-tip .gdef-arrow{position:absolute;width:10px;height:10px;background:#0f172a;border:1px solid #334155;transform:rotate(45deg)}
+.gdef-tip.below .gdef-arrow{top:-6px;border-right:none;border-bottom:none}
+.gdef-tip.above .gdef-arrow{bottom:-6px;border-left:none;border-top:none}
+@media (prefers-color-scheme: light){
+  /* keep dark tooltip — reads well on the light lesson pages */
+}

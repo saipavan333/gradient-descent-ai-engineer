@@ -115,6 +115,10 @@ function boot(){
   paintProg(); onScroll();
   /* lazy-load global search on every page (home + lessons) */
   if(!window.__gdsLoaded){var _s=document.createElement("script");_s.src=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/")+"search.js";_s.defer=true;document.head.appendChild(_s);}
+  /* inline term definitions (hover/tap) — only when the page has marked terms */
+  if(!window.__gdefLoaded && document.querySelector(".term")){var _p=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/");
+    var _gl=document.createElement("link");_gl.rel="stylesheet";_gl.href=_p+"gd-glossary.css";document.head.appendChild(_gl);
+    var _gj=document.createElement("script");_gj.src=_p+"gd-glossary.js";_gj.defer=true;document.head.appendChild(_gj);}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
 })();

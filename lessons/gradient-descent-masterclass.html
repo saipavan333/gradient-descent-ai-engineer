@@ -7,6 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon-180.png">
 <link rel="shortcut icon" href="../assets/img/favicon.ico">
+<link rel="stylesheet" href="../assets/gd-glossary.css">
 <script defer src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 <style>
 :root{
@@ -472,5 +473,6 @@ $("#resetProg").onclick=function(){localStorage.removeItem(LS);seen={};$$(".tk")
 (function(){var s=store.get();if(s.pct){$("#pct").textContent=s.pct+"%";$("#bar").style.width=s.pct+"%";}})();
 progress();
 </script>
+<script defer src="../assets/gd-glossary.js"></script>
 </body>
 </html>
