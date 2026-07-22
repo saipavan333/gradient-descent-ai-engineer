@@ -239,6 +239,7 @@ Run before every handoff:
 - **One proxy + one key can serve many courses** (they share the free daily quota; split into a per-course key when one gets popular).
 - **Cache-bust client assets on deploy** — browsers cache CSS/JS/data hard; a stale cache looks like "my fix didn't deploy."
 - **Cache repeat answers client-side** (localStorage + TTL) so identical first-turn questions are instant and spend no quota; **follow-up memory** by sending the last few turns to the model; **optionally log questions** (server-side KV, owner-token-gated view) to reveal content gaps.
+- **Reuse across courses is cheap (proven).** The retrieval/answer/UI logic is course-agnostic — port by swapping only the asset/link **path logic** (e.g. a `/lessons/` convention → a `<body data-base>` prefix) and building the per-course index from the course's own curriculum/search data. Courses on the **same origin** share one Worker with no new setup (the CORS allowlist already covers them).
 - **Gate to paying students later** by having the proxy require a valid login/subscription token once access control (Section 11) exists.
 
 *Status: built and verified for Gradient Descent — client retrieval + Cloudflare Worker → Gemini free tier.*

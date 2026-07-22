@@ -11,13 +11,13 @@ function reduce(){return !!(window.matchMedia&&window.matchMedia("(prefers-reduc
 function esc(s){var d=document.createElement("div");d.textContent=(s==null?"":String(s));return d.innerHTML;}
 function sameOrigin(u){try{return new URL(u,location.href).origin===location.origin}catch(e){return false}}
 var inLessons=/\/lessons\//.test(location.pathname);
-var isHome=/(^|\/)(index\.html)?$/.test(location.pathname);
+var isHome=/(^|\/)(index\.html)?$/.test(location.pathname) || document.body.getAttribute("data-page")==="home";
 
 function pageTitle(){
-  var h=document.querySelector("article.content h1, .lesson-head h1, main h1, h1");
+  var h=document.querySelector("main.lesson h1, article.content h1, .lesson-head h1, main h1, h1");
   return ((h&&h.textContent)||document.title||"").replace(/\s*·.*$/,"").replace(/\s+/g," ").trim();
 }
-function isLesson(){return !!document.querySelector("article.content");}
+function isLesson(){return !!document.querySelector("article.content, main.lesson");}   /* real lesson on any course */
 
 function boot(){
   injectA11y();
@@ -30,7 +30,7 @@ function boot(){
 
 /* ---------- accessibility: skip link, main landmark, labelled diagrams ---------- */
 function injectA11y(){
-  var main=document.querySelector("article.content")||document.querySelector(".main")||document.querySelector("main")||document.querySelector(".wrap");
+  var main=document.querySelector("article.content")||document.querySelector("main.lesson")||document.querySelector(".main")||document.querySelector(".home-wrap")||document.querySelector("main")||document.querySelector(".wrap");
   if(main){
     if(!main.id) main.id="gdx-main";
     if(!document.querySelector("main, [role=main]")) main.setAttribute("role","main");
@@ -54,7 +54,7 @@ function recordNav(){
   var u=location.pathname, t=pageTitle();
   var tr=jget(sessionStorage,TRAIL,[]);
   if(!tr.length || tr[tr.length-1].u!==u){ tr.push({u:u,t:t}); if(tr.length>30)tr=tr.slice(-30); jset(sessionStorage,TRAIL,tr); }
-  if(inLessons && isLesson()) jset(localStorage,LAST,{u:u,t:t,ts:Date.now()});   /* remember the last real lesson read */
+  if(isLesson()) jset(localStorage,LAST,{u:u,t:t,ts:Date.now()});   /* remember the last real lesson read */
 }
 function trailPrev(){var tr=jget(sessionStorage,TRAIL,[]);return tr.length>=2?tr[tr.length-2]:null;}
 
@@ -71,7 +71,7 @@ function runEffects(){
   if(reduce())return;
   document.documentElement.classList.add("gdx-anim");   /* entrance = CSS opacity keyframe (always ends visible) */
   if(!("IntersectionObserver" in window))return;
-  var sel="article.content > h2, article.content > figure, article.content > .keypoints, article.content > .quiz, article.content > details, .track-card, .lab-card, .p-item";
+  var sel="article.content > h2, article.content > figure, article.content > .keypoints, article.content > .quiz, article.content > details, main.lesson > h2, main.lesson > figure, main.lesson > .box, .track-card, .lab-card, .p-item, .home-wrap section";
   var els=[].slice.call(document.querySelectorAll(sel));
   if(!els.length)return;
   els.forEach(function(el){el.classList.add("gdx-reveal");});
@@ -96,7 +96,7 @@ function injectBack(){
 /* ---------- resume where you left off (home page) ---------- */
 function injectResume(){
   var d=jget(localStorage,LAST,null); if(!d||!d.u||document.querySelector(".gdx-resume"))return;
-  var main=document.querySelector(".main")||document.querySelector("main")||document.querySelector(".app"); if(!main)return;
+  var main=document.querySelector(".main")||document.querySelector(".home-wrap")||document.querySelector("main")||document.querySelector(".app"); if(!main)return;
   var a=document.createElement("a"); a.className="gdx-resume"; a.href=d.u;
   a.innerHTML='<span class="gdx-resume-ic">▸</span><span class="gdx-resume-tx"><b>Resume where you left off</b><span>'+esc(d.t||"Continue the course")+'</span></span><span class="gdx-resume-go">Continue →</span>';
   main.insertBefore(a, main.firstChild);
