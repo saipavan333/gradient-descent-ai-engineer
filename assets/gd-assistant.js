@@ -79,21 +79,24 @@ function srcItem(L,detail){
   return '<li><a class="gda-lnk" href="'+LBASE+L.f+'"><span class="gda-badge">'+esc(L.k)+'</span><span class="gda-lt">'+esc(L.t)+'</span></a>'
     +(detail?'<span class="gda-detail">'+esc(clip(detail,150))+'</span>':'')+'</li>';
 }
+function pickSummary(hits){
+  var proc=/^(building|designing|evaluating|scaling|putting|packaging|deploying)\b/i;
+  for(var i=0;i<Math.min(3,hits.length);i++){ if(hits[i].L.s && !proc.test(hits[i].L.t)) return hits[i].L.s; }  /* prefer an intro over a how-to */
+  return hits[0]&&hits[0].L.s;
+}
 function retrievalAnswer(q){
-  var qt=toks(q), hits=retrieve(q), defs=glossHits(q), parts=[], summarized=false;
-  /* 1) Plain-English answer: definitions of the terms asked about … */
-  defs.forEach(function(g){parts.push('<p class="gda-def"><b>'+esc(g.term)+'</b> — '+esc(g.desc)+'</p>');summarized=true;});
-  /* … or a summary sentence from the most relevant lesson when no term matched */
-  if(hits.length && !defs.length){
-    var s=hits[0].L.s || bestSnippet(qt,hits[0].L);
-    if(s){parts.push('<p>'+esc(s)+'</p>');summarized=true;}
-  }
-  /* 2) Navigation links to go deeper */
+  var qt=toks(q), hits=retrieve(q), defs=glossHits(q), parts=[], answered=false;
+  /* 1) Lead with a one-line definition of the term(s) asked about */
+  defs.forEach(function(g){parts.push('<p class="gda-def"><b>'+esc(g.term)+'</b> — '+esc(g.desc)+'</p>');answered=true;});
+  /* 2) A few-sentence answer, drawn from the most relevant intro lesson */
+  var sum=pickSummary(hits);
+  if(sum){parts.push('<p class="gda-sum">'+esc(sum)+'</p>');answered=true;}
+  /* 3) Navigation links to go deeper */
   if(hits.length){
-    parts.push('<div class="gda-srcwrap"><div class="gda-srch-h">'+(summarized?"Read more in these lessons":"Here’s what the course covers")+'</div><ul class="gda-src">'
-      +hits.map(function(o){return srcItem(o.L, defs.length?"":bestSnippet(qt,o.L));}).join("")+'</ul></div>');
+    parts.push('<div class="gda-srcwrap"><div class="gda-srch-h">Read more in these lessons</div><ul class="gda-src">'
+      +hits.map(function(o){return srcItem(o.L, (defs.length||answered)?"":bestSnippet(qt,o.L));}).join("")+'</ul></div>');
   }
-  if(!summarized && !hits.length){
+  if(!answered && !hits.length){
     parts.push('<p>I couldn’t find that in this course’s lessons. Try different words, or <a href="#" class="gda-srch">search every lesson</a>.</p>');
   } else {
     parts.push('<p class="gda-hint">Want a fuller, written-out answer? Add your API key with the ⚙ gear to turn on AI mode.</p>');
