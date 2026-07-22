@@ -20,7 +20,8 @@ function clip(s,n){s=(s||"").trim();return s.length>n?s.slice(0,n).replace(/\s+\
 function reduceMotion(){return window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;}
 
 var STOP={};"the a an is are was were be to of in on for and or as at by it its this that with from into about your you we they what why how when which who whom does do did can could would should will not no yes vs than then them their there here".split(" ").forEach(function(w){STOP[w]=1;});
-function toks(q){return (q||"").toLowerCase().replace(/[^a-z0-9+\-\s]/g," ").split(/\s+/).filter(function(w){return w.length>1&&!STOP[w];});}
+function singular(w){return w.replace(/ies$/,"y").replace(/([a-z]{3,})s$/,"$1");}
+function toks(q){return (q||"").toLowerCase().replace(/[^a-z0-9+\-\s]/g," ").split(/\s+/).filter(function(w){return w.length>1&&!STOP[w];}).map(singular);}
 
 var DATA=null;
 function ensureData(then){
@@ -32,29 +33,41 @@ function ensureData(then){
 }
 
 /* ---------- retrieval ---------- */
-function scoreLesson(qt,L){
-  var t=L.t.toLowerCase(),tn=(L.tn||"").toLowerCase(),x=(L.x||"").toLowerCase(),s=(L.s||"").toLowerCase(),sc=0,i;
-  for(i=0;i<qt.length;i++){var w=qt[i];
-    if(t.indexOf(w)>=0)sc+=6; if(tn.indexOf(w)>=0)sc+=2; if(x.indexOf(w)>=0)sc+=2; if(s.indexOf(w)>=0)sc+=1;}
-  for(i=0;i<qt.length-1;i++){var ph=qt[i]+" "+qt[i+1];   /* phrase (bigram) bonus */
-    if(t.indexOf(ph)>=0)sc+=5; if(x.indexOf(ph)>=0)sc+=4; if(s.indexOf(ph)>=0)sc+=2;}
+function scoreLesson(qt,L,idf){
+  var t=L.t.toLowerCase(),tn=(L.tn||"").toLowerCase(),x=(L.x||"").toLowerCase(),s=(L.s||"").toLowerCase(),sc=0,i,f;
+  for(i=0;i<qt.length;i++){var w=qt[i]; f=idf?(idf[w]||1):1;   /* rarer words count more (IDF) */
+    if(t.indexOf(w)>=0)sc+=6*f; if(tn.indexOf(w)>=0)sc+=2*f; if(x.indexOf(w)>=0)sc+=2*f; if(s.indexOf(w)>=0)sc+=1*f;}
+  for(i=0;i<qt.length-1;i++){var ph=qt[i]+" "+qt[i+1], pf=idf?Math.min(idf[qt[i]]||1,idf[qt[i+1]]||1):1;   /* phrase (bigram) bonus */
+    if(t.indexOf(ph)>=0)sc+=5*pf; if(x.indexOf(ph)>=0)sc+=4*pf; if(s.indexOf(ph)>=0)sc+=2*pf;}
   if(/^interview check/i.test(L.t))sc*=0.6;  /* prefer the teaching lesson over the interview-review page */
   return sc;
 }
+function idfWeights(qt){
+  var N=DATA.lessons.length, m={};
+  qt.forEach(function(w){ if(m[w]!=null)return; var n=0;
+    DATA.lessons.forEach(function(L){ if(L._b==null)L._b=(L.t+" "+L.tn+" "+L.x+" "+(L.s||"")).toLowerCase(); if(L._b.indexOf(w)>=0)n++; });
+    m[w]=Math.max(0.35, Math.min(3, Math.log((N+1)/(n+1))+0.3)); });
+  return m;
+}
 function retrieve(q){
   var qt=toks(q); if(!qt.length)return[];
-  var out=[];
-  DATA.lessons.forEach(function(L){var sc=scoreLesson(qt,L); if(sc>0)out.push({L:L,sc:sc});});
+  var idf=idfWeights(qt), out=[];
+  DATA.lessons.forEach(function(L){var sc=scoreLesson(qt,L,idf); if(sc>0)out.push({L:L,sc:sc});});
   out.sort(function(a,b){return b.sc-a.sc;});
   return out.slice(0,5);
 }
-function glossHit(q){
-  var ql=" "+q.toLowerCase().replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ")+" ",best=null;
+function glossHits(q){
+  var qw={}; toks(q).forEach(function(w){qw[singular(w)]=1;});
+  var res=[];
   (DATA.glossary||[]).forEach(function(g){
-    var term=g.term.toLowerCase();
-    if(ql.indexOf(" "+term+" ")>=0){ if(!best||term.length>best.term.length)best=g; }
+    var tw=g.term.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(Boolean).map(singular);
+    if(tw.length && tw.every(function(w){return qw[w];})) res.push(g);
   });
-  return best;
+  res.sort(function(a,b){return b.term.length-a.term.length;});           // prefer the most specific term
+  var kept=[];
+  res.forEach(function(g){var lg=" "+g.term.toLowerCase()+" ";
+    if(!kept.some(function(k){return (" "+k.term.toLowerCase()+" ").indexOf(lg)>=0;})) kept.push(g);});
+  return kept.slice(0,3);
 }
 function bestSnippet(qt,L){
   var segs=(L.x||"").split("·").map(function(s){return s.trim();}).filter(function(s){return s.length>10;});
@@ -67,22 +80,31 @@ function srcItem(L,detail){
     +(detail?'<span class="gda-detail">'+esc(clip(detail,150))+'</span>':'')+'</li>';
 }
 function retrievalAnswer(q){
-  var qt=toks(q), hits=retrieve(q), g=glossHit(q), parts=[];
-  if(g)parts.push('<p class="gda-def"><b>'+esc(g.term)+'</b> — '+esc(g.desc)+'</p>');
+  var qt=toks(q), hits=retrieve(q), defs=glossHits(q), parts=[], summarized=false;
+  /* 1) Plain-English answer: definitions of the terms asked about … */
+  defs.forEach(function(g){parts.push('<p class="gda-def"><b>'+esc(g.term)+'</b> — '+esc(g.desc)+'</p>');summarized=true;});
+  /* … or a summary sentence from the most relevant lesson when no term matched */
+  if(hits.length && !defs.length){
+    var s=hits[0].L.s || bestSnippet(qt,hits[0].L);
+    if(s){parts.push('<p>'+esc(s)+'</p>');summarized=true;}
+  }
+  /* 2) Navigation links to go deeper */
   if(hits.length){
-    parts.push('<p class="gda-lead">'+(g?"The course goes deeper in:":"Here’s what the course covers:")+'</p>');
-    parts.push('<ul class="gda-src">'+hits.map(function(o){return srcItem(o.L,bestSnippet(qt,o.L));}).join("")+'</ul>');
-    parts.push('<p class="gda-note">Grounded in this course. Open a lesson to go deeper.</p>');
-  } else if(!g){
+    parts.push('<div class="gda-srcwrap"><div class="gda-srch-h">'+(summarized?"Read more in these lessons":"Here’s what the course covers")+'</div><ul class="gda-src">'
+      +hits.map(function(o){return srcItem(o.L, defs.length?"":bestSnippet(qt,o.L));}).join("")+'</ul></div>');
+  }
+  if(!summarized && !hits.length){
     parts.push('<p>I couldn’t find that in this course’s lessons. Try different words, or <a href="#" class="gda-srch">search every lesson</a>.</p>');
+  } else {
+    parts.push('<p class="gda-hint">Want a fuller, written-out answer? Add your API key with the ⚙ gear to turn on AI mode.</p>');
   }
   return {html:parts.join(""),hits:hits};
 }
 
 /* ---------- optional generative upgrade (student's own key) ---------- */
 function buildContext(q){
-  var hits=retrieve(q), g=glossHit(q), c=[];
-  if(g)c.push("Glossary — "+g.term+": "+g.desc);
+  var hits=retrieve(q), gs=glossHits(q), c=[];
+  gs.forEach(function(g){c.push("Glossary — "+g.term+": "+g.desc);});
   hits.forEach(function(o){var L=o.L;c.push("Lesson “"+L.t+"” (Track "+L.k+", "+L.tn+"): "+(L.s||"")+" Topics: "+(L.x||"").replace(/·/g,"; "));});
   return {ctx:c.join("\n\n"),hits:hits};
 }
@@ -160,11 +182,13 @@ function boot(){
     var box=panel.querySelector(".gda-settings");
     if(!box.hasAttribute("hidden")){box.setAttribute("hidden","");return;}
     var c=cfg();
-    box.innerHTML='<p class="gda-set-note">Optional: paste your own Anthropic API key for full conversational answers. It is stored only in this browser and sent directly to Anthropic. Without a key, the assistant still answers from the lessons (offline).</p>'
+    box.innerHTML='<div class="gda-set-top"><button class="gda-set-back" type="button">← Back to chat</button></div>'
+      +'<p class="gda-set-note">Optional: paste your own Anthropic API key for full conversational answers. It is stored only in this browser and sent directly to Anthropic. Without a key, the assistant still answers from the lessons (offline).</p>'
       +'<label class="gda-set-l">API key<input type="password" class="gda-key" placeholder="sk-ant-…" value="'+esc(c.key||"")+'" autocomplete="off" spellcheck="false"></label>'
       +'<label class="gda-set-l">Model<input type="text" class="gda-model" value="'+esc(c.model||"claude-3-5-haiku-latest")+'" spellcheck="false"></label>'
       +'<div class="gda-set-row"><button class="gda-save" type="button">Save</button><button class="gda-clear" type="button">Clear key</button></div>';
     box.removeAttribute("hidden");
+    box.querySelector(".gda-set-back").onclick=function(){box.setAttribute("hidden","");};
     box.querySelector(".gda-save").onclick=function(){var k=box.querySelector(".gda-key").value.trim(),m=box.querySelector(".gda-model").value.trim();setCfg({key:k,model:m||"claude-3-5-haiku-latest"});box.setAttribute("hidden","");updateMode();};
     box.querySelector(".gda-clear").onclick=function(){setCfg({});box.querySelector(".gda-key").value="";updateMode();};
   }
