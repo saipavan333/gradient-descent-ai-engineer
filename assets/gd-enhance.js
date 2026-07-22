@@ -115,6 +115,10 @@ function boot(){
   paintProg(); onScroll();
   /* lazy-load global search on every page (home + lessons) */
   if(!window.__gdsLoaded){var _s=document.createElement("script");_s.src=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/")+"search.js";_s.defer=true;document.head.appendChild(_s);}
+  /* AI course assistant on every page (data loads lazily on first open) */
+  if(!window.__gdaLoaded){var _ap=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/");
+    var _al=document.createElement("link");_al.rel="stylesheet";_al.href=_ap+"gd-assistant.css";document.head.appendChild(_al);
+    var _aj=document.createElement("script");_aj.src=_ap+"gd-assistant.js";_aj.defer=true;document.head.appendChild(_aj);}
   /* inline term definitions (hover/tap) — only when the page has marked terms */
   if(!window.__gdefLoaded && document.querySelector(".term")){var _p=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/");
     var _gl=document.createElement("link");_gl.rel="stylesheet";_gl.href=_p+"gd-glossary.css";document.head.appendChild(_gl);

@@ -140,5 +140,7 @@ $("run").onclick=run;
 $("run100").onclick=function(){var sig=0;for(var i=0;i<100;i++){var cA=trial(rA),cB=trial(Math.min(0.99,rA+lift)),pool=(cA+cB)/(2*n),se=Math.sqrt(pool*(1-pool)*(2/n))||1e-9,z=(cB/n-cA/n)/se;if(2*(1-Phi(Math.abs(z)))<0.05)sig++;}run();$("verdict").innerHTML+='<span class="sub" style="color:#fbbf24">Over 100 runs at these settings: significant '+sig+'% of the time.</span>';};
 run();
 </script>
+<link rel="stylesheet" href="../assets/gd-assistant.css">
+<script src="../assets/gd-assistant.js" defer></script>
 </body>
 </html>

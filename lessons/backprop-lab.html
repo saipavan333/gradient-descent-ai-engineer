@@ -153,5 +153,7 @@ $("reset").onclick=function(){w=Object.assign({},init);steps=0;draw();};
 $("train").onclick=function(){if(timer){clearInterval(timer);timer=null;this.textContent="▶ Train";this.classList.add("go");return;}this.textContent="⏸ Stop";this.classList.remove("go");var b=this;timer=setInterval(function(){for(var k=0;k<3;k++)step();draw();if(forward().L<1e-4){clearInterval(timer);timer=null;b.textContent="▶ Train";b.classList.add("go");}},80);};
 draw();
 </script>
+<link rel="stylesheet" href="../assets/gd-assistant.css">
+<script src="../assets/gd-assistant.js" defer></script>
 </body>
 </html>
