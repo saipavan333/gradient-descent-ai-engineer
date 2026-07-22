@@ -71,6 +71,18 @@ unreachable, it quietly falls back to the offline answer — students never see 
   https://aistudio.google.com/apikey.
 - **Lock it to your site only:** set `ALLOWED_ORIGINS` (Step 3.4).
 
+## Optional: see what students are asking (5 min)
+
+This shows you the questions students type — gold for spotting gaps in your course. It's off until you turn it on:
+
+1. **Create a place to store them.** Left menu → **Storage & Databases** → **KV** → **Create a namespace**, name it `questions`.
+2. **Connect it to the worker.** Worker → **Settings** → **Bindings** → **Add** → **KV namespace**: Variable name `QLOG`, and pick the `questions` namespace.
+3. **Set a password for the view page.** Worker → **Settings** → **Variables and Secrets** → add a **Secret** named `ADMIN_TOKEN` with any password you choose.
+4. **Save and deploy.**
+5. **View them anytime** at: `https://gd-assistant-proxy.yourname.workers.dev/?admin=YOUR_ADMIN_TOKEN`
+
+(Questions auto-expire after 90 days. Leave `QLOG` unbound and nothing is logged.)
+
 ## Later, when you charge for the course
 Right now anyone on your site can use the assistant. When you add student logins (subscriptions),
 the worker can be extended to require a valid login token, so only paying students use your quota.

@@ -14,6 +14,11 @@ var CFG="gd_assistant_v1";
 
 function cfg(){try{return JSON.parse(localStorage.getItem(CFG))||{}}catch(e){return{}}}
 function setCfg(o){try{localStorage.setItem(CFG,JSON.stringify(o))}catch(e){}}
+/* answer cache: repeat first-turn questions return instantly and don't spend API quota */
+var ACACHE="gd_ans_cache_v1", ACACHE_TTL=7*864e5;
+function normQ(q){return (q||"").toLowerCase().replace(/\s+/g," ").trim();}
+function cacheGet(q){try{var c=JSON.parse(localStorage.getItem(ACACHE))||{},e=c[normQ(q)];if(e&&Date.now()-e.ts<ACACHE_TTL)return e;}catch(_){}return null;}
+function cachePut(q,a,hits){try{var c=JSON.parse(localStorage.getItem(ACACHE))||{};c[normQ(q)]={a:a,h:(hits||[]).map(function(o){return {L:{f:o.L.f,t:o.L.t,k:o.L.k}};}),ts:Date.now()};var ks=Object.keys(c);while(ks.length>60)delete c[ks.shift()];localStorage.setItem(ACACHE,JSON.stringify(c));}catch(_){}}
 function esc(s){var d=document.createElement("div");d.textContent=(s==null?"":String(s));return d.innerHTML;}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
 function clip(s,n){s=(s||"").trim();return s.length>n?s.slice(0,n).replace(/\s+\S*$/,"")+"…":s;}
@@ -181,12 +186,15 @@ function boot(){
   function submit(){
     if(busy)return; var q=(input.value||"").trim(); if(!q)return;
     addBubble("user",esc(q).replace(/\n/g,"<br>")); input.value="";autoresize();
+    var firstTurn=!convo.length, aiMode=proxyUrl()||cfg().key;
+    if(aiMode && firstTurn){ var hit=cacheGet(q);   /* instant, quota-free repeat answer */
+      if(hit){ addBubble("bot",mdToHtml(hit.a)+sourcesHtml(hit.h)); convo.push({role:"user",text:q}); convo.push({role:"model",text:hit.a}); return; } }
     var typing=addBubble("bot",'<span class="gda-typing" aria-label="Thinking"><i></i><i></i><i></i></span>');
     setBusy(true);
     function done(txt,err,hits){   /* shared: render the AI answer, or fall back to the offline answer */
       setBusy(false);typing.remove();
       if(err||!txt){var r=retrievalAnswer(q);addBubble("bot",'<p class="gda-err">Couldn’t get an AI answer'+(err?" ("+esc(err)+")":"")+'. Here’s what the course says:</p>'+r.html);}
-      else { addBubble("bot",mdToHtml(txt)+sourcesHtml(hits)); convo.push({role:"user",text:q}); convo.push({role:"model",text:txt}); if(convo.length>12)convo=convo.slice(-12); }
+      else { addBubble("bot",mdToHtml(txt)+sourcesHtml(hits)); if(aiMode&&firstTurn)cachePut(q,txt,hits); convo.push({role:"user",text:q}); convo.push({role:"model",text:txt}); if(convo.length>12)convo=convo.slice(-12); }
     }
     if(proxyUrl()){ askViaProxy(q,convo.slice(-6),done); }   /* owner AI for everyone, with follow-up memory */
     else if(cfg().key){ askViaKey(q,done); }           /* power user's own key */
