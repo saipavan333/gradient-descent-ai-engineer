@@ -1,4 +1,9 @@
-/* Gradient Descent — site extras: byline, page effects, resume/back nav. Namespaced .gdx */
+/* Gradient Descent — site extras: byline, page effects, resume/back nav, a11y. Namespaced .gdx */
+
+/* ---- skip-to-content link (visible only when keyboard-focused) ---- */
+.gdx-skip{position:fixed;left:12px;top:-52px;z-index:2147483600;background:#4f46e5;color:#fff;padding:9px 16px;border-radius:0 0 10px 10px;font:700 13px system-ui;text-decoration:none;transition:top .15s ease}
+.gdx-skip:focus{top:0;outline:3px solid #a5b4fc;outline-offset:2px}
+#gdx-main:focus{outline:none}
 
 /* ---- page entrance + scroll reveal (active only when <html> has .gdx-anim = motion allowed) ---- */
 .gdx-anim body{animation:gdxPageIn .4s ease both}          /* opacity-only so fixed elements never shift */

@@ -20,11 +20,33 @@ function pageTitle(){
 function isLesson(){return !!document.querySelector("article.content");}
 
 function boot(){
+  injectA11y();
   recordNav();
   injectByline();
   runEffects();
   injectBack();
   if(isHome) injectResume();
+}
+
+/* ---------- accessibility: skip link, main landmark, labelled diagrams ---------- */
+function injectA11y(){
+  var main=document.querySelector("article.content")||document.querySelector(".main")||document.querySelector("main")||document.querySelector(".wrap");
+  if(main){
+    if(!main.id) main.id="gdx-main";
+    if(!document.querySelector("main, [role=main]")) main.setAttribute("role","main");
+    if(!main.hasAttribute("tabindex")) main.setAttribute("tabindex","-1");
+    if(!document.querySelector(".gdx-skip")){
+      var s=document.createElement("a"); s.className="gdx-skip"; s.href="#"+main.id; s.textContent="Skip to content";
+      document.body.insertBefore(s, document.body.firstChild);
+    }
+  }
+  [].forEach.call(document.querySelectorAll("figure.diagram"),function(fig){   /* give each diagram an accessible name from its caption */
+    var svg=fig.querySelector("svg"), cap=fig.querySelector("figcaption");
+    if(svg && !svg.getAttribute("role") && svg.getAttribute("aria-hidden")==null){
+      svg.setAttribute("role","img");
+      if(cap && cap.textContent.trim()) svg.setAttribute("aria-label", cap.textContent.replace(/\s+/g," ").trim());
+    }
+  });
 }
 
 /* ---------- nav memory ---------- */

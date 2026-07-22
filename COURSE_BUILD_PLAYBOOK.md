@@ -130,6 +130,8 @@ Accessibility is a correctness requirement for a learning product, not a nicety.
 - **Alternatives** — diagrams and meaningful images carry a text alternative (alt / `aria-describedby` / a described caption) so the read-aloud and screen readers convey the idea.
 - **Reduced motion** — honor `prefers-reduced-motion`: disable or soften animations and any autoplay, and provide a static fallback. Motion must never be required to understand content.
 - **Zoom/scale** — use relative units (rem) and keep layouts intact at 200% zoom and larger system fonts.
+- **Landmarks & skip link** — provide a **skip-to-content** link (first focusable element) and exactly one `main` landmark per page. These can be injected once from a shared script rather than edited into every page.
+- **Label inline-SVG diagrams from their caption** — an inline `<svg>` inside a `<figure>` should get `role="img"` + `aria-label` sourced from its `<figcaption>` so screen readers announce the diagram's meaning (do this at runtime from the shared script; skip any SVG already marked `aria-hidden`).
 
 ### 5.7 Performance budget & mobile/touch
 - **Budget the initial load.** Keep first render fast: lazy-load heavy runtimes (Pyodide) *on demand*, defer non-critical JS, and load features conditionally (search/glossary only when needed). Don't ship megabytes to every page; cache vendored libraries.
@@ -156,6 +158,7 @@ Accessibility is a correctness requirement for a learning product, not a nicety.
 ### 6.1 Content accuracy & fact-checking (deepest quality bar)
 - **Claims, numbers, formulas, and code must be technically correct** and checked against authoritative sources — not merely rendered cleanly.
 - For **fast-moving topics** (AI model names, benchmarks, prices, API details), fact-check against current sources at build time and **date-stamp volatile facts** ("as of <month year>"). Prefer timeless explanations of *mechanisms* and isolate ephemeral specifics so they're easy to update later.
+- **Design content for longevity — this is what makes a course pass fact-checks over time.** Teach with **canonical, timeless examples** (well-established models/architectures — e.g. BERT, GPT-3, Stable Diffusion — whose properties are fixed) rather than chasing the newest named product; illustrate mechanisms with **hypothetical numbers** ("suppose an 8,000-token context") instead of a specific current model's live specs; keep named current specifics in clearly date-stamped callouts; and where you invoke "state of the art," use it to teach *judgment* ("don't chase SOTA in the abstract") rather than as a durable claim.
 - Use a **subagent fact-check pass** for high-stakes lessons; treat being confidently wrong as a serious defect.
 
 ---
