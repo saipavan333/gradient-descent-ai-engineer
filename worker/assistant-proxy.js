@@ -11,7 +11,7 @@
      2. Create a free Cloudflare Worker and paste this whole file in.
      3. In the Worker's Settings → Variables, add:
           - Secret   GEMINI_API_KEY   = your Gemini key
-          - (optional) Variable GEMINI_MODEL = gemini-2.5-flash   (or gemini-2.5-flash-lite for more free requests)
+          - (optional) Variable GEMINI_MODEL = gemini-flash-latest   (always the current free Flash model)
           - (optional) Variable ALLOWED_ORIGINS = https://yourname.github.io   (comma-separated; blank = allow any)
      4. Deploy, copy the Worker URL, and paste it into assets/assistant-config.js on your site.
 
@@ -19,7 +19,7 @@
    daily free quota runs out for the day — you can never be charged.
    ──────────────────────────────────────────────────────────────────────── */
 
-const MODEL_DEFAULT = "gemini-2.5-flash";
+const MODEL_DEFAULT = "gemini-flash-latest";  // Google's alias for the current Flash model (won't break on model rotations)
 
 const SYSTEM_PROMPT =
   "You are the friendly teaching assistant for an AI-engineering course. " +

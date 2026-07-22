@@ -63,9 +63,12 @@ unreachable, it quietly falls back to the offline answer — students never see 
   pushed, then hard-refresh the page (Ctrl+Shift+R).
 - **"Couldn't get an AI answer":** in the worker's **Settings → Variables and Secrets**, confirm
   `GEMINI_API_KEY` is set and re-deploy.
-- **Rate-limit errors when many students use it at once:** add a **Variable** `GEMINI_MODEL` =
-  `gemini-2.5-flash-lite` (higher free daily limit). If a model name ever stops working, check the
-  current free models at https://aistudio.google.com and set `GEMINI_MODEL` to one of them.
+- **"This model is no longer available":** Google occasionally retires model names. The worker
+  already defaults to `gemini-flash-latest`, which auto-tracks the current model. If you ever see
+  this error, add/confirm a **Variable** `GEMINI_MODEL` = `gemini-flash-latest`, then Save and deploy.
+- **Rate-limit errors when many students use it at once:** switch `GEMINI_MODEL` to a lighter
+  Flash model for a higher free daily limit — check the current model names at
+  https://aistudio.google.com/apikey.
 - **Lock it to your site only:** set `ALLOWED_ORIGINS` (Step 3.4).
 
 ## Later, when you charge for the course
