@@ -115,9 +115,11 @@ function buildContext(q){
   return {ctx:c.join("\n\n"),hits:hits};
 }
 /* Primary generative path: the owner's Cloudflare Worker (Gemini free tier). No student key needed. */
-function askViaProxy(q,cb){
-  var built=buildContext(q);
-  fetch(proxyUrl(),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({question:q,context:built.ctx})})
+function askViaProxy(q,history,cb){
+  var rq=q;   /* for a short follow-up ("why?", "an example?") retrieve using the previous question too */
+  if(history&&history.length){var lastU="";for(var i=history.length-1;i>=0;i--){if(history[i].role==="user"){lastU=history[i].text;break;}} if(lastU&&q.split(/\s+/).length<=4)rq=lastU+" "+q;}
+  var built=buildContext(rq);
+  fetch(proxyUrl(),{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({question:q,context:built.ctx,history:history||[]})})
     .then(function(r){return r.json();})
     .then(function(j){ if(j&&j.error){cb(null,j.error,built.hits);return;} cb((j&&j.answer)||"",null,built.hits); })
     .catch(function(e){cb(null,(e&&e.message)||"Network error",built.hits);});
@@ -160,7 +162,7 @@ function boot(){
   fab.setAttribute("aria-expanded","false");
   document.body.appendChild(fab);
 
-  var panel,msgs,input,open=false,built=false,busy=false,lastFocus=null;
+  var panel,msgs,input,open=false,built=false,busy=false,lastFocus=null,convo=[];
 
   function autoresize(){input.style.height="auto";input.style.height=Math.min(input.scrollHeight,120)+"px";}
   function updateMode(){var m=panel.querySelector(".gda-mode"),on=proxyUrl()||cfg().key;m.innerHTML=on?'<span class="gda-dot on"></span> AI mode · grounded in course':'<span class="gda-dot"></span> Offline mode · grounded in course';}
@@ -171,7 +173,7 @@ function boot(){
     return b;
   }
   function welcome(){
-    msgs.innerHTML="";
+    msgs.innerHTML="";convo=[];
     addBubble("bot",'<p>Hi! I’m your course assistant. Ask me anything about the material and I’ll answer from the lessons, with links. Try:</p><div class="gda-chips">'+EXAMPLES.map(function(q){return '<button class="gda-chip" type="button">'+esc(q)+'</button>';}).join("")+'</div>');
     [].forEach.call(msgs.querySelectorAll(".gda-chip"),function(b){b.onclick=function(){input.value=b.textContent;submit();};});
   }
@@ -184,9 +186,9 @@ function boot(){
     function done(txt,err,hits){   /* shared: render the AI answer, or fall back to the offline answer */
       setBusy(false);typing.remove();
       if(err||!txt){var r=retrievalAnswer(q);addBubble("bot",'<p class="gda-err">Couldn’t get an AI answer'+(err?" ("+esc(err)+")":"")+'. Here’s what the course says:</p>'+r.html);}
-      else addBubble("bot",mdToHtml(txt)+sourcesHtml(hits));
+      else { addBubble("bot",mdToHtml(txt)+sourcesHtml(hits)); convo.push({role:"user",text:q}); convo.push({role:"model",text:txt}); if(convo.length>12)convo=convo.slice(-12); }
     }
-    if(proxyUrl()){ askViaProxy(q,done); }             /* owner enabled AI for everyone */
+    if(proxyUrl()){ askViaProxy(q,convo.slice(-6),done); }   /* owner AI for everyone, with follow-up memory */
     else if(cfg().key){ askViaKey(q,done); }           /* power user's own key */
     else { var delay=reduceMotion()?0:260;             /* free offline mode */
       setTimeout(function(){setBusy(false);typing.remove();addBubble("bot",retrievalAnswer(q).html);},delay); }

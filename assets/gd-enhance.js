@@ -62,7 +62,7 @@ function boot(){
   var prog=elc("div","gde-prog",'<div class="lab"><span>Lessons completed</span><b class="gde-n">0</b></div><div class="gde-track"><i class="gde-fill"></i></div>');
   panel.appendChild(prog);
   var revLink=elc("a","gde-item gde-revlink",'<span class="ic">◱</span><span>Review &amp; progress hub</span><span class="sub">→</span>');
-  revLink.href="review.html"; revLink.title="Spaced-repetition review across every lesson"; panel.appendChild(revLink);
+  revLink.href=(/\/lessons\//.test(location.pathname)?"":"lessons/")+"review.html"; revLink.title="Spaced-repetition review across every lesson"; panel.appendChild(revLink);
   var hide=elc("button","gde-hide","Hide these tools"); panel.appendChild(hide);
 
   function headed(t){return elc("div","gde-h",t);}
@@ -119,6 +119,10 @@ function boot(){
   if(!window.__gdaLoaded){var _ap=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/");
     var _al=document.createElement("link");_al.rel="stylesheet";_al.href=_ap+"gd-assistant.css";document.head.appendChild(_al);
     var _aj=document.createElement("script");_aj.src=_ap+"gd-assistant.js";_aj.defer=true;document.head.appendChild(_aj);}
+  /* site extras: creator byline, page effects, resume/back nav */
+  if(!window.__gdxLoaded){var _xp=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/");
+    var _xl=document.createElement("link");_xl.rel="stylesheet";_xl.href=_xp+"gd-extras.css";document.head.appendChild(_xl);
+    var _xj=document.createElement("script");_xj.src=_xp+"gd-extras.js";_xj.defer=true;document.head.appendChild(_xj);}
   /* inline term definitions (hover/tap) — only when the page has marked terms */
   if(!window.__gdefLoaded && document.querySelector(".term")){var _p=(/\/lessons\//.test(location.pathname)?"../assets/":"assets/");
     var _gl=document.createElement("link");_gl.rel="stylesheet";_gl.href=_p+"gd-glossary.css";document.head.appendChild(_gl);

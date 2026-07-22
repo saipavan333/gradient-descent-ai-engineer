@@ -143,6 +143,8 @@ $("reset").onclick=function(){if(timer){clearInterval(timer);timer=null;$("run")
 $("run").onclick=function(){if(timer){clearInterval(timer);timer=null;this.textContent="▶ Run";this.classList.add("go");return;}this.textContent="⏸ Pause";this.classList.remove("go");timer=setInterval(step1,60);};
 reset();
 </script>
+<link rel="stylesheet" href="../assets/gd-extras.css">
+<script src="../assets/gd-extras.js" defer></script>
 <link rel="stylesheet" href="../assets/gd-assistant.css">
 <script src="../assets/gd-assistant.js" defer></script>
 </body>

@@ -127,6 +127,8 @@ var mc=$("mode");[["explore","Explore (nearest neighbours)"],["analogy","Analogy
 var ac=$("analogy");ANALOGIES.forEach(function(a,i){var c=document.createElement("span");c.className="chip"+(i===0?" sel":"");c.textContent=a[0]+" − "+a[1]+" + "+a[2];c.onclick=function(){ana=i;[].forEach.call(ac.children,function(x){x.classList.remove("sel");});c.classList.add("sel");draw();};ac.appendChild(c);});
 draw();
 </script>
+<link rel="stylesheet" href="../assets/gd-extras.css">
+<script src="../assets/gd-extras.js" defer></script>
 <link rel="stylesheet" href="../assets/gd-assistant.css">
 <script src="../assets/gd-assistant.js" defer></script>
 </body>

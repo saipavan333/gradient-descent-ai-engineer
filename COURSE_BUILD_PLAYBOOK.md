@@ -80,6 +80,8 @@ Encode these proven patterns rather than reinventing them per course:
 - **Unique, unseen animations** — colorful and characterful. Do **not** use generic/constellation particle backgrounds. Reuse a coherent motion language throughout rather than a different gimmick per page.
 - **No chrome-white or pale-white backgrounds.** Use a rich, deliberate palette. Provide both light and dark themes where feasible.
 - Everything animated must remain **legible and calm** — motion serves comprehension, never distracts from it — and must honor `prefers-reduced-motion` (Section 5.6).
+- **Page effects.** A subtle, consistent page-entrance (opacity-only, so fixed elements never shift) plus gentle scroll-reveal of content sections. Content must stay fully visible if JS is off or motion is reduced (only *add* the hidden-then-revealed state via JS when motion is allowed).
+- **Creator byline.** Every page carries a consistent, tasteful creator credit — a footer such as *"Built by <name>"* — injected from a **single source** so it is identical site-wide and can't drift.
 
 ---
 
@@ -107,6 +109,9 @@ Rules:
 - The **site logo/icon links to the home page** on every page.
 - Every lesson and sub-page has a **working "back" path** (breadcrumb and/or prev–next pager).
 - The **favicon/app icon is wired identically on every page** (PNG + ICO + apple-touch), so no page falls back to the browser's default globe. Prefer raster favicons over SVG-only for reliability on `file://` and older browsers.
+- **No dead-end pages.** Every page — lessons, labs, and hubs alike — has clear forward/back navigation: prev/next plus a path back to its track and to home. A student should never land somewhere with no way onward.
+- **Path-aware links (critical).** Links to shared/hub pages must resolve from **every page depth**. A hub linked from both a root page and a nested page needs the correct relative prefix (`lessons/review.html` from root vs `review.html` from within `lessons/`) — or use a root-absolute path. When a link is injected by shared JS, compute the prefix from `location.pathname`. **Test every nav link from both a root page and a nested page.** (A `review.html` link that worked from `lessons/` but 404'd from the home page is the cautionary tale.)
+- **Remembered navigation.** Persist the last lesson a student viewed (localStorage) and offer **"Resume where you left off"** on the home page. Provide a **reliable Back** that returns to the actual previous page the student was on (prefer the browser's real history; fall back to a session trail, then home) — never break the browser's native Back.
 
 ### 5.4 Locale & spelling consistency
 - Pick one locale (this project uses **American English**) and enforce it across **all** content — including files you author later (labs, glossary data, exams) and generated data files. British spellings such as *optimise, colour, centre, behaviour, labelled, minimise* must be converted (*optimize, color, center, behavior, labeled, minimize*). Scan generated/utility files too, not just lesson prose.
@@ -185,12 +190,12 @@ Run before every handoff:
 2. **Content accuracy** — claims/numbers/code fact-checked; volatile facts date-stamped (Section 6.1).
 3. **Math** — no literal-`$` / math-delimiter collisions (per-text-node scan clean); equations render, not raw LaTeX.
 4. **Visuals** — no overflow/overlap/spillage; numbers and equations in visuals are correct; algorithmic widgets pass edge cases.
-5. **Navigation** — logo→home, back paths, and favicon consistent on every page.
+5. **Navigation** — logo→home, back paths, and favicon consistent on every page; **no dead-end pages**; **every nav/hub link resolves from both a root and a nested page** (path-aware); resume + reliable Back work.
 6. **Accessibility** — contrast, keyboard operability, focus states, image/diagram alternatives, and `prefers-reduced-motion` all honored.
 7. **Performance & mobile** — budgets respected; responsive with no horizontal scroll; touch works.
 8. **UX states** — loading/empty/error/fallback states exist for every interactive feature.
 9. **Locale** — one spelling standard site-wide, including generated files.
-10. **Templates** — global elements come from a single source; no per-page drift.
+10. **Templates** — global elements (favicon, nav, **creator byline**, effects) come from a single source; no per-page drift.
 11. **Integrity** — full regression suite green; all inline scripts syntax-check.
 12. **Curriculum** — dependency order correct end-to-end.
 13. **Handoff** — consolidated push command; **exclude generated artifacts** (e.g., `review-data.json`) from commits; note anything left open honestly.
@@ -208,19 +213,31 @@ Run before every handoff:
 
 ## 10. AI Course Assistant
 
-**Goal:** a built-in assistant that answers a student's question using only the course's own content, and replies with a concise summary plus links to the exact lessons it drew from.
+**Goal:** a built-in assistant that answers a student's question using only the course's own content, replies with a short reasoned answer, and links the exact lessons it drew from.
 
-**Chosen architecture — client-side retrieval, with an optional API-key upgrade** (best fit for a free, private, static site; upgradeable when richer answers are wanted):
+**Proven architecture — three layers, generative-by-default with a free-forever fallback** (this is the tested design from the Gradient Descent build, not a sketch):
 
-- **Retrieval (default, offline, free, private):** build a lightweight content index from the lessons (reuse/extend the existing search index — titles, headings, key points, glossary). On a question, retrieve the most relevant lessons, assemble a concise grounded answer from their text, and show it with **deep links to each source lesson** ("From *Lesson 2.3 — Matrices* →"). Works entirely in the browser with zero cost and no data leaving the device.
-- **Optional generative upgrade:** if the student supplies their own LLM API key (stored locally, never hard-coded), the assistant sends the retrieved lesson passages as context (RAG) and returns a fully synthesized natural-language answer — still grounded in, and cited back to, the course content. No key → it silently stays in retrieval mode.
+1. **Retrieval engine (always on; the offline, free, private fallback).** Build a compact index from the lessons — title, track, section headings + key terms, a clean 2–3 sentence intro summary per lesson, and the glossary. Rank lessons by keyword hits **plus** a phrase (bigram) bonus, **IDF down-weighting** so common words (e.g. "LLM") don't drown out distinctive ones, and **singular/plural stemming** so "transformers" matches "Transformer". Compose the answer as: the glossary definition(s) of the term(s) asked about → a few-sentence summary pulled from the most relevant *intro* lesson (de-prioritize how-to/interview pages for the summary) → the cited lesson links. Runs entirely in the browser, zero cost, nothing leaves the device.
+2. **Generative RAG via a serverless proxy (recommended default for a real product).** A tiny serverless function (e.g. a **Cloudflare Worker**) holds the **owner's** free-tier LLM key **server-side**. The browser does the retrieval, POSTs `{question, context}` to the Worker, and the Worker calls the LLM (e.g. **Google Gemini free tier**) and returns a written, grounded answer. **No student needs a key.** On any failure it silently falls back to layer 1 — students never see a raw error.
+3. **Optional student-own-key path (advanced).** A power user can paste their own key (stored locally, never hard-coded); used only when no owner proxy is configured.
+
+**Cost:** effectively free. Serverless hosting free tier (~100k requests/day) + a free-tier LLM (Gemini) = $0 with daily limits; or a cheap paid model (~$0.005/question) with a hard budget cap. No card attached means no surprise bill — worst case the daily free quota pauses.
 
 **Requirements:**
-- Answers must be **grounded in course content only** and must **cite the lessons** used, with working links.
-- Ships as a self-contained, namespaced widget consistent with the site's design language (Section 4); available site-wide like search; honors all a11y and UX-state rules (5.6, 5.9).
-- **Safety:** the student's key stays local; treat retrieved content as untrusted context (guard against prompt-injection in lesson text); if the course doesn't cover something, say so and point to the nearest relevant lesson rather than inventing an answer.
+- Answers **grounded in course content only**, and **cite the lessons** used with working links; if the course doesn't cover it, say so and point to the nearest lesson rather than invent.
+- Self-contained, namespaced widget matching the site design (Section 4); docked so it **never covers primary navigation** (e.g. bottom-right over content, not over a left sidebar); available site-wide; honors all a11y and UX-state rules (5.6, 5.9).
+- **Security:** the LLM key lives only server-side in the proxy — never in client code; treat retrieved lesson text as untrusted data and instruct the model to ignore any instructions inside it (prompt-injection guard); restrict the proxy to the course's own origin(s).
 
-*Build order: specify here now; implement for the current course after these instructions are validated.*
+### 10.1 Serverless-proxy setup & gotchas (hard-won)
+- **Model IDs rotate and get retired.** Use the provider's `-latest` alias (e.g. `gemini-flash-latest`) and make the model a proxy **environment variable**, so switching is a dashboard change, not a code edit.
+- **The env-var NAME must match what the code reads exactly** (e.g. `GEMINI_API_KEY`). The label you gave the key in the provider console is irrelevant; the *value* is the raw key string.
+- **CORS allowlist uses the ORIGIN (scheme + host), never the full URL/path.** All GitHub Pages project sites under one username share **one** origin (`https://<user>.github.io`), so a single entry covers every course hosted there.
+- **Owner config in a separate, non-generated file** (e.g. `assistant-config.js` holding the proxy URL) so index/asset rebuilds never overwrite it.
+- **One proxy + one key can serve many courses** (they share the free daily quota; split into a per-course key when one gets popular).
+- **Cache-bust client assets on deploy** — browsers cache CSS/JS/data hard; a stale cache looks like "my fix didn't deploy."
+- **Gate to paying students later** by having the proxy require a valid login/subscription token once access control (Section 11) exists.
+
+*Status: built and verified for Gradient Descent — client retrieval + Cloudflare Worker → Gemini free tier.*
 
 ---
 

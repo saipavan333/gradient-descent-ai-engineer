@@ -44,14 +44,24 @@ export default {
     try { body = await request.json(); } catch { return json({ error: "Bad request." }, 400, cors); }
     const question = String(body.question || "").slice(0, 2000);
     const context  = String(body.context  || "").slice(0, 20000);
+    const history  = Array.isArray(body.history) ? body.history.slice(-6) : [];   // recent turns, for follow-ups
     if (!question) return json({ error: "No question provided." }, 400, cors);
 
     const model = env.GEMINI_MODEL || MODEL_DEFAULT;
     const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/" +
                      encodeURIComponent(model) + ":generateContent?key=" + env.GEMINI_API_KEY;
+
+    const contents = [];
+    for (const turn of history) {                       // prior conversation so "why?" / "give an example" make sense
+      const role = (turn && turn.role === "model") ? "model" : "user";
+      const text = String((turn && turn.text) || "").slice(0, 4000);
+      if (text) contents.push({ role, parts: [{ text }] });
+    }
+    contents.push({ role: "user", parts: [{ text: "COURSE MATERIAL:\n" + context + "\n\nSTUDENT QUESTION: " + question }] });
+
     const payload = {
       system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-      contents: [{ role: "user", parts: [{ text: "COURSE MATERIAL:\n" + context + "\n\nSTUDENT QUESTION: " + question }] }],
+      contents,
       generationConfig: { maxOutputTokens: 800, temperature: 0.3 }
     };
 
