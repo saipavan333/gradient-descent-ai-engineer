@@ -4,7 +4,8 @@
 "use strict";
 if(window.__gdxLoaded)return; window.__gdxLoaded=true;
 
-var LAST="gdx_last_v1", TRAIL="gdx_trail_v1";
+var NS=(location.pathname.split("/").filter(Boolean)[0]||"root");
+var LAST="gdx_last_v1_"+NS, TRAIL="gdx_trail_v1_"+NS;
 function jget(store,k,d){try{return JSON.parse(store.getItem(k))||d}catch(e){return d}}
 function jset(store,k,v){try{store.setItem(k,JSON.stringify(v))}catch(e){}}
 function reduce(){return !!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);}
@@ -20,13 +21,12 @@ function pageTitle(){
 function isLesson(){return !isHome && !!document.querySelector("article.content, main.lesson, main.content");}   /* real lesson on any course */
 
 function boot(){
+  var bylineOnly=!!window.GDX_BYLINE_ONLY;   /* single-page-app courses: byline + a11y only (the SPA owns its own nav/effects/resume) */
   injectA11y();
-  recordNav();
+  if(!bylineOnly) recordNav();
   mountTopCredit();
   injectByline();
-  runEffects();
-  injectBack();
-  if(isHome) injectResume();
+  if(!bylineOnly){ runEffects(); injectBack(); if(isHome) injectResume(); }
 }
 
 /* ---------- creator byline at the top ----------
@@ -34,30 +34,55 @@ function boot(){
    the banner, adapting to each course's UI) rather than a separate strip above it.
    Headers are often built by the course's own JS, so we wait for one to appear;
    only if a page truly has no top bar do we fall back to the slim ribbon. */
-var HEADER_SEL="header.site-header, .site-header, .topbar, header.masthead, .masthead, header.site-head, header.app-header";
-function headerEl(){
-  var list=document.querySelectorAll(HEADER_SEL);
+var BAR_SEL="header.site-header, .site-header, .topbar, header.masthead, .masthead, header.site-head, header.app-header";
+function firstVisible(sel){
+  var list=document.querySelectorAll(sel);
   for(var i=0;i<list.length;i++){ var h=list[i]; if(h.offsetParent!==null || h.getClientRects().length) return h; }
   return list[0]||null;
 }
+/* Prefer a real top bar; on sidebar-only layouts fall back to the brand block, then the rail.
+   Resolved in explicit priority order (a combined selector would return the ancestor <aside>
+   before its descendant brand block, in DOM order). */
+function bylineHost(){
+  var bar=firstVisible(BAR_SEL); if(bar) return {el:bar, kind:"bar"};
+  var brand=firstVisible(".sb-head")||firstVisible("aside .sb-brand")||firstVisible(".sidebar .brand")||firstVisible("aside .brand")||firstVisible(".sb-brand")||firstVisible(".brand");
+  if(brand) return {el:brand, kind:"side"};
+  var side=firstVisible("aside.sidebar")||firstVisible(".sidebar")||firstVisible("aside");
+  if(side) return {el:side, kind:"side"};
+  return null;
+}
 function mountTopCredit(){
-  var h=headerEl(); if(h){ injectHeaderCredit(h); return; }
+  var h=bylineHost(); if(h){ injectByHost(h); return; }
   var done=false;
-  function finish(hdr){ if(done)return; done=true; try{mo.disconnect()}catch(e){} if(hdr)injectHeaderCredit(hdr); else injectTopByline(); }
-  var mo=new MutationObserver(function(){ var hh=headerEl(); if(hh)finish(hh); });
+  function finish(host){ if(done)return; done=true; try{mo.disconnect()}catch(e){} if(host)injectByHost(host); else injectTopByline(); }
+  var mo=new MutationObserver(function(){ var hh=bylineHost(); if(hh)finish(hh); });
   try{ mo.observe(document.documentElement,{childList:true,subtree:true}); }catch(e){ injectTopByline(); return; }
-  setTimeout(function(){ finish(headerEl()); }, 4000);   /* no header ever appeared → ribbon fallback */
+  setTimeout(function(){ finish(bylineHost()); }, 4000);   /* nothing ever appeared → ribbon fallback */
+}
+function injectByHost(h){
+  if(document.querySelector(".gdx-headcredit, .gdx-sidecredit, .gdx-topcredit"))return;
+  if(h.kind==="bar") injectHeaderCredit(h.el); else injectSideCredit(h.el);
 }
 /* credit that lives inside the existing header bar (right-aligned via CSS margin) */
 function injectHeaderCredit(h){
-  if(!h || document.querySelector(".gdx-headcredit, .gdx-topcredit"))return;
+  if(!h)return;
   var s=document.createElement("span"); s.className="gdx-headcredit";
   s.innerHTML='<span class="gdx-sig">Built by <b>U E Sai Pavan Vamshi Krishna</b></span>';
   h.appendChild(s);
 }
-/* fallback only: a slim ribbon for pages with no top bar at all */
+/* credit for sidebar-only courses: a small line under the brand / at the top of the rail.
+   For a brand block, place it as the brand's next sibling (never disturb the brand's own
+   layout, which is often a horizontal logo+title flex); for a whole rail, append at the end. */
+function injectSideCredit(host){
+  if(!host)return;
+  var s=document.createElement("div"); s.className="gdx-sidecredit";
+  s.innerHTML='<span class="gdx-sig">Built by <b>U E Sai Pavan Vamshi Krishna</b></span>';
+  if(/sb-head|brand/.test(host.className||"") && host.parentNode) host.parentNode.insertBefore(s, host.nextSibling);
+  else host.appendChild(s);
+}
+/* fallback only: a slim ribbon for pages with no bar and no sidebar at all */
 function injectTopByline(){
-  if(document.querySelector(".gdx-topcredit, .gdx-headcredit"))return;
+  if(document.querySelector(".gdx-topcredit, .gdx-headcredit, .gdx-sidecredit"))return;
   var b=document.createElement("div"); b.className="gdx-topcredit";
   b.innerHTML='<span class="gdx-sig">Built by <b>U E Sai Pavan Vamshi Krishna</b></span>';
   document.body.insertBefore(b, document.body.firstChild);
@@ -108,7 +133,7 @@ function injectByline(){
 function alignFooterToContent(f){
   function apply(){
     f.style.paddingLeft="";
-    var col=document.querySelector(".main"); if(!col)return;
+    var col=document.querySelector(".main")||document.querySelector("main.content")||document.querySelector("main"); if(!col)return;
     var delta=Math.round(col.getBoundingClientRect().left - f.getBoundingClientRect().left);
     if(delta>24) f.style.paddingLeft=delta+"px";
   }
