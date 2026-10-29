@@ -27,3 +27,7 @@ Just open `index.html` in any web browser. No server or internet needed.
 - `lessons/` — all lesson pages (+ `start-here.html`, `glossary.html`)
 - `assets/` — styles, fonts, KaTeX, images
 - `notebooks/` — runnable Jupyter notebooks (`.ipynb`) linked from lessons
+
+## Licence
+
+© 2026 Sai Pavan UE. Free to read and share with credit, not for commercial use: [CC BY-NC 4.0](LICENSE).
